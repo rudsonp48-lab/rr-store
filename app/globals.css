@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  /* Palette Tokens */
   --rr-black: #0A0A0A;
   --rr-card-dark: #121212;
   --rr-white: #FFFFFF;
@@ -8,6 +9,21 @@
   --rr-emerald: #10B981;
   --rr-emerald-hover: #059669;
   --rr-emerald-glow: #34D399;
+
+  /* Animation Systems Tokens (Stripe × Linear × Apple × Vercel) */
+  --dur-micro: 160ms;
+  --dur-ui: 220ms;
+  --dur-popover: 280ms;
+  --dur-section: 620ms;
+  --dur-hero: 950ms;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --offset-sm: 8px;
+  --offset-md: 16px;
+  --offset-lg: 24px;
 }
 
 html {
@@ -17,6 +33,119 @@ html {
 body {
   background-color: #0A0A0A;
   color: #FFFFFF;
+}
+
+/* ============================================================================
+   MOTION PRIMITIVES (GPU-Accelerated: transform & opacity only)
+   ============================================================================ */
+
+@keyframes rrFadeRise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, var(--offset-md), 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes rrHeroScaleIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, var(--offset-lg), 0) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes rrScaleFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rrBeamSweep {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(200%, 0, 0);
+  }
+}
+
+/* Hero Choreography Beats (Hero Visual -> Headline -> Subheadline -> CTA) */
+.motion-hero-beat-1 {
+  animation: rrHeroScaleIn var(--dur-hero) var(--ease-out-expo) both;
+}
+.motion-hero-beat-2 {
+  animation: rrFadeRise var(--dur-section) var(--ease-out-expo) 110ms both;
+}
+.motion-hero-beat-3 {
+  animation: rrFadeRise var(--dur-section) var(--ease-out-expo) 210ms both;
+}
+.motion-hero-beat-4 {
+  animation: rrFadeRise var(--dur-section) var(--ease-out-expo) 310ms both;
+}
+
+/* Hover: Lift + Subtle Glow (160ms ease-out-quart) */
+.motion-hover-lift {
+  transition: transform var(--dur-micro) var(--ease-out-quart),
+              border-color var(--dur-micro) var(--ease-out-quart),
+              box-shadow var(--dur-micro) var(--ease-out-quart);
+  will-change: transform;
+}
+.motion-hover-lift:hover {
+  transform: translate3d(0, -4px, 0);
+}
+.motion-hover-lift:active {
+  transform: translate3d(0, -1px, 0) scale(0.99);
+}
+
+/* Focus Ring + Micro Shift for Form Inputs */
+.motion-input-focus {
+  transition: transform var(--dur-micro) var(--ease-out-quart),
+              border-color var(--dur-ui) var(--ease-out-quart),
+              box-shadow var(--dur-ui) var(--ease-out-quart);
+}
+.motion-input-focus:focus {
+  transform: translate3d(0, -1px, 0);
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Accessibility: Reduced Motion Support (System & Explicit Mode) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .motion-hover-lift:hover {
+    transform: none !important;
+  }
+}
+
+html.reduced-motion *,
+html.reduced-motion *::before,
+html.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+html.reduced-motion .motion-hover-lift:hover {
+  transform: none !important;
 }
 
 /* Custom Scrollbars */

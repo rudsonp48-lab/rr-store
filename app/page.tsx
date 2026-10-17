@@ -8,6 +8,7 @@ import {
   ShoppingBag,
   X,
   RotateCcw,
+  EyeOff,
 } from 'lucide-react';
 import { CartItem, CategoryId, DFRegion, Product } from '../types/store';
 import { CATEGORIES, DF_REGIONS, formatBRL, PRODUCTS } from '../data/mockData';
@@ -18,6 +19,7 @@ import ProductCard from '../components/ProductCard';
 import CartAndCheckoutDrawer from '../components/CartAndCheckoutDrawer';
 import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
+import MotionReveal from '../components/MotionReveal';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
 
@@ -29,8 +31,9 @@ export default function RRStorePage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [toastProduct, setToastProduct] = useState<Product | null>(null);
+  const [reducedMotion, setReducedMotion] = useState<boolean>(false);
 
-  // Carregar carrinho e região salvos no navegador
+  // Carregar carrinho, região e preferência de movimento salvos no navegador
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem('rr_store_cart_v1');
@@ -42,10 +45,32 @@ export default function RRStorePage() {
         const found = DF_REGIONS.find((r) => r.id === savedRegionId);
         if (found) setSelectedRegion(found);
       }
+      const savedReducedMotion = localStorage.getItem('rr_store_reduced_motion_v1');
+      if (savedReducedMotion === 'true') {
+        setReducedMotion(true);
+        document.documentElement.classList.add('reduced-motion');
+      }
     } catch {
       // Ignore storage errors
     }
   }, []);
+
+  const toggleReducedMotion = () => {
+    setReducedMotion((prev) => {
+      const next = !prev;
+      if (next) {
+        document.documentElement.classList.add('reduced-motion');
+      } else {
+        document.documentElement.classList.remove('reduced-motion');
+      }
+      try {
+        localStorage.setItem('rr_store_reduced_motion_v1', String(next));
+      } catch {
+        // Ignore
+      }
+      return next;
+    });
+  };
 
   // Salvar carrinho sempre que atualizar
   useEffect(() => {
@@ -94,7 +119,9 @@ export default function RRStorePage() {
       );
     }
     if (sortBy === 'melhor-avaliacao') {
-      return [...list].sort((a, b) => b.avaliacao - a.avaliacao || b.avaliacoesCount - a.avaliacoesCount);
+      return [...list].sort(
+        (a, b) => b.avaliacao - a.avaliacao || b.avaliacoesCount - a.avaliacoesCount
+      );
     }
     return list;
   }, [selectedCategory, searchQuery, sortBy]);
@@ -173,7 +200,7 @@ export default function RRStorePage() {
         onOpenCart={() => setIsCartOpen(true)}
       />
 
-      {/* 2.2 Hero Section com Logo 3D Interativa */}
+      {/* 2.2 Hero Section com Coreografia (Stripe/Linear/Apple/Vercel) & Logo 3D Interativa */}
       <HeroSection
         selectedRegion={selectedRegion}
         onExploreClick={scrollToCatalog}
@@ -194,7 +221,7 @@ export default function RRStorePage() {
       {/* 3. Área Principal de Produtos (Background Secundário #F8F9FA / #FFFFFF para Leitura Perfeita) */}
       <main id="catalogo-produtos" className="flex-1 bg-[#F8F9FA] text-[#0A0A0A] py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Cabeçalho da Vitrine & Controles de Filtro/Ordenação */}
+          {/* Cabeçalho da Vitrine & Controles de Filtro/Ordenação/Acessibilidade */}
           <div className="bg-[#FFFFFF] rounded-2xl p-4 sm:p-6 border border-zinc-200/90 shadow-sm mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex flex-wrap items-center gap-2">
@@ -218,7 +245,7 @@ export default function RRStorePage() {
               </p>
             </div>
 
-            {/* Ordenação + Limpar Filtros */}
+            {/* Ordenação + Modo Movimento Reduzido + Limpar Filtros */}
             <div className="flex flex-wrap items-center gap-2.5">
               {(selectedCategory !== 'Todos' || searchQuery.trim() !== '') && (
                 <button
@@ -232,6 +259,20 @@ export default function RRStorePage() {
                   Ver Todos os 30 Produtos
                 </button>
               )}
+
+              <button
+                type="button"
+                onClick={toggleReducedMotion}
+                className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
+                  reducedMotion
+                    ? 'bg-[#0A0A0A] text-[#34D399] border-[#10B981]'
+                    : 'bg-[#F8F9FA] text-zinc-600 border-zinc-200 hover:bg-zinc-100'
+                }`}
+                title="Acessibilidade: Ativar ou desativar animações (Reduced Motion)"
+              >
+                <EyeOff className="w-3.5 h-3.5" />
+                <span>{reducedMotion ? 'Movimento Reduzido: ON' : 'Reduzir Animações'}</span>
+              </button>
 
               <div className="flex items-center gap-2 bg-[#F8F9FA] border border-zinc-200 rounded-xl px-3 py-2">
                 <SlidersHorizontal className="w-4 h-4 text-[#059669]" />
@@ -253,7 +294,7 @@ export default function RRStorePage() {
             </div>
           </div>
 
-          {/* Grid de Produtos Responsivo (Mobile-First) */}
+          {/* Grid de Produtos Responsivo com Stagger Reveal (50ms por coluna) */}
           {filteredProducts.length === 0 ? (
             <div className="bg-[#FFFFFF] rounded-2xl border border-zinc-200 p-12 text-center max-w-xl mx-auto my-6 shadow-sm">
               <div className="w-14 h-14 rounded-2xl bg-[#10B981]/15 text-[#059669] flex items-center justify-center mx-auto mb-4">
@@ -278,23 +319,27 @@ export default function RRStorePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  selectedRegion={selectedRegion}
-                  onAddToCart={handleAddToCart}
-                />
+              {filteredProducts.map((product, idx) => (
+                <MotionReveal key={product.id} delayMs={(idx % 4) * 50} offsetY={16}>
+                  <ProductCard
+                    product={product}
+                    selectedRegion={selectedRegion}
+                    onAddToCart={handleAddToCart}
+                  />
+                </MotionReveal>
               ))}
             </div>
           )}
         </div>
       </main>
 
-      {/* 5. Elementos Extras de Conversão: Trust Badges & Depoimentos de Brasília */}
-      <TrustAndTestimonials />
+      {/* 5. Seções Completas de Conversão: Problem->Solution, Benefícios, Como Funciona (3 Passos), Depoimentos, FAQ (8 Q/As) e Final CTA */}
+      <TrustAndTestimonials
+        selectedRegion={selectedRegion}
+        onExploreClick={scrollToCatalog}
+      />
 
-      {/* 5. Footer Completo & Botão Flutuante de WhatsApp */}
+      {/* 6. Footer Completo & Botão Flutuante de WhatsApp */}
       <FooterAndFloatingWhatsApp
         selectedRegion={selectedRegion}
         onSelectCategory={setSelectedCategory}
@@ -314,7 +359,7 @@ export default function RRStorePage() {
 
       {/* Toast de Feedback Visual Rápido ao Adicionar Produto */}
       {toastProduct && !isCartOpen && (
-        <div className="fixed bottom-20 right-5 z-40 bg-[#121212] text-white border border-[#10B981] rounded-2xl p-4 shadow-2xl max-w-xs flex items-center gap-3 animate-in fade-in slide-in-from-bottom-5">
+        <div className="fixed bottom-20 right-5 z-40 bg-[#121212] text-white border border-[#10B981] rounded-2xl p-4 shadow-2xl max-w-xs flex items-center gap-3">
           <CheckCircle2 className="w-5 h-5 text-[#34D399] shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-xs font-extrabold text-white truncate">
