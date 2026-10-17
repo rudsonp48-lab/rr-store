@@ -16,6 +16,7 @@ import {
 import { CategoryId, DFRegion } from '../types/store';
 import { DF_REGIONS, formatBRL } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
+import InteractiveLogo3D from './InteractiveLogo3D';
 
 interface TopBarAndHeaderProps {
   searchQuery: string;
@@ -95,37 +96,17 @@ export default function TopBarAndHeader({
       {/* Header Principal Sticky Ultra-Moderno com Glassmorphism */}
       <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3">
-          {/* Linha 1: Brand + Região + Busca (Desktop) + Sacola */}
+          {/* Linha 1: Brand 3D com a Logo Oficial + Região + Busca (Desktop) + Sacola */}
           <div className="flex items-center justify-between gap-2.5 sm:gap-5">
-            {/* Logo Minimalista & Sofisticada RR Store */}
-            <button
-              type="button"
-              onClick={() => {
+            {/* Logo Oficial RR Mobile em 3D Interativo no Canto Superior Esquerdo */}
+            <InteractiveLogo3D
+              variant="header"
+              onClickHeader={() => {
                 onSelectCategory('Todos');
                 onSearchChange('');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="flex items-center gap-2.5 text-left group shrink-0 cursor-pointer focus:outline-none"
-            >
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-[#10B981] to-[#059669] flex items-center justify-center shadow-[0_0_24px_rgba(16,185,129,0.35)] group-hover:scale-105 transition-transform">
-                <span className="text-[#0A0A0A] font-black text-base sm:text-lg tracking-tighter">
-                  RR
-                </span>
-              </div>
-              <div className="leading-none">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-lg sm:text-xl font-black tracking-tight text-white">
-                    RR <span className="text-[#10B981]">Store</span>
-                  </span>
-                  <span className="text-[10px] font-black uppercase tracking-wider bg-[#10B981]/15 text-[#34D399] border border-[#10B981]/30 px-1.5 py-0.5 rounded-md">
-                    BSB
-                  </span>
-                </div>
-                <span className="text-[11px] text-zinc-400 font-medium block mt-0.5">
-                  Express • 10 Departamentos
-                </span>
-              </div>
-            </button>
+            />
 
             {/* Seletor de Região DF (Mobile & Desktop Sem Cortar!) */}
             <button

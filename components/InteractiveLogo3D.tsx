@@ -249,7 +249,7 @@ export default function InteractiveLogo3D({
   };
 
   // ============================================================================
-  // VARIANTE COMPACTA 3D (HEADER & FOOTER — OTIMIZADA PARA TELAS PEQUENAS)
+  // VARIANTE COMPACTA 3D (HEADER & FOOTER — COM A LOGO OFICIAL RR MOBILE)
   // ============================================================================
   if (variant === 'header' || variant === 'footer') {
     return (
@@ -262,48 +262,45 @@ export default function InteractiveLogo3D({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleMouseLeaveOrTouchEnd}
-        className="flex items-center gap-2.5 sm:gap-3 text-left group shrink-0 cursor-pointer select-none"
-        style={{ perspective: '700px' }}
+        className="flex items-center gap-2.5 text-left group shrink-0 cursor-pointer select-none"
+        style={{ perspective: '600px' }}
       >
         <div
-          className="relative w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-[#0A0A0A] border border-amber-500/40 group-hover:border-[#10B981] shadow-[0_0_20px_rgba(212,175,55,0.28)] group-hover:shadow-[0_0_30px_rgba(16,185,129,0.55)] transition-shadow duration-300 overflow-hidden shrink-0"
+          className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#070707] border border-amber-400/50 group-hover:border-[#10B981] shadow-[0_0_20px_rgba(16,185,129,0.35)] group-hover:shadow-[0_0_28px_rgba(212,175,55,0.55)] transition-all duration-200 overflow-hidden shrink-0"
           style={{
             transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale(${
-              isHovering ? 1.06 : 1
+              isHovering ? 1.08 : 1
             })`,
             transformStyle: 'preserve-3d',
-            transition: isHovering ? 'transform 60ms linear' : 'transform 400ms ease-out',
+            transition: isHovering ? 'transform 50ms linear' : 'transform 350ms ease-out',
           }}
         >
           <img
             src="/rr-mobile-logo.jpg"
-            alt="RR Store / RR Mobile Logo 3D"
-            className="w-full h-full object-cover scale-110"
+            alt="Logo Oficial RR Mobile"
+            className="w-full h-full object-cover scale-105"
           />
           <div
             className="pointer-events-none absolute inset-0"
             style={{
-              background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 230, 150, ${glare.opacity}), rgba(16, 185, 129, 0.2) 45%, transparent 75%)`,
+              background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 230, 150, ${glare.opacity}), rgba(16, 185, 129, 0.22) 45%, transparent 75%)`,
               mixBlendMode: 'screen',
             }}
           />
         </div>
 
-        <div className="leading-tight">
+        <div className="leading-none">
           <div className="flex items-center gap-1.5">
             <span className="text-base sm:text-xl font-black tracking-tight text-white">
-              RR{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-[#10B981]">
-                STORE
-              </span>
+              RR <span className="text-[#10B981]">Store</span>
             </span>
-            <span className="inline-flex items-center px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-300 rounded border border-amber-500/30">
-              3D
+            <span className="text-[10px] font-black uppercase tracking-wider bg-[#10B981]/15 text-[#34D399] border border-[#10B981]/30 px-1.5 py-0.5 rounded-md">
+              DF
             </span>
           </div>
-          <p className="text-[10px] sm:text-[11px] text-zinc-400 font-medium">
-            Apple • Android • DF
-          </p>
+          <span className="text-[11px] text-zinc-400 font-medium block mt-1">
+            Entrega Hoje
+          </span>
         </div>
       </div>
     );
