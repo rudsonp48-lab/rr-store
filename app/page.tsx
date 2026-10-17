@@ -11,6 +11,7 @@ import {
   EyeOff,
   Grid2x2,
   Rows3,
+  Settings,
 } from 'lucide-react';
 import { CartItem, CategoryId, DFRegion, Product } from '../types/store';
 import { CATEGORIES, DF_REGIONS, formatBRL, PRODUCTS } from '../data/mockData';
@@ -23,32 +24,56 @@ import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
+import AdminDashboardModal from '../components/AdminDashboardModal';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
 
 export default function RRStorePage() {
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [regions, setRegions] = useState<DFRegion[]>(DF_REGIONS);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('Todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<SortOption>('destaques');
   const [selectedRegion, setSelectedRegion] = useState<DFRegion>(DF_REGIONS[0]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
   const [toastProduct, setToastProduct] = useState<Product | null>(null);
   const [reducedMotion, setReducedMotion] = useState<boolean>(false);
   const [mobileColumns, setMobileColumns] = useState<1 | 2>(2);
 
-  // Carregar carrinho, região e preferência de movimento salvos no navegador
+  // Carregar produtos, regiões, carrinho e preferências salvos no navegador
   useEffect(() => {
     try {
+      const savedProducts = localStorage.getItem('rr_store_products_v1');
+      if (savedProducts) {
+        const parsed = JSON.parse(savedProducts);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setProducts(parsed);
+        }
+      }
+
+      const savedRegionsList = localStorage.getItem('rr_store_regions_list_v1');
+      let currentRegions = DF_REGIONS;
+      if (savedRegionsList) {
+        const parsedReg = JSON.parse(savedRegionsList);
+        if (Array.isArray(parsedReg) && parsedReg.length > 0) {
+          currentRegions = parsedReg;
+          setRegions(parsedReg);
+        }
+      }
+
       const savedCart = localStorage.getItem('rr_store_cart_v1');
       if (savedCart) {
         setCartItems(JSON.parse(savedCart));
       }
+
       const savedRegionId = localStorage.getItem('rr_store_region_v1');
       if (savedRegionId) {
-        const found = DF_REGIONS.find((r) => r.id === savedRegionId);
+        const found = currentRegions.find((r) => r.id === savedRegionId);
         if (found) setSelectedRegion(found);
       }
+
       const savedReducedMotion = localStorage.getItem('rr_store_reduced_motion_v1');
       if (savedReducedMotion === 'true') {
         setReducedMotion(true);
@@ -58,6 +83,35 @@ export default function RRStorePage() {
       // Ignore storage errors
     }
   }, []);
+
+  const handleSaveProducts = (updated: Product[]) => {
+    setProducts(updated);
+    try {
+      localStorage.setItem('rr_store_products_v1', JSON.stringify(updated));
+    } catch {
+      // Ignore
+    }
+  };
+
+  const handleResetDefaultProducts = () => {
+    setProducts(PRODUCTS);
+    try {
+      localStorage.removeItem('rr_store_products_v1');
+    } catch {
+      // Ignore
+    }
+  };
+
+  const handleSaveRegions = (updated: DFRegion[]) => {
+    setRegions(updated);
+    const updatedSelected = updated.find((r) => r.id === selectedRegion.id) || updated[0];
+    if (updatedSelected) setSelectedRegion(updatedSelected);
+    try {
+      localStorage.setItem('rr_store_regions_list_v1', JSON.stringify(updated));
+    } catch {
+      // Ignore
+    }
+  };
 
   const toggleReducedMotion = () => {
     setReducedMotion((prev) => {
@@ -98,7 +152,7 @@ export default function RRStorePage() {
   const filteredProducts = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
-    const list = PRODUCTS.filter((product) => {
+    const list = products.filter((product) => {
       const matchesCategory =
         selectedCategory === 'Todos' || product.categoria === selectedCategory;
 
@@ -128,7 +182,7 @@ export default function RRStorePage() {
       );
     }
     return list;
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [products, selectedCategory, searchQuery, sortBy]);
 
   // Funções do Carrinho
   const handleAddToCart = (product: Product) => {
@@ -222,26 +276,29 @@ export default function RRStorePage() {
         cartCount={cartCount}
         cartSubtotal={cartSubtotalPix}
         onOpenCart={() => setIsCartOpen(true)}
+        onOpenAdmin={() => setIsAdminOpen(true)}
+        regions={regions}
       />
 
-      {/* 2.2 Hero Section com Carrossel de Produtos em Destaque Passando ao Vivo */}
+      {/* 2.2 Hero Section Compactada + Super Banner de Produtos com Transição Fluida */}
       <HeroSection
         selectedRegion={selectedRegion}
         onExploreClick={scrollToCatalog}
         onAddToCart={handleAddToCart}
+        products={products}
       />
 
       {/* 2.3 Navegação por Departamentos (Os 10 Nichos da RR Store) */}
       <CategoryNav
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
-        products={PRODUCTS}
+        products={products}
       />
 
       {/* 3. Área Principal de Produtos (Background Secundário #F8F9FA / #FFFFFF para Leitura Perfeita) */}
       <main id="catalogo-produtos" className="flex-1 bg-[#F8F9FA] text-[#0A0A0A] py-6 sm:py-14">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          {/* Cabeçalho da Vitrine & Controles de Filtro/Ordenação/Modo Mobile */}
+          {/* Cabeçalho da Vitrine & Controles de Filtro/Ordenação/Painel Admin */}
           <div className="bg-[#FFFFFF] rounded-2xl p-3.5 sm:p-6 border border-zinc-200/90 shadow-sm mb-5 sm:mb-8 flex flex-col md:flex-row md:items-center justify-between gap-3.5">
             <div>
               <div className="flex flex-wrap items-center gap-2">
@@ -265,9 +322,8 @@ export default function RRStorePage() {
               </p>
             </div>
 
-            {/* Controles Mobile-First: Alternador 1/2 Colunas no Celular + Ordenação + Acessibilidade */}
+            {/* Controles Mobile-First: Alternador 1/2 Colunas + Botão Painel Admin + Ordenação */}
             <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2">
-              {/* Alternador de Visualização no Celular (2 Colunas App vs 1 Coluna Detalhada) */}
               <div className="sm:hidden inline-flex items-center bg-[#F8F9FA] border border-zinc-200 rounded-xl p-1">
                 <button
                   type="button"
@@ -297,6 +353,15 @@ export default function RRStorePage() {
                 </button>
               </div>
 
+              <button
+                type="button"
+                onClick={() => setIsAdminOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-extrabold bg-[#0A0A0A] hover:bg-zinc-800 text-[#34D399] transition-colors cursor-pointer"
+              >
+                <Settings className="w-3.5 h-3.5" />
+                <span>Gerenciar Produtos (Admin)</span>
+              </button>
+
               {(selectedCategory !== 'Todos' || searchQuery.trim() !== '') && (
                 <button
                   type="button"
@@ -307,7 +372,7 @@ export default function RRStorePage() {
                   className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-extrabold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 transition-colors cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Ver Tudo (30)</span>
+                  <span>Ver Tudo ({products.length})</span>
                 </button>
               )}
 
@@ -388,7 +453,7 @@ export default function RRStorePage() {
         </div>
       </main>
 
-      {/* 5. Seções Completas de Conversão: Problem->Solution, Benefícios, Como Funciona (3 Passos), Depoimentos, FAQ (8 Q/As) e Final CTA */}
+      {/* 5. Seções Completas de Conversão */}
       <TrustAndTestimonials
         selectedRegion={selectedRegion}
         onExploreClick={scrollToCatalog}
@@ -416,7 +481,7 @@ export default function RRStorePage() {
         onSearchClick={focusMobileSearch}
       />
 
-      {/* 4. Carrinho Lateral (Drawer) & Fluxo de Checkout Híbrido */}
+      {/* 4. Carrinho Lateral (Drawer) & Fluxo de Checkout Híbrido com Cálculo de Frete por Localidade */}
       <CartAndCheckoutDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -426,6 +491,18 @@ export default function RRStorePage() {
         onClearCart={handleClearCart}
         selectedRegion={selectedRegion}
         onSelectRegion={handleSelectRegion}
+        regions={regions}
+      />
+
+      {/* 8. Painel Admin Completo (Gerenciar Produtos e Taxas de Frete por Localidade do DF) */}
+      <AdminDashboardModal
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+        products={products}
+        onSaveProducts={handleSaveProducts}
+        onResetDefaultProducts={handleResetDefaultProducts}
+        regions={regions}
+        onSaveRegions={handleSaveRegions}
       />
 
       {/* Toast de Feedback Visual Rápido ao Adicionar Produto */}

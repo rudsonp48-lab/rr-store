@@ -45,6 +45,7 @@ interface CartAndCheckoutDrawerProps {
   onClearCart: () => void;
   selectedRegion: DFRegion;
   onSelectRegion: (region: DFRegion) => void;
+  regions?: DFRegion[];
 }
 
 export default function CartAndCheckoutDrawer({
@@ -56,11 +57,13 @@ export default function CartAndCheckoutDrawer({
   onClearCart,
   selectedRegion,
   onSelectRegion,
+  regions = DF_REGIONS,
 }: CartAndCheckoutDrawerProps) {
   const [step, setStep] = useState<'cart' | 'checkout' | 'success'>('cart');
   const [orderCode, setOrderCode] = useState<string>('#RR-8492');
   const [copiedPix, setCopiedPix] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [cepCalcMsg, setCepCalcMsg] = useState<string | null>(null);
 
   const [customer, setCustomer] = useState<CustomerCheckoutData>({
     nomeCompleto: '',
@@ -133,10 +136,40 @@ export default function CartAndCheckoutDrawer({
   };
 
   const handleRegionSelectChange = (regionId: string) => {
-    const found = DF_REGIONS.find((r) => r.id === regionId);
+    const found = regions.find((r) => r.id === regionId);
     if (found) {
       onSelectRegion(found);
       setCustomer((prev) => ({ ...prev, regiaoId: found.id }));
+      setCepCalcMsg(`Frete atualizado para ${found.nome}`);
+      setTimeout(() => setCepCalcMsg(null), 2800);
+    }
+  };
+
+  const handleCalculateCepShipping = () => {
+    const digits = customer.cep.replace(/\D/g, '');
+    if (digits.length < 5) {
+      setCepCalcMsg('Digite um CEP válido de Brasília-DF (ex: 70200-000 ou 71900-000).');
+      return;
+    }
+    let targetId = 'plano-piloto';
+    if (digits.startsWith('719')) targetId = 'aguas-claras';
+    else if (digits.startsWith('720') || digits.startsWith('721')) targetId = 'taguatinga';
+    else if (digits.startsWith('710')) targetId = 'guara';
+    else if (digits.startsWith('716')) targetId = 'lago-sul';
+    else if (digits.startsWith('715')) targetId = 'lago-norte';
+    else if (digits.startsWith('706')) targetId = 'sudoeste-octogonal';
+    else if (digits.startsWith('722')) targetId = 'ceilandia';
+    else if (digits.startsWith('723')) targetId = 'samambaia';
+    else if (digits.startsWith('730') || digits.startsWith('731')) targetId = 'sobradinho';
+    else if (digits.startsWith('724')) targetId = 'gama';
+    else if (digits.startsWith('7200')) targetId = 'vicente-pires';
+
+    const found = regions.find((r) => r.id === targetId) || regions[0];
+    if (found) {
+      onSelectRegion(found);
+      setCustomer((prev) => ({ ...prev, regiaoId: found.id }));
+      setCepCalcMsg(`Localidade identificada: ${found.nome} (${found.tempoEstimado})`);
+      setTimeout(() => setCepCalcMsg(null), 3500);
     }
   };
 
@@ -361,38 +394,79 @@ export default function CartAndCheckoutDrawer({
                   ))}
                 </div>
 
-                {/* Simulador de Região Administrativa do DF no Carrinho */}
-                <div className="bg-[#121212] border border-white/10 rounded-2xl p-4 space-y-3">
+                {/* Calculadora Completa de Frete por Localidade de Entrega (DF) */}
+                <div className="bg-[#121212] border border-[#10B981]/35 rounded-2xl p-4 space-y-3 shadow-[0_0_25px_rgba(16,185,129,0.08)]">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-extrabold uppercase tracking-wider text-zinc-300 flex items-center gap-1.5">
+                    <label className="text-xs font-extrabold uppercase tracking-wider text-[#34D399] flex items-center gap-1.5">
                       <MapPin className="w-4 h-4 text-[#10B981]" />
-                      Região Administrativa de Entrega (DF)
+                      Calcular Frete por Localidade (DF)
                     </label>
-                    <span className="text-[11px] text-[#34D399] font-semibold">
-                      Motoboy no Mesmo Dia
+                    <span className="text-[10px] bg-[#10B981]/15 text-[#34D399] border border-[#10B981]/30 px-2 py-0.5 rounded-full font-extrabold">
+                      Motoboy Hoje
                     </span>
                   </div>
 
-                  <select
-                    value={selectedRegion.id}
-                    onChange={(e) => handleRegionSelectChange(e.target.value)}
-                    className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white font-semibold focus:outline-none focus:border-[#10B981]"
-                  >
-                    {DF_REGIONS.map((reg) => (
-                      <option key={reg.id} value={reg.id}>
-                        {reg.nome} — {formatBRL(reg.taxaEntrega)} ({reg.tempoEstimado})
-                      </option>
-                    ))}
-                  </select>
+                  {/* Seleção de Localidade / Região Administrativa */}
+                  <div>
+                    <span className="block text-[11px] text-zinc-400 mb-1">
+                      Escolha sua Região Administrativa (Localidade de Entrega):
+                    </span>
+                    <select
+                      value={selectedRegion.id}
+                      onChange={(e) => handleRegionSelectChange(e.target.value)}
+                      className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white font-bold focus:outline-none focus:border-[#10B981]"
+                    >
+                      {regions.map((reg) => (
+                        <option key={reg.id} value={reg.id}>
+                          {reg.nome} — Taxa: {formatBRL(reg.taxaEntrega)} ({reg.tempoEstimado})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                  <div className="flex items-center justify-between text-xs text-zinc-400 pt-1">
-                    <span className="flex items-center gap-1.5">
-                      <Truck className="w-4 h-4 text-[#10B981]" />
-                      Prazo: <strong className="text-white">{selectedRegion.tempoEstimado}</strong>
-                    </span>
-                    <span className="font-bold text-[#34D399]">
-                      {isFreeShipping ? 'FRETE GRÁTIS' : formatBRL(shippingCost)}
-                    </span>
+                  {/* Ou Calcular pelo CEP do DF */}
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="tel"
+                      inputMode="numeric"
+                      value={customer.cep}
+                      onChange={(e) => setCustomer({ ...customer, cep: e.target.value })}
+                      placeholder="Ou digite seu CEP do DF (ex: 71900-000)"
+                      maxLength={9}
+                      className="flex-1 bg-[#0A0A0A] border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleCalculateCepShipping}
+                      className="bg-[#10B981]/20 hover:bg-[#10B981] text-[#34D399] hover:text-[#0A0A0A] border border-[#10B981]/40 font-black text-xs px-3.5 py-2 rounded-xl transition-all shrink-0 cursor-pointer"
+                    >
+                      Calcular CEP
+                    </button>
+                  </div>
+
+                  {cepCalcMsg && (
+                    <p className="text-[11px] font-bold text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/25 rounded-lg px-2.5 py-1.5">
+                      ✓ {cepCalcMsg}
+                    </p>
+                  )}
+
+                  {/* Resultado do Cálculo de Frete */}
+                  <div className="bg-[#0A0A0A] border border-white/10 rounded-xl p-3 flex items-center justify-between text-xs">
+                    <div>
+                      <span className="text-zinc-400 block text-[11px]">
+                        Rota Expressa: <strong className="text-white">{selectedRegion.nome}</strong>
+                      </span>
+                      <span className="flex items-center gap-1 text-[11px] text-[#34D399] font-bold mt-0.5">
+                        <Truck className="w-3.5 h-3.5 text-[#10B981]" />
+                        Entrega em {selectedRegion.tempoEstimado}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-[10px] text-zinc-500 block">Valor do Frete</span>
+                      <span className="text-sm font-black text-[#34D399]">
+                        {isFreeShipping ? 'GRÁTIS 🎉' : formatBRL(shippingCost)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </>
@@ -405,16 +479,62 @@ export default function CartAndCheckoutDrawer({
                   </div>
                 )}
 
-                {/* 1. Dados do Cliente e Endereço de Entrega em Brasília/DF */}
+                {/* 1. Dados do Cliente e Cálculo de Frete por Localidade de Entrega em Brasília/DF */}
                 <div className="bg-[#121212] border border-white/10 rounded-2xl p-4 space-y-3.5">
                   <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
                     <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#34D399] flex items-center gap-2">
                       <span className="w-5 h-5 rounded-full bg-[#10B981] text-[#0A0A0A] text-xs font-black flex items-center justify-center">
                         1
                       </span>
-                      Dados para Entrega Expressa (DF)
+                      Localidade de Entrega & Cálculo de Frete (DF)
                     </h3>
                     <span className="text-[11px] text-zinc-400">Campos obrigatórios *</span>
+                  </div>
+
+                  {/* Box Destacado de Cálculo de Frete por Localidade no Checkout */}
+                  <div className="bg-[#0A0A0A] border border-[#10B981]/35 rounded-xl p-3.5 space-y-2.5">
+                    <label className="block text-xs font-extrabold text-[#34D399]">
+                      Selecione a Localidade de Entrega (Região Administrativa do DF) *
+                    </label>
+                    <select
+                      value={selectedRegion.id}
+                      onChange={(e) => handleRegionSelectChange(e.target.value)}
+                      className="w-full bg-[#121212] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white font-bold focus:outline-none focus:border-[#10B981]"
+                    >
+                      {regions.map((reg) => (
+                        <option key={reg.id} value={reg.id}>
+                          {reg.nome} — Frete: {isFreeShipping ? 'GRÁTIS' : formatBRL(reg.taxaEntrega)} ({reg.tempoEstimado})
+                        </option>
+                      ))}
+                    </select>
+
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        autoComplete="postal-code"
+                        value={customer.cep}
+                        onChange={(e) => setCustomer({ ...customer, cep: e.target.value })}
+                        placeholder="CEP de entrega no DF (ex: 70200-000)"
+                        className="flex-1 bg-[#121212] border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleCalculateCepShipping}
+                        className="bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black text-xs px-3.5 py-2 rounded-xl transition-all shrink-0 cursor-pointer"
+                      >
+                        Calcular Frete
+                      </button>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1 text-xs">
+                      <span className="text-zinc-400">
+                        Prazo Motoboy: <strong className="text-white">{selectedRegion.tempoEstimado}</strong>
+                      </span>
+                      <span className="font-black text-[#34D399]">
+                        Frete: {isFreeShipping ? 'GRÁTIS 🎉' : formatBRL(shippingCost)}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -435,7 +555,7 @@ export default function CartAndCheckoutDrawer({
                       />
                     </div>
 
-                    <div>
+                    <div className="sm:col-span-2">
                       <label className="block text-xs font-bold text-zinc-300 mb-1">
                         Telefone / WhatsApp com DDD *
                       </label>
@@ -451,38 +571,6 @@ export default function CartAndCheckoutDrawer({
                         placeholder="(61) 99999-9999"
                         className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
                       />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-zinc-300 mb-1">
-                        CEP (Brasília / DF)
-                      </label>
-                      <input
-                        type="text"
-                        inputMode="numeric"
-                        autoComplete="postal-code"
-                        value={customer.cep}
-                        onChange={(e) => setCustomer({ ...customer, cep: e.target.value })}
-                        placeholder="Ex: 70200-000"
-                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
-                      />
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label className="block text-xs font-bold text-zinc-300 mb-1">
-                        Região Administrativa do DF *
-                      </label>
-                      <select
-                        value={selectedRegion.id}
-                        onChange={(e) => handleRegionSelectChange(e.target.value)}
-                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white font-semibold focus:outline-none focus:border-[#10B981]"
-                      >
-                        {DF_REGIONS.map((reg) => (
-                          <option key={reg.id} value={reg.id}>
-                            {reg.nome} — Taxa: {isFreeShipping ? 'GRÁTIS' : formatBRL(reg.taxaEntrega)}
-                          </option>
-                        ))}
-                      </select>
                     </div>
 
                     <div className="sm:col-span-2">

@@ -12,6 +12,7 @@ import {
   Check,
   Sparkles,
   Truck,
+  Settings,
 } from 'lucide-react';
 import { CategoryId, DFRegion } from '../types/store';
 import { DF_REGIONS, formatBRL } from '../data/mockData';
@@ -28,6 +29,8 @@ interface TopBarAndHeaderProps {
   cartCount: number;
   cartSubtotal: number;
   onOpenCart: () => void;
+  onOpenAdmin?: () => void;
+  regions?: DFRegion[];
 }
 
 export default function TopBarAndHeader({
@@ -39,6 +42,8 @@ export default function TopBarAndHeader({
   cartCount,
   cartSubtotal,
   onOpenCart,
+  onOpenAdmin,
+  regions = DF_REGIONS,
 }: TopBarAndHeaderProps) {
   const [isRegionModalOpen, setIsRegionModalOpen] = useState(false);
   const [cepInput, setCepInput] = useState('');
@@ -54,22 +59,22 @@ export default function TopBarAndHeader({
         digits.startsWith('707') ||
         digits.startsWith('708')
       ) {
-        const found = DF_REGIONS.find((r) => r.id === 'plano-piloto');
+        const found = regions.find((r) => r.id === 'plano-piloto');
         if (found) onSelectRegion(found);
       } else if (digits.startsWith('719')) {
-        const found = DF_REGIONS.find((r) => r.id === 'aguas-claras');
+        const found = regions.find((r) => r.id === 'aguas-claras');
         if (found) onSelectRegion(found);
       } else if (digits.startsWith('720') || digits.startsWith('721')) {
-        const found = DF_REGIONS.find((r) => r.id === 'taguatinga');
+        const found = regions.find((r) => r.id === 'taguatinga');
         if (found) onSelectRegion(found);
       } else if (digits.startsWith('710')) {
-        const found = DF_REGIONS.find((r) => r.id === 'guara');
+        const found = regions.find((r) => r.id === 'guara');
         if (found) onSelectRegion(found);
       } else if (digits.startsWith('716')) {
-        const found = DF_REGIONS.find((r) => r.id === 'lago-sul');
+        const found = regions.find((r) => r.id === 'lago-sul');
         if (found) onSelectRegion(found);
       } else if (digits.startsWith('715')) {
-        const found = DF_REGIONS.find((r) => r.id === 'lago-norte');
+        const found = regions.find((r) => r.id === 'lago-norte');
         if (found) onSelectRegion(found);
       }
       setIsRegionModalOpen(false);
@@ -96,8 +101,8 @@ export default function TopBarAndHeader({
       {/* Header Principal Sticky Ultra-Moderno com Glassmorphism */}
       <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3">
-          {/* Linha 1: Brand 3D com a Logo Oficial + Região + Busca (Desktop) + Sacola */}
-          <div className="flex items-center justify-between gap-2.5 sm:gap-5">
+          {/* Linha 1: Brand 3D com a Logo Oficial + Região + Busca (Desktop) + Admin + Sacola */}
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
             {/* Logo Oficial RR Mobile em 3D Interativo no Canto Superior Esquerdo */}
             <InteractiveLogo3D
               variant="header"
@@ -108,23 +113,23 @@ export default function TopBarAndHeader({
               }}
             />
 
-            {/* Seletor de Região DF (Mobile & Desktop Sem Cortar!) */}
+            {/* Seletor de Região DF (Mobile & Desktop) */}
             <button
               type="button"
               onClick={() => setIsRegionModalOpen(true)}
-              className="flex items-center gap-2 bg-[#121212] hover:bg-zinc-900 active:scale-98 px-3 py-2 rounded-xl border border-white/10 hover:border-[#10B981]/50 transition-all min-w-0 max-w-[165px] xs:max-w-[200px] sm:max-w-[230px] cursor-pointer"
-              title="Alterar Região Administrativa de entrega no DF"
+              className="flex items-center gap-1.5 bg-[#121212] hover:bg-zinc-900 active:scale-98 px-2.5 sm:px-3 py-2 rounded-xl border border-white/10 hover:border-[#10B981]/50 transition-all min-w-0 max-w-[140px] xs:max-w-[175px] sm:max-w-[220px] cursor-pointer"
+              title="Calcular frete por localidade de entrega no DF"
             >
-              <MapPin className="w-4 h-4 text-[#10B981] shrink-0" />
+              <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#10B981] shrink-0" />
               <div className="truncate text-left leading-tight">
-                <span className="block text-[10px] text-zinc-400 font-medium">
-                  Entregar em:
+                <span className="block text-[9px] sm:text-[10px] text-zinc-400 font-medium">
+                  Frete DF:
                 </span>
-                <span className="block text-xs font-bold text-white truncate">
+                <span className="block text-[11px] sm:text-xs font-bold text-white truncate">
                   {selectedRegion.nome.split('(')[0].trim()}
                 </span>
               </div>
-              <ChevronDown className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+              <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-zinc-400 shrink-0" />
             </button>
 
             {/* Barra de Busca Inteligente (Desktop) */}
@@ -156,8 +161,20 @@ export default function TopBarAndHeader({
               </div>
             </div>
 
-            {/* Ações Direita: Consultor + Carrinho */}
-            <div className="flex items-center gap-2 shrink-0">
+            {/* Ações Direita: Botão Painel Admin + Consultor + Sacola */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              {onOpenAdmin && (
+                <button
+                  type="button"
+                  onClick={onOpenAdmin}
+                  className="touch-target inline-flex items-center gap-1.5 bg-[#121212] hover:bg-white/10 text-zinc-200 hover:text-[#34D399] border border-white/15 hover:border-[#10B981]/50 px-2.5 sm:px-3 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer"
+                  title="Abrir Painel Admin para gerenciar produtos e fretes"
+                >
+                  <Settings className="w-4 h-4 text-[#34D399]" />
+                  <span className="hidden xs:inline">Admin</span>
+                </button>
+              )}
+
               <a
                 href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
                 target="_blank"
@@ -171,7 +188,7 @@ export default function TopBarAndHeader({
               <button
                 type="button"
                 onClick={onOpenCart}
-                className="touch-target relative inline-flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black px-3.5 py-2 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all cursor-pointer shrink-0"
+                className="touch-target relative inline-flex items-center gap-1.5 sm:gap-2 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black px-3 sm:px-3.5 py-2 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all cursor-pointer shrink-0"
                 aria-label="Abrir carrinho de compras"
               >
                 <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
@@ -194,7 +211,7 @@ export default function TopBarAndHeader({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Buscar na RR Store (ex: Creatina, Fone, Potes)..."
-              className="w-full bg-[#121212] text-white placeholder-zinc-500 text-base pl-10 pr-20 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:border-[#10B981]"
+              className="w-full bg-[#121212] text-white placeholder-zinc-500 text-base pl-10 pr-20 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-[#10B981]"
             />
             {searchQuery ? (
               <button
@@ -234,10 +251,10 @@ export default function TopBarAndHeader({
               </div>
               <div>
                 <h3 className="text-base sm:text-lg font-extrabold text-white">
-                  Sua Região em Brasília / DF
+                  Calcular Frete por Localidade no DF
                 </h3>
                 <p className="text-xs text-zinc-400">
-                  Escolha sua RA para calcular a taxa de motoboy e frete grátis.
+                  Escolha sua Região Administrativa ou digite seu CEP para ver a taxa e o prazo.
                 </p>
               </div>
             </div>
@@ -256,12 +273,12 @@ export default function TopBarAndHeader({
                 type="submit"
                 className="touch-target bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-extrabold text-xs px-4 py-2.5 rounded-xl transition-colors shrink-0"
               >
-                Aplicar CEP
+                Calcular CEP
               </button>
             </form>
 
             <div className="flex-1 overflow-y-auto space-y-2 pr-1">
-              {DF_REGIONS.map((region) => {
+              {regions.map((region) => {
                 const isSelected = region.id === selectedRegion.id;
                 return (
                   <button
@@ -282,7 +299,7 @@ export default function TopBarAndHeader({
                         <span className="truncate">{region.nome}</span>
                         {isSelected && (
                           <span className="inline-flex items-center gap-1 text-[10px] bg-[#10B981] text-[#0A0A0A] font-black px-2 py-0.5 rounded-full">
-                            <Check className="w-3 h-3 stroke-[3]" /> Atual
+                            <Check className="w-3 h-3 stroke-[3]" /> Selecionada
                           </span>
                         )}
                       </p>
