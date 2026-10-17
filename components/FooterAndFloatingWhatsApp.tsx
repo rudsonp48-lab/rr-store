@@ -171,8 +171,8 @@ export default function FooterAndFloatingWhatsApp({
         </div>
       </footer>
 
-      {/* Botão Flutuante de WhatsApp no Canto Inferior Direito com Animação Pulse Verde */}
-      <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5">
+      {/* Botão Flutuante de WhatsApp no Canto Inferior Direito (Visível em Tablets/Desktop; no celular fica integrado na MobileBottomBar) */}
+      <div className="hidden md:flex fixed bottom-5 right-5 z-40 items-center gap-2.5">
         <a
           href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
           target="_blank"
@@ -183,7 +183,7 @@ export default function FooterAndFloatingWhatsApp({
           {/* Anel de Pulse Verde */}
           <span className="absolute -inset-1 rounded-full bg-[#34D399] opacity-35 animate-ping pointer-events-none" />
           <MessageCircle className="w-6 h-6 fill-[#0A0A0A] text-[#10B981] relative z-10" />
-          <span className="text-xs sm:text-sm tracking-tight hidden sm:inline relative z-10">
+          <span className="text-xs sm:text-sm tracking-tight relative z-10">
             Dúvidas? WhatsApp DF
           </span>
         </a>

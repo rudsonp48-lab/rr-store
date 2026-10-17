@@ -425,12 +425,13 @@ export default function CartAndCheckoutDrawer({
                       <input
                         type="text"
                         required
+                        autoComplete="name"
                         value={customer.nomeCompleto}
                         onChange={(e) =>
                           setCustomer({ ...customer, nomeCompleto: e.target.value })
                         }
                         placeholder="Ex: Gabriel Rodrigues"
-                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
+                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
                       />
                     </div>
 
@@ -440,13 +441,15 @@ export default function CartAndCheckoutDrawer({
                       </label>
                       <input
                         type="tel"
+                        inputMode="tel"
+                        autoComplete="tel"
                         required
                         value={customer.whatsapp}
                         onChange={(e) =>
                           setCustomer({ ...customer, whatsapp: e.target.value })
                         }
                         placeholder="(61) 99999-9999"
-                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
+                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
                       />
                     </div>
 
@@ -456,10 +459,12 @@ export default function CartAndCheckoutDrawer({
                       </label>
                       <input
                         type="text"
+                        inputMode="numeric"
+                        autoComplete="postal-code"
                         value={customer.cep}
                         onChange={(e) => setCustomer({ ...customer, cep: e.target.value })}
                         placeholder="Ex: 70200-000"
-                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
+                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
                       />
                     </div>
 
@@ -470,7 +475,7 @@ export default function CartAndCheckoutDrawer({
                       <select
                         value={selectedRegion.id}
                         onChange={(e) => handleRegionSelectChange(e.target.value)}
-                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white font-semibold focus:outline-none focus:border-[#10B981]"
+                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white font-semibold focus:outline-none focus:border-[#10B981]"
                       >
                         {DF_REGIONS.map((reg) => (
                           <option key={reg.id} value={reg.id}>
@@ -486,13 +491,14 @@ export default function CartAndCheckoutDrawer({
                       </label>
                       <input
                         type="text"
+                        autoComplete="street-address"
                         required
                         value={customer.enderecoCompleto}
                         onChange={(e) =>
                           setCustomer({ ...customer, enderecoCompleto: e.target.value })
                         }
                         placeholder="Ex: SQS 308 Bloco D Apto 402 (ou Rua 14 Norte Lote 5)"
-                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
+                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
                       />
                     </div>
 
@@ -507,7 +513,7 @@ export default function CartAndCheckoutDrawer({
                           setCustomer({ ...customer, complemento: e.target.value })
                         }
                         placeholder="Ex: Deixar na portaria ou interfonar ao chegar"
-                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
+                        className="w-full bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
                       />
                     </div>
                   </div>
@@ -895,9 +901,9 @@ export default function CartAndCheckoutDrawer({
             )}
           </div>
 
-          {/* Rodapé Fixo com Resumo Financeiro e CTA */}
+          {/* Rodapé Fixo com Resumo Financeiro e CTA (Com Safe Area iOS/Android) */}
           {items.length > 0 && step !== 'success' && (
-            <div className="p-4 sm:p-5 bg-[#121212] border-t border-white/15 space-y-3.5">
+            <div className="p-4 sm:p-5 pb-safe bg-[#121212] border-t border-white/15 space-y-3.5">
               <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between text-zinc-400">
                   <span>Subtotal ({items.reduce((sum, i) => sum + i.quantity, 0)} itens)</span>

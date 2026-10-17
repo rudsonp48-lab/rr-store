@@ -24,21 +24,21 @@ export default function InteractiveLogo3D({
   const [isHovering, setIsHovering] = useState(false);
   const [activeBadge, setActiveBadge] = useState<'apple' | 'android' | null>(null);
 
-  // Animação suave de flutuação 3D quando o mouse não está sobre o emblema
+  // Animação suave de flutuação 3D quando o usuário não está tocando/movendo
   useEffect(() => {
     if (isHovering || mode === 'webgl360') return;
     let animationFrameId: number;
-    let startTime = performance.now();
+    const startTime = performance.now();
 
     const animateIdle = (now: number) => {
       const elapsed = (now - startTime) / 1000;
-      const idleX = Math.sin(elapsed * 1.4) * 6;
-      const idleY = Math.cos(elapsed * 1.1) * 8;
+      const idleX = Math.sin(elapsed * 1.4) * 5.5;
+      const idleY = Math.cos(elapsed * 1.1) * 7.5;
       setRotation({ x: idleX, y: idleY });
       setGlare({
         x: 50 + Math.sin(elapsed * 1.4) * 25,
         y: 50 + Math.cos(elapsed * 1.1) * 25,
-        opacity: 0.3,
+        opacity: 0.28,
       });
       animationFrameId = requestAnimationFrame(animateIdle);
     };
@@ -47,13 +47,13 @@ export default function InteractiveLogo3D({
     return () => cancelAnimationFrame(animationFrameId);
   }, [isHovering, mode]);
 
-  // Motor WebGL Three.js para o Modo Placa/Moeda 3D 360°
+  // Motor WebGL Three.js para o Modo Placa/Moeda 3D 360° (com suporte a Touch Mobile)
   useEffect(() => {
     if (variant !== 'hero' || mode !== 'webgl360' || !webglMountRef.current) return;
 
     const mount = webglMountRef.current;
-    const width = mount.clientWidth || 380;
-    const height = mount.clientHeight || 380;
+    const width = mount.clientWidth || 300;
+    const height = mount.clientHeight || 300;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 1000);
@@ -65,7 +65,6 @@ export default function InteractiveLogo3D({
     mount.innerHTML = '';
     mount.appendChild(renderer.domElement);
 
-    // Iluminação Metálica Dourada + Verde Esmeralda/Android
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.35);
     scene.add(ambientLight);
 
@@ -81,17 +80,14 @@ export default function InteractiveLogo3D({
     rimLight.position.set(0, 4, -3);
     scene.add(rimLight);
 
-    // Carrega a textura oficial da logo RR MOBILE enviada pelo usuário
     const textureLoader = new THREE.TextureLoader();
     const logoTexture = textureLoader.load('/rr-mobile-logo.jpg');
     logoTexture.colorSpace = THREE.SRGBColorSpace;
-    logoTexture.anisotropy = 8;
+    logoTexture.anisotropy = 4;
 
-    // Grupo 3D da Placa de Luxo RR Mobile
     const group = new THREE.Group();
     scene.add(group);
 
-    // Placa Principal com borda metálica bronze/dourada e faces texturizadas
     const boxGeo = new THREE.BoxGeometry(2.9, 2.9, 0.18);
     const sideMaterial = new THREE.MeshStandardMaterial({
       color: 0xb08d57,
@@ -118,7 +114,6 @@ export default function InteractiveLogo3D({
     const plaqueMesh = new THREE.Mesh(boxGeo, materials);
     group.add(plaqueMesh);
 
-    // Moldura Externa Chanfrada em Ouro Escovado & Preto Obsidiana
     const frameGeo = new THREE.BoxGeometry(3.04, 3.04, 0.12);
     const frameMat = new THREE.MeshStandardMaterial({
       color: 0xc5a059,
@@ -128,8 +123,7 @@ export default function InteractiveLogo3D({
     const frameMesh = new THREE.Mesh(frameGeo, frameMat);
     group.add(frameMesh);
 
-    // Partículas Orbitais Douradas e Verdes
-    const particlesCount = 45;
+    const particlesCount = 36;
     const positions = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount; i++) {
       const angle = (i / particlesCount) * Math.PI * 2;
@@ -149,7 +143,6 @@ export default function InteractiveLogo3D({
     const particles = new THREE.Points(particleGeo, particleMat);
     group.add(particles);
 
-    // Interação de Arrastar e Girar 360° no WebGL
     let isDragging = false;
     let prevX = 0;
     let prevY = 0;
@@ -175,8 +168,8 @@ export default function InteractiveLogo3D({
       }
       const deltaX = e.clientX - prevX;
       const deltaY = e.clientY - prevY;
-      targetRotY += deltaX * 0.015;
-      targetRotX += deltaY * 0.015;
+      targetRotY += deltaX * 0.016;
+      targetRotX += deltaY * 0.016;
       prevX = e.clientX;
       prevY = e.clientY;
     };
@@ -211,15 +204,15 @@ export default function InteractiveLogo3D({
     };
   }, [variant, mode]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const updateTiltFromClientCoords = (clientX: number, clientY: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = Math.max(0, Math.min(rect.width, clientX - rect.left));
+    const y = Math.max(0, Math.min(rect.height, clientY - rect.top));
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const maxTilt = variant === 'header' ? 18 : 22;
+    const maxTilt = variant === 'header' ? 16 : 20;
     const rotateX = ((y - centerY) / centerY) * -maxTilt;
     const rotateY = ((x - centerX) / centerX) * maxTilt;
 
@@ -231,15 +224,32 @@ export default function InteractiveLogo3D({
     });
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    updateTiltFromClientCoords(e.clientX, e.clientY);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setIsHovering(true);
+    if (e.touches[0]) {
+      updateTiltFromClientCoords(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches[0]) {
+      updateTiltFromClientCoords(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
+
+  const handleMouseLeaveOrTouchEnd = () => {
     setIsHovering(false);
     setRotation({ x: 0, y: 0 });
-    setGlare({ x: 50, y: 50, opacity: 0.2 });
+    setGlare({ x: 50, y: 50, opacity: 0.22 });
     setActiveBadge(null);
   };
 
   // ============================================================================
-  // VARIANTE COMPACTA 3D (HEADER & FOOTER)
+  // VARIANTE COMPACTA 3D (HEADER & FOOTER — OTIMIZADA PARA TELAS PEQUENAS)
   // ============================================================================
   if (variant === 'header' || variant === 'footer') {
     return (
@@ -248,15 +258,18 @@ export default function InteractiveLogo3D({
         onClick={onClickHeader}
         onMouseEnter={() => setIsHovering(true)}
         onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className="flex items-center gap-3 text-left group shrink-0 cursor-pointer select-none"
+        onMouseLeave={handleMouseLeaveOrTouchEnd}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleMouseLeaveOrTouchEnd}
+        className="flex items-center gap-2.5 sm:gap-3 text-left group shrink-0 cursor-pointer select-none"
         style={{ perspective: '700px' }}
       >
         <div
-          className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#0A0A0A] border border-amber-500/40 group-hover:border-[#10B981] shadow-[0_0_25px_rgba(212,175,55,0.28)] group-hover:shadow-[0_0_32px_rgba(16,185,129,0.55)] transition-shadow duration-300 overflow-hidden"
+          className="relative w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-[#0A0A0A] border border-amber-500/40 group-hover:border-[#10B981] shadow-[0_0_20px_rgba(212,175,55,0.28)] group-hover:shadow-[0_0_30px_rgba(16,185,129,0.55)] transition-shadow duration-300 overflow-hidden shrink-0"
           style={{
             transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale(${
-              isHovering ? 1.07 : 1
+              isHovering ? 1.06 : 1
             })`,
             transformStyle: 'preserve-3d',
             transition: isHovering ? 'transform 60ms linear' : 'transform 400ms ease-out',
@@ -267,7 +280,6 @@ export default function InteractiveLogo3D({
             alt="RR Store / RR Mobile Logo 3D"
             className="w-full h-full object-cover scale-110"
           />
-          {/* Reflexo Especular Dinâmico */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
@@ -279,15 +291,18 @@ export default function InteractiveLogo3D({
 
         <div className="leading-tight">
           <div className="flex items-center gap-1.5">
-            <span className="text-lg sm:text-xl font-black tracking-tight text-white">
-              RR <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-[#10B981]">STORE</span>
+            <span className="text-base sm:text-xl font-black tracking-tight text-white">
+              RR{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-[#10B981]">
+                STORE
+              </span>
             </span>
             <span className="inline-flex items-center px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-300 rounded border border-amber-500/30">
-              RR MOBILE 3D
+              3D
             </span>
           </div>
-          <p className="text-[11px] text-zinc-400 font-medium">
-            Apple • Android • 10 Departamentos DF
+          <p className="text-[10px] sm:text-[11px] text-zinc-400 font-medium">
+            Apple • Android • DF
           </p>
         </div>
       </div>
@@ -295,84 +310,87 @@ export default function InteractiveLogo3D({
   }
 
   // ============================================================================
-  // VARIANTE HERO: PALCO 3D INTERATIVO COMPLETO (PARALLAX MULTI-CAMADAS + WEBGL)
+  // VARIANTE HERO: PALCO 3D INTERATIVO (RESPONSIVO MOBILE-FIRST + TOUCH TILT)
   // ============================================================================
   return (
-    <div className="relative flex flex-col items-center">
+    <div className="relative flex flex-col items-center w-full">
       {/* Barra de Controle do Emblema 3D */}
-      <div className="mb-3 flex flex-wrap items-center justify-center gap-2 z-20">
+      <div className="mb-2.5 flex items-center justify-center gap-2 z-20">
         <button
           type="button"
           onClick={() => setMode('parallax3d')}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold border transition-all cursor-pointer ${
+          className={`touch-target inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-extrabold border transition-all cursor-pointer ${
             mode === 'parallax3d'
               ? 'bg-gradient-to-r from-amber-500/25 to-[#10B981]/25 border-amber-400/60 text-amber-200 shadow-[0_0_20px_rgba(212,175,55,0.25)]'
               : 'bg-[#121212] border-white/10 text-zinc-400 hover:text-white'
           }`}
         >
-          <Layers className="w-3.5 h-3.5 text-amber-400" />
-          <span>Relevo 3D Multi-Camadas</span>
+          <Layers className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+          <span>Relevo 3D Touch</span>
         </button>
 
         <button
           type="button"
           onClick={() => setMode('webgl360')}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold border transition-all cursor-pointer ${
+          className={`touch-target inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-extrabold border transition-all cursor-pointer ${
             mode === 'webgl360'
               ? 'bg-[#10B981] border-[#34D399] text-[#0A0A0A] shadow-[0_0_20px_rgba(16,185,129,0.4)]'
               : 'bg-[#121212] border-white/10 text-zinc-400 hover:text-white'
           }`}
         >
-          <Rotate3d className="w-3.5 h-3.5" />
-          <span>Placa 3D WebGL 360°</span>
+          <Rotate3d className="w-3.5 h-3.5 shrink-0" />
+          <span>Placa 3D 360°</span>
         </button>
       </div>
 
       {mode === 'webgl360' ? (
-        <div className="relative w-full max-w-[400px] aspect-square rounded-3xl bg-gradient-to-b from-[#121212] to-[#0A0A0A] border border-amber-500/30 shadow-[0_25px_70px_rgba(0,0,0,0.9)] flex flex-col items-center justify-center overflow-hidden">
+        <div className="relative w-full max-w-[280px] sm:max-w-[380px] aspect-square rounded-3xl bg-gradient-to-b from-[#121212] to-[#0A0A0A] border border-amber-500/30 shadow-[0_25px_70px_rgba(0,0,0,0.9)] flex flex-col items-center justify-center overflow-hidden touch-none">
           <div
             ref={webglMountRef}
             className="w-full h-full cursor-grab active:cursor-grabbing"
-            title="Arraste para girar a logo RR Mobile em 360°"
+            title="Arraste com o dedo ou mouse para girar em 360°"
           />
-          <div className="pointer-events-none absolute bottom-3 inset-x-4 flex items-center justify-between text-[11px] bg-black/75 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-xl text-zinc-300">
+          <div className="pointer-events-none absolute bottom-2.5 inset-x-3 flex items-center justify-between text-[10px] sm:text-[11px] bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-xl text-zinc-300">
             <span className="flex items-center gap-1.5 font-bold text-amber-300">
-              <Compass className="w-3.5 h-3.5 animate-spin" />
-              Arraste para girar em 360°
+              <Compass className="w-3.5 h-3.5 animate-spin shrink-0" />
+              Deslize o dedo p/ girar 360°
             </span>
-            <span className="text-[#34D399] font-extrabold">WebGL Three.js</span>
+            <span className="text-[#34D399] font-extrabold">3D WebGL</span>
           </div>
         </div>
       ) : (
-        /* PALCO 3D PARALLAX COM RELEVO PROFUNDO E ILUMINAÇÃO METÁLICA DINÂMICA */
+        /* PALCO 3D PARALLAX COM RELEVO PROFUNDO + SUPORTE A TOQUE NO CELULAR */
         <div
           ref={containerRef}
           onMouseEnter={() => setIsHovering(true)}
           onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          className="relative w-full max-w-[400px] aspect-square select-none cursor-pointer"
+          onMouseLeave={handleMouseLeaveOrTouchEnd}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleMouseLeaveOrTouchEnd}
+          className="relative w-full max-w-[280px] sm:max-w-[380px] aspect-square select-none cursor-pointer"
           style={{ perspective: '1100px' }}
         >
           {/* Glow Traseiro Dourado (Apple) + Verde (Android/Esmeralda) */}
           <div
-            className="pointer-events-none absolute -inset-3 rounded-3xl opacity-75 blur-2xl transition-all duration-300"
+            className="pointer-events-none absolute -inset-2.5 rounded-3xl opacity-75 blur-2xl transition-all duration-300"
             style={{
               background:
                 activeBadge === 'apple'
                   ? 'radial-gradient(circle, rgba(212,175,55,0.45) 0%, transparent 70%)'
                   : activeBadge === 'android'
                   ? 'radial-gradient(circle, rgba(132,196,65,0.45) 0%, transparent 70%)'
-                  : 'linear-gradient(135deg, rgba(212,175,55,0.3) 0%, rgba(16,185,129,0.3) 100%)',
+                  : 'linear-gradient(135deg, rgba(212,175,55,0.28) 0%, rgba(16,185,129,0.28) 100%)',
             }}
           />
 
           {/* Cartão 3D Principal com Preserve-3D */}
           <div
-            className="relative w-full h-full rounded-3xl bg-[#070707] border-2 border-amber-500/35 shadow-[0_30px_70px_rgba(0,0,0,0.95)]"
+            className="relative w-full h-full rounded-3xl bg-[#070707] border-2 border-amber-500/35 shadow-[0_25px_60px_rgba(0,0,0,0.95)]"
             style={{
               transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
               transformStyle: 'preserve-3d',
-              transition: isHovering ? 'transform 70ms linear' : 'transform 500ms ease-out',
+              transition: isHovering ? 'transform 60ms linear' : 'transform 450ms ease-out',
             }}
           >
             {/* CAMADA 1 (Base Z=0): Imagem Oficial RR MOBILE em Alta Definição */}
@@ -386,78 +404,94 @@ export default function InteractiveLogo3D({
                 className="w-full h-full object-cover"
               />
 
-              {/* Luz Especular Metálica que Segue o Cursor */}
+              {/* Luz Especular Metálica que Segue o Toque / Cursor */}
               <div
                 className="pointer-events-none absolute inset-0 transition-opacity duration-200"
                 style={{
-                  background: `radial-gradient(circle 220px at ${glare.x}% ${glare.y}%, rgba(255, 223, 128, ${glare.opacity}), rgba(52, 211, 153, 0.18) 45%, transparent 75%)`,
+                  background: `radial-gradient(circle 200px at ${glare.x}% ${glare.y}%, rgba(255, 223, 128, ${glare.opacity}), rgba(52, 211, 153, 0.18) 45%, transparent 75%)`,
                   mixBlendMode: 'screen',
                 }}
               />
             </div>
 
-            {/* CAMADA 2 (Z=24px): Moldura Metálica 3D Flutuante nos Cantos */}
+            {/* CAMADA 2 (Z=20px): Moldura Metálica 3D Flutuante */}
             <div
-              className="pointer-events-none absolute inset-3 rounded-2xl border border-amber-400/30 shadow-[inset_0_0_25px_rgba(212,175,55,0.15)]"
-              style={{ transform: 'translateZ(24px)' }}
+              className="pointer-events-none absolute inset-2.5 sm:inset-3 rounded-2xl border border-amber-400/30 shadow-[inset_0_0_25px_rgba(212,175,55,0.15)]"
+              style={{ transform: 'translateZ(20px)' }}
             />
 
-            {/* CAMADA 3 (Z=42px): Hotspots 3D Flutuantes sobre a Maçã Dourada e o Android Verde */}
-            {/* Hotspot Esquerdo: Apple Dourada */}
+            {/* CAMADA 3 (Z=36px): Hotspots 3D sobre a Maçã Dourada e o Android Verde */}
             <button
               type="button"
               onMouseEnter={() => setActiveBadge('apple')}
               onMouseLeave={() => setActiveBadge(null)}
               onClick={() => onSelectPlatformFilter?.('MagSafe')}
-              style={{ transform: 'translateZ(42px)' }}
-              className="group/apple absolute left-[9%] top-[33%] w-[26%] h-[28%] rounded-2xl border border-transparent hover:border-amber-400/70 hover:bg-amber-400/10 transition-all flex items-end justify-center p-1.5 cursor-pointer"
-              title="Filtrar Linha Apple / MagSafe"
+              style={{ transform: 'translateZ(36px)' }}
+              className="group/apple absolute left-[8%] top-[32%] w-[28%] h-[30%] rounded-2xl border border-transparent hover:border-amber-400/70 active:border-amber-400 hover:bg-amber-400/10 transition-all flex items-end justify-center p-1 cursor-pointer"
+              aria-label="Filtrar Linha Apple MagSafe"
             >
-              <span className="opacity-0 group-hover/apple:opacity-100 transition-opacity bg-black/90 text-amber-300 border border-amber-400/50 text-[10px] font-black px-2 py-0.5 rounded-md shadow-lg whitespace-nowrap">
-                 Linha Apple
+              <span className="opacity-90 sm:opacity-0 group-hover/apple:opacity-100 transition-opacity bg-black/90 text-amber-300 border border-amber-400/50 text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded shadow-lg whitespace-nowrap">
+                 Apple
               </span>
             </button>
 
-            {/* Hotspot Direito: Android Verde */}
             <button
               type="button"
               onMouseEnter={() => setActiveBadge('android')}
               onMouseLeave={() => setActiveBadge(null)}
               onClick={() => onSelectPlatformFilter?.('Bluetooth')}
-              style={{ transform: 'translateZ(42px)' }}
-              className="group/android absolute right-[8%] top-[33%] w-[27%] h-[30%] rounded-2xl border border-transparent hover:border-[#84C441]/80 hover:bg-[#84C441]/10 transition-all flex items-end justify-center p-1.5 cursor-pointer"
-              title="Filtrar Linha Android & Smart"
+              style={{ transform: 'translateZ(36px)' }}
+              className="group/android absolute right-[7%] top-[32%] w-[28%] h-[30%] rounded-2xl border border-transparent hover:border-[#84C441]/80 active:border-[#84C441] hover:bg-[#84C441]/10 transition-all flex items-end justify-center p-1 cursor-pointer"
+              aria-label="Filtrar Linha Android e Bluetooth"
             >
-              <span className="opacity-0 group-hover/android:opacity-100 transition-opacity bg-black/90 text-[#84C441] border border-[#84C441]/50 text-[10px] font-black px-2 py-0.5 rounded-md shadow-lg whitespace-nowrap">
-                🤖 Linha Android
+              <span className="opacity-90 sm:opacity-0 group-hover/android:opacity-100 transition-opacity bg-black/90 text-[#84C441] border border-[#84C441]/50 text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded shadow-lg whitespace-nowrap">
+                🤖 Android
               </span>
             </button>
 
-            {/* CAMADA 4 (Z=52px): Badge Superior Flutuante de Interatividade 3D */}
+            {/* CAMADA 4 (Z=44px): Badge Superior Flutuante */}
             <div
-              style={{ transform: 'translateZ(52px)' }}
-              className="pointer-events-none absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 via-amber-400 to-[#10B981] text-[#0A0A0A] text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-[0_10px_25px_rgba(0,0,0,0.8)]"
+              style={{ transform: 'translateZ(44px)' }}
+              className="pointer-events-none absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 bg-gradient-to-r from-amber-500 via-amber-400 to-[#10B981] text-[#0A0A0A] text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-[0_10px_25px_rgba(0,0,0,0.8)] whitespace-nowrap"
             >
-              <Sparkles className="w-3 h-3 fill-current" />
-              Emblema 3D Interativo • RR Mobile
+              <Sparkles className="w-3 h-3 fill-current shrink-0" />
+              Toque na Logo 3D • RR Mobile
             </div>
 
-            {/* CAMADA 5 (Z=46px): Barra Inferior Flutuante com Status 3D */}
+            {/* CAMADA 5 (Z=40px): Barra Inferior Flutuante com Status 3D */}
             <div
-              style={{ transform: 'translateZ(46px)' }}
-              className="pointer-events-none absolute bottom-3 inset-x-4 bg-black/80 backdrop-blur-md border border-amber-500/30 rounded-xl px-3 py-2 flex items-center justify-between text-[11px]"
+              style={{ transform: 'translateZ(40px)' }}
+              className="pointer-events-none absolute bottom-2.5 inset-x-3 bg-black/85 backdrop-blur-md border border-amber-500/30 rounded-xl px-2.5 py-1.5 flex items-center justify-between text-[10px] sm:text-[11px]"
             >
-              <span className="text-amber-300 font-extrabold flex items-center gap-1.5">
-                <Rotate3d className="w-3.5 h-3.5 text-[#34D399]" />
-                Mova o cursor para inclinar em 3D
+              <span className="text-amber-300 font-extrabold flex items-center gap-1 truncate">
+                <Rotate3d className="w-3.5 h-3.5 text-[#34D399] shrink-0" />
+                Toque/arraste para inclinar
               </span>
-              <span className="text-zinc-300 font-bold">
-                X:{rotation.x.toFixed(0)}° Y:{rotation.y.toFixed(0)}°
+              <span className="text-zinc-300 font-bold shrink-0 ml-1">
+                {rotation.x.toFixed(0)}°/{rotation.y.toFixed(0)}°
               </span>
             </div>
           </div>
         </div>
       )}
+
+      {/* Botões Rápidos Touch para Celular (Acesso Direto Apple / Android) */}
+      <div className="mt-3 flex items-center justify-center gap-2 w-full max-w-[280px] sm:max-w-[380px]">
+        <button
+          type="button"
+          onClick={() => onSelectPlatformFilter?.('MagSafe')}
+          className="flex-1 py-2 px-3 rounded-xl bg-[#121212] hover:bg-amber-500/15 active:scale-95 border border-amber-500/30 text-amber-300 text-[11px] font-extrabold flex items-center justify-center gap-1.5 transition-all"
+        >
+          <span> Linha Apple / MagSafe</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => onSelectPlatformFilter?.('Bluetooth')}
+          className="flex-1 py-2 px-3 rounded-xl bg-[#121212] hover:bg-[#84C441]/15 active:scale-95 border border-[#84C441]/30 text-[#84C441] text-[11px] font-extrabold flex items-center justify-center gap-1.5 transition-all"
+        >
+          <span>🤖 Linha Android / TWS</span>
+        </button>
+      </div>
     </div>
   );
 }

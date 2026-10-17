@@ -1,6 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { FAQ_ITEMS } from '../components/TrustAndTestimonials';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: 'cover',
+  themeColor: '#0A0A0A',
+};
 
 export const metadata: Metadata = {
   title: 'RR Store & RR Mobile Brasília | Entrega Expressa em 45–90 min no DF • 5% OFF no PIX',

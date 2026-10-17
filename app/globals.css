@@ -28,11 +28,29 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
   background-color: #0A0A0A;
   color: #FFFFFF;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safe Area Padding for iPhone Home Indicator & Notch */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+/* Touch target minimum 44x44px for mobile ergonomics */
+.touch-target {
+  min-height: 44px;
 }
 
 /* ============================================================================

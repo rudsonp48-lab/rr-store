@@ -9,6 +9,8 @@ import {
   X,
   RotateCcw,
   EyeOff,
+  Grid2x2,
+  Rows3,
 } from 'lucide-react';
 import { CartItem, CategoryId, DFRegion, Product } from '../types/store';
 import { CATEGORIES, DF_REGIONS, formatBRL, PRODUCTS } from '../data/mockData';
@@ -20,6 +22,7 @@ import CartAndCheckoutDrawer from '../components/CartAndCheckoutDrawer';
 import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
+import MobileBottomBar from '../components/MobileBottomBar';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
 
@@ -32,6 +35,7 @@ export default function RRStorePage() {
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [toastProduct, setToastProduct] = useState<Product | null>(null);
   const [reducedMotion, setReducedMotion] = useState<boolean>(false);
+  const [mobileColumns, setMobileColumns] = useState<1 | 2>(2);
 
   // Carregar carrinho, região e preferência de movimento salvos no navegador
   useEffect(() => {
@@ -170,8 +174,13 @@ export default function RRStorePage() {
     [cartItems]
   );
 
-  const cartSubtotal = useMemo(
+  const cartSubtotalPix = useMemo(
     () => cartItems.reduce((acc, item) => acc + item.product.precoPix * item.quantity, 0),
+    [cartItems]
+  );
+
+  const cartSubtotalRaw = useMemo(
+    () => cartItems.reduce((acc, item) => acc + item.product.precoPor * item.quantity, 0),
     [cartItems]
   );
 
@@ -185,8 +194,23 @@ export default function RRStorePage() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToDepartments = () => {
+    const el = document.getElementById('departamentos');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const focusMobileSearch = () => {
+    const input = document.getElementById('rr-mobile-search-input') as HTMLInputElement | null;
+    if (input) {
+      input.focus();
+      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0A0A]">
+    <div className="min-h-screen flex flex-col bg-[#0A0A0A] pb-20 md:pb-0">
       {/* 2.1 Top Bar & Sticky Header */}
       <TopBarAndHeader
         searchQuery={searchQuery}
@@ -196,7 +220,7 @@ export default function RRStorePage() {
         selectedRegion={selectedRegion}
         onSelectRegion={handleSelectRegion}
         cartCount={cartCount}
-        cartSubtotal={cartSubtotal}
+        cartSubtotal={cartSubtotalPix}
         onOpenCart={() => setIsCartOpen(true)}
       />
 
@@ -219,23 +243,23 @@ export default function RRStorePage() {
       />
 
       {/* 3. Área Principal de Produtos (Background Secundário #F8F9FA / #FFFFFF para Leitura Perfeita) */}
-      <main id="catalogo-produtos" className="flex-1 bg-[#F8F9FA] text-[#0A0A0A] py-10 sm:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Cabeçalho da Vitrine & Controles de Filtro/Ordenação/Acessibilidade */}
-          <div className="bg-[#FFFFFF] rounded-2xl p-4 sm:p-6 border border-zinc-200/90 shadow-sm mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <main id="catalogo-produtos" className="flex-1 bg-[#F8F9FA] text-[#0A0A0A] py-6 sm:py-14">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          {/* Cabeçalho da Vitrine & Controles de Filtro/Ordenação/Modo Mobile */}
+          <div className="bg-[#FFFFFF] rounded-2xl p-3.5 sm:p-6 border border-zinc-200/90 shadow-sm mb-5 sm:mb-8 flex flex-col md:flex-row md:items-center justify-between gap-3.5">
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-wider bg-[#0A0A0A] text-[#34D399] px-2.5 py-1 rounded-lg">
+                <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-[#0A0A0A] text-[#34D399] px-2.5 py-1 rounded-lg">
                   <Sparkles className="w-3 h-3" />
                   Vitrine Oficial RR Store
                 </span>
                 <span className="text-xs font-bold text-zinc-500">
-                  • Mostrando <strong className="text-[#0A0A0A]">{filteredProducts.length}</strong>{' '}
+                  • <strong className="text-[#0A0A0A]">{filteredProducts.length}</strong>{' '}
                   {filteredProducts.length === 1 ? 'produto' : 'produtos'}
                 </span>
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-black text-[#0A0A0A] tracking-tight mt-1.5">
+              <h2 className="text-lg sm:text-2xl font-black text-[#0A0A0A] tracking-tight mt-1">
                 {activeCategoryObj.nome}
               </h2>
               <p className="text-xs sm:text-sm text-zinc-600 mt-0.5">
@@ -245,25 +269,56 @@ export default function RRStorePage() {
               </p>
             </div>
 
-            {/* Ordenação + Modo Movimento Reduzido + Limpar Filtros */}
-            <div className="flex flex-wrap items-center gap-2.5">
+            {/* Controles Mobile-First: Alternador 1/2 Colunas no Celular + Ordenação + Acessibilidade */}
+            <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2">
+              {/* Alternador de Visualização no Celular (2 Colunas App vs 1 Coluna Detalhada) */}
+              <div className="sm:hidden inline-flex items-center bg-[#F8F9FA] border border-zinc-200 rounded-xl p-1">
+                <button
+                  type="button"
+                  onClick={() => setMobileColumns(2)}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold transition-colors ${
+                    mobileColumns === 2
+                      ? 'bg-[#0A0A0A] text-[#34D399]'
+                      : 'text-zinc-600'
+                  }`}
+                  aria-label="Visualizar em 2 colunas no celular"
+                >
+                  <Grid2x2 className="w-3.5 h-3.5" />
+                  <span>2 Col</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMobileColumns(1)}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold transition-colors ${
+                    mobileColumns === 1
+                      ? 'bg-[#0A0A0A] text-[#34D399]'
+                      : 'text-zinc-600'
+                  }`}
+                  aria-label="Visualizar em 1 coluna detalhada no celular"
+                >
+                  <Rows3 className="w-3.5 h-3.5" />
+                  <span>1 Col</span>
+                </button>
+              </div>
+
               {(selectedCategory !== 'Todos' || searchQuery.trim() !== '') && (
                 <button
+                  type="button"
                   onClick={() => {
                     setSelectedCategory('Todos');
                     setSearchQuery('');
                   }}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-extrabold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-extrabold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 transition-colors cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
-                  Ver Todos os 30 Produtos
+                  <span>Ver Tudo (30)</span>
                 </button>
               )}
 
               <button
                 type="button"
                 onClick={toggleReducedMotion}
-                className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
+                className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
                   reducedMotion
                     ? 'bg-[#0A0A0A] text-[#34D399] border-[#10B981]'
                     : 'bg-[#F8F9FA] text-zinc-600 border-zinc-200 hover:bg-zinc-100'
@@ -274,29 +329,27 @@ export default function RRStorePage() {
                 <span>{reducedMotion ? 'Movimento Reduzido: ON' : 'Reduzir Animações'}</span>
               </button>
 
-              <div className="flex items-center gap-2 bg-[#F8F9FA] border border-zinc-200 rounded-xl px-3 py-2">
-                <SlidersHorizontal className="w-4 h-4 text-[#059669]" />
-                <label htmlFor="sort-select" className="text-xs font-bold text-zinc-600">
-                  Ordenar:
-                </label>
+              <div className="flex items-center gap-1.5 bg-[#F8F9FA] border border-zinc-200 rounded-xl px-2.5 py-2">
+                <SlidersHorizontal className="w-3.5 h-3.5 text-[#059669] shrink-0" />
                 <select
                   id="sort-select"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  aria-label="Ordenar produtos"
                   className="bg-transparent text-xs font-extrabold text-[#0A0A0A] focus:outline-none cursor-pointer"
                 >
-                  <option value="destaques">Mais Vendidos &amp; Destaques</option>
-                  <option value="menor-preco">Menor Preço no PIX</option>
-                  <option value="maior-desconto">Maior Desconto (%)</option>
-                  <option value="melhor-avaliacao">Melhor Avaliação (★)</option>
+                  <option value="destaques">Destaques</option>
+                  <option value="menor-preco">Menor Preço PIX</option>
+                  <option value="maior-desconto">Maior Desconto</option>
+                  <option value="melhor-avaliacao">Melhor Avaliação</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Grid de Produtos Responsivo com Stagger Reveal (50ms por coluna) */}
+          {/* Grid de Produtos Responsivo (1 ou 2 Colunas no Celular -> 2 no Tablet -> 3/4 no Desktop) */}
           {filteredProducts.length === 0 ? (
-            <div className="bg-[#FFFFFF] rounded-2xl border border-zinc-200 p-12 text-center max-w-xl mx-auto my-6 shadow-sm">
+            <div className="bg-[#FFFFFF] rounded-2xl border border-zinc-200 p-8 sm:p-12 text-center max-w-xl mx-auto my-6 shadow-sm">
               <div className="w-14 h-14 rounded-2xl bg-[#10B981]/15 text-[#059669] flex items-center justify-center mx-auto mb-4">
                 <ShoppingBag className="w-7 h-7" />
               </div>
@@ -308,6 +361,7 @@ export default function RRStorePage() {
                 {selectedCategory}. Tente buscar por outro termo ou veja todos os departamentos.
               </p>
               <button
+                type="button"
                 onClick={() => {
                   setSelectedCategory('Todos');
                   setSearchQuery('');
@@ -318,13 +372,18 @@ export default function RRStorePage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
+            <div
+              className={`grid ${
+                mobileColumns === 2 ? 'grid-cols-2 gap-2.5' : 'grid-cols-1 gap-4'
+              } sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4`}
+            >
               {filteredProducts.map((product, idx) => (
-                <MotionReveal key={product.id} delayMs={(idx % 4) * 50} offsetY={16}>
+                <MotionReveal key={product.id} delayMs={(idx % 4) * 45} offsetY={14}>
                   <ProductCard
                     product={product}
                     selectedRegion={selectedRegion}
                     onAddToCart={handleAddToCart}
+                    compactMobile={mobileColumns === 2}
                   />
                 </MotionReveal>
               ))}
@@ -345,6 +404,22 @@ export default function RRStorePage() {
         onSelectCategory={setSelectedCategory}
       />
 
+      {/* 7. Barra de Navegação Inferior Nativa Mobile + Fechamento Rápido 1-Toque */}
+      <MobileBottomBar
+        cartCount={cartCount}
+        cartSubtotalPix={cartSubtotalPix}
+        cartSubtotalRaw={cartSubtotalRaw}
+        selectedRegion={selectedRegion}
+        onOpenCart={() => setIsCartOpen(true)}
+        onHomeClick={() => {
+          setSelectedCategory('Todos');
+          setSearchQuery('');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onCategoriesClick={scrollToDepartments}
+        onSearchClick={focusMobileSearch}
+      />
+
       {/* 4. Carrinho Lateral (Drawer) & Fluxo de Checkout Híbrido */}
       <CartAndCheckoutDrawer
         isOpen={isCartOpen}
@@ -359,7 +434,7 @@ export default function RRStorePage() {
 
       {/* Toast de Feedback Visual Rápido ao Adicionar Produto */}
       {toastProduct && !isCartOpen && (
-        <div className="fixed bottom-20 right-5 z-40 bg-[#121212] text-white border border-[#10B981] rounded-2xl p-4 shadow-2xl max-w-xs flex items-center gap-3">
+        <div className="hidden md:flex fixed bottom-20 right-5 z-40 bg-[#121212] text-white border border-[#10B981] rounded-2xl p-4 shadow-2xl max-w-xs items-center gap-3">
           <CheckCircle2 className="w-5 h-5 text-[#34D399] shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-xs font-extrabold text-white truncate">
@@ -370,6 +445,7 @@ export default function RRStorePage() {
             </p>
           </div>
           <button
+            type="button"
             onClick={() => setToastProduct(null)}
             className="text-zinc-400 hover:text-white"
           >

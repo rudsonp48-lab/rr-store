@@ -14,7 +14,7 @@ import {
   Truck,
 } from 'lucide-react';
 import { CategoryId, DFRegion } from '../types/store';
-import { CATEGORIES, DF_REGIONS, formatBRL } from '../data/mockData';
+import { DF_REGIONS, formatBRL } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
 import InteractiveLogo3D from './InteractiveLogo3D';
 
@@ -33,7 +33,6 @@ interface TopBarAndHeaderProps {
 export default function TopBarAndHeader({
   searchQuery,
   onSearchChange,
-  selectedCategory,
   onSelectCategory,
   selectedRegion,
   onSelectRegion,
@@ -47,9 +46,14 @@ export default function TopBarAndHeader({
   const handleCepLookup = (e: React.FormEvent) => {
     e.preventDefault();
     const digits = cepInput.replace(/\D/g, '');
-    if (digits.startsWith('70') || digits.startsWith('71')) {
-      // Map common DF CEP prefixes to regions
-      if (digits.startsWith('700') || digits.startsWith('702') || digits.startsWith('703') || digits.startsWith('707') || digits.startsWith('708')) {
+    if (digits.startsWith('70') || digits.startsWith('71') || digits.startsWith('72')) {
+      if (
+        digits.startsWith('700') ||
+        digits.startsWith('702') ||
+        digits.startsWith('703') ||
+        digits.startsWith('707') ||
+        digits.startsWith('708')
+      ) {
         const found = DF_REGIONS.find((r) => r.id === 'plano-piloto');
         if (found) onSelectRegion(found);
       } else if (digits.startsWith('719')) {
@@ -74,16 +78,11 @@ export default function TopBarAndHeader({
 
   return (
     <>
-      {/* 2.1 Top Bar Oficial em Verde #10B981 */}
+      {/* 2.1 Top Bar Oficial em Verde #10B981 (Compacta no Mobile) */}
       <div className="bg-[#10B981] text-[#0A0A0A] border-b border-[#34D399]/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
-          <p className="text-xs sm:text-sm font-extrabold tracking-tight flex items-center justify-center gap-1.5">
-            <span>🚀 Entrega Expressa via Motoboy no mesmo dia para toda Brasília e DF</span>
-            <span className="hidden md:inline-block mx-1.5 opacity-40">|</span>
-            <span className="hidden md:inline-block">💳 5% OFF no PIX ou em até 12x no Cartão</span>
-          </p>
-          <p className="md:hidden text-[11px] font-bold bg-[#0A0A0A]/10 px-2.5 py-0.5 rounded-full">
-            💳 5% OFF no PIX ou em até 12x no Cartão
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-1.5 sm:py-2 flex items-center justify-between gap-2 text-center sm:text-left">
+          <p className="text-[11px] sm:text-sm font-extrabold tracking-tight flex-1 sm:flex-initial truncate">
+            🚀 Motoboy no mesmo dia em Brasília-DF • 💳 5% OFF PIX ou 12x
           </p>
           <div className="hidden lg:flex items-center gap-4 text-xs font-bold">
             <span className="inline-flex items-center gap-1 bg-[#0A0A0A] text-[#34D399] px-2.5 py-0.5 rounded-full">
@@ -94,10 +93,11 @@ export default function TopBarAndHeader({
         </div>
       </div>
 
-      {/* Header Principal Sticky com Glassmorphism */}
-      <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-md border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-          <div className="flex items-center justify-between gap-3 md:gap-6">
+      {/* Header Principal Sticky com Glassmorphism (Ergonômico Mobile-First) */}
+      <header className="sticky top-0 z-40 bg-[#0A0A0A]/92 backdrop-blur-md border-b border-white/10 shadow-2xl">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5">
+          {/* Linha 1: Logo 3D + Seletor DF + Busca Desktop + Ações */}
+          <div className="flex items-center justify-between gap-2 sm:gap-4 md:gap-6">
             {/* Logo RR Store / RR Mobile 3D Interativa */}
             <InteractiveLogo3D
               variant="header"
@@ -108,10 +108,28 @@ export default function TopBarAndHeader({
               }}
             />
 
-            {/* Seletor de Região / CEP (Desktop & Tablet) */}
+            {/* Seletor Rápido de Região no Mobile (Compact Pill) */}
             <button
+              type="button"
               onClick={() => setIsRegionModalOpen(true)}
-              className="hidden lg:flex items-center gap-2.5 bg-[#121212] hover:bg-zinc-900 text-left px-3.5 py-2 rounded-xl border border-white/10 hover:border-[#10B981]/50 transition-all shrink-0 group"
+              className="lg:hidden flex items-center gap-1 bg-[#121212] active:bg-zinc-800 px-2.5 py-1.5 rounded-xl border border-white/10 text-left max-w-[140px] xs:max-w-[170px] shrink"
+              title="Trocar Região Administrativa do DF"
+            >
+              <MapPin className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+              <div className="truncate leading-tight">
+                <span className="block text-[9px] text-zinc-400">Entregar em:</span>
+                <span className="block text-[11px] font-extrabold text-[#34D399] truncate">
+                  {selectedRegion.nome.split('(')[0].trim()}
+                </span>
+              </div>
+              <ChevronDown className="w-3 h-3 text-zinc-400 shrink-0" />
+            </button>
+
+            {/* Seletor de Região / CEP (Desktop) */}
+            <button
+              type="button"
+              onClick={() => setIsRegionModalOpen(true)}
+              className="hidden lg:flex items-center gap-2.5 bg-[#121212] hover:bg-zinc-900 text-left px-3.5 py-2 rounded-xl border border-white/10 hover:border-[#10B981]/50 transition-all shrink-0 group cursor-pointer"
               title="Alterar Região Administrativa de entrega no DF"
             >
               <div className="w-8 h-8 rounded-lg bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center text-[#10B981] group-hover:scale-105 transition-transform">
@@ -128,19 +146,20 @@ export default function TopBarAndHeader({
               </div>
             </button>
 
-            {/* Barra de Busca Inteligente em Tempo Real */}
-            <div className="flex-1 max-w-xl relative">
+            {/* Barra de Busca Inteligente (Visível na Linha 1 em Telas Médias/Grandes) */}
+            <div className="hidden md:block flex-1 max-w-xl relative">
               <div className="relative flex items-center">
-                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 absolute left-3.5 pointer-events-none" />
+                <Search className="w-5 h-5 text-zinc-400 absolute left-3.5 pointer-events-none" />
                 <input
-                  type="text"
+                  type="search"
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
-                  placeholder="Buscar por produto, departamento ou marca (ex: Creatina, Fone, Potes, Sérum)..."
-                  className="w-full bg-[#121212] text-white placeholder-zinc-500 text-xs sm:text-sm pl-10 pr-20 py-2.5 sm:py-3 rounded-xl border border-white/15 focus:outline-none focus:border-[#10B981] focus:ring-2 focus:ring-[#10B981]/25 transition-all"
+                  placeholder="Buscar por produto, departamento ou marca (ex: Creatina, Fone, MagSafe)..."
+                  className="motion-input-focus w-full bg-[#121212] text-white placeholder-zinc-500 text-sm pl-10 pr-24 py-2.5 rounded-xl border border-white/15 focus:outline-none"
                 />
                 {searchQuery ? (
                   <button
+                    type="button"
                     onClick={() => onSearchChange('')}
                     className="absolute right-2.5 inline-flex items-center gap-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs px-2.5 py-1 rounded-lg transition-colors"
                   >
@@ -148,7 +167,7 @@ export default function TopBarAndHeader({
                     Limpar
                   </button>
                 ) : (
-                  <span className="hidden sm:inline-flex items-center gap-1 absolute right-3 text-[11px] font-semibold text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/20 px-2 py-0.5 rounded-md pointer-events-none">
+                  <span className="inline-flex items-center gap-1 absolute right-3 text-[11px] font-semibold text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/20 px-2 py-0.5 rounded-md pointer-events-none">
                     <Sparkles className="w-3 h-3" />
                     10 Nichos
                   </span>
@@ -157,12 +176,12 @@ export default function TopBarAndHeader({
             </div>
 
             {/* Ações Direita: Atendimento Rápido WhatsApp + Carrinho */}
-            <div className="flex items-center gap-2.5 shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <a
                 href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden md:inline-flex items-center gap-2 bg-[#121212] hover:bg-[#10B981]/15 text-white hover:text-[#34D399] border border-white/10 hover:border-[#10B981]/50 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all"
+                className="hidden xl:inline-flex items-center gap-2 bg-[#121212] hover:bg-[#10B981]/15 text-white hover:text-[#34D399] border border-white/10 hover:border-[#10B981]/50 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all"
               >
                 <MessageCircle className="w-4 h-4 text-[#10B981]" />
                 <div className="text-left leading-tight">
@@ -171,10 +190,11 @@ export default function TopBarAndHeader({
                 </div>
               </a>
 
-              {/* Botão do Carrinho com Contador Dinâmico */}
+              {/* Botão do Carrinho com Contador Dinâmico (Touch-Target >= 44px) */}
               <button
+                type="button"
                 onClick={onOpenCart}
-                className="relative inline-flex items-center gap-2.5 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-extrabold px-3.5 sm:px-4 py-2.5 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_28px_rgba(52,211,153,0.5)] transition-all active:scale-95 cursor-pointer"
+                className="touch-target relative inline-flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-extrabold px-3 sm:px-4 py-2 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all cursor-pointer"
                 aria-label="Abrir carrinho de compras"
               >
                 <div className="relative">
@@ -185,7 +205,7 @@ export default function TopBarAndHeader({
                 </div>
                 <div className="hidden sm:block text-left leading-tight pl-1">
                   <span className="block text-[10px] uppercase tracking-wider text-[#0A0A0A]/80 font-extrabold">
-                    Meu Carrinho
+                    Carrinho
                   </span>
                   <span className="text-xs font-black text-[#0A0A0A]">
                     {cartCount > 0 ? formatBRL(cartSubtotal) : 'Vazio'}
@@ -195,104 +215,118 @@ export default function TopBarAndHeader({
             </div>
           </div>
 
-          {/* Barra Mobile de Região e Filtro Rápido */}
-          <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between lg:hidden text-xs">
-            <button
-              onClick={() => setIsRegionModalOpen(true)}
-              className="inline-flex items-center gap-1.5 text-zinc-300 hover:text-white font-medium truncate"
-            >
-              <MapPin className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
-              <span>Entregar em:</span>
-              <strong className="text-[#34D399] underline decoration-[#10B981]/50 truncate">
-                {selectedRegion.nome} - DF
-              </strong>
-              <ChevronDown className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
-            </button>
-
-            <span className="text-[11px] text-zinc-400 font-semibold shrink-0 flex items-center gap-1">
-              <Truck className="w-3.5 h-3.5 text-[#10B981]" />
-              {selectedRegion.tempoEstimado.split('(')[0]}
-            </span>
+          {/* Linha 2 Exclusiva Mobile: Barra de Busca Full-Width (16px font para evitar auto-zoom no iOS) */}
+          <div className="mt-2 md:hidden relative flex items-center">
+            <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 pointer-events-none" />
+            <input
+              id="rr-mobile-search-input"
+              type="search"
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              placeholder="O que você precisa hoje em Brasília?"
+              className="w-full bg-[#121212] text-white placeholder-zinc-500 text-base pl-10 pr-16 py-2 rounded-xl border border-white/15 focus:outline-none focus:border-[#10B981]"
+            />
+            {searchQuery ? (
+              <button
+                type="button"
+                onClick={() => onSearchChange('')}
+                className="absolute right-2 bg-zinc-800 text-zinc-200 text-xs font-bold px-2.5 py-1 rounded-lg"
+              >
+                Limpar
+              </button>
+            ) : (
+              <span className="absolute right-2.5 text-[10px] font-bold text-[#34D399] bg-[#10B981]/10 px-2 py-0.5 rounded-md pointer-events-none flex items-center gap-1">
+                <Truck className="w-3 h-3" /> Hoje
+              </span>
+            )}
           </div>
         </div>
       </header>
 
-      {/* Modal de Seleção de Região Administrativa do DF / CEP */}
+      {/* Modal / Bottom Sheet Mobile de Seleção de Região Administrativa do DF */}
       {isRegionModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="bg-[#121212] border border-white/15 rounded-2xl max-w-lg w-full p-6 text-white shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm p-0 sm:p-4">
+          <div className="bg-[#121212] border-t sm:border border-white/15 rounded-t-3xl sm:rounded-2xl max-w-lg w-full p-5 sm:p-6 pb-safe text-white shadow-2xl relative max-h-[88vh] flex flex-col">
+            {/* Indicador de Drag Mobile */}
+            <div className="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-3 sm:hidden" />
+
             <button
+              type="button"
               onClick={() => setIsRegionModalOpen(false)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white"
+              className="touch-target absolute top-4 right-4 w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white"
+              aria-label="Fechar seletor de região"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
 
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-[#10B981]/20 border border-[#10B981]/40 flex items-center justify-center text-[#34D399]">
+            <div className="flex items-center gap-3 mb-4 pr-8">
+              <div className="w-10 h-10 rounded-xl bg-[#10B981]/20 border border-[#10B981]/40 flex items-center justify-center text-[#34D399] shrink-0">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-extrabold text-white">
-                  Onde você está em Brasília / DF?
+                <h3 className="text-base sm:text-lg font-extrabold text-white">
+                  Sua Região em Brasília / DF
                 </h3>
                 <p className="text-xs text-zinc-400">
-                  Selecione sua Região Administrativa para calcular taxa de motoboy e prazo no mesmo dia.
+                  Escolha sua RA para calcular a taxa de motoboy e frete grátis.
                 </p>
               </div>
             </div>
 
-            <form onSubmit={handleCepLookup} className="mb-4 flex gap-2">
+            <form onSubmit={handleCepLookup} className="mb-3.5 flex gap-2">
               <input
-                type="text"
+                type="tel"
+                inputMode="numeric"
                 value={cepInput}
                 onChange={(e) => setCepInput(e.target.value)}
-                placeholder="Digite seu CEP do DF (ex: 70200-000 ou 71900-000)"
+                placeholder="Digite seu CEP do DF (ex: 70200-000)"
                 maxLength={9}
-                className="flex-1 bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
+                className="flex-1 bg-[#0A0A0A] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#10B981]"
               />
               <button
                 type="submit"
-                className="bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-extrabold text-xs px-4 py-2.5 rounded-xl transition-colors shrink-0"
+                className="touch-target bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-extrabold text-xs px-4 py-2.5 rounded-xl transition-colors shrink-0"
               >
                 Aplicar CEP
               </button>
             </form>
 
-            <div className="max-h-72 overflow-y-auto space-y-2 pr-1">
+            <div className="flex-1 overflow-y-auto space-y-2 pr-1">
               {DF_REGIONS.map((region) => {
                 const isSelected = region.id === selectedRegion.id;
                 return (
                   <button
+                    type="button"
                     key={region.id}
                     onClick={() => {
                       onSelectRegion(region);
                       setIsRegionModalOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between p-3 rounded-xl border text-left transition-all ${
+                    className={`w-full flex items-center justify-between p-3.5 rounded-xl border text-left transition-all ${
                       isSelected
                         ? 'bg-[#10B981]/15 border-[#10B981] text-white'
-                        : 'bg-[#0A0A0A] border-white/10 hover:border-white/25 text-zinc-300'
+                        : 'bg-[#0A0A0A] border-white/10 active:bg-white/5 text-zinc-300'
                     }`}
                   >
-                    <div>
-                      <p className="text-sm font-bold flex items-center gap-2">
-                        {region.nome}
+                    <div className="min-w-0 pr-2">
+                      <p className="text-xs sm:text-sm font-bold flex flex-wrap items-center gap-1.5">
+                        <span className="truncate">{region.nome}</span>
                         {isSelected && (
                           <span className="inline-flex items-center gap-1 text-[10px] bg-[#10B981] text-[#0A0A0A] font-black px-2 py-0.5 rounded-full">
-                            <Check className="w-3 h-3 stroke-[3]" /> Selecionado
+                            <Check className="w-3 h-3 stroke-[3]" /> Atual
                           </span>
                         )}
                       </p>
-                      <p className="text-xs text-zinc-400 mt-0.5">
-                        ⚡ {region.tempoEstimado} • Frete Grátis acima de {formatBRL(region.freteGratisAcimaDe)}
+                      <p className="text-[11px] text-zinc-400 mt-0.5">
+                        ⚡ {region.tempoEstimado} • Grátis acima de{' '}
+                        {formatBRL(region.freteGratisAcimaDe)}
                       </p>
                     </div>
-                    <div className="text-right shrink-0 pl-2">
+                    <div className="text-right shrink-0">
                       <span className="text-xs font-extrabold text-[#34D399] block">
                         {formatBRL(region.taxaEntrega)}
                       </span>
-                      <span className="text-[10px] text-zinc-500">Taxa fixa</span>
+                      <span className="text-[10px] text-zinc-500">Motoboy</span>
                     </div>
                   </button>
                 );
