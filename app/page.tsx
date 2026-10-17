@@ -224,15 +224,11 @@ export default function RRStorePage() {
         onOpenCart={() => setIsCartOpen(true)}
       />
 
-      {/* 2.2 Hero Section com Coreografia (Stripe/Linear/Apple/Vercel) & Logo 3D Interativa */}
+      {/* 2.2 Hero Section com Carrossel de Produtos em Destaque Passando ao Vivo */}
       <HeroSection
         selectedRegion={selectedRegion}
         onExploreClick={scrollToCatalog}
-        onSelectPlatformFilter={(query) => {
-          setSelectedCategory('Eletrônicos & Smartphones');
-          setSearchQuery(query);
-          scrollToCatalog();
-        }}
+        onAddToCart={handleAddToCart}
       />
 
       {/* 2.3 Navegação por Departamentos (Os 10 Nichos da RR Store) */}

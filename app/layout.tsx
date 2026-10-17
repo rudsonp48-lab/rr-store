@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { FAQ_ITEMS } from '../components/TrustAndTestimonials';
+import { FAQ_ITEMS } from '../data/mockData';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -11,12 +11,11 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'RR Store & RR Mobile Brasília | Entrega Expressa em 45–90 min no DF • 5% OFF no PIX',
+  title: 'RR Store Brasília | Entrega Expressa em 45–90 min no DF • 5% OFF no PIX',
   description:
-    'Tudo o que seu dia a dia em Brasília precisa, na velocidade de um clique. Linha Apple & Android (RR Mobile) + 10 departamentos com entrega via Motoboy no mesmo dia em todo o DF, 5% OFF no PIX ou até 12x no Cartão.',
+    'Tudo o que seu dia a dia em Brasília precisa, na velocidade de um clique. 10 departamentos com entrega via Motoboy no mesmo dia em todo o DF, 5% OFF no PIX ou até 12x no Cartão.',
   keywords: [
     'RR Store Brasília',
-    'RR Mobile Brasília',
     'Entrega no mesmo dia Brasília DF',
     'Acessórios Apple MagSafe Brasília',
     'Eletrônicos Águas Claras Asa Sul Taguatinga',
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
     'Papelaria Concursos Brasília Caderno Inteligente',
   ],
   openGraph: {
-    title: 'RR Store & RR Mobile Brasília | Entrega Expressa no Mesmo Dia no DF',
+    title: 'RR Store Brasília | Entrega Expressa no Mesmo Dia no DF',
     description:
       'Receba em 45–90 min via Motoboy Express em Brasília-DF. 10 departamentos, 5% OFF no PIX ou pague na entrega na maquininha.',
     locale: 'pt_BR',
@@ -37,7 +36,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Schema JSON-LD (AEO / SEO Rich Results: FAQPage + LocalBusiness Store)
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',

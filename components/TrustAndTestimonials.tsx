@@ -18,7 +18,7 @@ import {
   ShoppingBag,
 } from 'lucide-react';
 import { DFRegion } from '../types/store';
-import { formatBRL, TESTIMONIALS } from '../data/mockData';
+import { FAQ_ITEMS, formatBRL, TESTIMONIALS } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
 import MotionReveal from './MotionReveal';
 
@@ -26,41 +26,6 @@ interface TrustAndTestimonialsProps {
   selectedRegion?: DFRegion;
   onExploreClick?: () => void;
 }
-
-export const FAQ_ITEMS = [
-  {
-    q: 'Em quanto tempo meu pedido chega em Brasília e Região (DF)?',
-    a: 'Para pedidos confirmados até as 19h, o despacho via Motoboy Express ocorre em até 30 minutos. No Plano Piloto (Asa Sul/Norte), Sudoeste, Noroeste e Guará, o tempo médio de entrega é de 45 a 90 minutos. Em Águas Claras, Taguatinga, Vicente Pires, Lago Sul e Lago Norte, entre 50 e 110 minutos no mesmo dia.',
-  },
-  {
-    q: 'Posso pagar somente quando o motoboy chegar na minha casa ou trabalho?',
-    a: 'Sim! No checkout híbrido da RR Store você pode escolher a opção "Passar na Maquininha na Entrega". Nosso motoboy leva a maquininha (crédito em até 12x ou débito por aproximação/chip) até a sua portaria ou endereço comercial em Brasília.',
-  },
-  {
-    q: 'Como funciona o desconto de 5% no PIX?',
-    a: 'Ao selecionar a aba PIX no carrinho, o sistema aplica automaticamente 5% de desconto sobre o valor dos produtos e gera o QR Code e o código Pix Copia e Cola. Assim que finalizado, você envia o resumo no WhatsApp e seu pedido tem prioridade imediata de saída.',
-  },
-  {
-    q: 'Os produtos da linha RR Mobile (Apple & Android) e Suplementos são originais e têm garantia?',
-    a: '100% selecionados, testados e com Garantia Oficial RR Store Brasília. Trabalhamos apenas com lotes homologados, suplementos com laudo de pureza aprovado e acessórios premium MagSafe/TWS com troca expressa local.',
-  },
-  {
-    q: 'Como ganhar Frete Grátis via Motoboy para minha Região Administrativa?',
-    a: 'O carrinho calcula automaticamente sua meta de Frete Grátis conforme sua Região Administrativa (por exemplo, compras acima de R$ 189 no Guará, R$ 199 no Plano Piloto/Sudoeste/Noroeste ou R$ 220 em Águas Claras). Basta atingir o valor no carrinho que a taxa zera na hora.',
-  },
-  {
-    q: 'E se eu precisar trocar um produto ou escolher outro tamanho de Moda Fitness / Infantil?',
-    a: 'Você conta com 7 dias de Garantia de Satisfação e Troca Fácil diretamente em Brasília. Basta acionar nosso suporte humanizado no WhatsApp informando o número do seu pedido (#RR-XXXX) que resolvemos sem burocracia.',
-  },
-  {
-    q: 'Posso comprar produtos de departamentos diferentes no mesmo pedido?',
-    a: 'Com certeza! Essa é a maior vantagem da RR Store: você pode colocar no mesmo carrinho um Fone Bluetooth TWS, uma Creatina 100% Pura, um Sérum Facial para o clima seco do DF e um Caderno Inteligente, pagando um único frete (ou frete grátis) e recebendo tudo junto no mesmo pacote.',
-  },
-  {
-    q: 'Vocês entregam em condomínios fechados, ministérios na Esplanada e prédios comerciais?',
-    a: 'Sim! Entregamos diariamente em todas as Superquadras, Esplanada dos Ministérios, Setor Bancário, Setor Comercial/Hospitalar, condomínios do Jardim Botânico, Park Way, Lagos e todas as Regiões Administrativas do DF. Basta informar a portaria ou bloco nas observações do checkout.',
-  },
-];
 
 export default function TrustAndTestimonials({
   selectedRegion,

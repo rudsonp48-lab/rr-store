@@ -43,10 +43,19 @@ export default function FooterAndFloatingWhatsApp({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
             {/* Coluna 1: Sobre a RR Store Brasília */}
             <div className="lg:col-span-4 space-y-4">
-              <InteractiveLogo3D
-                variant="footer"
-                onClickHeader={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              />
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#10B981] to-[#059669] flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.35)]">
+                  <span className="text-[#0A0A0A] font-black text-base tracking-tighter">RR</span>
+                </div>
+                <div>
+                  <span className="text-xl font-black tracking-tight text-white">
+                    RR <span className="text-[#10B981]">Store</span>
+                  </span>
+                  <span className="block text-[11px] text-zinc-400">
+                    Brasília - Distrito Federal
+                  </span>
+                </div>
+              </div>
 
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                 Sua loja multidepartamentos online em Brasília-DF. Curadoria completa com entrega

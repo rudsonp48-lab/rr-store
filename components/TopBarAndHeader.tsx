@@ -16,7 +16,6 @@ import {
 import { CategoryId, DFRegion } from '../types/store';
 import { DF_REGIONS, formatBRL } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
-import InteractiveLogo3D from './InteractiveLogo3D';
 
 interface TopBarAndHeaderProps {
   searchQuery: string;
@@ -78,84 +77,85 @@ export default function TopBarAndHeader({
 
   return (
     <>
-      {/* 2.1 Top Bar Oficial em Verde #10B981 (Compacta no Mobile) */}
-      <div className="bg-[#10B981] text-[#0A0A0A] border-b border-[#34D399]/40">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-1.5 sm:py-2 flex items-center justify-between gap-2 text-center sm:text-left">
-          <p className="text-[11px] sm:text-sm font-extrabold tracking-tight flex-1 sm:flex-initial truncate">
-            🚀 Motoboy no mesmo dia em Brasília-DF • 💳 5% OFF PIX ou 12x
+      {/* 2.1 Top Bar Oficial em Verde #10B981 */}
+      <div className="bg-[#10B981] text-[#0A0A0A] border-b border-[#34D399]/30">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-1.5 sm:py-2 flex items-center justify-between gap-2">
+          <p className="text-[11px] sm:text-xs md:text-sm font-extrabold tracking-tight truncate mx-auto sm:mx-0">
+            🚀 Entrega Expressa via Motoboy hoje em Brasília-DF • 💳 5% OFF no PIX ou até 12x
           </p>
-          <div className="hidden lg:flex items-center gap-4 text-xs font-bold">
+          <div className="hidden lg:flex items-center gap-3 text-xs font-bold shrink-0">
             <span className="inline-flex items-center gap-1 bg-[#0A0A0A] text-[#34D399] px-2.5 py-0.5 rounded-full">
-              <Zap className="w-3.5 h-3.5 fill-current" />
-              Despacho em até 30 min
+              <Zap className="w-3 h-3 fill-current" />
+              Despacho em 30 min
             </span>
           </div>
         </div>
       </div>
 
-      {/* Header Principal Sticky com Glassmorphism (Ergonômico Mobile-First) */}
-      <header className="sticky top-0 z-40 bg-[#0A0A0A]/92 backdrop-blur-md border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5">
-          {/* Linha 1: Logo 3D + Seletor DF + Busca Desktop + Ações */}
-          <div className="flex items-center justify-between gap-2 sm:gap-4 md:gap-6">
-            {/* Logo RR Store / RR Mobile 3D Interativa */}
-            <InteractiveLogo3D
-              variant="header"
-              onClickHeader={() => {
+      {/* Header Principal Sticky Ultra-Moderno com Glassmorphism */}
+      <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3">
+          {/* Linha 1: Brand + Região + Busca (Desktop) + Sacola */}
+          <div className="flex items-center justify-between gap-2.5 sm:gap-5">
+            {/* Logo Minimalista & Sofisticada RR Store */}
+            <button
+              type="button"
+              onClick={() => {
                 onSelectCategory('Todos');
                 onSearchChange('');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-            />
+              className="flex items-center gap-2.5 text-left group shrink-0 cursor-pointer focus:outline-none"
+            >
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-[#10B981] to-[#059669] flex items-center justify-center shadow-[0_0_24px_rgba(16,185,129,0.35)] group-hover:scale-105 transition-transform">
+                <span className="text-[#0A0A0A] font-black text-base sm:text-lg tracking-tighter">
+                  RR
+                </span>
+              </div>
+              <div className="leading-none">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-lg sm:text-xl font-black tracking-tight text-white">
+                    RR <span className="text-[#10B981]">Store</span>
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider bg-[#10B981]/15 text-[#34D399] border border-[#10B981]/30 px-1.5 py-0.5 rounded-md">
+                    BSB
+                  </span>
+                </div>
+                <span className="text-[11px] text-zinc-400 font-medium block mt-0.5">
+                  Express • 10 Departamentos
+                </span>
+              </div>
+            </button>
 
-            {/* Seletor Rápido de Região no Mobile (Compact Pill) */}
+            {/* Seletor de Região DF (Mobile & Desktop Sem Cortar!) */}
             <button
               type="button"
               onClick={() => setIsRegionModalOpen(true)}
-              className="lg:hidden flex items-center gap-1 bg-[#121212] active:bg-zinc-800 px-2.5 py-1.5 rounded-xl border border-white/10 text-left max-w-[140px] xs:max-w-[170px] shrink"
-              title="Trocar Região Administrativa do DF"
+              className="flex items-center gap-2 bg-[#121212] hover:bg-zinc-900 active:scale-98 px-3 py-2 rounded-xl border border-white/10 hover:border-[#10B981]/50 transition-all min-w-0 max-w-[165px] xs:max-w-[200px] sm:max-w-[230px] cursor-pointer"
+              title="Alterar Região Administrativa de entrega no DF"
             >
-              <MapPin className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
-              <div className="truncate leading-tight">
-                <span className="block text-[9px] text-zinc-400">Entregar em:</span>
-                <span className="block text-[11px] font-extrabold text-[#34D399] truncate">
+              <MapPin className="w-4 h-4 text-[#10B981] shrink-0" />
+              <div className="truncate text-left leading-tight">
+                <span className="block text-[10px] text-zinc-400 font-medium">
+                  Entregar em:
+                </span>
+                <span className="block text-xs font-bold text-white truncate">
                   {selectedRegion.nome.split('(')[0].trim()}
                 </span>
               </div>
-              <ChevronDown className="w-3 h-3 text-zinc-400 shrink-0" />
+              <ChevronDown className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
             </button>
 
-            {/* Seletor de Região / CEP (Desktop) */}
-            <button
-              type="button"
-              onClick={() => setIsRegionModalOpen(true)}
-              className="hidden lg:flex items-center gap-2.5 bg-[#121212] hover:bg-zinc-900 text-left px-3.5 py-2 rounded-xl border border-white/10 hover:border-[#10B981]/50 transition-all shrink-0 group cursor-pointer"
-              title="Alterar Região Administrativa de entrega no DF"
-            >
-              <div className="w-8 h-8 rounded-lg bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center text-[#10B981] group-hover:scale-105 transition-transform">
-                <MapPin className="w-4 h-4" />
-              </div>
-              <div className="leading-tight">
-                <span className="text-[11px] text-zinc-400 block font-medium">
-                  Entregar em: <strong className="text-[#34D399]">Brasília - DF</strong>
-                </span>
-                <span className="text-xs font-bold text-white flex items-center gap-1 max-w-[165px] truncate">
-                  {selectedRegion.nome}
-                  <ChevronDown className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
-                </span>
-              </div>
-            </button>
-
-            {/* Barra de Busca Inteligente (Visível na Linha 1 em Telas Médias/Grandes) */}
+            {/* Barra de Busca Inteligente (Desktop) */}
             <div className="hidden md:block flex-1 max-w-xl relative">
               <div className="relative flex items-center">
-                <Search className="w-5 h-5 text-zinc-400 absolute left-3.5 pointer-events-none" />
+                <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 pointer-events-none" />
                 <input
                   type="search"
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
-                  placeholder="Buscar por produto, departamento ou marca (ex: Creatina, Fone, MagSafe)..."
-                  className="motion-input-focus w-full bg-[#121212] text-white placeholder-zinc-500 text-sm pl-10 pr-24 py-2.5 rounded-xl border border-white/15 focus:outline-none"
+                  placeholder="Buscar produtos, marcas ou departamentos (ex: Fone TWS, Creatina, Sérum)..."
+                  className="motion-input-focus w-full bg-[#121212] text-white placeholder-zinc-500 text-sm pl-10 pr-24 py-2.5 rounded-xl border border-white/10 focus:outline-none"
                 />
                 {searchQuery ? (
                   <button
@@ -175,7 +175,7 @@ export default function TopBarAndHeader({
               </div>
             </div>
 
-            {/* Ações Direita: Atendimento Rápido WhatsApp + Carrinho */}
+            {/* Ações Direita: Consultor + Carrinho */}
             <div className="flex items-center gap-2 shrink-0">
               <a
                 href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
@@ -184,58 +184,47 @@ export default function TopBarAndHeader({
                 className="hidden xl:inline-flex items-center gap-2 bg-[#121212] hover:bg-[#10B981]/15 text-white hover:text-[#34D399] border border-white/10 hover:border-[#10B981]/50 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all"
               >
                 <MessageCircle className="w-4 h-4 text-[#10B981]" />
-                <div className="text-left leading-tight">
-                  <span className="block text-[10px] text-zinc-400 font-normal">Dúvidas?</span>
-                  <span>Atendimento DF</span>
-                </div>
+                <span>WhatsApp DF</span>
               </a>
 
-              {/* Botão do Carrinho com Contador Dinâmico (Touch-Target >= 44px) */}
               <button
                 type="button"
                 onClick={onOpenCart}
-                className="touch-target relative inline-flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-extrabold px-3 sm:px-4 py-2 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all cursor-pointer"
+                className="touch-target relative inline-flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black px-3.5 py-2 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all cursor-pointer shrink-0"
                 aria-label="Abrir carrinho de compras"
               >
-                <div className="relative">
-                  <ShoppingBag className="w-5 h-5 stroke-[2.5]" />
-                  <span className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1 rounded-full bg-[#0A0A0A] text-[#34D399] border border-[#34D399] text-[11px] font-black flex items-center justify-center shadow-md">
-                    {cartCount}
-                  </span>
-                </div>
-                <div className="hidden sm:block text-left leading-tight pl-1">
-                  <span className="block text-[10px] uppercase tracking-wider text-[#0A0A0A]/80 font-extrabold">
-                    Carrinho
-                  </span>
-                  <span className="text-xs font-black text-[#0A0A0A]">
-                    {cartCount > 0 ? formatBRL(cartSubtotal) : 'Vazio'}
-                  </span>
-                </div>
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+                <span className="text-xs font-black bg-[#0A0A0A] text-[#34D399] px-2 py-0.5 rounded-full">
+                  {cartCount}
+                </span>
+                <span className="hidden sm:inline text-xs font-black">
+                  {cartCount > 0 ? formatBRL(cartSubtotal) : 'Sacola'}
+                </span>
               </button>
             </div>
           </div>
 
-          {/* Linha 2 Exclusiva Mobile: Barra de Busca Full-Width (16px font para evitar auto-zoom no iOS) */}
-          <div className="mt-2 md:hidden relative flex items-center">
+          {/* Linha 2 (Mobile): Barra de Busca Full-Width Limpa e Moderna */}
+          <div className="mt-2.5 md:hidden relative flex items-center">
             <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 pointer-events-none" />
             <input
               id="rr-mobile-search-input"
               type="search"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="O que você precisa hoje em Brasília?"
-              className="w-full bg-[#121212] text-white placeholder-zinc-500 text-base pl-10 pr-16 py-2 rounded-xl border border-white/15 focus:outline-none focus:border-[#10B981]"
+              placeholder="Buscar na RR Store (ex: Creatina, Fone, Potes)..."
+              className="w-full bg-[#121212] text-white placeholder-zinc-500 text-base pl-10 pr-20 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:border-[#10B981]"
             />
             {searchQuery ? (
               <button
                 type="button"
                 onClick={() => onSearchChange('')}
-                className="absolute right-2 bg-zinc-800 text-zinc-200 text-xs font-bold px-2.5 py-1 rounded-lg"
+                className="absolute right-2.5 bg-zinc-800 text-zinc-200 text-xs font-bold px-2.5 py-1 rounded-lg"
               >
                 Limpar
               </button>
             ) : (
-              <span className="absolute right-2.5 text-[10px] font-bold text-[#34D399] bg-[#10B981]/10 px-2 py-0.5 rounded-md pointer-events-none flex items-center gap-1">
+              <span className="absolute right-2.5 text-[11px] font-bold text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/20 px-2 py-0.5 rounded-lg pointer-events-none flex items-center gap-1">
                 <Truck className="w-3 h-3" /> Hoje
               </span>
             )}
@@ -243,11 +232,10 @@ export default function TopBarAndHeader({
         </div>
       </header>
 
-      {/* Modal / Bottom Sheet Mobile de Seleção de Região Administrativa do DF */}
+      {/* Modal / Bottom Sheet de Seleção de Região Administrativa do DF */}
       {isRegionModalOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm p-0 sm:p-4">
           <div className="bg-[#121212] border-t sm:border border-white/15 rounded-t-3xl sm:rounded-2xl max-w-lg w-full p-5 sm:p-6 pb-safe text-white shadow-2xl relative max-h-[88vh] flex flex-col">
-            {/* Indicador de Drag Mobile */}
             <div className="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-3 sm:hidden" />
 
             <button
