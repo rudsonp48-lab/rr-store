@@ -18,7 +18,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@next/swc-darwin-x64": "15.1.6",
@@ -26,6 +27,7 @@
     "@types/node": "^22.13.1",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "@types/three": "^0.185.4",
     "eslint": "^9.19.0",
     "eslint-config-next": "15.1.6",
     "lightningcss-darwin-x64": "^1.33.0",

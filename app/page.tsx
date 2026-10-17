@@ -173,10 +173,15 @@ export default function RRStorePage() {
         onOpenCart={() => setIsCartOpen(true)}
       />
 
-      {/* 2.2 Hero Section */}
+      {/* 2.2 Hero Section com Logo 3D Interativa */}
       <HeroSection
         selectedRegion={selectedRegion}
         onExploreClick={scrollToCatalog}
+        onSelectPlatformFilter={(query) => {
+          setSelectedCategory('Eletrônicos & Smartphones');
+          setSearchQuery(query);
+          scrollToCatalog();
+        }}
       />
 
       {/* 2.3 Navegação por Departamentos (Os 10 Nichos da RR Store) */}

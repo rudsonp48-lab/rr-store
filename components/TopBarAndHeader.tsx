@@ -16,6 +16,7 @@ import {
 import { CategoryId, DFRegion } from '../types/store';
 import { CATEGORIES, DF_REGIONS, formatBRL } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
+import InteractiveLogo3D from './InteractiveLogo3D';
 
 interface TopBarAndHeaderProps {
   searchQuery: string;
@@ -97,35 +98,15 @@ export default function TopBarAndHeader({
       <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-md border-b border-white/10 shadow-2xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
           <div className="flex items-center justify-between gap-3 md:gap-6">
-            {/* Logo RR Store */}
-            <button
-              onClick={() => {
+            {/* Logo RR Store / RR Mobile 3D Interativa */}
+            <InteractiveLogo3D
+              variant="header"
+              onClickHeader={() => {
                 onSelectCategory('Todos');
                 onSearchChange('');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="flex items-center gap-3 text-left group shrink-0 focus:outline-none"
-            >
-              <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-[#10B981] to-[#059669] flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.4)] group-hover:shadow-[0_0_32px_rgba(52,211,153,0.65)] transition-all duration-300">
-                <span className="text-[#0A0A0A] font-black text-xl tracking-tighter">RR</span>
-                <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#0A0A0A] border-2 border-[#34D399] flex items-center justify-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-ping" />
-                </span>
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xl sm:text-2xl font-black tracking-tight text-white">
-                    RR <span className="text-[#10B981]">Store</span>
-                  </span>
-                  <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider bg-white/10 text-[#34D399] rounded-md border border-[#10B981]/30">
-                    DF
-                  </span>
-                </div>
-                <p className="text-[11px] text-zinc-400 font-medium hidden sm:block">
-                  Multidepartamentos • Entrega Hoje
-                </p>
-              </div>
-            </button>
+            />
 
             {/* Seletor de Região / CEP (Desktop & Tablet) */}
             <button
