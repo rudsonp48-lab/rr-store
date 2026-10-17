@@ -25,6 +25,12 @@ import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
 import AdminDashboardModal from '../components/AdminDashboardModal';
+import {
+  loadCatalogFromFirebase,
+  loadRegionsFromFirebase,
+  saveCatalogToFirebase,
+  saveRegionsToFirebase,
+} from '../lib/firebase';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
 
@@ -42,7 +48,7 @@ export default function RRStorePage() {
   const [reducedMotion, setReducedMotion] = useState<boolean>(false);
   const [mobileColumns, setMobileColumns] = useState<1 | 2>(2);
 
-  // Carregar produtos, regiões, carrinho e preferências salvos no navegador
+  // Carregar produtos, regiões, carrinho e preferências salvos no navegador + Sincronizar com Firebase Firestore
   useEffect(() => {
     try {
       const savedProducts = localStorage.getItem('rr_store_products_v1');
@@ -82,6 +88,30 @@ export default function RRStorePage() {
     } catch {
       // Ignore storage errors
     }
+
+    // Sincroniza catálogo e fretes diretamente do Firebase Firestore em segundo plano
+    void (async () => {
+      const [cloudCatalog, cloudRegions] = await Promise.all([
+        loadCatalogFromFirebase(),
+        loadRegionsFromFirebase(),
+      ]);
+      if (cloudCatalog && cloudCatalog.length > 0) {
+        setProducts(cloudCatalog);
+        try {
+          localStorage.setItem('rr_store_products_v1', JSON.stringify(cloudCatalog));
+        } catch {
+          // Ignore
+        }
+      }
+      if (cloudRegions && cloudRegions.length > 0) {
+        setRegions(cloudRegions);
+        try {
+          localStorage.setItem('rr_store_regions_list_v1', JSON.stringify(cloudRegions));
+        } catch {
+          // Ignore
+        }
+      }
+    })();
   }, []);
 
   const handleSaveProducts = (updated: Product[]) => {
@@ -91,6 +121,7 @@ export default function RRStorePage() {
     } catch {
       // Ignore
     }
+    void saveCatalogToFirebase(updated);
   };
 
   const handleResetDefaultProducts = () => {
@@ -100,6 +131,7 @@ export default function RRStorePage() {
     } catch {
       // Ignore
     }
+    void saveCatalogToFirebase(PRODUCTS);
   };
 
   const handleSaveRegions = (updated: DFRegion[]) => {
@@ -111,6 +143,7 @@ export default function RRStorePage() {
     } catch {
       // Ignore
     }
+    void saveRegionsToFirebase(updated);
   };
 
   const toggleReducedMotion = () => {

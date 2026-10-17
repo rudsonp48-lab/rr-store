@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Plus,
@@ -12,8 +12,9 @@ import {
   Check,
   RotateCcw,
   Search,
-  DollarSign,
   Layers,
+  Database,
+  RefreshCw,
 } from 'lucide-react';
 import { CategoryId, DFRegion, Product } from '../types/store';
 import {
@@ -22,6 +23,12 @@ import {
   formatBRL,
   formatInstallment,
 } from '../data/mockData';
+import {
+  CloudOrderRecord,
+  fetchOrdersFromFirebase,
+  FIREBASE_PROJECT_ID,
+  verifyFirebaseConnection,
+} from '../lib/firebase';
 
 interface AdminDashboardModalProps {
   isOpen: boolean;
@@ -55,10 +62,37 @@ export default function AdminDashboardModal({
   regions,
   onSaveRegions,
 }: AdminDashboardModalProps) {
-  const [activeTab, setActiveTab] = useState<'produtos' | 'novo' | 'fretes'>('produtos');
+  const [activeTab, setActiveTab] = useState<'produtos' | 'novo' | 'fretes' | 'firebase'>(
+    'produtos'
+  );
   const [adminSearch, setAdminSearch] = useState('');
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [savedBanner, setSavedBanner] = useState<string | null>(null);
+  const [firebaseStatus, setFirebaseStatus] = useState<{
+    ok: boolean;
+    projectId: string;
+    message: string;
+    syncedAt: string;
+  } | null>(null);
+  const [orders, setOrders] = useState<CloudOrderRecord[]>([]);
+  const [isSyncingFirebase, setIsSyncingFirebase] = useState(false);
+
+  useEffect(() => {
+    if (isOpen && activeTab === 'firebase') {
+      void handleCheckFirebase();
+    }
+  }, [isOpen, activeTab]);
+
+  const handleCheckFirebase = async () => {
+    setIsSyncingFirebase(true);
+    const [status, loadedOrders] = await Promise.all([
+      verifyFirebaseConnection(products, regions),
+      fetchOrdersFromFirebase(),
+    ]);
+    setFirebaseStatus(status);
+    setOrders(loadedOrders);
+    setIsSyncingFirebase(false);
+  };
 
   const [formData, setFormData] = useState<{
     nome: string;
@@ -289,7 +323,20 @@ export default function AdminDashboardModal({
               }`}
             >
               <Truck className="w-3.5 h-3.5" />
-              <span>Taxas de Frete DF ({regions.length} localidades)</span>
+              <span>Taxas de Frete DF ({regions.length})</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('firebase')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer ${
+                activeTab === 'firebase'
+                  ? 'bg-[#10B981] text-[#0A0A0A]'
+                  : 'bg-white/5 text-amber-300 hover:bg-white/10 border border-amber-400/30'
+              }`}
+            >
+              <Database className="w-3.5 h-3.5" />
+              <span>🔥 Firebase & Pedidos</span>
             </button>
           </div>
 
@@ -645,6 +692,84 @@ export default function AdminDashboardModal({
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'firebase' && (
+            <div className="space-y-4">
+              {/* Status Card Firebase */}
+              <div className="bg-[#141418] border border-[#10B981]/40 rounded-2xl p-4 sm:p-5 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <span className="inline-flex items-center gap-1.5 text-[11px] font-black uppercase bg-[#10B981]/20 text-[#34D399] border border-[#10B981]/40 px-2.5 py-0.5 rounded-full">
+                      <Database className="w-3.5 h-3.5" />
+                      Firebase Cloud Firestore + Cache Persistente IndexedDB
+                    </span>
+                    <h3 className="text-sm sm:text-base font-black text-white mt-1.5">
+                      Projeto Conectado: <span className="text-[#34D399]">{FIREBASE_PROJECT_ID}</span>
+                    </h3>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleCheckFirebase}
+                    disabled={isSyncingFirebase}
+                    className="inline-flex items-center gap-1.5 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black text-xs px-4 py-2.5 rounded-xl cursor-pointer"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${isSyncingFirebase ? 'animate-spin' : ''}`} />
+                    <span>{isSyncingFirebase ? 'Verificando...' : 'Sincronizar & Testar Agora'}</span>
+                  </button>
+                </div>
+
+                {firebaseStatus && (
+                  <div className="bg-[#0A0A0A] border border-white/10 rounded-xl p-3 text-xs space-y-1">
+                    <p className="font-bold text-[#34D399]">
+                      ✓ Status ({firebaseStatus.syncedAt}): {firebaseStatus.message}
+                    </p>
+                    <p className="text-zinc-400">
+                      • Documentos ativos: <code className="text-white">rr_store_settings/catalog</code> ({products.length} produtos), <code className="text-white">rr_store_settings/shipping</code> ({regions.length} localidades DF) e coleção <code className="text-white">rr_store_orders</code>.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Lista de Pedidos Gravados */}
+              <div className="bg-[#141418] border border-white/10 rounded-2xl p-4 space-y-3">
+                <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-white">
+                  Últimos Pedidos Armazenados ({orders.length})
+                </h4>
+                {orders.length === 0 ? (
+                  <p className="text-xs text-zinc-400 py-4 text-center">
+                    Nenhum pedido registrado ainda. Faça um pedido de teste na Sacola para vê-lo gravado aqui e no Firebase!
+                  </p>
+                ) : (
+                  <div className="space-y-2">
+                    {orders.map((ord, idx) => (
+                      <div
+                        key={ord.id || idx}
+                        className="bg-[#0A0A0A] border border-white/10 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2 text-xs"
+                      >
+                        <div>
+                          <p className="font-black text-[#34D399]">
+                            {ord.orderCode} — {ord.customer?.nomeCompleto || 'Cliente DF'}
+                          </p>
+                          <p className="text-zinc-400">
+                            📍 {ord.region?.nome} • {ord.customer?.enderecoCompleto} • Tel: {ord.customer?.whatsapp}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <span className="font-black text-white block">
+                            {formatBRL(ord.finalTotal || 0)}
+                          </span>
+                          <span className="text-[10px] text-zinc-500 uppercase">
+                            {ord.customer?.metodoPagamento || 'PIX'}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           )}

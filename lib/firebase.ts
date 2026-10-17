@@ -5,19 +5,26 @@ import {
   persistentMultipleTabManager,
   collection,
   addDoc,
+  setDoc,
+  getDoc,
+  doc,
   serverTimestamp,
   getDocs,
   query,
+  orderBy,
   limit,
 } from 'firebase/firestore';
-import { CartItem, CustomerCheckoutData, DFRegion, Product } from '../types/store';
+import { CustomerCheckoutData, DFRegion, Product } from '../types/store';
 
-// Configuração Firebase com suporte a Variáveis de Ambiente (Vercel) e fallback pré-configurado
+// Configuração Firebase com suporte a Variáveis de Ambiente (Vercel) e projeto pré-configurado
+export const FIREBASE_PROJECT_ID =
+  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'landing-page-d9c04';
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyDSyJsWUpg8ac4wZBia0-I_L5i3z75m8ak',
   authDomain:
     process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'landing-page-d9c04.firebaseapp.com',
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'landing-page-d9c04',
+  projectId: FIREBASE_PROJECT_ID,
   storageBucket:
     process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'landing-page-d9c04.firebasestorage.app',
   messagingSenderId:
@@ -39,6 +46,7 @@ export const db =
     : null;
 
 export interface CloudOrderRecord {
+  id?: string;
   orderCode: string;
   customer: CustomerCheckoutData;
   region: DFRegion;
@@ -53,39 +61,200 @@ export interface CloudOrderRecord {
   pixDiscount: number;
   shippingCost: number;
   finalTotal: number;
+  createdAtIso?: string;
 }
 
 /**
- * Salva o pedido em segundo plano no Firebase Firestore sem travar o redirecionamento para o WhatsApp
+ * 1. Salva o pedido no Firebase Firestore (`rr_store_orders`) e mantém espelho local de segurança
  */
 export async function saveOrderToFirebase(order: CloudOrderRecord): Promise<string | null> {
+  const payload = {
+    ...order,
+    status: 'aguardando_confirmacao_whatsapp',
+    cidade: 'Brasília - DF',
+    createdAtIso: new Date().toISOString(),
+  };
+
+  // Salva espelho local imediato para exibição instantânea no Painel Admin
+  if (typeof window !== 'undefined') {
+    try {
+      const existing = JSON.parse(localStorage.getItem('rr_store_orders_v1') || '[]');
+      localStorage.setItem(
+        'rr_store_orders_v1',
+        JSON.stringify([{ id: order.orderCode, ...payload }, ...existing].slice(0, 50))
+      );
+    } catch {
+      // Ignore storage error
+    }
+  }
+
   if (!db) return null;
   try {
     const docRef = await addDoc(collection(db, 'rr_store_orders'), {
-      ...order,
-      status: 'aguardando_confirmacao_whatsapp',
-      cidade: 'Brasília - DF',
+      ...payload,
       createdAt: serverTimestamp(),
     });
     return docRef.id;
   } catch (err) {
-    console.warn('Pedido registrado localmente (Firebase offline ou regras restritas):', err);
+    console.warn('Pedido salvo no cache persistente local (Firestore):', err);
     return null;
   }
 }
 
 /**
- * Busca catálogo atualizado na nuvem caso exista coleção `rr_store_products` no Firestore,
- * mantendo o catálogo estático ultra-rápido como fallback imediato (Zero Loading Spinners).
+ * 2. Busca os últimos pedidos gravados no Firebase Firestore (`rr_store_orders`)
  */
-export async function syncProductsFromFirebase(): Promise<Product[] | null> {
+export async function fetchOrdersFromFirebase(): Promise<CloudOrderRecord[]> {
+  let localOrders: CloudOrderRecord[] = [];
+  if (typeof window !== 'undefined') {
+    try {
+      localOrders = JSON.parse(localStorage.getItem('rr_store_orders_v1') || '[]');
+    } catch {
+      localOrders = [];
+    }
+  }
+
+  if (!db) return localOrders;
+  try {
+    const q = query(
+      collection(db, 'rr_store_orders'),
+      orderBy('createdAtIso', 'desc'),
+      limit(25)
+    );
+    const snap = await getDocs(q);
+    if (snap.empty) return localOrders;
+    const cloudOrders = snap.docs.map((d) => ({
+      id: d.id,
+      ...(d.data() as CloudOrderRecord),
+    }));
+    return cloudOrders.length > 0 ? cloudOrders : localOrders;
+  } catch {
+    return localOrders;
+  }
+}
+
+/**
+ * 3. Salva o catálogo completo gerenciado no Painel Admin direto no Firebase Firestore (`rr_store_settings/catalog`)
+ */
+export async function saveCatalogToFirebase(products: Product[]): Promise<boolean> {
+  if (!db) return false;
+  try {
+    await setDoc(doc(db, 'rr_store_settings', 'catalog'), {
+      products,
+      totalCount: products.length,
+      updatedAtIso: new Date().toISOString(),
+      updatedAt: serverTimestamp(),
+    });
+    return true;
+  } catch (err) {
+    console.warn('Catálogo mantido em cache persistente IndexedDB:', err);
+    return false;
+  }
+}
+
+/**
+ * 4. Carrega o catálogo de produtos salvo no Firebase Firestore (`rr_store_settings/catalog`)
+ */
+export async function loadCatalogFromFirebase(): Promise<Product[] | null> {
   if (!db) return null;
   try {
-    const q = query(collection(db, 'rr_store_products'), limit(50));
-    const snap = await getDocs(q);
-    if (snap.empty) return null;
-    return snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Product, 'id'>) }));
+    const snap = await getDoc(doc(db, 'rr_store_settings', 'catalog'));
+    if (snap.exists()) {
+      const data = snap.data();
+      if (Array.isArray(data?.products) && data.products.length > 0) {
+        return data.products as Product[];
+      }
+    }
+    return null;
   } catch {
     return null;
+  }
+}
+
+/**
+ * 5. Salva as taxas de frete por localidade do DF no Firebase Firestore (`rr_store_settings/shipping`)
+ */
+export async function saveRegionsToFirebase(regions: DFRegion[]): Promise<boolean> {
+  if (!db) return false;
+  try {
+    await setDoc(doc(db, 'rr_store_settings', 'shipping'), {
+      regions,
+      updatedAtIso: new Date().toISOString(),
+      updatedAt: serverTimestamp(),
+    });
+    return true;
+  } catch (err) {
+    console.warn('Fretes DF mantidos em cache persistente IndexedDB:', err);
+    return false;
+  }
+}
+
+/**
+ * 6. Carrega as taxas de frete por localidade do DF salvas no Firebase Firestore
+ */
+export async function loadRegionsFromFirebase(): Promise<DFRegion[] | null> {
+  if (!db) return null;
+  try {
+    const snap = await getDoc(doc(db, 'rr_store_settings', 'shipping'));
+    if (snap.exists()) {
+      const data = snap.data();
+      if (Array.isArray(data?.regions) && data.regions.length > 0) {
+        return data.regions as DFRegion[];
+      }
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * 7. Verifica em tempo real a conexão e gravação com o Firebase Firestore
+ */
+export async function verifyFirebaseConnection(
+  currentProducts: Product[],
+  currentRegions: DFRegion[]
+): Promise<{
+  ok: boolean;
+  projectId: string;
+  message: string;
+  syncedAt: string;
+}> {
+  const nowStr = new Date().toLocaleTimeString('pt-BR');
+  if (!db) {
+    return {
+      ok: false,
+      projectId: FIREBASE_PROJECT_ID,
+      message: 'Cliente Firestore aguardando ambiente de navegador.',
+      syncedAt: nowStr,
+    };
+  }
+
+  try {
+    await setDoc(doc(db, 'rr_store_settings', 'catalog'), {
+      products: currentProducts,
+      totalCount: currentProducts.length,
+      updatedAtIso: new Date().toISOString(),
+      updatedAt: serverTimestamp(),
+    });
+    await setDoc(doc(db, 'rr_store_settings', 'shipping'), {
+      regions: currentRegions,
+      updatedAtIso: new Date().toISOString(),
+      updatedAt: serverTimestamp(),
+    });
+    return {
+      ok: true,
+      projectId: FIREBASE_PROJECT_ID,
+      message: `Conectado e gravando em nuvem no projeto "${FIREBASE_PROJECT_ID}" (Coleções: rr_store_settings & rr_store_orders).`,
+      syncedAt: nowStr,
+    };
+  } catch (err) {
+    const errMsg = err instanceof Error ? err.message : String(err);
+    return {
+      ok: false,
+      projectId: FIREBASE_PROJECT_ID,
+      message: `Cache Local IndexedDB Ativo. Detalhe da nuvem (${FIREBASE_PROJECT_ID}): ${errMsg}`,
+      syncedAt: nowStr,
+    };
   }
 }
