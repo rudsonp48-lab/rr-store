@@ -11,9 +11,8 @@ import {
   EyeOff,
   Grid2x2,
   Rows3,
-  Settings,
 } from 'lucide-react';
-import { CartItem, CategoryId, DFRegion, Product } from '../types/store';
+import { CartItem, CategoryId, DFRegion, HeroBanner, Product } from '../types/store';
 import { CATEGORIES, DF_REGIONS, formatBRL, PRODUCTS } from '../data/mockData';
 import TopBarAndHeader from '../components/TopBarAndHeader';
 import HeroSection from '../components/HeroSection';
@@ -24,48 +23,48 @@ import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
-import AdminDashboardModal from '../components/AdminDashboardModal';
-import {
-  loadCatalogFromFirebase,
-  loadRegionsFromFirebase,
-  saveCatalogToFirebase,
-  saveRegionsToFirebase,
-} from '../lib/firebase';
+import { loadStoreSettings } from '../lib/firebase';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
+
+// Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v2';
 
 export default function RRStorePage() {
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
   const [regions, setRegions] = useState<DFRegion[]>(DF_REGIONS);
+  const [banners, setBanners] = useState<HeroBanner[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('Todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<SortOption>('destaques');
   const [selectedRegion, setSelectedRegion] = useState<DFRegion>(DF_REGIONS[0]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
-  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
   const [toastProduct, setToastProduct] = useState<Product | null>(null);
   const [reducedMotion, setReducedMotion] = useState<boolean>(false);
   const [mobileColumns, setMobileColumns] = useState<1 | 2>(2);
 
-  // Carregar produtos, regiões, carrinho e preferências salvos no navegador + Sincronizar com Firebase Firestore
+  // Carrega preferências locais e, em seguida, o catálogo/fretes/banners publicados no Firestore
   useEffect(() => {
+    let currentRegions = DF_REGIONS;
     try {
-      const savedProducts = localStorage.getItem('rr_store_products_v1');
-      if (savedProducts) {
-        const parsed = JSON.parse(savedProducts);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setProducts(parsed);
-        }
-      }
+      // Limpa dados de quando o painel ficava dentro do site (edições locais não valem mais)
+      localStorage.removeItem('rr_store_products_v1');
+      localStorage.removeItem('rr_store_regions_list_v1');
+      localStorage.removeItem('rr_store_orders_v1');
 
-      const savedRegionsList = localStorage.getItem('rr_store_regions_list_v1');
-      let currentRegions = DF_REGIONS;
-      if (savedRegionsList) {
-        const parsedReg = JSON.parse(savedRegionsList);
-        if (Array.isArray(parsedReg) && parsedReg.length > 0) {
-          currentRegions = parsedReg;
-          setRegions(parsedReg);
+      const cached = localStorage.getItem(SETTINGS_CACHE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed.products) && parsed.products.length > 0) {
+          setProducts(parsed.products);
+        }
+        if (Array.isArray(parsed.regions) && parsed.regions.length > 0) {
+          currentRegions = parsed.regions;
+          setRegions(parsed.regions);
+        }
+        if (Array.isArray(parsed.banners)) {
+          setBanners(parsed.banners);
         }
       }
 
@@ -89,62 +88,32 @@ export default function RRStorePage() {
       // Ignore storage errors
     }
 
-    // Sincroniza catálogo e fretes diretamente do Firebase Firestore em segundo plano
     void (async () => {
-      const [cloudCatalog, cloudRegions] = await Promise.all([
-        loadCatalogFromFirebase(),
-        loadRegionsFromFirebase(),
-      ]);
-      if (cloudCatalog && cloudCatalog.length > 0) {
-        setProducts(cloudCatalog);
-        try {
-          localStorage.setItem('rr_store_products_v1', JSON.stringify(cloudCatalog));
-        } catch {
-          // Ignore
-        }
+      const cloud = await loadStoreSettings();
+      const cloudProducts = cloud.products;
+      const cloudRegions = cloud.regions;
+      if (cloudProducts) {
+        setProducts(cloudProducts);
+        // Mantém o carrinho com preços/dados atualizados do catálogo publicado
+        setCartItems((prev) =>
+          prev.map((item) => ({
+            ...item,
+            product: cloudProducts.find((p) => p.id === item.product.id) || item.product,
+          }))
+        );
       }
-      if (cloudRegions && cloudRegions.length > 0) {
+      if (cloudRegions) {
         setRegions(cloudRegions);
-        try {
-          localStorage.setItem('rr_store_regions_list_v1', JSON.stringify(cloudRegions));
-        } catch {
-          // Ignore
-        }
+        setSelectedRegion((prev) => cloudRegions.find((r) => r.id === prev.id) || prev);
+      }
+      if (cloud.banners) setBanners(cloud.banners);
+      try {
+        localStorage.setItem(SETTINGS_CACHE_KEY, JSON.stringify(cloud));
+      } catch {
+        // Ignore
       }
     })();
   }, []);
-
-  const handleSaveProducts = (updated: Product[]) => {
-    setProducts(updated);
-    try {
-      localStorage.setItem('rr_store_products_v1', JSON.stringify(updated));
-    } catch {
-      // Ignore
-    }
-    void saveCatalogToFirebase(updated);
-  };
-
-  const handleResetDefaultProducts = () => {
-    setProducts(PRODUCTS);
-    try {
-      localStorage.removeItem('rr_store_products_v1');
-    } catch {
-      // Ignore
-    }
-    void saveCatalogToFirebase(PRODUCTS);
-  };
-
-  const handleSaveRegions = (updated: DFRegion[]) => {
-    setRegions(updated);
-    const updatedSelected = updated.find((r) => r.id === selectedRegion.id) || updated[0];
-    if (updatedSelected) setSelectedRegion(updatedSelected);
-    try {
-      localStorage.setItem('rr_store_regions_list_v1', JSON.stringify(updated));
-    } catch {
-      // Ignore
-    }
-    void saveRegionsToFirebase(updated);
-  };
 
   const toggleReducedMotion = () => {
     setReducedMotion((prev) => {
@@ -309,16 +278,16 @@ export default function RRStorePage() {
         cartCount={cartCount}
         cartSubtotal={cartSubtotalPix}
         onOpenCart={() => setIsCartOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
         regions={regions}
       />
 
-      {/* 2.2 Hero Section Compactada + Super Banner de Produtos com Transição Fluida */}
+      {/* 2.2 Hero Section Compactada + Super Banner (imagens gerenciadas no painel externo) */}
       <HeroSection
         selectedRegion={selectedRegion}
         onExploreClick={scrollToCatalog}
         onAddToCart={handleAddToCart}
         products={products}
+        banners={banners}
       />
 
       {/* 2.3 Navegação por Departamentos (Os 10 Nichos da RR Store) */}
@@ -385,15 +354,6 @@ export default function RRStorePage() {
                   <span>1 Col</span>
                 </button>
               </div>
-
-              <button
-                type="button"
-                onClick={() => setIsAdminOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-extrabold bg-[#0A0A0A] hover:bg-zinc-800 text-[#34D399] transition-colors cursor-pointer"
-              >
-                <Settings className="w-3.5 h-3.5" />
-                <span>Gerenciar Produtos (Admin)</span>
-              </button>
 
               {(selectedCategory !== 'Todos' || searchQuery.trim() !== '') && (
                 <button
@@ -527,16 +487,6 @@ export default function RRStorePage() {
         regions={regions}
       />
 
-      {/* 8. Painel Admin Completo (Gerenciar Produtos e Taxas de Frete por Localidade do DF) */}
-      <AdminDashboardModal
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-        products={products}
-        onSaveProducts={handleSaveProducts}
-        onResetDefaultProducts={handleResetDefaultProducts}
-        regions={regions}
-        onSaveRegions={handleSaveRegions}
-      />
 
       {/* Toast de Feedback Visual Rápido ao Adicionar Produto */}
       {toastProduct && !isCartOpen && (

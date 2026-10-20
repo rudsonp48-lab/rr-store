@@ -12,7 +12,6 @@ import {
   Check,
   Sparkles,
   Truck,
-  Settings,
 } from 'lucide-react';
 import { CategoryId, DFRegion } from '../types/store';
 import { DF_REGIONS, formatBRL } from '../data/mockData';
@@ -29,7 +28,6 @@ interface TopBarAndHeaderProps {
   cartCount: number;
   cartSubtotal: number;
   onOpenCart: () => void;
-  onOpenAdmin?: () => void;
   regions?: DFRegion[];
 }
 
@@ -42,7 +40,6 @@ export default function TopBarAndHeader({
   cartCount,
   cartSubtotal,
   onOpenCart,
-  onOpenAdmin,
   regions = DF_REGIONS,
 }: TopBarAndHeaderProps) {
   const [isRegionModalOpen, setIsRegionModalOpen] = useState(false);
@@ -161,20 +158,8 @@ export default function TopBarAndHeader({
               </div>
             </div>
 
-            {/* Ações Direita: Botão Painel Admin + Consultor + Sacola */}
+            {/* Ações Direita: Consultor + Sacola */}
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-              {onOpenAdmin && (
-                <button
-                  type="button"
-                  onClick={onOpenAdmin}
-                  className="touch-target inline-flex items-center gap-1.5 bg-[#121212] hover:bg-white/10 text-zinc-200 hover:text-[#34D399] border border-white/15 hover:border-[#10B981]/50 px-2.5 sm:px-3 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer"
-                  title="Abrir Painel Admin para gerenciar produtos e fretes"
-                >
-                  <Settings className="w-4 h-4 text-[#34D399]" />
-                  <span className="hidden xs:inline">Admin</span>
-                </button>
-              )}
-
               <a
                 href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
                 target="_blank"

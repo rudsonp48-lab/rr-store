@@ -49,6 +49,18 @@ export interface DFRegion {
   freteGratisAcimaDe: number;
 }
 
+/**
+ * Banner da vitrine principal, gerenciado pelo projeto separado `rr-store-admin`
+ * e publicado em Firestore (rr_store_settings/banners).
+ */
+export interface HeroBanner {
+  id: string;
+  imagem: string;
+  titulo?: string;
+  produtoId?: string; // produto exibido/vendido neste banner (opcional)
+  ativo: boolean;
+}
+
 export type PaymentMethod = 'pix' | 'credito' | 'debito';
 
 export type CardPaymentMode = 'link_seguro' | 'maquininha_entrega' | 'checkout_transparente';
