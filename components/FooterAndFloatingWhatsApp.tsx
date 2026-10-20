@@ -171,20 +171,21 @@ export default function FooterAndFloatingWhatsApp({
         </div>
       </footer>
 
-      {/* Botão Flutuante de WhatsApp no Canto Inferior Direito (Visível em Tablets/Desktop; no celular fica integrado na MobileBottomBar) */}
-      <div className="hidden md:flex fixed bottom-5 right-5 z-40 items-center gap-2.5">
+      {/* Balão Flutuante de WhatsApp no Canto Direito (Visível no Celular e no Desktop) */}
+      <div className="flex fixed bottom-24 md:bottom-6 right-4 md:right-6 z-40 items-center">
         <a
           href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative flex items-center gap-2.5 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black px-4 py-3.5 rounded-full shadow-[0_10px_30px_rgba(16,185,129,0.5)] hover:shadow-[0_12px_36px_rgba(52,211,153,0.75)] transition-all duration-300 hover:scale-105"
+          className="group relative flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-3.5 rounded-full shadow-[0_10px_30px_rgba(16,185,129,0.55)] hover:shadow-[0_12px_36px_rgba(52,211,153,0.75)] transition-all duration-300 hover:scale-105"
           aria-label="Falar no WhatsApp da RR Store"
+          title="Atendimento Rápido no WhatsApp"
         >
           {/* Anel de Pulse Verde */}
           <span className="absolute -inset-1 rounded-full bg-[#34D399] opacity-35 animate-ping pointer-events-none" />
-          <MessageCircle className="w-6 h-6 fill-[#0A0A0A] text-[#10B981] relative z-10" />
-          <span className="text-xs sm:text-sm tracking-tight relative z-10">
-            Dúvidas? WhatsApp DF
+          <MessageCircle className="w-7 h-7 md:w-6 md:h-6 fill-[#0A0A0A] text-[#10B981] relative z-10" />
+          <span className="hidden md:inline text-sm tracking-tight relative z-10">
+            WhatsApp DF
           </span>
         </a>
       </div>

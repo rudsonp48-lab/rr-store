@@ -90,33 +90,75 @@ export default function RRStorePage() {
       // Ignore storage errors
     }
 
-    void (async () => {
+    const syncWithSupplierAndCloud = async () => {
       const cloud = await loadStoreSettings();
-      const cloudProducts = cloud.products;
-      const cloudRegions = cloud.regions;
-      if (cloudProducts) {
-        const cloudIds = new Set(cloudProducts.map((p) => p.id));
-        const merged = [...cloudProducts, ...PRODUCTS.filter((p) => !cloudIds.has(p.id))];
-        setProducts(merged);
-        // Mantém o carrinho com preços/dados atualizados do catálogo publicado
-        setCartItems((prev) =>
-          prev.map((item) => ({
-            ...item,
-            product: merged.find((p) => p.id === item.product.id) || item.product,
-          }))
-        );
+      let baseProducts = PRODUCTS;
+      if (cloud.products && cloud.products.length > 0) {
+        const cloudIds = new Set(cloud.products.map((p) => p.id));
+        baseProducts = [...cloud.products, ...PRODUCTS.filter((p) => !cloudIds.has(p.id))];
       }
-      if (cloudRegions) {
-        setRegions(cloudRegions);
-        setSelectedRegion((prev) => cloudRegions.find((r) => r.id === prev.id) || prev);
+
+      // Sincroniza em tempo real com o fornecedor GSM Digital Acessórios
+      try {
+        const res = await fetch('/api/supplier-sync');
+        if (res.ok) {
+          const supplierData = await res.json();
+          if (Array.isArray(supplierData.products) && supplierData.products.length > 0) {
+            const supplierMap = new Map<string, Product>(
+              supplierData.products.map((p: Product) => [p.id, p])
+            );
+            // Atualiza preço, foto e estoque dos itens GSM Digital e adiciona novos produtos do fornecedor
+            const updatedExisting = baseProducts.map((p) => {
+              const live = supplierMap.get(p.id);
+              if (!live) return p;
+              supplierMap.delete(p.id);
+              return {
+                ...p,
+                nome: live.nome,
+                precoDe: live.precoDe,
+                precoPor: live.precoPor,
+                precoPix: live.precoPix,
+                parcelamento: live.parcelamento,
+                imagem: live.imagem || p.imagem,
+                estoque: live.estoque,
+              };
+            });
+            const newFromSupplier = Array.from(supplierMap.values());
+            baseProducts = [...newFromSupplier, ...updatedExisting];
+          }
+        }
+      } catch {
+        // Fallback silencioso para o catálogo local/cloud
+      }
+
+      setProducts(baseProducts);
+      setCartItems((prev) =>
+        prev.map((item) => ({
+          ...item,
+          product: baseProducts.find((p) => p.id === item.product.id) || item.product,
+        }))
+      );
+
+      if (cloud.regions) {
+        setRegions(cloud.regions);
+        setSelectedRegion((prev) => cloud.regions!.find((r) => r.id === prev.id) || prev);
       }
       if (cloud.banners) setBanners(cloud.banners);
       try {
-        localStorage.setItem(SETTINGS_CACHE_KEY, JSON.stringify(cloud));
+        localStorage.setItem(
+          SETTINGS_CACHE_KEY,
+          JSON.stringify({ ...cloud, products: baseProducts })
+        );
       } catch {
         // Ignore
       }
-    })();
+    };
+
+    void syncWithSupplierAndCloud();
+    const interval = setInterval(() => {
+      void syncWithSupplierAndCloud();
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const toggleReducedMotion = () => {

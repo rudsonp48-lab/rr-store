@@ -6,13 +6,11 @@ import {
   LayoutGrid,
   Search,
   ShoppingBag,
-  MessageCircle,
   ArrowRight,
   Sparkles,
 } from 'lucide-react';
 import { DFRegion } from '../types/store';
 import { formatBRL } from '../data/mockData';
-import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
 
 interface MobileBottomBarProps {
   cartCount: number;
@@ -97,7 +95,7 @@ export default function MobileBottomBar({
         aria-label="Navegação rápida mobile"
         className="pointer-events-auto bg-[#0A0A0A]/95 backdrop-blur-xl border-t border-white/15 px-2 pt-1.5 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.85)]"
       >
-        <div className="grid grid-cols-5 gap-1">
+        <div className="grid grid-cols-4 gap-1">
           <button
             type="button"
             onClick={onHomeClick}
@@ -113,7 +111,7 @@ export default function MobileBottomBar({
             className="touch-target flex flex-col items-center justify-center py-1 rounded-xl text-zinc-300 active:text-[#34D399] active:bg-white/5 transition-colors"
           >
             <LayoutGrid className="w-5 h-5 text-zinc-300" />
-            <span className="text-[10px] font-bold mt-0.5">10 Nichos</span>
+            <span className="text-[10px] font-bold mt-0.5">Departamentos</span>
           </button>
 
           <button
@@ -139,19 +137,9 @@ export default function MobileBottomBar({
               )}
             </div>
             <span className="text-[10px] font-extrabold text-[#34D399] mt-0.5">
-              Carrinho
+              Sacola
             </span>
           </button>
-
-          <a
-            href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="touch-target flex flex-col items-center justify-center py-1 rounded-xl text-zinc-300 active:text-[#34D399] active:bg-white/5 transition-colors"
-          >
-            <MessageCircle className="w-5 h-5 text-[#10B981]" />
-            <span className="text-[10px] font-bold mt-0.5">WhatsApp</span>
-          </a>
         </div>
       </nav>
     </div>
