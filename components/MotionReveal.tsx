@@ -12,7 +12,7 @@ interface MotionRevealProps {
 export default function MotionReveal({
   children,
   delayMs = 0,
-  offsetY = 18,
+  offsetY = 22,
   className = '',
 }: MotionRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -41,7 +41,7 @@ export default function MotionReveal({
           }
         });
       },
-      { threshold: 0.18, rootMargin: '0px 0px -30px 0px' }
+      { threshold: 0.12, rootMargin: '0px 0px -24px 0px' }
     );
 
     observer.observe(el);
@@ -54,8 +54,10 @@ export default function MotionReveal({
       className={className}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translate3d(0, 0, 0)' : `translate3d(0, ${offsetY}px, 0)`,
-        transition: `opacity var(--dur-section, 620ms) var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) ${delayMs}ms, transform var(--dur-section, 620ms) var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) ${delayMs}ms`,
+        transform: isVisible
+          ? 'translate3d(0, 0, 0) scale(1)'
+          : `translate3d(0, ${offsetY}px, 0) scale(0.955)`,
+        transition: `opacity 580ms cubic-bezier(0.16, 1, 0.3, 1) ${delayMs}ms, transform 580ms cubic-bezier(0.16, 1, 0.3, 1) ${delayMs}ms`,
         willChange: isVisible ? 'auto' : 'opacity, transform',
       }}
     >
