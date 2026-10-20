@@ -18,6 +18,7 @@ import TopBarAndHeader from '../components/TopBarAndHeader';
 import HeroSection from '../components/HeroSection';
 import CategoryNav from '../components/CategoryNav';
 import ProductCard from '../components/ProductCard';
+import ProductDetailModal from '../components/ProductDetailModal';
 import CartAndCheckoutDrawer from '../components/CartAndCheckoutDrawer';
 import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
@@ -28,7 +29,13 @@ import { loadStoreSettings } from '../lib/firebase';
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v4';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v5';
+
+function prioritizeAppleProducts(list: Product[]): Product[] {
+  const apple = list.filter((p) => p.id.startsWith('rr-apple-'));
+  const others = list.filter((p) => !p.id.startsWith('rr-apple-'));
+  return [...apple, ...others];
+}
 
 export default function RRStorePage() {
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
@@ -40,6 +47,7 @@ export default function RRStorePage() {
   const [selectedRegion, setSelectedRegion] = useState<DFRegion>(DF_REGIONS[0]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [toastProduct, setToastProduct] = useState<Product | null>(null);
   const [reducedMotion, setReducedMotion] = useState<boolean>(false);
   const [mobileColumns, setMobileColumns] = useState<1 | 2>(2);
@@ -54,13 +62,18 @@ export default function RRStorePage() {
       localStorage.removeItem('rr_store_orders_v1');
       localStorage.removeItem('rr_store_settings_cache_v2');
       localStorage.removeItem('rr_store_settings_cache_v3');
+      localStorage.removeItem('rr_store_settings_cache_v4');
 
       const cached = localStorage.getItem(SETTINGS_CACHE_KEY);
       if (cached) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed.products) && parsed.products.length > 0) {
           const cloudIds = new Set(parsed.products.map((p: Product) => p.id));
-          setProducts([...parsed.products, ...PRODUCTS.filter((p) => !cloudIds.has(p.id))]);
+          const merged = [
+            ...PRODUCTS.filter((p) => !cloudIds.has(p.id)),
+            ...parsed.products,
+          ];
+          setProducts(prioritizeAppleProducts(merged));
         }
         if (Array.isArray(parsed.regions) && parsed.regions.length > 0) {
           currentRegions = parsed.regions;
@@ -96,7 +109,10 @@ export default function RRStorePage() {
       let baseProducts = PRODUCTS;
       if (cloud.products && cloud.products.length > 0) {
         const cloudIds = new Set(cloud.products.map((p) => p.id));
-        baseProducts = [...cloud.products, ...PRODUCTS.filter((p) => !cloudIds.has(p.id))];
+        baseProducts = [
+          ...PRODUCTS.filter((p) => !cloudIds.has(p.id)),
+          ...cloud.products,
+        ];
       }
 
       // Sincroniza em tempo real com o fornecedor GSM Digital Acessórios
@@ -125,13 +141,14 @@ export default function RRStorePage() {
               };
             });
             const newFromSupplier = Array.from(supplierMap.values());
-            baseProducts = [...newFromSupplier, ...updatedExisting];
+            baseProducts = [...updatedExisting, ...newFromSupplier];
           }
         }
       } catch {
         // Fallback silencioso para o catálogo local/cloud
       }
 
+      baseProducts = prioritizeAppleProducts(baseProducts);
       setProducts(baseProducts);
       setCartItems((prev) =>
         prev.map((item) => ({
@@ -234,21 +251,22 @@ export default function RRStorePage() {
   }, [products, selectedCategory, searchQuery, sortBy]);
 
   // Funções do Carrinho
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = (product: Product, qty: number = 1) => {
     setCartItems((prev) => {
       const existingIndex = prev.findIndex((i) => i.product.id === product.id);
       if (existingIndex > -1) {
         const updated = [...prev];
         updated[existingIndex] = {
           ...updated[existingIndex],
-          quantity: updated[existingIndex].quantity + 1,
+          quantity: updated[existingIndex].quantity + qty,
         };
         return updated;
       }
-      return [...prev, { product, quantity: 1 }];
+      return [...prev, { product, quantity: qty }];
     });
 
     setToastProduct(product);
+    setSelectedProduct(null);
     setIsCartOpen(true);
   };
 
@@ -333,6 +351,7 @@ export default function RRStorePage() {
         selectedRegion={selectedRegion}
         onExploreClick={scrollToCatalog}
         onAddToCart={handleAddToCart}
+        onSelectProduct={setSelectedProduct}
         products={products}
         banners={banners}
       />
@@ -484,6 +503,7 @@ export default function RRStorePage() {
                     product={product}
                     selectedRegion={selectedRegion}
                     onAddToCart={handleAddToCart}
+                    onSelectProduct={setSelectedProduct}
                     compactMobile={mobileColumns === 2}
                   />
                 </MotionReveal>
@@ -492,6 +512,14 @@ export default function RRStorePage() {
           )}
         </div>
       </main>
+
+      {/* Modal de Informações e SEO Completo ao Clicar em Qualquer Produto */}
+      <ProductDetailModal
+        product={selectedProduct}
+        selectedRegion={selectedRegion}
+        onClose={() => setSelectedProduct(null)}
+        onAddToCart={handleAddToCart}
+      />
 
       {/* 5. Seções Completas de Conversão */}
       <TrustAndTestimonials

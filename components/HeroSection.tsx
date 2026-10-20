@@ -18,6 +18,7 @@ interface HeroSectionProps {
   selectedRegion: DFRegion;
   onExploreClick: () => void;
   onAddToCart?: (product: Product) => void;
+  onSelectProduct?: (product: Product) => void;
   products?: Product[];
   /** Banners publicados pelo painel externo (rr-store-admin). Vazio = usa os produtos em destaque. */
   banners?: HeroBanner[];
@@ -34,6 +35,7 @@ export default function HeroSection({
   selectedRegion,
   onExploreClick,
   onAddToCart,
+  onSelectProduct,
   products = PRODUCTS,
   banners = [],
 }: HeroSectionProps) {
@@ -207,7 +209,10 @@ export default function HeroSection({
             }`}
           >
             {/* Imagem Principal Grande (7 Colunas no Desktop e Altura Ampliada no Mobile) */}
-            <div className="lg:col-span-7 relative h-[280px] sm:h-[360px] lg:h-[400px] rounded-2xl overflow-hidden bg-white flex items-center justify-center border border-white/10 shadow-2xl group">
+            <div
+              onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
+              className="lg:col-span-7 relative h-[280px] sm:h-[360px] lg:h-[400px] rounded-2xl overflow-hidden bg-white flex items-center justify-center border border-white/10 shadow-2xl group cursor-pointer"
+            >
               <img
                 src={currentSlide.imagem}
                 alt={currentProduct?.nome || currentSlide.titulo || 'Banner RR Store'}
@@ -232,7 +237,10 @@ export default function HeroSection({
             <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
               {currentProduct ? (
                 <>
-                  <div className="space-y-2">
+                  <div
+                    onClick={() => onSelectProduct?.(currentProduct)}
+                    className="space-y-2 cursor-pointer"
+                  >
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-xs font-extrabold text-[#34D399] uppercase tracking-wider truncate">
                         {currentProduct.categoria}
@@ -243,12 +251,12 @@ export default function HeroSection({
                       </span>
                     </div>
 
-                    <h1 className="text-lg sm:text-2xl lg:text-3xl font-black text-white line-clamp-2 leading-tight">
+                    <h1 className="text-lg sm:text-2xl lg:text-3xl font-black text-white hover:text-[#34D399] transition-colors line-clamp-2 leading-tight">
                       {currentSlide.titulo || currentProduct.nome}
                     </h1>
 
                     <p className="text-xs sm:text-sm text-zinc-400 line-clamp-2 leading-relaxed">
-                      {currentProduct.descricao}
+                      {currentProduct.descricao.split(' | Pagamento:')[0]}
                     </p>
                   </div>
 
