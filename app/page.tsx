@@ -28,7 +28,7 @@ import { loadStoreSettings } from '../lib/firebase';
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v3';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v4';
 
 export default function RRStorePage() {
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
@@ -53,6 +53,7 @@ export default function RRStorePage() {
       localStorage.removeItem('rr_store_regions_list_v1');
       localStorage.removeItem('rr_store_orders_v1');
       localStorage.removeItem('rr_store_settings_cache_v2');
+      localStorage.removeItem('rr_store_settings_cache_v3');
 
       const cached = localStorage.getItem(SETTINGS_CACHE_KEY);
       if (cached) {

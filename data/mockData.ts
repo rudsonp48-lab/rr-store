@@ -4592,11 +4592,49 @@ const rawProducts: Array<Omit<Product, 'precoPix' | 'parcelamento'>> = [
   },
 ];
 
-export const PRODUCTS: Product[] = rawProducts.map((p) => ({
-  ...p,
-  precoPix: calculatePixPrice(p.precoPor),
-  parcelamento: formatInstallment(p.precoPor, p.maxParcelasSemJuros),
-}));
+/**
+ * Aplica margem de lucro de giro rápido sobre o preço de custo do fornecedor (GSM Digital),
+ * mantendo o preço final super atrativo para vender em quantidade e arredondando para ,90.
+ *
+ * Faixas de margem pensadas para giro rápido (já considerando o desconto de 5% no PIX):
+ * - Custo até R$ 15,00 (cabos, fontes, papelaria, miudezas): +45% (lucro mín. R$ 5,00)
+ * - Custo de R$ 15,01 a R$ 50,00 (garrafas, copos térmicos, fones, suportes): +38%
+ * - Custo de R$ 50,01 a R$ 150,00 (caixas de som, powerbanks, iluminação): +32%
+ * - Custo acima de R$ 150,00 (eletrônicos de maior valor): +25%
+ */
+export function applySupplierMarkup(cost: number): { precoPor: number; precoDe: number } {
+  let targetPrice: number;
+  if (cost <= 15) {
+    targetPrice = Math.max(cost * 1.45, cost + 5);
+  } else if (cost <= 50) {
+    targetPrice = cost * 1.38;
+  } else if (cost <= 150) {
+    targetPrice = cost * 1.32;
+  } else {
+    targetPrice = cost * 1.25;
+  }
+
+  const precoPor = Number((Math.floor(targetPrice) + 0.9).toFixed(2));
+  const precoDe = Number((Math.floor(precoPor * 1.28) + 0.9).toFixed(2));
+  return { precoPor, precoDe };
+}
+
+export const PRODUCTS: Product[] = rawProducts.map((p) => {
+  const isSupplierItem = p.id.startsWith('gsm-');
+  const { precoPor, precoDe } = isSupplierItem
+    ? applySupplierMarkup(p.precoPor)
+    : { precoPor: p.precoPor, precoDe: p.precoDe };
+  const maxParcelasSemJuros = precoPor >= 200 ? 12 : precoPor >= 80 ? 6 : 3;
+
+  return {
+    ...p,
+    precoDe,
+    precoPor,
+    maxParcelasSemJuros,
+    precoPix: calculatePixPrice(precoPor),
+    parcelamento: formatInstallment(precoPor, maxParcelasSemJuros),
+  };
+});
 
 export const TESTIMONIALS: Testimonial[] = [
   {
