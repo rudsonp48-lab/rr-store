@@ -4621,6 +4621,9 @@ export function applySupplierMarkup(cost: number): { precoPor: number; precoDe: 
 
 export const PRODUCTS: Product[] = rawProducts.map((p) => {
   const isSupplierItem = p.id.startsWith('gsm-');
+  const precoCusto = isSupplierItem
+    ? Number(p.precoPor.toFixed(2))
+    : Number((p.precoPor / 1.38).toFixed(2));
   const { precoPor, precoDe } = isSupplierItem
     ? applySupplierMarkup(p.precoPor)
     : { precoPor: p.precoPor, precoDe: p.precoDe };
@@ -4628,6 +4631,7 @@ export const PRODUCTS: Product[] = rawProducts.map((p) => {
 
   return {
     ...p,
+    precoCusto,
     precoDe,
     precoPor,
     maxParcelasSemJuros,
