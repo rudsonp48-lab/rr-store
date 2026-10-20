@@ -28,7 +28,7 @@ import { loadStoreSettings } from '../lib/firebase';
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v2';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v3';
 
 export default function RRStorePage() {
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
@@ -52,12 +52,14 @@ export default function RRStorePage() {
       localStorage.removeItem('rr_store_products_v1');
       localStorage.removeItem('rr_store_regions_list_v1');
       localStorage.removeItem('rr_store_orders_v1');
+      localStorage.removeItem('rr_store_settings_cache_v2');
 
       const cached = localStorage.getItem(SETTINGS_CACHE_KEY);
       if (cached) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed.products) && parsed.products.length > 0) {
-          setProducts(parsed.products);
+          const cloudIds = new Set(parsed.products.map((p: Product) => p.id));
+          setProducts([...parsed.products, ...PRODUCTS.filter((p) => !cloudIds.has(p.id))]);
         }
         if (Array.isArray(parsed.regions) && parsed.regions.length > 0) {
           currentRegions = parsed.regions;
@@ -93,12 +95,14 @@ export default function RRStorePage() {
       const cloudProducts = cloud.products;
       const cloudRegions = cloud.regions;
       if (cloudProducts) {
-        setProducts(cloudProducts);
+        const cloudIds = new Set(cloudProducts.map((p) => p.id));
+        const merged = [...cloudProducts, ...PRODUCTS.filter((p) => !cloudIds.has(p.id))];
+        setProducts(merged);
         // Mantém o carrinho com preços/dados atualizados do catálogo publicado
         setCartItems((prev) =>
           prev.map((item) => ({
             ...item,
-            product: cloudProducts.find((p) => p.id === item.product.id) || item.product,
+            product: merged.find((p) => p.id === item.product.id) || item.product,
           }))
         );
       }
