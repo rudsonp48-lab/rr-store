@@ -15,6 +15,7 @@ import { CategoryId, DFRegion } from '../types/store';
 import { CATEGORIES, DF_REGIONS } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
 import InteractiveLogo3D from './InteractiveLogo3D';
+import StoreLocationSection from './StoreLocationSection';
 
 interface FooterAndFloatingWhatsAppProps {
   selectedRegion: DFRegion;
@@ -37,6 +38,9 @@ export default function FooterAndFloatingWhatsApp({
 
   return (
     <>
+      {/* Loja Física + Mapa (Feira dos Importados do SIA — Loja D439) */}
+      <StoreLocationSection />
+
       {/* Footer Completo Dark Tech (#0A0A0A) */}
       <footer className="bg-[#0A0A0A] text-white border-t border-white/10 pt-14 pb-24 sm:pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,15 +69,33 @@ export default function FooterAndFloatingWhatsApp({
                 <div className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
                   <div>
+                    <strong className="text-white block">Loja Física:</strong>
+                    <a href="#loja-fisica" className="hover:text-[#34D399] transition-colors">
+                      Feira dos Importados do SIA — Loja D439, SIA Trecho 7, Brasília - DF
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
+                  <div>
                     <strong className="text-white block">Área de Cobertura Motoboy:</strong>
                     <span>
                       Plano Piloto, Águas Claras, Taguatinga, Sudoeste, Guará, Lagos, Noroeste e todo o DF
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <PhoneCall className="w-4 h-4 text-[#10B981] shrink-0" />
-                  <span>Central WhatsApp Brasília: (61) 99999-9999</span>
+                <div className="flex items-start gap-2.5">
+                  <PhoneCall className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">WhatsApp / Contato:</strong>
+                    <a href="https://wa.me/5561998151299" target="_blank" rel="noopener noreferrer" className="hover:text-[#34D399] transition-colors">
+                      (61) 99815-1299
+                    </a>
+                    <span className="text-zinc-500"> • </span>
+                    <a href="https://wa.me/5561985964112" target="_blank" rel="noopener noreferrer" className="hover:text-[#34D399] transition-colors">
+                      (61) 98596-4112
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
