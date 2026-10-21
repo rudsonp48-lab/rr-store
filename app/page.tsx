@@ -467,6 +467,43 @@ export default function RRStorePage() {
             </div>
           </div>
 
+          {/* Atalhos Rápidos de Busca por Marcas e Categorias Populares */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-4 -mx-1 px-1">
+            <span className="text-[11px] font-black uppercase tracking-wider text-zinc-600 shrink-0 hidden sm:inline">
+              Filtro Rápido:
+            </span>
+            {[
+              { label: 'Todos', query: '' },
+              { label: '🍏 iPhone & Apple', query: 'apple' },
+              { label: '📱 Xiaomi / Redmi', query: 'xiaomi' },
+              { label: '⚡ Realme', query: 'realme' },
+              { label: 'Samsung Galaxy', query: 'samsung' },
+              { label: '🎮 Gamer & PS5', query: 'dualsense' },
+              { label: '🔊 JBL & Áudio', query: 'jbl' },
+              { label: '⌚ Smartwatches', query: 'smartwatch' },
+              { label: '💾 SSD & Armazenamento', query: 'ssd' },
+            ].map((chip) => {
+              const active = searchQuery.toLowerCase() === chip.query.toLowerCase();
+              return (
+                <button
+                  type="button"
+                  key={chip.label}
+                  onClick={() => {
+                    setSearchQuery(chip.query);
+                    if (chip.query === '') setSelectedCategory('Todos');
+                  }}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
+                    active
+                      ? 'bg-[#10B981] text-[#0A0A0A] shadow-md shadow-emerald-500/20 font-black'
+                      : 'bg-white hover:bg-zinc-100 text-zinc-700 border border-zinc-200'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              );
+            })}
+          </div>
+
           {/* Grid de Produtos Responsivo (1 ou 2 Colunas no Celular -> 2 no Tablet -> 3/4 no Desktop) */}
           {filteredProducts.length === 0 ? (
             <div className="bg-[#FFFFFF] rounded-2xl border border-zinc-200 p-8 sm:p-12 text-center max-w-xl mx-auto my-6 shadow-sm">
