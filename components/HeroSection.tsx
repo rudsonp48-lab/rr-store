@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { DFRegion, HeroBanner, Product } from '../types/store';
 import { formatBRL, PRODUCTS } from '../data/mockData';
+import CutoutImage, { prefetchCutouts } from './CutoutImage';
 
 interface HeroSectionProps {
   selectedRegion: DFRegion;
@@ -224,6 +225,12 @@ export default function HeroSection({
     };
   }, []);
 
+  // Pré-recorta o fundo das imagens de todos os slides (troca instantânea)
+  useEffect(() => {
+    const t = setTimeout(() => prefetchCutouts(slides.map((s) => s.imagem)), 600);
+    return () => clearTimeout(t);
+  }, [slides]);
+
   if (!currentSlide) return null;
 
   const discountPercent = currentProduct
@@ -368,7 +375,7 @@ export default function HeroSection({
           }`}
         >
           {/* COLUNA ESQUERDA (5 Colunas): "SOURCE OF INNER LOGIC /" + Os 2 Cards Inferiores (Branco Sólido & Glassmorphism) */}
-          <div className="lg:col-span-5 flex flex-col justify-between z-20 space-y-8 lg:space-y-0">
+          <div className="lg:col-span-3 flex flex-col justify-between z-20 space-y-8 lg:space-y-0">
             {/* Bloco Superior Esquerdo */}
             <div className="space-y-4 max-w-xs">
               <div className="w-10 h-[1.5px] bg-white/40" />
@@ -389,8 +396,8 @@ export default function HeroSection({
               </p>
             </div>
 
-            {/* Bloco Inferior Esquerdo: Os 2 Cards Lado a Lado idênticos à referência */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+            {/* Bloco Inferior Esquerdo: Os 2 Cards (empilhados no desktop) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 pt-4">
               {/* CARD 1: Card Branco Sólido ("85% Flow state retention" -> Preço PIX & Desconto) */}
               <div
                 onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
@@ -492,51 +499,63 @@ export default function HeroSection({
             </div>
           </div>
 
-          {/* CENTRO VISUAL (Imagem Principal Integrada ao Palco Escuro com Halo Luminoso e Parallax no Scroll) */}
+          {/* CENTRO VISUAL — PRODUTO PROTAGONISTA (~70% da área, sem fundo branco) */}
           <div
             onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-            className="lg:col-span-3 relative flex items-center justify-center min-h-[290px] sm:min-h-[360px] lg:min-h-full z-10 cursor-pointer group"
+            className="order-first lg:order-none lg:col-span-6 relative flex items-center justify-center min-h-[380px] sm:min-h-[500px] lg:min-h-[620px] z-10 cursor-pointer group"
           >
-            {/* Halo Solar/Âmbar atrás do produto (como na 2ª foto) */}
+            {/* Painel arredondado ao fundo (como nas referências) */}
             <div
-              className="pointer-events-none absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full blur-2xl opacity-80 transition-transform duration-500"
+              className="pointer-events-none absolute inset-x-[8%] top-[16%] bottom-[10%] rounded-[48px] border border-white/10 bg-gradient-to-b from-white/[0.07] via-orange-500/[0.06] to-emerald-500/[0.08] backdrop-blur-[2px] transition-transform duration-500"
               style={{
-                background:
-                  'radial-gradient(circle, rgba(251,146,60,0.55) 0%, rgba(16,185,129,0.22) 55%, transparent 75%)',
-                transform: `scale(${1 + scrollProgress * 0.14})`,
+                transform: `translate3d(${mouseTilt.x * -0.8}px, ${scrollProgress * 22}px, 0)`,
               }}
             />
 
-            {/* Pedestal Circular / Escudo Dark Glass com a Foto do Produto em Alta Definição */}
+            {/* Halo luminoso atrás do produto */}
             <div
-              className="relative w-64 h-64 sm:w-76 sm:h-76 lg:w-80 lg:h-80 rounded-[36px] bg-gradient-to-b from-white via-zinc-50 to-zinc-200 p-5 shadow-[0_30px_90px_rgba(249,115,22,0.35)] border border-white/40 flex items-center justify-center transition-transform duration-300"
+              className="pointer-events-none absolute w-[78%] aspect-square rounded-full blur-3xl opacity-80 transition-transform duration-500"
               style={{
-                transform: `perspective(900px) rotateX(${mouseTilt.y * 0.5}deg) rotateY(${
-                  mouseTilt.x * 0.5
-                }deg) translateY(${scrollProgress * -16}px) scale(${1 + scrollProgress * 0.06})`,
+                background:
+                  'radial-gradient(circle, rgba(251,146,60,0.45) 0%, rgba(16,185,129,0.18) 50%, transparent 72%)',
+                transform: `scale(${1 + scrollProgress * 0.18})`,
+              }}
+            />
+
+            {/* Sombra de chão */}
+            <div className="pointer-events-none absolute bottom-[6%] w-[55%] h-10 rounded-[50%] bg-black/70 blur-2xl" />
+
+            {/* Produto recortado em destaque */}
+            <div
+              className="relative w-full h-[360px] sm:h-[480px] lg:h-[600px] flex items-center justify-center transition-transform duration-300 ease-out"
+              style={{
+                transform: `perspective(1100px) rotateX(${mouseTilt.y * 0.45}deg) rotateY(${
+                  mouseTilt.x * 0.45
+                }deg) translateY(${scrollProgress * -24}px) scale(${1 + scrollProgress * 0.08})`,
               }}
             >
-              <img
+              <CutoutImage
+                key={currentSlide.imagem}
                 src={currentSlide.imagem}
                 alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
-                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                className="w-[96%] h-full object-contain group-hover:scale-[1.04] transition-transform duration-700 ease-out drop-shadow-[0_40px_60px_rgba(0,0,0,0.75)] lg:scale-110"
               />
-
-              {currentProduct && (
-                <div className="absolute -top-3 -right-3 bg-[#0A0A0A] text-orange-400 border border-orange-500/40 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-orange-400 text-orange-400" />
-                  <span>{currentProduct.avaliacao.toFixed(1)}</span>
-                </div>
-              )}
-
-              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#0A0A0A]/95 text-white border border-white/15 text-[10px] font-extrabold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-lg">
-                Clique para ver Ficha Técnica
-              </span>
             </div>
+
+            {currentProduct && (
+              <div className="absolute top-[10%] right-[8%] bg-[#0A0A0A]/90 backdrop-blur text-orange-400 border border-orange-500/40 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+                <Star className="w-3 h-3 fill-orange-400 text-orange-400" />
+                <span>{currentProduct.avaliacao.toFixed(1)}</span>
+              </div>
+            )}
+
+            <span className="absolute bottom-[2%] left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#0A0A0A]/85 backdrop-blur text-white border border-white/15 text-[10px] font-extrabold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-lg opacity-80 group-hover:opacity-100 transition-opacity">
+              Clique para ver Ficha Técnica
+            </span>
           </div>
 
-          {/* COLUNA DIREITA (4 Colunas): Tipografia Monumental em 3 Linhas + Botão Circular c/ Seta Diagonal + Texto Editorial */}
-          <div className="lg:col-span-4 flex flex-col justify-between items-start lg:items-end text-left lg:text-right z-20 space-y-6 lg:space-y-0">
+          {/* COLUNA DIREITA (3 Colunas): Tipografia Monumental em 3 Linhas + Botão Circular c/ Seta Diagonal + Texto Editorial */}
+          <div className="lg:col-span-3 flex flex-col justify-between items-start lg:items-end text-left lg:text-right z-20 space-y-6 lg:space-y-0">
             <div className="hidden lg:block h-4" />
 
             {/* Tipografia Monumental empilhada + Círculo com Seta Diagonal (↗) */}
@@ -550,7 +569,7 @@ export default function HeroSection({
                 {headlineLines.map((line, idx) => (
                   <div
                     key={idx}
-                    className="text-4xl sm:text-5xl xl:text-[62px] font-normal tracking-[-0.03em] leading-[0.96] text-zinc-100/95 uppercase break-words"
+                    className="text-4xl sm:text-5xl lg:text-[34px] xl:text-[42px] font-normal tracking-[-0.03em] leading-[0.98] text-zinc-100/95 uppercase break-words"
                   >
                     {line}
                   </div>
