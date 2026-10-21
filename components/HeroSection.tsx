@@ -499,57 +499,54 @@ export default function HeroSection({
             </div>
           </div>
 
-          {/* CENTRO VISUAL — PRODUTO PROTAGONISTA (~70% da área, sem fundo branco) */}
+          {/* CENTRO VISUAL — PRODUTO PROTAGONISTA (Proporção da referência, sem deformação) */}
           <div
             onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-            className="order-first lg:order-none lg:col-span-6 relative flex items-center justify-center min-h-[380px] sm:min-h-[500px] lg:min-h-[620px] z-10 cursor-pointer group"
+            className="order-first lg:order-none lg:col-span-6 relative flex items-center justify-center py-4 sm:py-6 lg:py-0 z-10 cursor-pointer group"
           >
-            {/* Painel arredondado ao fundo (como nas referências) */}
+            {/* Halo luminoso difuso atrás da moldura */}
             <div
-              className="pointer-events-none absolute inset-x-[8%] top-[16%] bottom-[10%] rounded-[48px] border border-white/10 bg-gradient-to-b from-white/[0.07] via-orange-500/[0.06] to-emerald-500/[0.08] backdrop-blur-[2px] transition-transform duration-500"
-              style={{
-                transform: `translate3d(${mouseTilt.x * -0.8}px, ${scrollProgress * 22}px, 0)`,
-              }}
-            />
-
-            {/* Halo luminoso atrás do produto */}
-            <div
-              className="pointer-events-none absolute w-[78%] aspect-square rounded-full blur-3xl opacity-80 transition-transform duration-500"
+              className="pointer-events-none absolute w-[360px] sm:w-[460px] lg:w-[500px] aspect-square rounded-full blur-[100px] opacity-75 transition-transform duration-500"
               style={{
                 background:
                   'radial-gradient(circle, rgba(251,146,60,0.45) 0%, rgba(16,185,129,0.18) 50%, transparent 72%)',
-                transform: `scale(${1 + scrollProgress * 0.18})`,
+                transform: `scale(${1 + scrollProgress * 0.12})`,
               }}
             />
 
-            {/* Sombra de chão */}
-            <div className="pointer-events-none absolute bottom-[6%] w-[55%] h-10 rounded-[50%] bg-black/70 blur-2xl" />
-
-            {/* Produto recortado em destaque */}
+            {/* Moldura Dark Glass com cantos arredondados suaves idêntica à referência dos prints */}
             <div
-              className="relative w-full h-[360px] sm:h-[480px] lg:h-[600px] flex items-center justify-center transition-transform duration-300 ease-out"
+              className="relative w-[310px] h-[310px] sm:w-[400px] sm:h-[400px] lg:w-[460px] lg:h-[460px] rounded-[48px] sm:rounded-[56px] border border-white/[0.12] bg-gradient-to-b from-white/[0.05] via-[#121214]/60 to-[#0A0A0C]/90 backdrop-blur-md p-6 sm:p-9 shadow-[0_25px_70px_rgba(0,0,0,0.85)] flex items-center justify-center transition-transform duration-300 ease-out"
               style={{
-                transform: `perspective(1100px) rotateX(${mouseTilt.y * 0.45}deg) rotateY(${
-                  mouseTilt.x * 0.45
-                }deg) translateY(${scrollProgress * -24}px) scale(${1 + scrollProgress * 0.08})`,
+                transform: `perspective(1000px) rotateX(${mouseTilt.y * 0.4}deg) rotateY(${
+                  mouseTilt.x * 0.4
+                }deg) translateY(${scrollProgress * -16}px) scale(${1 + scrollProgress * 0.04})`,
               }}
             >
-              <CutoutImage
-                key={currentSlide.imagem}
-                src={currentSlide.imagem}
-                alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
-                className="w-[96%] h-full object-contain group-hover:scale-[1.04] transition-transform duration-700 ease-out drop-shadow-[0_40px_60px_rgba(0,0,0,0.75)] lg:scale-110"
-              />
+              {/* Sombra de chão sob o produto */}
+              <div className="pointer-events-none absolute bottom-[10%] w-[60%] h-8 rounded-[50%] bg-black/80 blur-xl" />
+
+              {/* Imagem do produto em proporção real perfeita (object-contain, sem corte e sem esticar) */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                <CutoutImage
+                  key={currentSlide.imagem}
+                  src={currentSlide.imagem}
+                  alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
+                  className="max-w-full max-h-full w-auto h-auto object-contain group-hover:scale-[1.03] transition-transform duration-500 ease-out drop-shadow-[0_20px_35px_rgba(0,0,0,0.7)]"
+                />
+              </div>
+
+              {/* Badge de Avaliação fixada no topo da moldura */}
+              {currentProduct && (
+                <div className="absolute top-4 right-4 sm:top-5 sm:right-5 bg-[#0A0A0A]/95 text-orange-400 border border-orange-500/50 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-lg flex items-center gap-1 z-20">
+                  <Star className="w-3.5 h-3.5 fill-orange-400 text-orange-400" />
+                  <span>{currentProduct.avaliacao.toFixed(1)}</span>
+                </div>
+              )}
             </div>
 
-            {currentProduct && (
-              <div className="absolute top-[10%] right-[8%] bg-[#0A0A0A]/90 backdrop-blur text-orange-400 border border-orange-500/40 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
-                <Star className="w-3 h-3 fill-orange-400 text-orange-400" />
-                <span>{currentProduct.avaliacao.toFixed(1)}</span>
-              </div>
-            )}
-
-            <span className="absolute bottom-[2%] left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#0A0A0A]/85 backdrop-blur text-white border border-white/15 text-[10px] font-extrabold uppercase tracking-wider px-3.5 py-1 rounded-full shadow-lg opacity-80 group-hover:opacity-100 transition-opacity">
+            {/* Pill inferior de Ficha Técnica */}
+            <span className="absolute -bottom-2 sm:-bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#0A0A0A]/95 text-white border border-white/20 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider px-4 py-1.5 rounded-full shadow-2xl z-20 transition-transform group-hover:scale-105">
               Clique para ver Ficha Técnica
             </span>
           </div>

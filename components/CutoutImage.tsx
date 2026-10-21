@@ -13,8 +13,11 @@ const cache = new Map<string, string | null>();
 const pending = new Map<string, Promise<string | null>>();
 
 const MAX_SIDE = 1000;
-const TOL_HARD = 14; // até aqui: 100% transparente
-const TOL_SOFT = 34; // entre HARD e SOFT: borda suave (anti-alias)
+// Tolerâncias calibradas para fundo de estúdio branco/claro (250-255):
+// Evita "vazar" para dentro de corpos brancos ou reflexos prateados (AirPods, relógio, etc.)
+const TOL_HARD = 4;
+const TOL_SOFT = 12;
+const MAX_EXPAND = 5;
 
 function proxied(src: string): string {
   if (src.startsWith('data:') || src.startsWith('/')) return src;
@@ -65,7 +68,7 @@ async function processCutout(src: string): Promise<string | null> {
     const r = d[i];
     const g = d[i + 1];
     const b = d[i + 2];
-    if (Math.min(r, g, b) > 205 && Math.max(r, g, b) - Math.min(r, g, b) < 24) {
+    if (Math.min(r, g, b) > 230 && Math.max(r, g, b) - Math.min(r, g, b) < 16) {
       light++;
       sr += r;
       sg += g;
@@ -83,8 +86,8 @@ async function processCutout(src: string): Promise<string | null> {
 
   // PNG já recortado: usa como está
   if (transparent / total > 0.6) return canvas.toDataURL('image/png');
-  // Foto com cenário (não é fundo de estúdio claro): não recorta
-  if (light / total < 0.55) return null;
+  // Foto sem borda predominantemente de estúdio claro: não arrisca recortar
+  if (light / total < 0.6) return null;
 
   const bgR = sr / light;
   const bgG = sg / light;
@@ -115,9 +118,8 @@ async function processCutout(src: string): Promise<string | null> {
   }
   while (sp > 0) {
     const p = stack[--sp];
-    const i = p * 4;
-    // só continua expandindo a partir de pixels "duros" (fundo de verdade)
-    if (d[i + 3] >= 24 && dist(i) > TOL_HARD + 6) continue;
+    // Só expande enquanto for pixel do fundo homogêneo
+    if (dist(p * 4) > MAX_EXPAND) continue;
     const x = p % w;
     const y = (p - x) / w;
     if (x > 0) push(p - 1);
@@ -126,21 +128,17 @@ async function processCutout(src: string): Promise<string | null> {
     if (y < h - 1) push(p + w);
   }
 
-  // 3) Aplica transparência com borda suave e remove o "halo" branco
+  // 3) Aplica transparência preservando 100% da integridade do produto
   for (let p = 0; p < w * h; p++) {
     if (!visited[p]) continue;
     const i = p * 4;
     const dd = dist(i);
     if (dd <= TOL_HARD) {
       d[i + 3] = 0;
-      continue;
+    } else {
+      const a = (dd - TOL_HARD) / (TOL_SOFT - TOL_HARD);
+      d[i + 3] = Math.round(255 * a);
     }
-    const a = Math.min(1, (dd - TOL_HARD) / (TOL_SOFT - TOL_HARD));
-    // descontamina a cor (remove a mistura com o fundo branco)
-    d[i] = Math.max(0, Math.min(255, (d[i] - bgR * (1 - a)) / a));
-    d[i + 1] = Math.max(0, Math.min(255, (d[i + 1] - bgG * (1 - a)) / a));
-    d[i + 2] = Math.max(0, Math.min(255, (d[i + 2] - bgB * (1 - a)) / a));
-    d[i + 3] = Math.round(d[i + 3] * a);
   }
 
   ctx.putImageData(imageData, 0, 0);
