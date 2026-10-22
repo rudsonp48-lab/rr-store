@@ -514,31 +514,36 @@ export default function HeroSection({
               }}
             />
 
-            {/* Moldura Dark Glass com cantos arredondados suaves idêntica à referência dos prints */}
+            {/* Moldura Dark Glass proporcional e ampliada (exatamente como no print) com esmaecer no scroll */}
             <div
-              className="relative w-[310px] h-[310px] sm:w-[400px] sm:h-[400px] lg:w-[460px] lg:h-[460px] rounded-[48px] sm:rounded-[56px] border border-white/[0.12] bg-gradient-to-b from-white/[0.05] via-[#121214]/60 to-[#0A0A0C]/90 backdrop-blur-md p-6 sm:p-9 shadow-[0_25px_70px_rgba(0,0,0,0.85)] flex items-center justify-center transition-transform duration-300 ease-out"
+              className="relative w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] lg:w-[540px] lg:h-[540px] rounded-[52px] sm:rounded-[64px] border border-white/[0.14] bg-gradient-to-b from-white/[0.06] via-[#121214]/65 to-[#0A0A0C]/92 backdrop-blur-md p-5 sm:p-8 lg:p-10 shadow-[0_30px_90px_rgba(0,0,0,0.9)] flex items-center justify-center transition-all duration-300 ease-out"
               style={{
+                opacity: Math.max(0.15, 1 - scrollProgress * 1.05),
+                filter: `blur(${scrollProgress * 4.5}px)`,
                 transform: `perspective(1000px) rotateX(${mouseTilt.y * 0.4}deg) rotateY(${
                   mouseTilt.x * 0.4
-                }deg) translateY(${scrollProgress * -16}px) scale(${1 + scrollProgress * 0.04})`,
+                }deg) translateY(${scrollProgress * -38}px) scale(${Math.max(
+                  0.88,
+                  1 + scrollProgress * 0.04 - scrollProgress * 0.12
+                )})`,
               }}
             >
               {/* Sombra de chão sob o produto */}
-              <div className="pointer-events-none absolute bottom-[10%] w-[60%] h-8 rounded-[50%] bg-black/80 blur-xl" />
+              <div className="pointer-events-none absolute bottom-[8%] w-[65%] h-10 rounded-[50%] bg-black/85 blur-2xl" />
 
-              {/* Imagem do produto em proporção real perfeita (object-contain, sem corte e sem esticar) */}
-              <div className="relative w-full h-full flex items-center justify-center">
+              {/* Imagem do produto em proporção 4K real destacada e maior */}
+              <div className="relative w-full h-full flex items-center justify-center p-2">
                 <CutoutImage
                   key={currentSlide.imagem}
                   src={currentSlide.imagem}
                   alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
-                  className="max-w-full max-h-full w-auto h-auto object-contain group-hover:scale-[1.03] transition-transform duration-500 ease-out drop-shadow-[0_20px_35px_rgba(0,0,0,0.7)]"
+                  className="max-w-[94%] max-h-[94%] w-auto h-auto object-contain group-hover:scale-[1.04] transition-transform duration-500 ease-out drop-shadow-[0_25px_45px_rgba(0,0,0,0.8)]"
                 />
               </div>
 
               {/* Badge de Avaliação fixada no topo da moldura */}
               {currentProduct && (
-                <div className="absolute top-4 right-4 sm:top-5 sm:right-5 bg-[#0A0A0A]/95 text-orange-400 border border-orange-500/50 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-lg flex items-center gap-1 z-20">
+                <div className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-[#0A0A0A]/95 text-orange-400 border border-orange-500/50 text-[11px] sm:text-xs font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-xl flex items-center gap-1.5 z-20">
                   <Star className="w-3.5 h-3.5 fill-orange-400 text-orange-400" />
                   <span>{currentProduct.avaliacao.toFixed(1)}</span>
                 </div>

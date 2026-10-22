@@ -467,41 +467,53 @@ export default function RRStorePage() {
             </div>
           </div>
 
-          {/* Atalhos Rápidos de Busca por Marcas e Categorias Populares */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-4 -mx-1 px-1">
-            <span className="text-[11px] font-black uppercase tracking-wider text-zinc-600 shrink-0 hidden sm:inline">
-              Filtro Rápido:
-            </span>
-            {[
-              { label: 'Todos', query: '' },
-              { label: '🍏 iPhone & Apple', query: 'apple' },
-              { label: '📱 Xiaomi / Redmi', query: 'xiaomi' },
-              { label: '⚡ Realme', query: 'realme' },
-              { label: 'Samsung Galaxy', query: 'samsung' },
-              { label: '🎮 Gamer & PS5', query: 'dualsense' },
-              { label: '🔊 JBL & Áudio', query: 'jbl' },
-              { label: '⌚ Smartwatches', query: 'smartwatch' },
-              { label: '💾 SSD & Armazenamento', query: 'ssd' },
-            ].map((chip) => {
-              const active = searchQuery.toLowerCase() === chip.query.toLowerCase();
-              return (
-                <button
-                  type="button"
-                  key={chip.label}
-                  onClick={() => {
-                    setSearchQuery(chip.query);
-                    if (chip.query === '') setSelectedCategory('Todos');
-                  }}
-                  className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
-                    active
-                      ? 'bg-[#10B981] text-[#0A0A0A] shadow-md shadow-emerald-500/20 font-black'
-                      : 'bg-white hover:bg-zinc-100 text-zinc-700 border border-zinc-200'
-                  }`}
-                >
-                  {chip.label}
-                </button>
-              );
-            })}
+          {/* Atalhos Rápidos de Busca por Marcas e Categorias Populares (Design Premium Moderno & Glassmorphism) */}
+          <div className="relative mb-6">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 -mx-1 px-1">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/80 border border-white/10 text-white shrink-0 shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-[#10B981]" />
+                <span className="text-[11px] font-black uppercase tracking-[0.12em] text-zinc-300">
+                  Filtro Rápido
+                </span>
+              </div>
+
+              {[
+                { label: 'Todos', query: '', icon: '⚡' },
+                { label: 'iPhone & Apple', query: 'apple', icon: '🍏' },
+                { label: 'Xiaomi / Redmi', query: 'xiaomi', icon: '📱' },
+                { label: 'Realme', query: 'realme', icon: '⚡' },
+                { label: 'Samsung Galaxy', query: 'samsung', icon: '✨' },
+                { label: 'Gamer & PS5', query: 'dualsense', icon: '🎮' },
+                { label: 'JBL & Áudio', query: 'jbl', icon: '🔊' },
+                { label: 'Smartwatches', query: 'smartwatch', icon: '⌚' },
+                { label: 'SSD & Armazenamento', query: 'ssd', icon: '💾' },
+              ].map((chip) => {
+                const active = searchQuery.toLowerCase() === chip.query.toLowerCase();
+                return (
+                  <button
+                    type="button"
+                    key={chip.label}
+                    onClick={() => {
+                      setSearchQuery(chip.query);
+                      if (chip.query === '') setSelectedCategory('Todos');
+                    }}
+                    className={`group relative inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-extrabold whitespace-nowrap transition-all duration-300 shrink-0 cursor-pointer ${
+                      active
+                        ? 'bg-gradient-to-r from-[#10B981] to-[#059669] text-[#0A0A0A] shadow-[0_8px_20px_rgba(16,185,129,0.35)] scale-[1.03] border border-[#34D399]'
+                        : 'bg-white hover:bg-zinc-50 text-zinc-800 border border-zinc-200/90 shadow-sm hover:border-[#10B981]/50 hover:shadow-md'
+                    }`}
+                  >
+                    <span className="text-sm leading-none transition-transform group-hover:scale-110">
+                      {chip.icon}
+                    </span>
+                    <span className="tracking-tight">{chip.label}</span>
+                    {active && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0A0A0A] animate-pulse" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Grid de Produtos Responsivo (1 ou 2 Colunas no Celular -> 2 no Tablet -> 3/4 no Desktop) */}

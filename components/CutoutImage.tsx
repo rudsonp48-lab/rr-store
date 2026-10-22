@@ -181,7 +181,14 @@ export default function CutoutImage({ src, alt, className = '', style }: CutoutI
     done: cache.has(src),
   }));
 
+  const isNativePng =
+    src.includes('fmt=png-alpha') ||
+    src.endsWith('.png') ||
+    src.includes('.png?') ||
+    src.startsWith('data:image/png');
+
   useEffect(() => {
+    if (isNativePng) return;
     let alive = true;
     if (cache.has(src)) {
       setState({ src, url: cache.get(src) ?? null, done: true });
@@ -194,7 +201,11 @@ export default function CutoutImage({ src, alt, className = '', style }: CutoutI
     return () => {
       alive = false;
     };
-  }, [src]);
+  }, [src, isNativePng]);
+
+  if (isNativePng) {
+    return <img src={src} alt={alt} className={className} style={style} draggable={false} />;
+  }
 
   const ready = state.src === src && state.done;
 
