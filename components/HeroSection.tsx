@@ -14,6 +14,8 @@ import {
   ShieldCheck,
   Store,
   Heart,
+  Play,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { DFRegion, HeroBanner, Product } from '../types/store';
 import { formatBRL, PRODUCTS } from '../data/mockData';
@@ -32,6 +34,7 @@ interface HeroSectionProps {
 interface HeroSlide {
   key: string;
   imagem: string;
+  videoUrl: string;
   titulo?: string;
   product?: Product;
 }
@@ -48,6 +51,108 @@ const CURATED_FLAGSHIP_IDS = [
   'rr-apple-airpods-max2-azul',
   'rr-apple-airpods-pro-3',
 ];
+
+/**
+ * PNGs recortados em alta resolução (100% sem fundo branco) + Vídeos Oficiais Apple (apple.com/br)
+ */
+const FLAGSHIP_APPLE_MEDIA: Record<string, { cutoutPng: string; videoUrl: string }> = {
+  'rr-apple-ip17pm-512-silver': {
+    cutoutPng: '/apple-cutouts/ip17pm-silver.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/iphone-18-pro/2026/591df885-5ee2-4173-86e6-401021249f7c/anim/hero/large.mp4',
+  },
+  'rr-apple-ip17pm-256-laranja': {
+    cutoutPng: '/apple-cutouts/ip17pm-laranja.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/iphone-18-pro/2026/591df885-5ee2-4173-86e6-401021249f7c/anim/highlights-colors/large.mp4',
+  },
+  'rr-apple-ip18pm-256-bordo': {
+    cutoutPng: '/apple-cutouts/ip18pm-bordo.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/iphone-18-pro/2026/591df885-5ee2-4173-86e6-401021249f7c/anim/highlights-camera/large.mp4',
+  },
+  'rr-apple-watch-s12-42-dourado-bordo': {
+    cutoutPng: '/apple-cutouts/watch-s12-bordo.png',
+    videoUrl:
+      'https://www.apple.com/105/media/br/apple-watch-series-12/2026/d1e8480b-cebf-43a2-abc8-748767c2e122/anim/hero/large.mp4',
+  },
+  'rr-apple-watch-ultra3-49-black': {
+    cutoutPng: '/apple-cutouts/watch-ultra3-black.png',
+    videoUrl:
+      'https://www.apple.com/105/media/br/apple-watch-ultra-4/2026/6adeb6e9-f28b-4ea3-83d8-682065bc12b1/anim/hero/large.mp4',
+  },
+  'rr-apple-macbook-air-m5-512-midnight': {
+    cutoutPng: '/apple-cutouts/macbook-air-m5-midnight.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/macbook-air/2026/ff11cb38-708e-4c28-9653-1b01a2f8fd2b/anim/mx-chip/large.mp4',
+  },
+  'rr-apple-macbook-neo-256-citrus': {
+    cutoutPng: '/apple-cutouts/macbook-neo-citrus.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/macbook-neo/2026/eee281c9-06d4-45d9-9a37-ef16ad413279/anim/hero/large.mp4',
+  },
+  'rr-apple-ipadpro-m5-13-256-preto': {
+    cutoutPng: '/apple-cutouts/ipad-pro-m5-13-preto.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/ipad-pro/2025/adee90db-c01e-430d-b726-fe64c0063f08/anim/hero/large.mp4',
+  },
+  'rr-apple-airpods-max2-azul': {
+    cutoutPng: '/apple-cutouts/airpods-max2-azul.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/airpods-max/2024/e8f376d6-82b2-40ca-8a22-5f87de755d6b/anim/max-loop/large.mp4',
+  },
+  'rr-apple-airpods-pro-3': {
+    cutoutPng: '/apple-cutouts/airpods-pro-3.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/airpods-pro/2025/7acffb13-4adb-40b1-9393-8f1c99bc6c90/anim/hero/large.mp4',
+  },
+};
+
+function resolveAppleMedia(
+  product?: Product,
+  rawTitle?: string,
+  fallbackImg?: string
+): { cutoutPng: string; videoUrl: string } {
+  if (product && FLAGSHIP_APPLE_MEDIA[product.id]) {
+    return FLAGSHIP_APPLE_MEDIA[product.id];
+  }
+  const text = `${product?.nome || ''} ${rawTitle || ''}`.toUpperCase();
+  if (text.includes('IPHONE 18')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-ip18pm-256-bordo'];
+  }
+  if (text.includes('LARANJA')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-ip17pm-256-laranja'];
+  }
+  if (text.includes('IPHONE')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-ip17pm-512-silver'];
+  }
+  if (text.includes('ULTRA')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-watch-ultra3-49-black'];
+  }
+  if (text.includes('WATCH')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-watch-s12-42-dourado-bordo'];
+  }
+  if (text.includes('MACBOOK NEO') || text.includes('CITRUS')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-macbook-neo-256-citrus'];
+  }
+  if (text.includes('MACBOOK')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-macbook-air-m5-512-midnight'];
+  }
+  if (text.includes('IPAD')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-ipadpro-m5-13-256-preto'];
+  }
+  if (text.includes('AIRPODS MAX')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-airpods-max2-azul'];
+  }
+  if (text.includes('AIRPODS')) {
+    return FLAGSHIP_APPLE_MEDIA['rr-apple-airpods-pro-3'];
+  }
+  return {
+    cutoutPng: fallbackImg || product?.imagem || '/apple-cutouts/ip17pm-silver.png',
+    videoUrl:
+      'https://www.apple.com/105/media/us/iphone-18-pro/2026/591df885-5ee2-4173-86e6-401021249f7c/anim/hero/large.mp4',
+  };
+}
 
 /**
  * Gera os títulos divididos no topo (Esquerda e Direita) e a frase de impacto
@@ -178,53 +283,66 @@ export default function HeroSection({
   const [animPhase, setAnimPhase] = useState<'in' | 'out'>('in');
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mouseTilt, setMouseTilt] = useState({ x: 0, y: 0 });
+  const [stageMode, setStageMode] = useState<'cutout' | 'video'>('cutout');
 
-  // Slides: banners ativos do painel ou seleção curada de flagships
+  // Sempre garante a coleção completa dos 10 flagships Apple em PNG recortado grande + vídeo oficial Apple
   const slides = useMemo<HeroSlide[]>(() => {
     const source = products.length > 0 ? products : PRODUCTS;
-    const activeBanners = banners.filter((b) => b.ativo && b.imagem);
-    if (activeBanners.length > 0) {
-      return activeBanners.map((b) => {
-        const linkedProduct = b.produtoId ? source.find((p) => p.id === b.produtoId) : undefined;
-        const useProductImg =
-          linkedProduct &&
-          (b.imagem.includes('iphone-16-pro') ||
-            b.imagem.includes('watch-compare') ||
-            b.imagem.includes('mba13-midnight-select'));
-        return {
-          key: b.id,
-          imagem: useProductImg ? linkedProduct.imagem : b.imagem,
-          titulo: b.titulo,
-          product: linkedProduct,
-        };
-      });
-    }
 
     const curated: Product[] = [];
     for (const id of CURATED_FLAGSHIP_IDS) {
       const found = source.find((p) => p.id === id && p.estoque > 0);
       if (found) curated.push(found);
     }
-    if (curated.length < 8) {
-      for (const p of source) {
-        if (curated.length >= 10) break;
-        if (!curated.some((c) => c.id === p.id) && p.estoque > 0) {
-          curated.push(p);
+    if (curated.length < 10) {
+      for (const id of CURATED_FLAGSHIP_IDS) {
+        if (!curated.some((c) => c.id === id)) {
+          const fallback = PRODUCTS.find((p) => p.id === id);
+          if (fallback) curated.push(fallback);
         }
       }
     }
 
-    return curated.slice(0, 10).map((p) => ({
-      key: p.id,
-      imagem: p.imagem,
-      product: p,
-    }));
+    const flagshipSlides: HeroSlide[] = curated.slice(0, 10).map((p) => {
+      const media = resolveAppleMedia(p, p.nome, p.imagem);
+      return {
+        key: p.id,
+        imagem: media.cutoutPng,
+        videoUrl: media.videoUrl,
+        product: p,
+      };
+    });
+
+    // Se houver banners extras personalizados do painel que não sejam duplicados dos 10 flagships, adiciona ao final
+    const activeBanners = banners.filter((b) => b.ativo && b.imagem);
+    for (const b of activeBanners) {
+      const linkedProduct = b.produtoId ? source.find((p) => p.id === b.produtoId) : undefined;
+      if (linkedProduct && flagshipSlides.some((s) => s.product?.id === linkedProduct.id)) {
+        continue;
+      }
+      if (
+        b.imagem.includes('iphone-16-pro') ||
+        b.imagem.includes('watch-compare') ||
+        b.imagem.includes('mba13-midnight-select')
+      ) {
+        continue;
+      }
+      const media = resolveAppleMedia(linkedProduct, b.titulo, b.imagem);
+      flagshipSlides.push({
+        key: b.id,
+        imagem: media.cutoutPng,
+        videoUrl: media.videoUrl,
+        titulo: b.titulo,
+        product: linkedProduct,
+      });
+    }
+
+    return flagshipSlides;
   }, [products, banners]);
 
   const safeIndex = slides.length > 0 ? activeIndex % slides.length : 0;
   const currentSlide = slides[safeIndex];
   const currentProduct = currentSlide?.product;
-  // Card lateral direito pode destacar o produto atual ou permitir compra rápida
   const nextIndex = slides.length > 1 ? (safeIndex + 1) % slides.length : safeIndex;
   const nextSlide = slides[nextIndex];
 
@@ -236,18 +354,18 @@ export default function HeroSection({
     }, 180);
   };
 
-  // Auto-play fluido a cada 5 segundos
+  // Auto-play fluido a cada 6 segundos (pausa quando o usuário está assistindo vídeo no palco principal)
   useEffect(() => {
-    if (isPaused || slides.length <= 1) return;
+    if (isPaused || stageMode === 'video' || slides.length <= 1) return;
     const timer = setInterval(() => {
       setAnimPhase('out');
       setTimeout(() => {
         setActiveIndex((prev) => (prev + 1) % slides.length);
         setAnimPhase('in');
       }, 180);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
-  }, [isPaused, slides.length]);
+  }, [isPaused, stageMode, slides.length]);
 
   // Efeito Action de esmaecer/parallax suave no Scroll da página
   useEffect(() => {
@@ -267,9 +385,9 @@ export default function HeroSection({
     };
   }, []);
 
-  // Pré-recorta o fundo das imagens de todos os slides
+  // Pré-carrega os PNGs recortados
   useEffect(() => {
-    const t = setTimeout(() => prefetchCutouts(slides.map((s) => s.imagem)), 400);
+    const t = setTimeout(() => prefetchCutouts(slides.map((s) => s.imagem)), 250);
     return () => clearTimeout(t);
   }, [slides]);
 
@@ -336,7 +454,7 @@ export default function HeroSection({
       />
 
       <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 pb-7 sm:pt-6 sm:pb-10">
-        {/* Sub-barra superior: Localização Feira dos Importados SIA Loja D439 + Controles de Slide */}
+        {/* Sub-barra superior: Localização Feira dos Importados SIA Loja D439 + Alternador PNG Sem Fundo / Vídeo Apple + Controles */}
         <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-2 sm:mb-4 border-b border-zinc-200/80">
           <div className="flex flex-wrap items-center gap-2.5 text-xs">
             <span className="inline-flex items-center gap-1.5 text-zinc-800 font-bold bg-white border border-zinc-200/90 px-3 py-1.5 rounded-full shadow-xs">
@@ -357,6 +475,34 @@ export default function HeroSection({
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Botão para alternar o palco central entre PNG Grande Sem Fundo e Vídeo Oficial Apple */}
+            <div className="inline-flex items-center bg-white border border-zinc-200/90 rounded-full p-0.5 shadow-xs">
+              <button
+                type="button"
+                onClick={() => setStageMode('cutout')}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
+                  stageMode === 'cutout'
+                    ? 'bg-[#7C63E6] text-white shadow-xs'
+                    : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                <ImageIcon className="w-3 h-3" />
+                <span>PNG 4K</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setStageMode('video')}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
+                  stageMode === 'video'
+                    ? 'bg-[#111115] text-white shadow-xs'
+                    : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                <Play className="w-3 h-3 fill-current" />
+                <span>Vídeo Apple</span>
+              </button>
+            </div>
+
             <span className="text-[11px] uppercase tracking-[0.16em] text-zinc-500 font-bold hidden sm:inline">
               Destaque {safeIndex + 1}/{slides.length}
             </span>
@@ -423,21 +569,20 @@ export default function HeroSection({
             </div>
           </div>
 
-          {/* 2. CARD PRINCIPAL ROXO/LAVANDA ARREDONDADO + PRODUTO GIGANTE SOBREPOSTO NO CENTRO */}
+          {/* 2. CARD PRINCIPAL ROXO/LAVANDA ARREDONDADO + PRODUTO GIGANTE EM PNG SEM FUNDO SOBREPOSTO NO CENTRO */}
           <div className="relative">
-            {/* PRODUTO CENTRAL RECORTADO (DESBORDA PARA CIMA ENTRE OS TÍTULOS NO DESKTOP, EXATAMENTE COMO A MODELO NA FOTO) */}
+            {/* PRODUTO CENTRAL EM PNG SEM FUNDO TAMANHO GRANDE (OU VÍDEO OFICIAL APPLE QUANDO ALTERNADO) */}
             <div
               onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-              className="relative lg:absolute lg:inset-x-0 lg:-top-[115px] lg:bottom-0 z-20 pointer-events-none flex flex-col items-center justify-center mb-4 lg:mb-0"
+              className="relative lg:absolute lg:inset-x-0 lg:-top-[125px] lg:bottom-0 z-20 pointer-events-none flex flex-col items-center justify-center mb-4 lg:mb-0"
             >
-              {/* Anéis orbitais sutis atrás do topo do produto (igual ao detalhe atrás da touca na referência) */}
-              <div className="hidden lg:block absolute top-[28px] w-[290px] h-[76px] rounded-[50%] border border-[#7B61E4]/35 -rotate-6 pointer-events-none" />
-              <div className="hidden lg:block absolute top-[38px] w-[320px] h-[82px] rounded-[50%] border border-[#7B61E4]/25 rotate-6 pointer-events-none" />
+              {/* Anéis orbitais sutis atrás do topo do produto */}
+              <div className="hidden lg:block absolute top-[28px] w-[310px] h-[80px] rounded-[50%] border border-[#7B61E4]/35 -rotate-6 pointer-events-none" />
+              <div className="hidden lg:block absolute top-[38px] w-[340px] h-[86px] rounded-[50%] border border-[#7B61E4]/25 rotate-6 pointer-events-none" />
 
-              {/* Container clicável da Imagem Recortada sem fundo com efeito esmaecer no scroll */}
               <div
                 onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-                className="pointer-events-auto cursor-pointer group relative w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] lg:w-[440px] lg:h-[490px] flex items-center justify-center transition-all duration-300 ease-out"
+                className="pointer-events-auto cursor-pointer group relative w-[300px] h-[300px] sm:w-[400px] sm:h-[410px] lg:w-[520px] lg:h-[550px] flex items-center justify-center transition-all duration-300 ease-out"
                 style={{
                   opacity: Math.max(0.2, 1 - fadeFactor * 0.95),
                   filter: `blur(${Math.max(0, scrollProgress - 0.14) * 3.8}px)`,
@@ -449,22 +594,52 @@ export default function HeroSection({
                   )})`,
                 }}
               >
-                <CutoutImage
-                  key={currentSlide.imagem}
-                  src={currentSlide.imagem}
-                  alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
-                  className="max-w-[92%] max-h-[92%] w-auto h-auto object-contain group-hover:scale-[1.04] transition-transform duration-500 ease-out drop-shadow-[0_28px_45px_rgba(17,12,46,0.45)]"
-                />
+                {stageMode === 'video' ? (
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setStageMode('cutout');
+                    }}
+                    className="relative w-[94%] h-[82%] rounded-[32px] overflow-hidden border-2 border-white/60 shadow-[0_32px_70px_rgba(17,12,46,0.55)] bg-black flex items-center justify-center"
+                  >
+                    <video
+                      key={currentSlide.videoUrl}
+                      src={currentSlide.videoUrl}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                    <span className="absolute top-3 left-3 bg-black/75 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/20">
+                      <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                      <span>Vídeo Oficial Apple.com/br</span>
+                    </span>
+                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 text-[#111115] text-[11px] font-extrabold px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                      <ImageIcon className="w-3.5 h-3.5 text-[#7C63E6]" />
+                      <span>Voltar para Foto PNG Sem Fundo</span>
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <CutoutImage
+                      key={currentSlide.imagem}
+                      src={currentSlide.imagem}
+                      alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
+                      className="max-w-[96%] max-h-[96%] w-auto h-auto object-contain group-hover:scale-[1.05] transition-transform duration-500 ease-out drop-shadow-[0_32px_50px_rgba(17,12,46,0.5)]"
+                    />
 
-                {/* Selo discreto de Ficha Técnica ao passar o mouse */}
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#111115]/90 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                  <Eye className="w-3.5 h-3.5 text-[#A78BFA]" />
-                  <span>Clique para ver Ficha Técnica</span>
-                </span>
+                    {/* Selo discreto de Ficha Técnica ao passar o mouse */}
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#111115]/90 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                      <Eye className="w-3.5 h-3.5 text-[#A78BFA]" />
+                      <span>Clique para ver Ficha Técnica</span>
+                    </span>
+                  </>
+                )}
               </div>
             </div>
 
-            {/* BLOCO ROXO ARREDONDADO (3 COLUNAS: TEXTO + BOTÃO PRETO + SOCIAL PROOF À ESQUERDA | CENTRO | 3 ÍCONES + CARD FEATURED À DIREITA) */}
+            {/* BLOCO ROXO ARREDONDADO (3 COLUNAS: TEXTO + BOTÃO PRETO + SOCIAL PROOF À ESQUERDA | CENTRO | 3 ÍCONES + CARD VÍDEO OFICIAL APPLE À DIREITA) */}
             <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-gradient-to-br from-[#8B72EE] via-[#7E64E6] to-[#6D52D8] text-white p-5 sm:p-8 lg:px-10 lg:py-9 shadow-[0_25px_70px_rgba(109,82,216,0.28)]">
               {/* Formas ovais diagonais decorativas ao centro do card roxo (idênticas à referência) */}
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -570,11 +745,11 @@ export default function HeroSection({
                 </div>
 
                 {/* COLUNA CENTRAL (4 Colunas): Espaço onde o Produto Protagonista fica posicionado */}
-                <div className="hidden lg:block lg:col-span-4 min-h-[360px]" />
+                <div className="hidden lg:block lg:col-span-4 min-h-[380px]" />
 
-                {/* COLUNA DIREITA (4 Colunas): 3 Ícones de Diferenciais no Topo + Card "Featured Look" Branco na Base */}
+                {/* COLUNA DIREITA (4 Colunas): 3 Ícones de Diferenciais no Topo + Card com Vídeo Oficial Apple ao Vivo */}
                 <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-between space-y-5">
-                  {/* 3 Ícones Superiores Direitos (Premium Quality | Sustainable | Limited Edition -> Garantias RR Store) */}
+                  {/* 3 Ícones Superiores Direitos */}
                   <div className="grid grid-cols-3 gap-3 sm:gap-5 text-center w-full max-w-[310px]">
                     <div className="flex flex-col items-center gap-1">
                       <div className="w-9 h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center">
@@ -610,11 +785,12 @@ export default function HeroSection({
                     </div>
                   </div>
 
-                  {/* Card "Featured Look" (Oferta em Destaque) idêntico ao card branco à direita na referência */}
-                  <div className="w-full max-w-[260px] flex flex-col items-center">
+                  {/* Card "Featured Look" com VÍDEO OFICIAL APPLE.COM/BR rodando ao vivo */}
+                  <div className="w-full max-w-[270px] flex flex-col items-center">
                     <div className="flex items-center justify-between w-full mb-2 px-1">
-                      <span className="text-xs font-bold tracking-wide text-white/95">
-                        Destaque da Loja
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wide text-white/95">
+                        <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+                        <span>Vídeo Oficial Apple</span>
                       </span>
                       {slides.length > 1 && (
                         <button
@@ -628,16 +804,28 @@ export default function HeroSection({
                     </div>
 
                     <div
-                      onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
+                      onClick={() => setStageMode(stageMode === 'video' ? 'cutout' : 'video')}
                       className="w-full bg-white text-[#111115] rounded-[26px] p-2.5 border-2 border-white shadow-[0_18px_40px_rgba(17,12,46,0.28)] cursor-pointer group transition-transform hover:-translate-y-0.5"
                     >
-                      {/* Moldura interna lilás clara com miniatura do produto */}
-                      <div className="relative h-[138px] w-full rounded-[20px] bg-gradient-to-b from-[#E5DDFB] to-[#D5C8F8] flex items-center justify-center p-3 overflow-hidden">
-                        <img
-                          src={currentSlide.imagem}
-                          alt={copy.shortName}
-                          className="max-h-[112px] max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300 mix-blend-multiply"
+                      {/* Moldura interna com o Vídeo Oficial Apple em Loop */}
+                      <div className="relative h-[146px] w-full rounded-[20px] bg-[#0B0B0F] flex items-center justify-center overflow-hidden">
+                        <video
+                          key={currentSlide.videoUrl}
+                          src={currentSlide.videoUrl}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
+
+                        <span className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 border border-white/20">
+                          <Play className="w-2.5 h-2.5 fill-white" />
+                          <span>
+                            {stageMode === 'video' ? 'Ver PNG no Centro' : 'Expandir Vídeo'}
+                          </span>
+                        </span>
+
                         {nextSlide && nextSlide.key !== currentSlide.key && (
                           <button
                             type="button"
@@ -646,7 +834,7 @@ export default function HeroSection({
                               handleNext();
                             }}
                             title="Ver próximo destaque"
-                            className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/85 hover:bg-white text-[#6D52D8] flex items-center justify-center shadow-xs cursor-pointer"
+                            className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/90 hover:bg-white text-[#6D52D8] flex items-center justify-center shadow-xs cursor-pointer"
                           >
                             <ChevronRight className="w-3.5 h-3.5" />
                           </button>
@@ -686,7 +874,7 @@ export default function HeroSection({
             </div>
           </div>
 
-          {/* 3. SELETOR RÁPIDO DE DESTAQUES NA BASE DO BANNER */}
+          {/* 3. SELETOR RÁPIDO DE DESTAQUES NA BASE DO BANNER (COM MINIATURAS PNG SEM FUNDO) */}
           <div className="mt-5 flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
             {slides.map((item, idx) => {
               const isCurrent = idx === safeIndex;
@@ -704,9 +892,9 @@ export default function HeroSection({
                   <img
                     src={item.imagem}
                     alt={item.product?.nome || item.titulo || 'Banner'}
-                    className="w-9 h-9 rounded-xl object-contain bg-white p-1 shrink-0 border border-zinc-100"
+                    className="w-10 h-10 rounded-xl object-contain bg-[#F4F2FB] p-1 shrink-0 border border-zinc-100"
                   />
-                  <div className="text-left max-w-[135px]">
+                  <div className="text-left max-w-[140px]">
                     <p
                       className={`text-[11px] font-bold truncate ${
                         isCurrent ? 'text-white' : 'text-zinc-900'

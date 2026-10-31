@@ -39,7 +39,7 @@ type QuickFilterId =
   | 'ssd';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v6';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v7';
 
 const LOCAL_CURATED_MAP = new Map<string, Product>(PRODUCTS.map((p) => [p.id, p]));
 

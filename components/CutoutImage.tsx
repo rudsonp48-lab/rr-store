@@ -155,49 +155,76 @@ async function processCutout(src: string): Promise<string | null> {
   const dist = (i: number) =>
     Math.max(Math.abs(d[i] - bgR), Math.abs(d[i + 1] - bgG), Math.abs(d[i + 2] - bgB));
 
-  // 2) Flood-fill a partir das bordas
+  // 2) Flood-fill a partir das bordas com continuidade entre vizinhos
+  // Remove fundos de estúdio brancos/off-white (#FFFFFF até #F2F0F7) sem invadir produtos claros
   const visited = new Uint8Array(w * h);
   const stack = new Int32Array(w * h);
   let sp = 0;
-  const push = (p: number) => {
+
+  const isStudioBgPixel = (i: number) => {
+    if (d[i + 3] < 24) return true;
+    const r = d[i];
+    const g = d[i + 1];
+    const b = d[i + 2];
+    const minC = Math.min(r, g, b);
+    const maxC = Math.max(r, g, b);
+    return minC >= 238 && maxC - minC <= 14;
+  };
+
+  const pushInitial = (p: number) => {
     if (visited[p]) return;
     const i = p * 4;
-    if (d[i + 3] < 24 || dist(i) <= TOL_SOFT) {
+    if (isStudioBgPixel(i) || dist(i) <= TOL_SOFT) {
       visited[p] = 1;
       stack[sp++] = p;
     }
   };
+
   for (let x = 0; x < w; x++) {
-    push(x);
-    push((h - 1) * w + x);
+    pushInitial(x);
+    pushInitial((h - 1) * w + x);
   }
   for (let y = 0; y < h; y++) {
-    push(y * w);
-    push(y * w + w - 1);
+    pushInitial(y * w);
+    pushInitial(y * w + w - 1);
   }
+
+  const tryNeighbor = (currIdx: number, nextPos: number) => {
+    if (visited[nextPos]) return;
+    const ni = nextPos * 4;
+    if (d[ni + 3] < 24) {
+      visited[nextPos] = 1;
+      stack[sp++] = nextPos;
+      return;
+    }
+    if (!isStudioBgPixel(ni)) return;
+    const step = Math.max(
+      Math.abs(d[ni] - d[currIdx]),
+      Math.abs(d[ni + 1] - d[currIdx + 1]),
+      Math.abs(d[ni + 2] - d[currIdx + 2])
+    );
+    if (step <= 6 || dist(ni) <= MAX_EXPAND) {
+      visited[nextPos] = 1;
+      stack[sp++] = nextPos;
+    }
+  };
+
   while (sp > 0) {
     const p = stack[--sp];
-    // Só expande enquanto for pixel do fundo homogêneo
-    if (dist(p * 4) > MAX_EXPAND) continue;
+    const ci = p * 4;
     const x = p % w;
     const y = (p - x) / w;
-    if (x > 0) push(p - 1);
-    if (x < w - 1) push(p + 1);
-    if (y > 0) push(p - w);
-    if (y < h - 1) push(p + w);
+    if (x > 0) tryNeighbor(ci, p - 1);
+    if (x < w - 1) tryNeighbor(ci, p + 1);
+    if (y > 0) tryNeighbor(ci, p - w);
+    if (y < h - 1) tryNeighbor(ci, p + w);
   }
 
   // 3) Aplica transparência preservando 100% da integridade do produto
   for (let p = 0; p < w * h; p++) {
     if (!visited[p]) continue;
     const i = p * 4;
-    const dd = dist(i);
-    if (dd <= TOL_HARD) {
-      d[i + 3] = 0;
-    } else {
-      const a = (dd - TOL_HARD) / (TOL_SOFT - TOL_HARD);
-      d[i + 3] = Math.round(255 * a);
-    }
+    d[i + 3] = 0;
   }
 
   ctx.putImageData(imageData, 0, 0);
@@ -205,6 +232,10 @@ async function processCutout(src: string): Promise<string | null> {
 }
 
 export function getCutout(src: string): Promise<string | null> {
+  if (src.startsWith('/apple-cutouts/')) {
+    cache.set(src, src);
+    return Promise.resolve(src);
+  }
   if (cache.has(src)) return Promise.resolve(cache.get(src) ?? null);
   const existing = pending.get(src);
   if (existing) return existing;
@@ -234,14 +265,20 @@ interface CutoutImageProps {
 }
 
 export default function CutoutImage({ src, alt, className = '', style }: CutoutImageProps) {
+  const isStaticCutout = src.startsWith('/apple-cutouts/');
   const [state, setState] = useState<{ src: string; url: string | null; done: boolean }>(() => ({
     src,
-    url: cache.get(src) ?? null,
-    done: cache.has(src),
+    url: isStaticCutout ? src : cache.get(src) ?? null,
+    done: isStaticCutout || cache.has(src),
   }));
 
   useEffect(() => {
     let alive = true;
+    if (src.startsWith('/apple-cutouts/')) {
+      cache.set(src, src);
+      setState({ src, url: src, done: true });
+      return;
+    }
     if (cache.has(src)) {
       setState({ src, url: cache.get(src) ?? null, done: true });
       return;
