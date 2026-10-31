@@ -16,8 +16,7 @@ export function formatBRL(value: number): string {
 }
 
 export function formatInstallment(precoPor: number, parcelas: number): string {
-  const valorParcela = precoPor / parcelas;
-  return `ou ${parcelas}x de ${formatBRL(valorParcela)} sem juros`;
+  return `ou em até ${parcelas}x no cartão (juros conforme taxa da operadora)`;
 }
 
 export const CATEGORIES: CategoryInfo[] = [

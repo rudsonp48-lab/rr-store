@@ -40,7 +40,7 @@ type QuickFilterId =
   | 'ssd';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v7';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v8';
 
 const LOCAL_CURATED_MAP = new Map<string, Product>(PRODUCTS.map((p) => [p.id, p]));
 
@@ -48,15 +48,23 @@ function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
   const cloudIds = new Set(cloudProducts.map((p) => p.id));
   const sanitizedCloud = cloudProducts.map((cp) => {
     const local = LOCAL_CURATED_MAP.get(cp.id);
+    const cleanParcelamento = (local?.parcelamento || cp.parcelamento || '').replace(
+      /sem juros/gi,
+      '(juros conforme taxa da operadora)'
+    );
     if (local && (cp.id.startsWith('rr-apple-') || cp.id.startsWith('sousa-'))) {
       return {
         ...cp,
         nome: local.nome,
         imagem: local.imagem,
         descricao: local.descricao,
+        parcelamento: cleanParcelamento,
       };
     }
-    return cp;
+    return {
+      ...cp,
+      parcelamento: cleanParcelamento,
+    };
   });
   return [...PRODUCTS.filter((p) => !cloudIds.has(p.id)), ...sanitizedCloud];
 }

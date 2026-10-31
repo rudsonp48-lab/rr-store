@@ -45,7 +45,7 @@ export default function TrustAndTestimonials({
       icon: ShieldCheck,
       title: 'Risco Zero: Pague no PIX ou na Entrega',
       description:
-        'Economize 5% à vista no PIX, parcele em até 12x sem juros no link seguro ou passe seu cartão presencialmente na maquininha do motoboy.',
+        'Economize à vista no PIX, parcele em até 12x no cartão (juros de acordo com a taxa da operadora) ou passe seu cartão na maquininha do motoboy.',
       highlight: '5% OFF ou 12x',
     },
     {
@@ -149,7 +149,7 @@ export default function TrustAndTestimonials({
                   <li className="flex items-start gap-2.5">
                     <span className="text-[#34D399] font-black">✓</span>
                     <span>
-                      <strong>5% OFF imediato no PIX</strong>, até 12x sem juros ou pagamento na maquininha ao receber.
+                      <strong>Desconto imediato no PIX</strong>, parcelamento em até 12x (taxa da operadora) ou maquininha ao receber.
                     </span>
                   </li>
                   <li className="flex items-start gap-2.5">

@@ -68,7 +68,7 @@ export function buildCheckoutWhatsAppUrl(params: {
         : customer.modoCartao === 'maquininha_entrega'
         ? 'Passar na Maquininha na Entrega (Motoboy)'
         : 'Checkout Online Autorizado';
-    paymentDescription = `Cartão de Crédito em *${customer.parcelasCredito}x de ${formatBRL(installmentValue)} sem juros* (${modeLabel})`;
+    paymentDescription = `Cartão de Crédito em *${customer.parcelasCredito}x* — juros de acordo com a taxa da operadora (${modeLabel})`;
   } else {
     const modeLabel =
       customer.modoCartao === 'maquininha_entrega'

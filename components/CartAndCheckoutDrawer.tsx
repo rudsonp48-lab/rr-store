@@ -781,7 +781,7 @@ export default function CartAndCheckoutDrawer({
                     <div className="bg-[#0A0A0A] border border-white/15 rounded-xl p-4 space-y-3.5">
                       <div>
                         <label className="block text-xs font-bold text-zinc-300 mb-1.5">
-                          Número de Parcelas (Até 12x Sem Juros)
+                          Número de Parcelas (Juros de acordo com a taxa da operadora)
                         </label>
                         <select
                           value={customer.parcelasCredito}
@@ -795,11 +795,13 @@ export default function CartAndCheckoutDrawer({
                         >
                           {Array.from({ length: 12 }, (_, i) => i + 1).map((parcela) => (
                             <option key={parcela} value={parcela}>
-                              {parcela}x de {formatBRL(finalTotal / parcela)} sem juros (Total:{' '}
-                              {formatBRL(finalTotal)})
+                              {parcela}x de {formatBRL(finalTotal / parcela)}* (+ taxa da operadora)
                             </option>
                           ))}
                         </select>
+                        <p className="text-[11px] text-amber-300/90 font-semibold mt-1.5">
+                          * No cartão de crédito, os juros serão calculados de acordo com a taxa da operadora.
+                        </p>
                       </div>
 
                       <div>
@@ -1021,9 +1023,7 @@ export default function CartAndCheckoutDrawer({
                       {customer.metodoPagamento === 'pix'
                         ? 'Com 5% de desconto no PIX'
                         : customer.metodoPagamento === 'credito'
-                        ? `Ou em ${customer.parcelasCredito}x de ${formatBRL(
-                            finalTotal / customer.parcelasCredito
-                          )} sem juros`
+                        ? `Ou em ${customer.parcelasCredito}x (+ juros conforme taxa da operadora)`
                         : 'Pagamento no Cartão de Débito'}
                     </span>
                   </div>

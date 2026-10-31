@@ -211,16 +211,19 @@ export default function ProductDetailModal({
                   </span>
                 </div>
 
-                <div className="pt-2 border-t border-zinc-200 flex items-center justify-between text-xs text-zinc-700">
+                <div className="pt-2 border-t border-zinc-200 flex items-center justify-between gap-2 text-xs text-zinc-700">
                   <span className="font-bold">
-                    Cartão: <strong>{formatBRL(product.precoPor)}</strong> ({product.parcelamento})
+                    Cartão em até {product.maxParcelasSemJuros}x{' '}
+                    <span className="text-zinc-500 font-semibold">
+                      (juros de acordo com a taxa da operadora)
+                    </span>
                   </span>
                   <button
                     type="button"
                     onClick={() => setActiveTab('parcelas')}
-                    className="text-[#059669] hover:underline font-extrabold cursor-pointer"
+                    className="text-[#059669] hover:underline font-extrabold cursor-pointer shrink-0"
                   >
-                    Ver parcelas
+                    Ver opções
                   </button>
                 </div>
               </div>
@@ -396,6 +399,19 @@ export default function ProductDetailModal({
                   </span>
                 </div>
 
+                {/* Aviso claro sobre a taxa da operadora do cartão */}
+                <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-300 rounded-xl p-3 text-amber-950">
+                  <CreditCard className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div className="text-xs leading-relaxed">
+                    <p className="font-black text-amber-900">
+                      Parcelamento no Cartão de Crédito em até {product.maxParcelasSemJuros}x
+                    </p>
+                    <p className="font-semibold text-amber-800 mt-0.5">
+                      Os juros do parcelamento serão calculados de acordo com a taxa da operadora do cartão/maquininha.
+                    </p>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {Array.from({ length: product.maxParcelasSemJuros }, (_, i) => i + 1).map(
                     (parcela) => (
@@ -403,14 +419,20 @@ export default function ProductDetailModal({
                         key={parcela}
                         className="bg-white border border-zinc-200 rounded-xl p-2.5 flex items-center justify-between text-xs"
                       >
-                        <span className="font-bold text-zinc-700">{parcela}x sem juros</span>
+                        <span className="font-bold text-zinc-700">
+                          {parcela}x <span className="text-[10px] text-zinc-500 font-semibold">(+ taxa da operadora)</span>
+                        </span>
                         <span className="font-extrabold text-[#0A0A0A]">
-                          {formatBRL(product.precoPor / parcela)}
+                          {formatBRL(product.precoPix / parcela)}*
                         </span>
                       </div>
                     )
                   )}
                 </div>
+
+                <p className="text-[11px] text-zinc-500 font-semibold text-center pt-1">
+                  * Valores base de referência por parcela. O acréscimo de juros varia de acordo com a taxa da operadora no ato do pagamento.
+                </p>
               </div>
             )}
           </div>
