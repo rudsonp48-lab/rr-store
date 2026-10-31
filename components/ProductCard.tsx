@@ -95,10 +95,10 @@ export default function ProductCard({
           </span>
         </div>
 
-        {/* Badge de Economia Total + Botão Rápido Ver Detalhes */}
+        {/* Badge Preço de Atacado + Botão Rápido Ver Detalhes */}
         <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between gap-1">
           <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-black bg-[#0A0A0A] text-[#34D399] border border-[#10B981]/40">
-            -{discountPercent}% OFF
+            Preço de Atacado
           </span>
 
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-bold bg-white/95 text-zinc-800 shadow-sm border border-zinc-200/80">
@@ -179,18 +179,16 @@ export default function ProductCard({
         </div>
 
         <div>
-          {/* Bloco de Preços */}
+          {/* Bloco de Preços (Valor de Atacado Integral) */}
           <div
             className={`bg-[#F8F9FA] rounded-xl ${
               compactMobile ? 'p-2.5 sm:p-3' : 'p-3'
             } border border-zinc-200/80 mb-3`}
           >
-            <div className="flex items-center justify-between text-[11px] text-zinc-400 mb-0.5">
-              <span className="truncate">
-                De <del className="font-semibold">{formatBRL(product.precoDe)}</del>
-              </span>
+            <div className="flex items-center justify-between text-[11px] text-zinc-500 mb-0.5">
+              <span className="truncate font-semibold text-zinc-600">Valor de Atacado</span>
               <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#059669] bg-[#10B981]/15 px-1.5 py-0.5 rounded shrink-0">
-                {isApple ? 'PIX / DINHEIRO' : '-5% PIX'}
+                PIX / DINHEIRO
               </span>
             </div>
 
@@ -203,7 +201,7 @@ export default function ProductCard({
                 {formatBRL(product.precoPix)}
               </span>
               <span className="text-[10px] sm:text-xs font-bold text-[#059669]">
-                no PIX
+                à vista no PIX
               </span>
             </div>
 

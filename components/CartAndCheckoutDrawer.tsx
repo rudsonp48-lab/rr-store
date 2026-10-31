@@ -94,24 +94,20 @@ export default function CartAndCheckoutDrawer({
     }
   }, [isOpen, step]);
 
-  // Calculations
+  // Calculations — Preço de Atacado Integral (sem abater descontos do valor postado)
   const subtotal = useMemo(() => {
-    return items.reduce((acc, item) => acc + item.product.precoPor * item.quantity, 0);
+    return items.reduce((acc, item) => acc + item.product.precoPix * item.quantity, 0);
   }, [items]);
 
-  const pixDiscount = useMemo(() => {
-    return Number((subtotal * 0.05).toFixed(2));
-  }, [subtotal]);
+  const pixDiscount = 0;
 
   const isFreeShipping = subtotal >= selectedRegion.freteGratisAcimaDe && items.length > 0;
   const shippingCost = items.length === 0 ? 0 : isFreeShipping ? 0 : selectedRegion.taxaEntrega;
 
   const finalTotal = useMemo(() => {
     if (items.length === 0) return 0;
-    const discountedProducts =
-      customer.metodoPagamento === 'pix' ? subtotal - pixDiscount : subtotal;
-    return Number((discountedProducts + shippingCost).toFixed(2));
-  }, [items.length, customer.metodoPagamento, subtotal, pixDiscount, shippingCost]);
+    return Number((subtotal + shippingCost).toFixed(2));
+  }, [items.length, subtotal, shippingCost]);
 
   const missingForFreeShipping = Math.max(0, selectedRegion.freteGratisAcimaDe - subtotal);
   const freeShippingProgress = Math.min(
@@ -385,7 +381,7 @@ export default function CartAndCheckoutDrawer({
                               {formatBRL(product.precoPix * quantity)} no PIX
                             </span>
                             <span className="text-[11px] text-zinc-400">
-                              ou {formatBRL(product.precoPor * quantity)} cartão
+                              Cartão (+ taxa da operadora)
                             </span>
                           </div>
                         </div>
@@ -628,7 +624,7 @@ export default function CartAndCheckoutDrawer({
                         {
                           id: 'pix',
                           title: 'PIX',
-                          subtitle: '5% OFF Imediato',
+                          subtitle: 'Preço de Atacado',
                           icon: QrCode,
                         },
                         {
@@ -671,7 +667,7 @@ export default function CartAndCheckoutDrawer({
                             />
                             {tab.id === 'pix' && (
                               <span className="text-[9px] font-black uppercase bg-[#10B981] text-[#0A0A0A] px-1.5 py-0.5 rounded">
-                                -5%
+                                Atacado
                               </span>
                             )}
                           </div>
@@ -688,11 +684,10 @@ export default function CartAndCheckoutDrawer({
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="inline-flex items-center gap-1 text-[11px] font-black uppercase text-[#0A0A0A] bg-[#34D399] px-2 py-0.5 rounded-md">
-                            Aprovação Imediata • 5% OFF Aplicado
+                            Aprovação Imediata • Preço de Atacado
                           </span>
                           <p className="text-xs text-zinc-300 mt-1">
-                            Você está economizando{' '}
-                            <strong className="text-[#34D399]">{formatBRL(pixDiscount)}</strong> neste pedido!
+                            Valor integral de atacado garantido para pagamento via PIX.
                           </p>
                         </div>
                         <div className="text-right">
@@ -1000,13 +995,6 @@ export default function CartAndCheckoutDrawer({
                   <span className="font-semibold text-white">{formatBRL(subtotal)}</span>
                 </div>
 
-                {customer.metodoPagamento === 'pix' && (
-                  <div className="flex justify-between text-[#34D399]">
-                    <span className="font-semibold">Desconto PIX (5% OFF imediato)</span>
-                    <span className="font-bold">-{formatBRL(pixDiscount)}</span>
-                  </div>
-                )}
-
                 <div className="flex justify-between text-zinc-400">
                   <span>Entrega Expressa ({selectedRegion.nome})</span>
                   <span className="font-bold text-[#34D399]">
@@ -1021,7 +1009,7 @@ export default function CartAndCheckoutDrawer({
                     </span>
                     <span className="text-[11px] text-zinc-400">
                       {customer.metodoPagamento === 'pix'
-                        ? 'Com 5% de desconto no PIX'
+                        ? 'Preço de Atacado à vista no PIX'
                         : customer.metodoPagamento === 'credito'
                         ? `Ou em ${customer.parcelasCredito}x (+ juros conforme taxa da operadora)`
                         : 'Pagamento no Cartão de Débito'}

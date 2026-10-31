@@ -241,7 +241,7 @@ export function getProductSeoDetails(product: Product): ProductSeoDetails {
   let beneficios = [
     'Produto novo, testado e revisado antes do envio em Brasília-DF',
     'Despacho expresso no mesmo dia via Motoboy para todas as RAs do DF',
-    '5% de desconto imediato no PIX ou parcelamento facilitado no cartão',
+    'Preço especial de atacado à vista no PIX ou parcelamento em até 12x no cartão (taxa da operadora)',
     '7 dias de Garantia de Satisfação e Troca Fácil diretamente na loja',
   ];
 

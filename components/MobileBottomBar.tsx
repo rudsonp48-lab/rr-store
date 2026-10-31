@@ -65,7 +65,7 @@ export default function MobileBottomBar({
                     {formatBRL(cartSubtotalPix)}
                   </span>
                   <span className="text-[10px] font-bold text-zinc-400">
-                    no PIX (5% OFF)
+                    no PIX (Atacado)
                   </span>
                 </div>
                 <p className="text-[11px] text-zinc-300 truncate flex items-center gap-1">

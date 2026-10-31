@@ -20,8 +20,8 @@ export function buildSingleProductWhatsAppUrl(product: Product, regiaoNome: stri
     ``,
     `🛍️ *Produto:* ${product.nome}`,
     `📂 *Departamento:* ${product.categoria}`,
-    `💚 *Valor no PIX (5% OFF):* ${formatBRL(product.precoPix)}`,
-    `💳 *Valor no Cartão:* ${formatBRL(product.precoPor)} (${product.parcelamento})`,
+    `💚 *Valor à Vista no PIX (Atacado):* ${formatBRL(product.precoPix)}`,
+    `💳 *Cartão de Crédito:* ${product.parcelamento}`,
     `📍 *Minha Região no DF:* ${regiaoNome}`,
     ``,
     `Podem confirmar a disponibilidade para *entrega expressa via Motoboy hoje*? 🚀`,
@@ -59,9 +59,8 @@ export function buildCheckoutWhatsAppUrl(params: {
 
   let paymentDescription = '';
   if (customer.metodoPagamento === 'pix') {
-    paymentDescription = `PIX com 5% de Desconto Imediato (Economia de ${formatBRL(pixDiscount)})`;
+    paymentDescription = `PIX à Vista (Valor Integral de Atacado)`;
   } else if (customer.metodoPagamento === 'credito') {
-    const installmentValue = finalTotal / customer.parcelasCredito;
     const modeLabel =
       customer.modoCartao === 'link_seguro'
         ? 'Link de Pagamento Seguro'
@@ -85,8 +84,7 @@ export function buildCheckoutWhatsAppUrl(params: {
     ...itemsLines,
     `━━━━━━━━━━━━━━━━━━━━`,
     `💰 *RESUMO FINANCEIRO:*`,
-    `• Subtotal dos Produtos: ${formatBRL(subtotal)}`,
-    customer.metodoPagamento === 'pix' ? `• Desconto PIX (5% OFF): -${formatBRL(pixDiscount)}` : null,
+    `• Subtotal dos Produtos (Atacado): ${formatBRL(subtotal)}`,
     `• Taxa de Entrega (${region.nome}): ${shippingCost === 0 ? 'GRÁTIS 🎉' : formatBRL(shippingCost)}`,
     `🔥 *VALOR TOTAL FINAL: ${formatBRL(finalTotal)}*`,
     `━━━━━━━━━━━━━━━━━━━━`,

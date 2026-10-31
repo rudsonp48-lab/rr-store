@@ -124,7 +124,7 @@ export default function ProductDetailModal({
 
                 <div className="absolute top-3 left-3 flex flex-col gap-1.5">
                   <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-black bg-[#0A0A0A] text-[#34D399] shadow">
-                    -{discountPercent}% OFF
+                    Preço de Atacado
                   </span>
                 </div>
 
@@ -191,14 +191,12 @@ export default function ProductDetailModal({
                 </p>
               </div>
 
-              {/* Card de Preços */}
+              {/* Card de Preços (Valor Integral de Atacado) */}
               <div className="bg-[#F8F9FA] border-2 border-[#10B981]/35 rounded-2xl p-4 space-y-2">
                 <div className="flex items-center justify-between text-xs text-zinc-500">
-                  <span>
-                    De <del className="font-semibold">{formatBRL(product.precoDe)}</del>
-                  </span>
+                  <span className="font-bold text-zinc-700">Valor Oficial de Atacado</span>
                   <span className="font-extrabold text-[#059669] bg-[#10B981]/15 px-2 py-0.5 rounded-md">
-                    Economize {formatBRL(savingsAmount)}
+                    Pronta Entrega SIA Loja D439
                   </span>
                 </div>
 
@@ -207,7 +205,7 @@ export default function ProductDetailModal({
                     {formatBRL(product.precoPix)}
                   </span>
                   <span className="text-xs sm:text-sm font-extrabold text-[#0A0A0A] bg-[#34D399] px-2 py-0.5 rounded-md">
-                    à vista no PIX {seo.isAppleOfficial ? 'ou Dinheiro' : '(-5%)'}
+                    à vista no PIX ou Dinheiro
                   </span>
                 </div>
 

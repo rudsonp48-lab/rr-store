@@ -86,7 +86,7 @@ export default function TopBarAndHeader({
       <div className="bg-[#10B981] text-[#0A0A0A] border-b border-[#34D399]/30">
         <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-1.5 sm:py-2 flex items-center justify-between gap-2">
           <p className="text-[11px] sm:text-xs md:text-sm font-extrabold tracking-tight truncate mx-auto sm:mx-0">
-            🚀 Entrega Expressa via Motoboy hoje em Brasília-DF • 💳 5% OFF no PIX ou até 12x
+            🚀 Entrega Expressa via Motoboy hoje em Brasília-DF • 💎 Preço de Atacado no PIX ou Cartão em até 12x
           </p>
           <div className="hidden lg:flex items-center gap-3 text-xs font-bold shrink-0">
             <span className="inline-flex items-center gap-1 bg-[#0A0A0A] text-[#34D399] px-2.5 py-0.5 rounded-full">
@@ -145,7 +145,7 @@ export default function TopBarAndHeader({
                   placeholder="Buscar produtos, marcas ou departamentos (ex: Fone TWS, Creatina, Sérum)..."
                   className="motion-input-focus w-full bg-[#121212] text-white placeholder-zinc-500 text-sm pl-10 pr-24 py-2.5 rounded-xl border border-white/10 focus:outline-none"
                 />
-                {searchQuery ? (
+                {searchQuery && (
                   <button
                     type="button"
                     onClick={() => onSearchChange('')}
@@ -154,11 +154,6 @@ export default function TopBarAndHeader({
                     <X className="w-3.5 h-3.5" />
                     Limpar
                   </button>
-                ) : (
-                  <span className="inline-flex items-center gap-1 absolute right-3 text-[11px] font-semibold text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/20 px-2 py-0.5 rounded-md pointer-events-none">
-                    <Sparkles className="w-3 h-3" />
-                    10 Nichos
-                  </span>
                 )}
               </div>
             </div>

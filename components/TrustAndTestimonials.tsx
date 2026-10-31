@@ -46,7 +46,7 @@ export default function TrustAndTestimonials({
       title: 'Risco Zero: Pague no PIX ou na Entrega',
       description:
         'Economize à vista no PIX, parcele em até 12x no cartão (juros de acordo com a taxa da operadora) ou passe seu cartão na maquininha do motoboy.',
-      highlight: '5% OFF ou 12x',
+      highlight: 'Preço de Atacado',
     },
     {
       icon: Award,
@@ -76,7 +76,7 @@ export default function TrustAndTestimonials({
       step: '02',
       title: 'Escolha sua Região do DF e pagamento',
       description:
-        'Selecione sua Região Administrativa para ver a taxa de motoboy (ou Frete Grátis) e escolha entre PIX 5% OFF, Crédito 12x ou Débito na entrega.',
+        'Selecione sua Região Administrativa para ver a taxa de motoboy (ou Frete Grátis) e escolha entre PIX à vista, Crédito em até 12x ou Débito na entrega.',
       badge: 'Checkout Híbrido Transparente',
     },
     {
@@ -390,8 +390,8 @@ export default function TrustAndTestimonials({
               </h2>
 
               <p className="text-xs sm:text-base text-zinc-300 max-w-2xl mx-auto mt-3 leading-relaxed">
-                Aproveite <strong className="text-[#34D399]">5% OFF imediato no PIX</strong>, parcele em até{' '}
-                <strong className="text-white">12x no Cartão</strong> ou pague somente na entrega direto na
+                Aproveite nosso <strong className="text-[#34D399]">Preço de Atacado no PIX</strong>, parcele em até{' '}
+                <strong className="text-white">12x no Cartão</strong> (juros conforme taxa da operadora) ou pague na entrega direto na
                 maquininha do nosso motoboy. Frete grátis em compras acima de{' '}
                 <strong className="text-white">
                   {selectedRegion ? formatBRL(selectedRegion.freteGratisAcimaDe) : 'R$ 199,00'}

@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'RR Mobile | RR Store Brasília • Entrega Expressa 45–90 min no DF',
   description:
-    'Tudo o que seu dia a dia em Brasília precisa, na velocidade de um clique. 10 departamentos com entrega via Motoboy no mesmo dia em todo o DF, 5% OFF no PIX ou até 12x no Cartão.',
+    'Tudo o que seu dia a dia em Brasília precisa, na velocidade de um clique. Departamentos oficiais com entrega via Motoboy no mesmo dia em todo o DF, Preço de Atacado no PIX ou até 12x no Cartão.',
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'RR Mobile | Entrega Expressa no Mesmo Dia em Brasília-DF',
     description:
-      'Receba em 45–90 min via Motoboy Express em Brasília-DF. 10 departamentos, 5% OFF no PIX ou pague na entrega na maquininha.',
+      'Receba em 45–90 min via Motoboy Express em Brasília-DF. Preço de Atacado no PIX ou pague na entrega na maquininha.',
     locale: 'pt_BR',
     type: 'website',
   },

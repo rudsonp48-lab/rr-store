@@ -475,34 +475,6 @@ export default function HeroSection({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Botão para alternar o palco central entre PNG Grande Sem Fundo e Vídeo Oficial Apple */}
-            <div className="inline-flex items-center bg-white border border-zinc-200/90 rounded-full p-0.5 shadow-xs">
-              <button
-                type="button"
-                onClick={() => setStageMode('cutout')}
-                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
-                  stageMode === 'cutout'
-                    ? 'bg-[#7C63E6] text-white shadow-xs'
-                    : 'text-zinc-600 hover:text-zinc-900'
-                }`}
-              >
-                <ImageIcon className="w-3 h-3" />
-                <span>PNG 4K</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setStageMode('video')}
-                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
-                  stageMode === 'video'
-                    ? 'bg-[#111115] text-white shadow-xs'
-                    : 'text-zinc-600 hover:text-zinc-900'
-                }`}
-              >
-                <Play className="w-3 h-3 fill-current" />
-                <span>Vídeo Apple</span>
-              </button>
-            </div>
-
             <span className="text-[11px] uppercase tracking-[0.16em] text-zinc-500 font-bold hidden sm:inline">
               Destaque {safeIndex + 1}/{slides.length}
             </span>
@@ -656,7 +628,7 @@ export default function HeroSection({
                       <Sparkles className="w-4 h-4 fill-white text-white" />
                       <span>
                         {currentProduct
-                          ? `${currentProduct.tag} • PIX -${discountPercent}% OFF`
+                          ? `${currentProduct.tag} • Preço de Atacado`
                           : 'Coleção Oficial RR Store'}
                       </span>
                     </div>

@@ -5,7 +5,7 @@ export const WHATSAPP_NUMBER_SECONDARY = '5561985964112';
 export const STORE_ADDRESS = 'Feira dos Importados do SIA — Conjunto D, Loja D439 • SIA Trecho 7, Brasília - DF';
 
 export function calculatePixPrice(precoPor: number): number {
-  return Number((precoPor * 0.95).toFixed(2));
+  return Number(precoPor.toFixed(2));
 }
 
 export function formatBRL(value: number): string {
@@ -6017,25 +6017,32 @@ export function applySupplierMarkup(cost: number): { precoPor: number; precoDe: 
 
 export const PRODUCTS: Product[] = rawProducts.map((p) => {
   const isSupplierItem = p.id.startsWith('gsm-');
+  const isAppleItem = p.id.startsWith('rr-apple-');
   const precoCusto =
     typeof p.precoCusto === 'number'
       ? p.precoCusto
       : isSupplierItem
       ? Number(p.precoPor.toFixed(2))
       : Number((p.precoPor / 1.38).toFixed(2));
-  const { precoPor, precoDe } = isSupplierItem
+  const rawBase = isSupplierItem
     ? applySupplierMarkup(p.precoPor)
     : { precoPor: p.precoPor, precoDe: p.precoDe };
-  const maxParcelasSemJuros = precoPor >= 200 ? 12 : precoPor >= 80 ? 6 : 3;
+
+  // Valor integral de atacado postado (sem abater 5% do lojista)
+  const valorIntegralAtacado = isAppleItem
+    ? Math.round(rawBase.precoPor * 0.95)
+    : Number(rawBase.precoPor.toFixed(2));
+  const precoDe = Number(Math.max(rawBase.precoDe, valorIntegralAtacado * 1.15).toFixed(2));
+  const maxParcelasSemJuros = valorIntegralAtacado >= 200 ? 12 : valorIntegralAtacado >= 80 ? 6 : 3;
 
   return {
     ...p,
     precoCusto,
     precoDe,
-    precoPor,
+    precoPor: valorIntegralAtacado,
     maxParcelasSemJuros,
-    precoPix: calculatePixPrice(precoPor),
-    parcelamento: formatInstallment(precoPor, maxParcelasSemJuros),
+    precoPix: valorIntegralAtacado,
+    parcelamento: formatInstallment(valorIntegralAtacado, maxParcelasSemJuros),
   };
 });
 

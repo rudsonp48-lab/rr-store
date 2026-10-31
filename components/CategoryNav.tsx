@@ -57,7 +57,7 @@ export default function CategoryNav({
               Navegue por Departamento
             </span>
             <h2 className="text-lg sm:text-2xl font-black text-white tracking-tight mt-0.5">
-              Os 10 Nichos Oficiais da RR Store
+              Departamentos Oficiais da RR Store
             </h2>
           </div>
           <span className="sm:hidden inline-flex items-center gap-0.5 text-[11px] font-bold text-[#34D399] shrink-0">

@@ -40,7 +40,7 @@ type QuickFilterId =
   | 'ssd';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v8';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v9';
 
 const LOCAL_CURATED_MAP = new Map<string, Product>(PRODUCTS.map((p) => [p.id, p]));
 
@@ -58,11 +58,16 @@ function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
         nome: local.nome,
         imagem: local.imagem,
         descricao: local.descricao,
+        precoPor: local.precoPor,
+        precoPix: local.precoPix,
         parcelamento: cleanParcelamento,
       };
     }
+    const integralPrice = local ? local.precoPix : cp.precoPor;
     return {
       ...cp,
+      precoPor: integralPrice,
+      precoPix: integralPrice,
       parcelamento: cleanParcelamento,
     };
   });
@@ -398,11 +403,8 @@ export default function RRStorePage() {
         if (found) setSelectedRegion(found);
       }
 
-      const savedReducedMotion = localStorage.getItem('rr_store_reduced_motion_v1');
-      if (savedReducedMotion === 'true') {
-        setReducedMotion(true);
-        document.documentElement.classList.add('reduced-motion');
-      }
+      localStorage.removeItem('rr_store_reduced_motion_v1');
+      document.documentElement.classList.remove('reduced-motion');
     } catch {
       // Ignore storage errors
     }
@@ -743,20 +745,6 @@ export default function RRStorePage() {
                   <span>Ver Tudo ({products.length})</span>
                 </button>
               )}
-
-              <button
-                type="button"
-                onClick={toggleReducedMotion}
-                className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
-                  reducedMotion
-                    ? 'bg-[#0A0A0A] text-[#34D399] border-[#10B981]'
-                    : 'bg-[#F8F9FA] text-zinc-600 border-zinc-200 hover:bg-zinc-100'
-                }`}
-                title="Acessibilidade: Ativar ou desativar animações (Reduced Motion)"
-              >
-                <EyeOff className="w-3.5 h-3.5" />
-                <span>{reducedMotion ? 'Movimento Reduzido: ON' : 'Reduzir Animações'}</span>
-              </button>
 
               <div className="flex items-center gap-1.5 bg-[#F8F9FA] border border-zinc-200 rounded-xl px-2.5 py-2">
                 <SlidersHorizontal className="w-3.5 h-3.5 text-[#059669] shrink-0" />
