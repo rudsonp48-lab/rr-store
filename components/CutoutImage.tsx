@@ -5,14 +5,15 @@ import React, { useEffect, useState } from 'react';
 /**
  * Remove automaticamente o fundo branco/claro das fotos de produto
  * (flood-fill a partir das bordas), preservando partes brancas do próprio
- * produto que não tocam a borda (ex.: AirPods, iPhone prata).
+ * produto que não tocam a borda (ex.: AirPods, iPhone prata) e realizando
+ * auto-crop inteligente da área útil para manter proporção uniforme no banner.
  * Resultado é cacheado em memória por URL.
  */
 
 const cache = new Map<string, string | null>();
 const pending = new Map<string, Promise<string | null>>();
 
-const MAX_SIDE = 1000;
+const MAX_SIDE = 1200;
 // Tolerâncias calibradas para fundo de estúdio branco/claro (250-255):
 // Evita "vazar" para dentro de corpos brancos ou reflexos prateados (AirPods, relógio, etc.)
 const TOL_HARD = 4;
@@ -33,6 +34,62 @@ function loadImage(src: string): Promise<HTMLImageElement> {
     img.onerror = reject;
     img.src = src;
   });
+}
+
+function cropToBoundingBox(
+  sourceCanvas: HTMLCanvasElement,
+  d: Uint8ClampedArray,
+  w: number,
+  h: number
+): string {
+  let minX = w;
+  let minY = h;
+  let maxX = -1;
+  let maxY = -1;
+
+  for (let y = 0; y < h; y++) {
+    const rowOffset = y * w;
+    for (let x = 0; x < w; x++) {
+      const alpha = d[(rowOffset + x) * 4 + 3];
+      if (alpha > 16) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+
+  if (maxX < minX || maxY < minY) {
+    return sourceCanvas.toDataURL('image/png');
+  }
+
+  const contentW = maxX - minX + 1;
+  const contentH = maxY - minY + 1;
+  const pad = Math.round(Math.max(contentW, contentH) * 0.03);
+
+  const outW = contentW + pad * 2;
+  const outH = contentH + pad * 2;
+
+  const outCanvas = document.createElement('canvas');
+  outCanvas.width = outW;
+  outCanvas.height = outH;
+  const outCtx = outCanvas.getContext('2d');
+  if (!outCtx) return sourceCanvas.toDataURL('image/png');
+
+  outCtx.drawImage(
+    sourceCanvas,
+    minX,
+    minY,
+    contentW,
+    contentH,
+    pad,
+    pad,
+    contentW,
+    contentH
+  );
+
+  return outCanvas.toDataURL('image/png');
 }
 
 async function processCutout(src: string): Promise<string | null> {
@@ -84,8 +141,10 @@ async function processCutout(src: string): Promise<string | null> {
     sampleBorder(w - 1, y);
   }
 
-  // PNG já recortado: usa como está
-  if (transparent / total > 0.6) return canvas.toDataURL('image/png');
+  // PNG já recortado: aplica apenas o auto-crop da área útil para preencher o palco
+  if (transparent / total > 0.6) {
+    return cropToBoundingBox(canvas, d, w, h);
+  }
   // Foto sem borda predominantemente de estúdio claro: não arrisca recortar
   if (light / total < 0.6) return null;
 
@@ -142,7 +201,7 @@ async function processCutout(src: string): Promise<string | null> {
   }
 
   ctx.putImageData(imageData, 0, 0);
-  return canvas.toDataURL('image/png');
+  return cropToBoundingBox(canvas, d, w, h);
 }
 
 export function getCutout(src: string): Promise<string | null> {
@@ -181,14 +240,7 @@ export default function CutoutImage({ src, alt, className = '', style }: CutoutI
     done: cache.has(src),
   }));
 
-  const isNativePng =
-    src.includes('fmt=png-alpha') ||
-    src.endsWith('.png') ||
-    src.includes('.png?') ||
-    src.startsWith('data:image/png');
-
   useEffect(() => {
-    if (isNativePng) return;
     let alive = true;
     if (cache.has(src)) {
       setState({ src, url: cache.get(src) ?? null, done: true });
@@ -201,11 +253,7 @@ export default function CutoutImage({ src, alt, className = '', style }: CutoutI
     return () => {
       alive = false;
     };
-  }, [src, isNativePng]);
-
-  if (isNativePng) {
-    return <img src={src} alt={alt} className={className} style={style} draggable={false} />;
-  }
+  }, [src]);
 
   const ready = state.src === src && state.done;
 

@@ -27,9 +27,84 @@ import MobileBottomBar from '../components/MobileBottomBar';
 import { loadStoreSettings } from '../lib/firebase';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
+type QuickFilterId =
+  | 'todos'
+  | 'apple'
+  | 'xiaomi'
+  | 'realme'
+  | 'samsung'
+  | 'gamer'
+  | 'jbl-audio'
+  | 'smartwatches'
+  | 'ssd';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v5';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v6';
+
+const LOCAL_CURATED_MAP = new Map<string, Product>(PRODUCTS.map((p) => [p.id, p]));
+
+function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
+  const cloudIds = new Set(cloudProducts.map((p) => p.id));
+  const sanitizedCloud = cloudProducts.map((cp) => {
+    const local = LOCAL_CURATED_MAP.get(cp.id);
+    if (local && (cp.id.startsWith('rr-apple-') || cp.id.startsWith('sousa-'))) {
+      return {
+        ...cp,
+        nome: local.nome,
+        imagem: local.imagem,
+        descricao: local.descricao,
+      };
+    }
+    return cp;
+  });
+  return [...PRODUCTS.filter((p) => !cloudIds.has(p.id)), ...sanitizedCloud];
+}
+
+function matchesQuickFilter(product: Product, filterId: QuickFilterId): boolean {
+  if (filterId === 'todos') return true;
+  const name = product.nome.toLowerCase();
+  const text = `${product.nome} ${product.descricao}`.toLowerCase();
+
+  switch (filterId) {
+    case 'apple':
+      return (
+        product.id.startsWith('rr-apple-') ||
+        /\b(iphone|ipad|macbook|mac mini|airpods|airtag|apple watch|magic mouse|magic keyboard|apple pencil|magsafe)\b/i.test(
+          name
+        )
+      );
+    case 'xiaomi':
+      return /\b(xiaomi|redmi|poco|mi tv)\b/i.test(name);
+    case 'realme':
+      return /\brealme\b/i.test(name);
+    case 'samsung':
+      return /\b(samsung|galaxy)\b/i.test(name);
+    case 'gamer':
+      return /\b(ps5|playstation|dualsense|gamer|joystick|controle|mouse gamer|teclado mec[aâ]nico|headset)\b/i.test(
+        text
+      );
+    case 'jbl-audio':
+      return /\b(jbl|airpods|buds|headphone|fone|caixa de som|speaker|microfone)\b/i.test(name);
+    case 'smartwatches':
+      return /\b(smartwatch|apple watch|amazfit|haylou|rel[oó]gio)\b/i.test(name);
+    case 'ssd':
+      return /\b(ssd|nvme|sata|sandisk|kingston|case gaveta)\b/i.test(name);
+    default:
+      return true;
+  }
+}
+
+const QUICK_FILTER_CHIPS: { id: QuickFilterId; label: string; icon: string }[] = [
+  { id: 'todos', label: 'Todos', icon: '⚡' },
+  { id: 'apple', label: 'iPhone & Apple', icon: '🍏' },
+  { id: 'xiaomi', label: 'Xiaomi / Redmi', icon: '📱' },
+  { id: 'realme', label: 'Realme', icon: '⚡' },
+  { id: 'samsung', label: 'Samsung Galaxy', icon: '✨' },
+  { id: 'gamer', label: 'Gamer & PS5', icon: '🎮' },
+  { id: 'jbl-audio', label: 'JBL & Áudio', icon: '🔊' },
+  { id: 'smartwatches', label: 'Smartwatches', icon: '⌚' },
+  { id: 'ssd', label: 'SSD & Armazenamento', icon: '💾' },
+];
 
 function prioritizeAppleProducts(list: Product[]): Product[] {
   const apple = list.filter((p) => p.id.startsWith('rr-apple-'));
@@ -42,6 +117,7 @@ export default function RRStorePage() {
   const [regions, setRegions] = useState<DFRegion[]>(DF_REGIONS);
   const [banners, setBanners] = useState<HeroBanner[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('Todos');
+  const [quickFilter, setQuickFilter] = useState<QuickFilterId>('todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<SortOption>('destaques');
   const [selectedRegion, setSelectedRegion] = useState<DFRegion>(DF_REGIONS[0]);
@@ -63,16 +139,13 @@ export default function RRStorePage() {
       localStorage.removeItem('rr_store_settings_cache_v2');
       localStorage.removeItem('rr_store_settings_cache_v3');
       localStorage.removeItem('rr_store_settings_cache_v4');
+      localStorage.removeItem('rr_store_settings_cache_v5');
 
       const cached = localStorage.getItem(SETTINGS_CACHE_KEY);
       if (cached) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed.products) && parsed.products.length > 0) {
-          const cloudIds = new Set(parsed.products.map((p: Product) => p.id));
-          const merged = [
-            ...PRODUCTS.filter((p) => !cloudIds.has(p.id)),
-            ...parsed.products,
-          ];
+          const merged = mergeWithVerifiedCatalog(parsed.products);
           setProducts(prioritizeAppleProducts(merged));
         }
         if (Array.isArray(parsed.regions) && parsed.regions.length > 0) {
@@ -108,11 +181,7 @@ export default function RRStorePage() {
       const cloud = await loadStoreSettings();
       let baseProducts = PRODUCTS;
       if (cloud.products && cloud.products.length > 0) {
-        const cloudIds = new Set(cloud.products.map((p) => p.id));
-        baseProducts = [
-          ...PRODUCTS.filter((p) => !cloudIds.has(p.id)),
-          ...cloud.products,
-        ];
+        baseProducts = mergeWithVerifiedCatalog(cloud.products);
       }
 
       // Sincroniza em tempo real com o fornecedor GSM Digital Acessórios
@@ -223,6 +292,7 @@ export default function RRStorePage() {
         selectedCategory === 'Todos' || product.categoria === selectedCategory;
 
       if (!matchesCategory) return false;
+      if (!matchesQuickFilter(product, quickFilter)) return false;
       if (!query) return true;
 
       return (
@@ -359,7 +429,10 @@ export default function RRStorePage() {
       {/* 2.3 Navegação por Departamentos (Os 10 Nichos da RR Store) */}
       <CategoryNav
         selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={(cat) => {
+          setSelectedCategory(cat);
+          setQuickFilter('todos');
+        }}
         products={products}
       />
 
@@ -421,11 +494,14 @@ export default function RRStorePage() {
                 </button>
               </div>
 
-              {(selectedCategory !== 'Todos' || searchQuery.trim() !== '') && (
+              {(selectedCategory !== 'Todos' ||
+                quickFilter !== 'todos' ||
+                searchQuery.trim() !== '') && (
                 <button
                   type="button"
                   onClick={() => {
                     setSelectedCategory('Todos');
+                    setQuickFilter('todos');
                     setSearchQuery('');
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-extrabold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 transition-colors cursor-pointer"
@@ -467,49 +543,47 @@ export default function RRStorePage() {
             </div>
           </div>
 
-          {/* Atalhos Rápidos de Busca por Marcas e Categorias Populares (Design Premium Moderno & Glassmorphism) */}
-          <div className="relative mb-6">
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 -mx-1 px-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/80 border border-white/10 text-white shrink-0 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-[#10B981]" />
-                <span className="text-[11px] font-black uppercase tracking-[0.12em] text-zinc-300">
+          {/* Atalhos Rápidos de Busca por Marcas e Categorias Populares (Design Premium Moderno & Funcional) */}
+          <div className="relative mb-6 bg-[#0A0A0A] rounded-2xl p-3 sm:p-4 border border-zinc-800 shadow-lg">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+              <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/[0.06] border border-white/10 text-white shrink-0">
+                <Sparkles className="w-3.5 h-3.5 text-[#34D399]" />
+                <span className="text-[11px] font-black uppercase tracking-[0.12em] text-zinc-200">
                   Filtro Rápido
                 </span>
               </div>
 
-              {[
-                { label: 'Todos', query: '', icon: '⚡' },
-                { label: 'iPhone & Apple', query: 'apple', icon: '🍏' },
-                { label: 'Xiaomi / Redmi', query: 'xiaomi', icon: '📱' },
-                { label: 'Realme', query: 'realme', icon: '⚡' },
-                { label: 'Samsung Galaxy', query: 'samsung', icon: '✨' },
-                { label: 'Gamer & PS5', query: 'dualsense', icon: '🎮' },
-                { label: 'JBL & Áudio', query: 'jbl', icon: '🔊' },
-                { label: 'Smartwatches', query: 'smartwatch', icon: '⌚' },
-                { label: 'SSD & Armazenamento', query: 'ssd', icon: '💾' },
-              ].map((chip) => {
-                const active = searchQuery.toLowerCase() === chip.query.toLowerCase();
+              {QUICK_FILTER_CHIPS.map((chip) => {
+                const active = quickFilter === chip.id && searchQuery.trim() === '';
+                const count = products.filter((p) => matchesQuickFilter(p, chip.id)).length;
                 return (
                   <button
                     type="button"
-                    key={chip.label}
+                    key={chip.id}
                     onClick={() => {
-                      setSearchQuery(chip.query);
-                      if (chip.query === '') setSelectedCategory('Todos');
+                      setQuickFilter(chip.id);
+                      setSelectedCategory('Todos');
+                      setSearchQuery('');
                     }}
-                    className={`group relative inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-extrabold whitespace-nowrap transition-all duration-300 shrink-0 cursor-pointer ${
+                    className={`group relative inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 cursor-pointer ${
                       active
-                        ? 'bg-gradient-to-r from-[#10B981] to-[#059669] text-[#0A0A0A] shadow-[0_8px_20px_rgba(16,185,129,0.35)] scale-[1.03] border border-[#34D399]'
-                        : 'bg-white hover:bg-zinc-50 text-zinc-800 border border-zinc-200/90 shadow-sm hover:border-[#10B981]/50 hover:shadow-md'
+                        ? 'bg-[#10B981] text-[#0A0A0A] shadow-[0_6px_18px_rgba(16,185,129,0.35)] border border-[#34D399]'
+                        : 'bg-white/[0.05] hover:bg-white/[0.12] text-zinc-200 border border-white/10 hover:border-white/25'
                     }`}
                   >
                     <span className="text-sm leading-none transition-transform group-hover:scale-110">
                       {chip.icon}
                     </span>
                     <span className="tracking-tight">{chip.label}</span>
-                    {active && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0A0A0A] animate-pulse" />
-                    )}
+                    <span
+                      className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                        active
+                          ? 'bg-[#0A0A0A]/20 text-[#0A0A0A]'
+                          : 'bg-white/10 text-zinc-400 group-hover:text-white'
+                      }`}
+                    >
+                      {count}
+                    </span>
                   </button>
                 );
               })}
@@ -533,6 +607,7 @@ export default function RRStorePage() {
                 type="button"
                 onClick={() => {
                   setSelectedCategory('Todos');
+                  setQuickFilter('todos');
                   setSearchQuery('');
                 }}
                 className="bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black text-xs sm:text-sm px-6 py-3 rounded-xl transition-all cursor-pointer"

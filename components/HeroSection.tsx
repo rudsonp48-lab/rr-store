@@ -37,9 +37,9 @@ interface HeroSlide {
 }
 
 const CURATED_FLAGSHIP_IDS = [
-  'rr-apple-ip18pm-256-bordo',
   'rr-apple-ip17pm-512-silver',
   'rr-apple-ip17pm-256-laranja',
+  'rr-apple-ip18pm-256-bordo',
   'rr-apple-watch-s12-42-dourado-bordo',
   'rr-apple-watch-ultra3-49-black',
   'rr-apple-macbook-air-m5-512-midnight',
@@ -153,12 +153,20 @@ export default function HeroSection({
     const source = products.length > 0 ? products : PRODUCTS;
     const activeBanners = banners.filter((b) => b.ativo && b.imagem);
     if (activeBanners.length > 0) {
-      return activeBanners.map((b) => ({
-        key: b.id,
-        imagem: b.imagem,
-        titulo: b.titulo,
-        product: b.produtoId ? source.find((p) => p.id === b.produtoId) : undefined,
-      }));
+      return activeBanners.map((b) => {
+        const linkedProduct = b.produtoId ? source.find((p) => p.id === b.produtoId) : undefined;
+        const useProductImg =
+          linkedProduct &&
+          (b.imagem.includes('iphone-16-pro') ||
+            b.imagem.includes('watch-compare') ||
+            b.imagem.includes('mba13-midnight-select'));
+        return {
+          key: b.id,
+          imagem: useProductImg ? linkedProduct.imagem : b.imagem,
+          titulo: b.titulo,
+          product: linkedProduct,
+        };
+      });
     }
 
     const curated: Product[] = [];
@@ -514,30 +522,30 @@ export default function HeroSection({
               }}
             />
 
-            {/* Moldura Dark Glass proporcional e ampliada (exatamente como no print) com esmaecer no scroll */}
+            {/* Moldura Dark Glass proporcional e ampliada (exatamente como no print) com esmaecer suave no scroll */}
             <div
-              className="relative w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] lg:w-[540px] lg:h-[540px] rounded-[52px] sm:rounded-[64px] border border-white/[0.14] bg-gradient-to-b from-white/[0.06] via-[#121214]/65 to-[#0A0A0C]/92 backdrop-blur-md p-5 sm:p-8 lg:p-10 shadow-[0_30px_90px_rgba(0,0,0,0.9)] flex items-center justify-center transition-all duration-300 ease-out"
+              className="relative w-full max-w-[340px] sm:max-w-[430px] lg:max-w-[480px] aspect-square rounded-[48px] sm:rounded-[60px] border border-white/[0.14] bg-gradient-to-b from-white/[0.06] via-[#121214]/70 to-[#0A0A0C]/95 backdrop-blur-md p-5 sm:p-7 lg:p-8 shadow-[0_30px_90px_rgba(0,0,0,0.9)] flex items-center justify-center transition-all duration-300 ease-out"
               style={{
-                opacity: Math.max(0.15, 1 - scrollProgress * 1.05),
-                filter: `blur(${scrollProgress * 4.5}px)`,
+                opacity: Math.max(0.18, 1 - Math.max(0, scrollProgress - 0.08) * 0.95),
+                filter: `blur(${Math.max(0, scrollProgress - 0.12) * 4}px)`,
                 transform: `perspective(1000px) rotateX(${mouseTilt.y * 0.4}deg) rotateY(${
                   mouseTilt.x * 0.4
-                }deg) translateY(${scrollProgress * -38}px) scale(${Math.max(
-                  0.88,
-                  1 + scrollProgress * 0.04 - scrollProgress * 0.12
+                }deg) translateY(${scrollProgress * -32}px) scale(${Math.max(
+                  0.9,
+                  1 - Math.max(0, scrollProgress - 0.08) * 0.1
                 )})`,
               }}
             >
               {/* Sombra de chão sob o produto */}
               <div className="pointer-events-none absolute bottom-[8%] w-[65%] h-10 rounded-[50%] bg-black/85 blur-2xl" />
 
-              {/* Imagem do produto em proporção 4K real destacada e maior */}
+              {/* Imagem do produto sem fundo e auto-recortada na proporção de destaque */}
               <div className="relative w-full h-full flex items-center justify-center p-2">
                 <CutoutImage
                   key={currentSlide.imagem}
                   src={currentSlide.imagem}
                   alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
-                  className="max-w-[94%] max-h-[94%] w-auto h-auto object-contain group-hover:scale-[1.04] transition-transform duration-500 ease-out drop-shadow-[0_25px_45px_rgba(0,0,0,0.8)]"
+                  className="max-w-[86%] max-h-[86%] w-auto h-auto object-contain group-hover:scale-[1.04] transition-transform duration-500 ease-out drop-shadow-[0_25px_45px_rgba(0,0,0,0.85)]"
                 />
               </div>
 
