@@ -4,16 +4,16 @@ import React, { useState, useEffect, useMemo } from 'react';
 import {
   Truck,
   ArrowRight,
-  ArrowUpRight,
-  Star,
   ChevronLeft,
   ChevronRight,
-  ShoppingBag,
+  ShoppingCart,
   Check,
   Sparkles,
-  Settings,
   MapPin,
   Eye,
+  ShieldCheck,
+  Store,
+  Heart,
 } from 'lucide-react';
 import { DFRegion, HeroBanner, Product } from '../types/store';
 import { formatBRL, PRODUCTS } from '../data/mockData';
@@ -50,87 +50,118 @@ const CURATED_FLAGSHIP_IDS = [
 ];
 
 /**
- * Divide o nome do produto/banner em 3 linhas monumentais em caixa alta
- * no estilo editorial "DESIGN / YOUR OWN / COGNITION" da referência.
+ * Gera os títulos divididos no topo (Esquerda e Direita) e a frase de impacto
+ * exatamente no formato editorial da imagem de referência ("Define Your STYLE / Own Your WORLD").
  */
-function buildMonumentalHeadline(rawTitle: string): [string, string, string] {
+function buildHeroCopy(rawTitle: string): {
+  leftTop: string;
+  leftBig: string;
+  rightTop: string;
+  rightBig: string;
+  cardHeadline1: string;
+  cardHeadline2: string;
+  shortName: string;
+  shortSub: string;
+} {
   const clean = rawTitle
     .replace(/\(Americano\s*🇺🇸\)/gi, '')
+    .replace(/\(Lacrado\)/gi, '')
     .replace(/\(Zerou no Estoque\)/gi, '')
     .replace(/\s+/g, ' ')
-    .trim()
-    .toUpperCase();
+    .trim();
+  const upper = clean.toUpperCase();
 
-  if (clean.includes('IPHONE')) {
+  if (upper.includes('IPHONE')) {
     const parts = clean.split(' - ');
-    const color = parts[1] || 'PRO SERIES';
-    if (clean.includes('PRO MAX')) {
-      const modelMatch = clean.match(/IPHONE\s+\d+/);
-      const storageMatch = clean.match(/\d+GB/);
-      return [
-        modelMatch ? modelMatch[0] : 'IPHONE PRO',
-        `PRO MAX ${storageMatch ? storageMatch[0] : ''}`.trim(),
-        color,
-      ];
-    }
-    const modelMatch = clean.match(/IPHONE\s+\d+\s*PRO?/);
-    const storageMatch = clean.match(/\d+GB/);
-    return [
-      modelMatch ? modelMatch[0] : 'IPHONE',
-      storageMatch ? `${storageMatch[0]} AMERICANO` : 'APPLE OFICIAL',
-      color,
-    ];
+    const color = parts[1] || 'Titânio Pro';
+    const modelMatch = upper.match(/IPHONE\s+\d+/);
+    const storageMatch = upper.match(/\d+GB/);
+    const isProMax = upper.includes('PRO MAX');
+    return {
+      leftTop: 'Escolha Seu',
+      leftBig: modelMatch ? modelMatch[0] : 'IPHONE',
+      rightTop: 'Domine Seu',
+      rightBig: isProMax ? 'PRO MAX' : 'PRO SERIES',
+      cardHeadline1: 'Onde a Potência',
+      cardHeadline2: 'Encontra a Perfeição',
+      shortName: `${modelMatch ? modelMatch[0] : 'iPhone'} ${isProMax ? 'Pro Max' : 'Pro'}`,
+      shortSub: `${storageMatch ? storageMatch[0] : '256GB'} • ${color}`,
+    };
   }
 
-  if (clean.includes('APPLE WATCH')) {
+  if (upper.includes('APPLE WATCH')) {
     const parts = clean.split(' - ');
-    const color = parts[1] || 'EDITION';
-    const series = clean.replace('APPLE WATCH', '').split(' - ')[0].trim();
-    return ['APPLE WATCH', series || 'SERIES PRO', color];
+    const color = parts[1] || 'Edição Especial';
+    const isUltra = upper.includes('ULTRA');
+    const seriesMatch = upper.match(/SERIES\s+\d+|ULTRA\s+\d+|SE\s+\d+/);
+    return {
+      leftTop: 'Eleve Seu',
+      leftBig: 'WATCH',
+      rightTop: 'Supere Seu',
+      rightBig: seriesMatch ? seriesMatch[0] : isUltra ? 'ULTRA 3' : 'SERIES 12',
+      cardHeadline1: 'Onde o Estilo',
+      cardHeadline2: 'Encontra a Saúde',
+      shortName: parts[0] || 'Apple Watch',
+      shortSub: color,
+    };
   }
 
-  if (clean.includes('MACBOOK')) {
+  if (upper.includes('MACBOOK')) {
     const parts = clean.split(' - ');
-    const color = parts[1] || 'APPLE SILICON';
-    if (clean.includes('MACBOOK AIR')) {
-      return ['MACBOOK AIR', 'CHIP M5 16GB', color];
-    }
-    return ['MACBOOK NEO', 'CHIP A18 PRO', color];
+    const color = parts[1] || 'Apple Silicon';
+    const isAir = upper.includes('AIR');
+    return {
+      leftTop: 'Crie Seu',
+      leftBig: 'MACBOOK',
+      rightTop: 'Acelere Seu',
+      rightBig: isAir ? 'CHIP M5' : 'NEO 13"',
+      cardHeadline1: 'Onde a Leveza',
+      cardHeadline2: 'Encontra a Performance',
+      shortName: isAir ? 'MacBook Air M5 13"' : 'MacBook Neo 13"',
+      shortSub: `SSD Rápido • ${color}`,
+    };
   }
 
-  if (clean.includes('IPAD')) {
+  if (upper.includes('IPAD')) {
     const parts = clean.split(' - ');
-    const color = parts[1] || 'WI-FI';
-    if (clean.includes('IPAD PRO')) {
-      return ['IPAD PRO M5', clean.includes('13"') ? 'TELA 13" OLED' : 'TELA 11" OLED', color];
-    }
-    if (clean.includes('IPAD AIR')) {
-      return ['IPAD AIR M4', 'WI-FI OFICIAL', color];
-    }
-    return ['APPLE IPAD', '11ª GERAÇÃO', color];
+    const color = parts[1] || 'Wi-Fi Oficial';
+    return {
+      leftTop: 'Expanda Sua',
+      leftBig: 'IPAD PRO',
+      rightTop: 'Domine Seu',
+      rightBig: upper.includes('M5') ? 'OLED M5' : 'CHIP M4',
+      cardHeadline1: 'Onde a Criação',
+      cardHeadline2: 'Encontra a Nitidez',
+      shortName: parts[0] || 'iPad Pro M5',
+      shortSub: color,
+    };
   }
 
-  if (clean.includes('AIRPODS')) {
-    if (clean.includes('MAX')) {
-      const parts = clean.split(' - ');
-      return ['AIRPODS MAX', 'CHIP H2 USB-C', parts[1] || 'OVER-EAR'];
-    }
-    if (clean.includes('PRO 3')) {
-      return ['AIRPODS PRO', '3ª GERAÇÃO', 'MAGSAFE USB-C'];
-    }
-    return ['APPLE AIRPODS', clean.includes('5') ? '5ª GERAÇÃO' : '4ª GERAÇÃO', 'ÁUDIO ESPACIAL'];
+  if (upper.includes('AIRPODS')) {
+    const isMax = upper.includes('MAX');
+    const parts = clean.split(' - ');
+    return {
+      leftTop: 'Sinta Seu',
+      leftBig: 'AIRPODS',
+      rightTop: 'Viva Seu',
+      rightBig: isMax ? 'MAX H2' : 'PRO 3',
+      cardHeadline1: 'Onde o Silêncio',
+      cardHeadline2: 'Encontra a Imersão',
+      shortName: isMax ? 'AirPods Max 2 USB-C' : 'AirPods Pro 3 MagSafe',
+      shortSub: parts[1] || 'Cancelamento Ativo ANC',
+    };
   }
 
-  const words = clean.split(' ').filter(Boolean);
-  if (words.length <= 3) {
-    return [words[0] || 'DESTAQUE', words[1] || 'OFICIAL', words[2] || 'RR MOBILE'];
-  }
-  const third = Math.ceil(words.length / 3);
-  return [
-    words.slice(0, third).join(' '),
-    words.slice(third, third * 2).join(' '),
-    words.slice(third * 2, third * 3).join(' '),
-  ];
+  return {
+    leftTop: 'Defina Seu',
+    leftBig: 'ESTILO',
+    rightTop: 'Domine Seu',
+    rightBig: 'MUNDO',
+    cardHeadline1: 'Onde a Tecnologia',
+    cardHeadline2: 'Encontra a Confiança',
+    shortName: clean.slice(0, 28),
+    shortSub: 'Pronta Entrega • SIA Loja D439',
+  };
 }
 
 export default function HeroSection({
@@ -193,16 +224,19 @@ export default function HeroSection({
   const safeIndex = slides.length > 0 ? activeIndex % slides.length : 0;
   const currentSlide = slides[safeIndex];
   const currentProduct = currentSlide?.product;
+  // Card lateral direito pode destacar o produto atual ou permitir compra rápida
+  const nextIndex = slides.length > 1 ? (safeIndex + 1) % slides.length : safeIndex;
+  const nextSlide = slides[nextIndex];
 
-  const triggerSlideChange = (nextIndex: number) => {
+  const triggerSlideChange = (idx: number) => {
     setAnimPhase('out');
     setTimeout(() => {
-      setActiveIndex(nextIndex);
+      setActiveIndex(idx);
       setAnimPhase('in');
     }, 180);
   };
 
-  // Auto-play fluido a cada 4.5 segundos
+  // Auto-play fluido a cada 5 segundos
   useEffect(() => {
     if (isPaused || slides.length <= 1) return;
     const timer = setInterval(() => {
@@ -211,18 +245,18 @@ export default function HeroSection({
         setActiveIndex((prev) => (prev + 1) % slides.length);
         setAnimPhase('in');
       }, 180);
-    }, 4500);
+    }, 5000);
     return () => clearInterval(timer);
   }, [isPaused, slides.length]);
 
-  // Efeito Action suave no Scroll (sem balão flutuante)
+  // Efeito Action de esmaecer/parallax suave no Scroll da página
   useEffect(() => {
     let rafId = 0;
     const handleScroll = () => {
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         const y = window.scrollY || 0;
-        setScrollProgress(Math.min(1, Math.max(0, y / 520)));
+        setScrollProgress(Math.min(1, Math.max(0, y / 560)));
       });
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -233,13 +267,17 @@ export default function HeroSection({
     };
   }, []);
 
-  // Pré-recorta o fundo das imagens de todos os slides (troca instantânea)
+  // Pré-recorta o fundo das imagens de todos os slides
   useEffect(() => {
-    const t = setTimeout(() => prefetchCutouts(slides.map((s) => s.imagem)), 600);
+    const t = setTimeout(() => prefetchCutouts(slides.map((s) => s.imagem)), 400);
     return () => clearTimeout(t);
   }, [slides]);
 
   if (!currentSlide) return null;
+
+  const copy = buildHeroCopy(
+    currentSlide.titulo || currentProduct?.nome || 'iPhone 17 Pro Max 512GB - Silver'
+  );
 
   const discountPercent = currentProduct
     ? Math.max(
@@ -250,18 +288,6 @@ export default function HeroSection({
       )
     : 18;
 
-  const savingsAmount = currentProduct
-    ? Math.max(0, currentProduct.precoDe - currentProduct.precoPix)
-    : 0;
-
-  const headlineLines = buildMonumentalHeadline(
-    currentSlide.titulo || currentProduct?.nome || 'RR MOBILE JOIAS APPLE'
-  );
-
-  const cleanDescription = currentProduct
-    ? currentProduct.descricao.split(' | Pagamento:')[0]
-    : 'Produtos originais selecionados com retirada na Feira dos Importados do SIA (Loja D439) ou entrega expressa via Motoboy em todo o Distrito Federal.';
-
   const handlePrev = () => {
     triggerSlideChange(safeIndex === 0 ? slides.length - 1 : safeIndex - 1);
   };
@@ -270,7 +296,8 @@ export default function HeroSection({
     triggerSlideChange((safeIndex + 1) % slides.length);
   };
 
-  const handleHeroAdd = (product: Product) => {
+  const handleHeroAdd = (product: Product, e?: React.MouseEvent) => {
+    e?.stopPropagation();
     onAddToCart?.(product);
     setAddedId(product.id);
     setTimeout(() => setAddedId(null), 1300);
@@ -280,13 +307,15 @@ export default function HeroSection({
     const rect = e.currentTarget.getBoundingClientRect();
     const relX = (e.clientX - rect.left) / rect.width - 0.5;
     const relY = (e.clientY - rect.top) / rect.height - 0.5;
-    setMouseTilt({ x: relX * 12, y: -relY * 12 });
+    setMouseTilt({ x: relX * 10, y: -relY * 10 });
   };
 
   const handleMouseLeave = () => {
     setIsPaused(false);
     setMouseTilt({ x: 0, y: 0 });
   };
+
+  const fadeFactor = Math.max(0, scrollProgress - 0.08);
 
   return (
     <section
@@ -295,362 +324,410 @@ export default function HeroSection({
       onMouseLeave={handleMouseLeave}
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
-      className="relative bg-[#050506] text-white overflow-hidden border-b border-white/[0.08]"
+      className="relative bg-[#F7F6FC] text-[#111115] overflow-hidden border-b border-zinc-200/80"
     >
-      {/* AMBIENT GLOW CINEMATOGRÁFICO (Estilo Editorial da 2ª Foto: Âmbar/Fogo + Esmeralda Profundo) */}
+      {/* Brilho suave de fundo no estilo do mockup de referência */}
       <div
-        className="pointer-events-none absolute top-[-10%] left-[20%] w-[520px] h-[520px] rounded-full blur-[135px] opacity-65 transition-transform duration-300"
+        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[780px] h-[340px] rounded-full blur-[120px] opacity-50"
         style={{
           background:
-            'radial-gradient(circle, rgba(249,115,22,0.42) 0%, rgba(234,88,12,0.18) 45%, transparent 75%)',
-          transform: `translate3d(${mouseTilt.x * 1.6}px, ${scrollProgress * 35}px, 0) scale(${
-            1 + scrollProgress * 0.15
-          })`,
-        }}
-      />
-      <div
-        className="pointer-events-none absolute bottom-[-15%] right-[12%] w-[560px] h-[560px] rounded-full blur-[150px] opacity-50 transition-transform duration-300"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(16,185,129,0.28) 0%, rgba(217,119,6,0.14) 50%, transparent 75%)',
-          transform: `translate3d(${-mouseTilt.x * 1.4}px, ${-scrollProgress * 25}px, 0)`,
+            'radial-gradient(circle, rgba(131,103,232,0.28) 0%, rgba(167,139,250,0.12) 55%, transparent 75%)',
         }}
       />
 
-      {/* Partículas / Bolhas de Luz Líquida sutis ao redor do centro */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className="absolute top-[18%] left-[38%] w-24 h-24 rounded-full border border-orange-400/25 bg-gradient-to-br from-orange-500/20 to-transparent blur-[1px]"
-          style={{
-            transform: `translate3d(${mouseTilt.x * -1.2}px, ${scrollProgress * -28}px, 0)`,
-          }}
-        />
-        <div
-          className="absolute bottom-[26%] left-[31%] w-16 h-16 rounded-full border border-amber-300/20 bg-gradient-to-tr from-amber-500/20 to-transparent"
-          style={{
-            transform: `translate3d(${mouseTilt.x * 1.1}px, ${scrollProgress * -18}px, 0)`,
-          }}
-        />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 sm:py-8">
-        {/* Sub-Header Editorial Discreto (Localização Loja Física SIA D439 + Região de Entrega + Navegação Rápida) */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 mb-6 border-b border-white/10">
-          <div className="flex flex-wrap items-center gap-3 text-xs">
-            <span className="inline-flex items-center gap-1.5 text-zinc-200 font-bold bg-white/[0.06] border border-white/10 px-3 py-1.5 rounded-full">
-              <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+      <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 pb-7 sm:pt-6 sm:pb-10">
+        {/* Sub-barra superior: Localização Feira dos Importados SIA Loja D439 + Controles de Slide */}
+        <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-2 sm:mb-4 border-b border-zinc-200/80">
+          <div className="flex flex-wrap items-center gap-2.5 text-xs">
+            <span className="inline-flex items-center gap-1.5 text-zinc-800 font-bold bg-white border border-zinc-200/90 px-3 py-1.5 rounded-full shadow-xs">
+              <MapPin className="w-3.5 h-3.5 text-[#7C63E6] shrink-0" />
               <span>Feira dos Importados do SIA — Loja D439</span>
             </span>
 
-            <span className="hidden md:inline-flex items-center gap-1.5 text-zinc-300">
-              <Truck className="w-3.5 h-3.5 text-[#34D399]" />
+            <span className="hidden md:inline-flex items-center gap-1.5 text-zinc-600 font-medium">
+              <Truck className="w-3.5 h-3.5 text-[#059669]" />
               <span>
-                Entrega em <strong className="text-white">{selectedRegion.nome.split('(')[0].trim()}</strong>:{' '}
-                {selectedRegion.tempoEstimado}
+                Entrega em{' '}
+                <strong className="text-zinc-900">
+                  {selectedRegion.nome.split('(')[0].trim()}
+                </strong>
+                : {selectedRegion.tempoEstimado}
               </span>
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[11px] uppercase tracking-[0.2em] text-zinc-400 font-semibold hidden sm:inline">
+            <span className="text-[11px] uppercase tracking-[0.16em] text-zinc-500 font-bold hidden sm:inline">
               Destaque {safeIndex + 1}/{slides.length}
             </span>
             <button
               type="button"
               onClick={handlePrev}
-              className="w-8 h-8 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-black flex items-center justify-center transition-all cursor-pointer"
-              aria-label="Banner anterior"
+              className="w-8 h-8 rounded-full border border-zinc-300 bg-white hover:bg-[#7C63E6] hover:border-[#7C63E6] hover:text-white text-zinc-700 flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              aria-label="Produto anterior"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               type="button"
               onClick={handleNext}
-              className="w-8 h-8 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-black flex items-center justify-center transition-all cursor-pointer"
-              aria-label="Próximo banner"
+              className="w-8 h-8 rounded-full border border-zinc-300 bg-white hover:bg-[#7C63E6] hover:border-[#7C63E6] hover:text-white text-zinc-700 flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              aria-label="Próximo produto"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        {/* STAGE PRINCIPAL NO LAYOUT EXATO DA 2ª FOTO (3 ZONAS: ESQUERDA EDITORIAL + CARDS, CENTRO VISUAL, DIREITA TIPOGRAFIA MONUMENTAL) */}
+        {/* CONTAINER PRINCIPAL DO BANNER — LAYOUT FIEL À IMAGEM DE REFERÊNCIA */}
         <div
-          className={`relative min-h-[540px] lg:min-h-[600px] grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-between transition-all duration-300 ${
+          className={`relative transition-all duration-300 ${
             animPhase === 'in'
               ? 'opacity-100 translate-y-0 scale-100'
-              : 'opacity-0 translate-y-2 scale-[0.99]'
+              : 'opacity-0 translate-y-1.5 scale-[0.99]'
           }`}
         >
-          {/* COLUNA ESQUERDA (5 Colunas): "SOURCE OF INNER LOGIC /" + Os 2 Cards Inferiores (Branco Sólido & Glassmorphism) */}
-          <div className="lg:col-span-3 flex flex-col justify-between z-20 space-y-8 lg:space-y-0">
-            {/* Bloco Superior Esquerdo */}
-            <div className="space-y-4 max-w-xs">
-              <div className="w-10 h-[1.5px] bg-white/40" />
-
-              <div className="space-y-1">
-                <p className="text-xl sm:text-2xl font-normal tracking-wide text-white uppercase leading-snug">
-                  RR MOBILE &amp;
-                  <br />
-                  JOIAS APPLE{' '}
-                  <span className="text-orange-500 font-light tracking-tighter">{'</'}</span>
-                </p>
-              </div>
-
-              <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                Onde a tecnologia original Apple encontra pronta-entrega imediata na{' '}
-                <strong className="text-zinc-200">Feira dos Importados do SIA (Loja D439)</strong> e
-                envio expresso em Brasília.
+          {/* 1. FAIXA SUPERIOR BRANCA COM OS 2 TÍTULOS MONUMENTAIS ("Define Your STYLE" / "Own Your WORLD") */}
+          <div className="relative z-10 grid grid-cols-2 lg:grid-cols-12 items-end gap-2 sm:gap-4 pt-1 pb-4 sm:pb-6 lg:pb-8 px-1 sm:px-2">
+            {/* Esquerda: "Define Your / STYLE" */}
+            <div className="col-span-1 lg:col-span-5 text-left">
+              <p className="text-base sm:text-2xl lg:text-[32px] font-bold italic text-[#141418] tracking-tight leading-tight">
+                {copy.leftTop}
               </p>
+              <h1 className="text-3xl sm:text-6xl lg:text-[72px] xl:text-[80px] font-black uppercase tracking-[-0.04em] text-[#7B61E4] leading-[0.92] mt-0.5">
+                {copy.leftBig}
+              </h1>
             </div>
 
-            {/* Bloco Inferior Esquerdo: Os 2 Cards (empilhados no desktop) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 pt-4">
-              {/* CARD 1: Card Branco Sólido ("85% Flow state retention" -> Preço PIX & Desconto) */}
-              <div
-                onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-                className="bg-[#F3F4F6] text-[#0A0A0A] rounded-[26px] p-5 flex flex-col justify-between min-h-[175px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] hover:scale-[1.02] transition-transform cursor-pointer"
-              >
-                <div className="flex items-center justify-between">
-                  <Sparkles className="w-4 h-4 text-zinc-700" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-500">
-                    {currentProduct ? `PIX -${discountPercent}% OFF` : 'PRONTA ENTREGA'}
-                  </span>
-                </div>
+            {/* Espaço central reservado para o topo do produto que invade a faixa branca */}
+            <div className="hidden lg:block lg:col-span-2" />
 
-                <div className="mt-6">
-                  {currentProduct ? (
-                    <>
-                      <span className="text-[11px] text-zinc-500 line-through block mb-0.5">
-                        De {formatBRL(currentProduct.precoDe)}
-                      </span>
-                      <p className="text-2xl sm:text-[28px] font-semibold tracking-tight text-[#0A0A0A] leading-none">
-                        {formatBRL(currentProduct.precoPix)}
-                      </p>
-                      <p className="text-[11px] font-medium text-zinc-600 mt-2">
-                        À vista no PIX ou Dinheiro
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p className="text-4xl font-semibold tracking-tight text-[#0A0A0A]">100%</p>
-                      <p className="text-xs text-zinc-600 mt-1">Original Apple &amp; Garantia</p>
-                    </>
-                  )}
-                </div>
+            {/* Direita: "Own Your ✸ / WORLD" */}
+            <div className="col-span-1 lg:col-span-5 text-right lg:pl-4">
+              <div className="inline-flex items-center justify-end gap-2 sm:gap-4 w-full">
+                <p className="text-base sm:text-2xl lg:text-[32px] font-bold italic text-[#141418] tracking-tight leading-tight">
+                  {copy.rightTop}
+                </p>
+                {/* Estrela de 8 pontas idêntica à referência */}
+                <svg
+                  viewBox="0 0 36 36"
+                  className="w-5 h-5 sm:w-8 sm:h-8 text-[#8C74EC] shrink-0 fill-current"
+                  aria-hidden="true"
+                >
+                  <path d="M18 0L21.2 12.2L30.7 5.3L23.8 14.8L36 18L23.8 21.2L30.7 30.7L21.2 23.8L18 36L14.8 23.8L5.3 30.7L12.2 21.2L0 18L12.2 14.8L5.3 5.3L14.8 12.2L18 0Z" />
+                </svg>
               </div>
-
-              {/* CARD 2: Card Dark Glassmorphism ("Reload your process" -> Ação Rápida & Parcelamento) */}
-              <div className="bg-white/[0.04] backdrop-blur-xl border border-white/15 rounded-[26px] p-5 flex flex-col justify-between min-h-[175px] text-white hover:border-white/30 transition-all">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="text-sm sm:text-base font-medium text-white leading-snug">
-                      {currentProduct ? 'Garanta o seu' : 'Visite nossa loja'}
-                      <br />
-                      <span className="text-zinc-300">hoje mesmo</span>
-                    </p>
-                  </div>
-                  <Settings className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5 animate-spin [animation-duration:14s]" />
-                </div>
-
-                <div className="space-y-3 mt-4">
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">
-                    {currentProduct
-                      ? `${currentProduct.parcelamento}. Economia real de ${formatBRL(savingsAmount)} no PIX.`
-                      : 'Atendimento especializado Apple e acessórios no SIA Loja D439.'}
-                  </p>
-
-                  {currentProduct ? (
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => handleHeroAdd(currentProduct)}
-                        className={`flex-1 py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                          addedId === currentProduct.id
-                            ? 'bg-white text-black'
-                            : 'bg-orange-500 hover:bg-orange-400 text-black shadow-lg shadow-orange-500/25'
-                        }`}
-                      >
-                        {addedId === currentProduct.id ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 stroke-[3]" />
-                            <span>Na Sacola</span>
-                          </>
-                        ) : (
-                          <>
-                            <ShoppingBag className="w-3.5 h-3.5 stroke-[2.5]" />
-                            <span>Comprar</span>
-                          </>
-                        )}
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => onSelectProduct?.(currentProduct)}
-                        className="py-2 px-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 cursor-pointer"
-                        title="Ver Ficha Técnica e SEO"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={onExploreClick}
-                      className="w-full py-2 px-3 rounded-xl text-xs font-extrabold bg-white text-black hover:bg-zinc-200 transition-colors cursor-pointer"
-                    >
-                      Explorar Catálogo
-                    </button>
-                  )}
-                </div>
+              <div className="text-3xl sm:text-6xl lg:text-[72px] xl:text-[80px] font-black uppercase tracking-[-0.04em] text-[#7B61E4] leading-[0.92] mt-0.5">
+                {copy.rightBig}
               </div>
             </div>
           </div>
 
-          {/* CENTRO VISUAL — PRODUTO PROTAGONISTA (Proporção da referência, sem deformação) */}
-          <div
-            onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-            className="order-first lg:order-none lg:col-span-6 relative flex items-center justify-center py-4 sm:py-6 lg:py-0 z-10 cursor-pointer group"
-          >
-            {/* Halo luminoso difuso atrás da moldura */}
+          {/* 2. CARD PRINCIPAL ROXO/LAVANDA ARREDONDADO + PRODUTO GIGANTE SOBREPOSTO NO CENTRO */}
+          <div className="relative">
+            {/* PRODUTO CENTRAL RECORTADO (DESBORDA PARA CIMA ENTRE OS TÍTULOS NO DESKTOP, EXATAMENTE COMO A MODELO NA FOTO) */}
             <div
-              className="pointer-events-none absolute w-[360px] sm:w-[460px] lg:w-[500px] aspect-square rounded-full blur-[100px] opacity-75 transition-transform duration-500"
-              style={{
-                background:
-                  'radial-gradient(circle, rgba(251,146,60,0.45) 0%, rgba(16,185,129,0.18) 50%, transparent 72%)',
-                transform: `scale(${1 + scrollProgress * 0.12})`,
-              }}
-            />
-
-            {/* Moldura Dark Glass proporcional e ampliada (exatamente como no print) com esmaecer suave no scroll */}
-            <div
-              className="relative w-full max-w-[340px] sm:max-w-[430px] lg:max-w-[480px] aspect-square rounded-[48px] sm:rounded-[60px] border border-white/[0.14] bg-gradient-to-b from-white/[0.06] via-[#121214]/70 to-[#0A0A0C]/95 backdrop-blur-md p-5 sm:p-7 lg:p-8 shadow-[0_30px_90px_rgba(0,0,0,0.9)] flex items-center justify-center transition-all duration-300 ease-out"
-              style={{
-                opacity: Math.max(0.18, 1 - Math.max(0, scrollProgress - 0.08) * 0.95),
-                filter: `blur(${Math.max(0, scrollProgress - 0.12) * 4}px)`,
-                transform: `perspective(1000px) rotateX(${mouseTilt.y * 0.4}deg) rotateY(${
-                  mouseTilt.x * 0.4
-                }deg) translateY(${scrollProgress * -32}px) scale(${Math.max(
-                  0.9,
-                  1 - Math.max(0, scrollProgress - 0.08) * 0.1
-                )})`,
-              }}
+              onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
+              className="relative lg:absolute lg:inset-x-0 lg:-top-[115px] lg:bottom-0 z-20 pointer-events-none flex flex-col items-center justify-center mb-4 lg:mb-0"
             >
-              {/* Sombra de chão sob o produto */}
-              <div className="pointer-events-none absolute bottom-[8%] w-[65%] h-10 rounded-[50%] bg-black/85 blur-2xl" />
+              {/* Anéis orbitais sutis atrás do topo do produto (igual ao detalhe atrás da touca na referência) */}
+              <div className="hidden lg:block absolute top-[28px] w-[290px] h-[76px] rounded-[50%] border border-[#7B61E4]/35 -rotate-6 pointer-events-none" />
+              <div className="hidden lg:block absolute top-[38px] w-[320px] h-[82px] rounded-[50%] border border-[#7B61E4]/25 rotate-6 pointer-events-none" />
 
-              {/* Imagem do produto sem fundo e auto-recortada na proporção de destaque */}
-              <div className="relative w-full h-full flex items-center justify-center p-2">
+              {/* Container clicável da Imagem Recortada sem fundo com efeito esmaecer no scroll */}
+              <div
+                onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
+                className="pointer-events-auto cursor-pointer group relative w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] lg:w-[440px] lg:h-[490px] flex items-center justify-center transition-all duration-300 ease-out"
+                style={{
+                  opacity: Math.max(0.2, 1 - fadeFactor * 0.95),
+                  filter: `blur(${Math.max(0, scrollProgress - 0.14) * 3.8}px)`,
+                  transform: `perspective(1000px) rotateX(${mouseTilt.y * 0.35}deg) rotateY(${
+                    mouseTilt.x * 0.35
+                  }deg) translateY(${scrollProgress * -30}px) scale(${Math.max(
+                    0.9,
+                    1 - fadeFactor * 0.08
+                  )})`,
+                }}
+              >
                 <CutoutImage
                   key={currentSlide.imagem}
                   src={currentSlide.imagem}
                   alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
-                  className="max-w-[86%] max-h-[86%] w-auto h-auto object-contain group-hover:scale-[1.04] transition-transform duration-500 ease-out drop-shadow-[0_25px_45px_rgba(0,0,0,0.85)]"
+                  className="max-w-[92%] max-h-[92%] w-auto h-auto object-contain group-hover:scale-[1.04] transition-transform duration-500 ease-out drop-shadow-[0_28px_45px_rgba(17,12,46,0.45)]"
                 />
-              </div>
 
-              {/* Badge de Avaliação fixada no topo da moldura */}
-              {currentProduct && (
-                <div className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-[#0A0A0A]/95 text-orange-400 border border-orange-500/50 text-[11px] sm:text-xs font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-xl flex items-center gap-1.5 z-20">
-                  <Star className="w-3.5 h-3.5 fill-orange-400 text-orange-400" />
-                  <span>{currentProduct.avaliacao.toFixed(1)}</span>
-                </div>
-              )}
+                {/* Selo discreto de Ficha Técnica ao passar o mouse */}
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#111115]/90 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                  <Eye className="w-3.5 h-3.5 text-[#A78BFA]" />
+                  <span>Clique para ver Ficha Técnica</span>
+                </span>
+              </div>
             </div>
 
-            {/* Pill inferior de Ficha Técnica */}
-            <span className="absolute -bottom-2 sm:-bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#0A0A0A]/95 text-white border border-white/20 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider px-4 py-1.5 rounded-full shadow-2xl z-20 transition-transform group-hover:scale-105">
-              Clique para ver Ficha Técnica
-            </span>
-          </div>
-
-          {/* COLUNA DIREITA (3 Colunas): Tipografia Monumental em 3 Linhas + Botão Circular c/ Seta Diagonal + Texto Editorial */}
-          <div className="lg:col-span-3 flex flex-col justify-between items-start lg:items-end text-left lg:text-right z-20 space-y-6 lg:space-y-0">
-            <div className="hidden lg:block h-4" />
-
-            {/* Tipografia Monumental empilhada + Círculo com Seta Diagonal (↗) */}
-            <div className="relative w-full">
-              <div
-                onClick={() =>
-                  currentProduct ? onSelectProduct?.(currentProduct) : onExploreClick()
-                }
-                className="cursor-pointer select-none space-y-0.5"
-              >
-                {headlineLines.map((line, idx) => (
-                  <div
-                    key={idx}
-                    className="text-4xl sm:text-5xl lg:text-[34px] xl:text-[42px] font-normal tracking-[-0.03em] leading-[0.98] text-zinc-100/95 uppercase break-words"
-                  >
-                    {line}
-                  </div>
-                ))}
+            {/* BLOCO ROXO ARREDONDADO (3 COLUNAS: TEXTO + BOTÃO PRETO + SOCIAL PROOF À ESQUERDA | CENTRO | 3 ÍCONES + CARD FEATURED À DIREITA) */}
+            <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-gradient-to-br from-[#8B72EE] via-[#7E64E6] to-[#6D52D8] text-white p-5 sm:p-8 lg:px-10 lg:py-9 shadow-[0_25px_70px_rgba(109,82,216,0.28)]">
+              {/* Formas ovais diagonais decorativas ao centro do card roxo (idênticas à referência) */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute top-[14%] left-[33%] w-[360px] h-[78px] rounded-[50%] bg-white/[0.13] -rotate-12" />
+                <div className="absolute top-[42%] left-[29%] w-[420px] h-[86px] rounded-[50%] bg-white/[0.11] -rotate-12" />
+                <div className="absolute bottom-[12%] left-[32%] w-[380px] h-[80px] rounded-[50%] bg-white/[0.12] -rotate-12" />
               </div>
 
-              {/* Botão Redondo com Borda Fina e Seta Diagonal (Exatamente como na 2ª foto) */}
-              <div className="mt-5 flex lg:justify-end">
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-4 items-center">
+                {/* COLUNA ESQUERDA (4 Colunas): Tag + Título 2 Linhas + Subtítulo + Botão Pill Preto + Card Social Proof */}
+                <div className="lg:col-span-4 flex flex-col justify-between space-y-5 text-left">
+                  <div className="space-y-3">
+                    <div className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white/95">
+                      <Sparkles className="w-4 h-4 fill-white text-white" />
+                      <span>
+                        {currentProduct
+                          ? `${currentProduct.tag} • PIX -${discountPercent}% OFF`
+                          : 'Coleção Oficial RR Store'}
+                      </span>
+                    </div>
+
+                    <h2 className="text-2xl sm:text-4xl lg:text-[38px] font-bold tracking-tight text-white leading-[1.12]">
+                      {copy.cardHeadline1}
+                      <br />
+                      {copy.cardHeadline2}
+                    </h2>
+
+                    <p className="text-xs sm:text-sm text-white/85 leading-relaxed max-w-xs">
+                      {currentProduct ? (
+                        <>
+                          <strong className="text-white">{currentProduct.nome}</strong> por{' '}
+                          <strong className="text-white">
+                            {formatBRL(currentProduct.precoPix)} no PIX
+                          </strong>{' '}
+                          ou {currentProduct.parcelamento}. Retirada na{' '}
+                          <strong className="text-white">SIA Loja D439</strong> ou Motoboy no DF.
+                        </>
+                      ) : (
+                        'Aparelhos originais com garantia, retirada imediata na Feira dos Importados do SIA (Loja D439) e entrega expressa.'
+                      )}
+                    </p>
+                  </div>
+
+                  {/* Botão Pill Preto ("Explore Now (→)" da referência) + Botão Detalhes */}
+                  <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        currentProduct ? handleHeroAdd(currentProduct) : onExploreClick()
+                      }
+                      className="group inline-flex items-center gap-3 bg-[#0E0E11] hover:bg-black text-white font-bold text-xs sm:text-sm pl-5 pr-2.5 py-2.5 rounded-full shadow-lg transition-all cursor-pointer"
+                    >
+                      <span>
+                        {currentProduct && addedId === currentProduct.id
+                          ? 'Adicionado à Sacola!'
+                          : currentProduct
+                          ? 'Comprar Agora'
+                          : 'Explorar Catálogo'}
+                      </span>
+                      <span className="w-7 h-7 rounded-full border border-white/40 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                        {currentProduct && addedId === currentProduct.id ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400 stroke-[3]" />
+                        ) : (
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        )}
+                      </span>
+                    </button>
+
+                    {currentProduct && (
+                      <button
+                        type="button"
+                        onClick={() => onSelectProduct?.(currentProduct)}
+                        className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white font-bold text-xs px-4 py-2.5 rounded-full transition-all cursor-pointer"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>Ficha Técnica</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Card Frosted Glass Inferior Esquerdo ("Loved by 20K+ Trendsetters ♥" da referência) */}
+                  <div className="bg-white/20 backdrop-blur-md border border-white/25 rounded-[22px] p-3.5 max-w-[295px] flex items-center gap-3 shadow-sm">
+                    <div className="flex -space-x-2.5 shrink-0">
+                      <span className="w-9 h-9 rounded-full border-2 border-white bg-gradient-to-tr from-amber-500 to-orange-400 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                        R
+                      </span>
+                      <span className="w-9 h-9 rounded-full border-2 border-white bg-gradient-to-tr from-emerald-600 to-teal-400 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                        M
+                      </span>
+                      <span className="w-9 h-9 rounded-full border-2 border-white bg-gradient-to-tr from-indigo-600 to-purple-500 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                        L
+                      </span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-bold text-white leading-tight">
+                        Aprovado por +20 mil
+                        <br />
+                        <span className="text-white/90 font-medium">Clientes em Brasília</span>
+                      </p>
+                    </div>
+                    <Heart className="w-4 h-4 fill-white text-white shrink-0 self-end" />
+                  </div>
+                </div>
+
+                {/* COLUNA CENTRAL (4 Colunas): Espaço onde o Produto Protagonista fica posicionado */}
+                <div className="hidden lg:block lg:col-span-4 min-h-[360px]" />
+
+                {/* COLUNA DIREITA (4 Colunas): 3 Ícones de Diferenciais no Topo + Card "Featured Look" Branco na Base */}
+                <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-between space-y-5">
+                  {/* 3 Ícones Superiores Direitos (Premium Quality | Sustainable | Limited Edition -> Garantias RR Store) */}
+                  <div className="grid grid-cols-3 gap-3 sm:gap-5 text-center w-full max-w-[310px]">
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="w-9 h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center">
+                        <ShieldCheck className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="text-[11px] font-semibold text-white/95 leading-tight">
+                        Qualidade
+                        <br />
+                        Original
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="w-9 h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center">
+                        <Store className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="text-[11px] font-semibold text-white/95 leading-tight">
+                        Loja Física
+                        <br />
+                        SIA D439
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="w-9 h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center">
+                        <Truck className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="text-[11px] font-semibold text-white/95 leading-tight">
+                        Motoboy
+                        <br />
+                        Expresso DF
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card "Featured Look" (Oferta em Destaque) idêntico ao card branco à direita na referência */}
+                  <div className="w-full max-w-[260px] flex flex-col items-center">
+                    <div className="flex items-center justify-between w-full mb-2 px-1">
+                      <span className="text-xs font-bold tracking-wide text-white/95">
+                        Destaque da Loja
+                      </span>
+                      {slides.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={handleNext}
+                          className="text-[11px] font-bold text-white/80 hover:text-white underline cursor-pointer"
+                        >
+                          Próximo →
+                        </button>
+                      )}
+                    </div>
+
+                    <div
+                      onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
+                      className="w-full bg-white text-[#111115] rounded-[26px] p-2.5 border-2 border-white shadow-[0_18px_40px_rgba(17,12,46,0.28)] cursor-pointer group transition-transform hover:-translate-y-0.5"
+                    >
+                      {/* Moldura interna lilás clara com miniatura do produto */}
+                      <div className="relative h-[138px] w-full rounded-[20px] bg-gradient-to-b from-[#E5DDFB] to-[#D5C8F8] flex items-center justify-center p-3 overflow-hidden">
+                        <img
+                          src={currentSlide.imagem}
+                          alt={copy.shortName}
+                          className="max-h-[112px] max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300 mix-blend-multiply"
+                        />
+                        {nextSlide && nextSlide.key !== currentSlide.key && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleNext();
+                            }}
+                            title="Ver próximo destaque"
+                            className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/85 hover:bg-white text-[#6D52D8] flex items-center justify-center shadow-xs cursor-pointer"
+                          >
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Nome, Subtítulo e Botão Roxo com Preço PIX */}
+                      <div className="pt-2.5 pb-1 px-2 text-center">
+                        <p className="text-xs sm:text-sm font-extrabold text-[#111115] truncate">
+                          {copy.shortName}
+                        </p>
+                        <p className="text-[11px] text-zinc-500 truncate mt-0.5">{copy.shortSub}</p>
+
+                        {currentProduct ? (
+                          <button
+                            type="button"
+                            onClick={(e) => handleHeroAdd(currentProduct, e)}
+                            className="mt-2.5 w-full py-2 px-3 rounded-full bg-[#7C63E6] hover:bg-[#694FD6] text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#7C63E6]/30 transition-all cursor-pointer"
+                          >
+                            <ShoppingCart className="w-3.5 h-3.5" />
+                            <span>{formatBRL(currentProduct.precoPix)}</span>
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={onExploreClick}
+                            className="mt-2.5 w-full py-2 px-3 rounded-full bg-[#7C63E6] text-white font-extrabold text-xs cursor-pointer"
+                          >
+                            Ver Catálogo
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. SELETOR RÁPIDO DE DESTAQUES NA BASE DO BANNER */}
+          <div className="mt-5 flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {slides.map((item, idx) => {
+              const isCurrent = idx === safeIndex;
+              return (
                 <button
                   type="button"
-                  onClick={() =>
-                    currentProduct ? onSelectProduct?.(currentProduct) : onExploreClick()
-                  }
-                  aria-label="Abrir detalhes do produto em destaque"
-                  className="group w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-white/35 hover:border-white bg-black/40 hover:bg-white text-white hover:text-black backdrop-blur-md flex items-center justify-center transition-all duration-300 cursor-pointer shadow-xl"
+                  key={item.key}
+                  onClick={() => triggerSlideChange(idx)}
+                  className={`group flex items-center gap-2.5 p-1.5 pr-3.5 rounded-2xl border transition-all duration-200 shrink-0 cursor-pointer ${
+                    isCurrent
+                      ? 'bg-[#7C63E6] border-[#7C63E6] text-white shadow-md shadow-[#7C63E6]/25 scale-[1.02]'
+                      : 'bg-white border-zinc-200/90 text-zinc-700 hover:border-[#7C63E6]/50'
+                  }`}
                 >
-                  <ArrowUpRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Parágrafo Editorial Inferior Direito */}
-            <div className="max-w-xs lg:ml-auto space-y-2">
-              <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed line-clamp-3">
-                {cleanDescription}
-              </p>
-              <button
-                type="button"
-                onClick={onExploreClick}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-400 hover:text-orange-300 transition-colors cursor-pointer"
-              >
-                <span>Ver todos os produtos da loja</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Seletor Horizontal de Destaques na Base do Banner */}
-        <div className="mt-8 pt-5 border-t border-white/10 flex items-center gap-2.5 overflow-x-auto no-scrollbar pb-1">
-          {slides.map((item, idx) => {
-            const isCurrent = idx === safeIndex;
-            return (
-              <button
-                type="button"
-                key={item.key}
-                onClick={() => triggerSlideChange(idx)}
-                className={`group flex items-center gap-2.5 p-1.5 pr-3.5 rounded-2xl border transition-all duration-200 shrink-0 cursor-pointer ${
-                  isCurrent
-                    ? 'bg-white/[0.1] border-orange-400/80 text-white scale-[1.02] shadow-lg'
-                    : 'bg-white/[0.02] border-white/10 text-zinc-400 hover:border-white/25 opacity-70 hover:opacity-100'
-                }`}
-              >
-                <img
-                  src={item.imagem}
-                  alt={item.product?.nome || item.titulo || 'Banner'}
-                  className="w-10 h-10 rounded-xl object-contain bg-white p-1 shrink-0"
-                />
-                <div className="text-left max-w-[135px]">
-                  <p className="text-[11px] font-bold text-white truncate">
-                    {item.titulo || item.product?.nome || 'Destaque'}
-                  </p>
-                  {item.product && (
-                    <p className="text-[11px] font-black text-orange-400">
-                      {formatBRL(item.product.precoPix)} PIX
+                  <img
+                    src={item.imagem}
+                    alt={item.product?.nome || item.titulo || 'Banner'}
+                    className="w-9 h-9 rounded-xl object-contain bg-white p-1 shrink-0 border border-zinc-100"
+                  />
+                  <div className="text-left max-w-[135px]">
+                    <p
+                      className={`text-[11px] font-bold truncate ${
+                        isCurrent ? 'text-white' : 'text-zinc-900'
+                      }`}
+                    >
+                      {item.titulo || item.product?.nome || 'Destaque'}
                     </p>
-                  )}
-                </div>
-              </button>
-            );
-          })}
+                    {item.product && (
+                      <p
+                        className={`text-[11px] font-black ${
+                          isCurrent ? 'text-amber-200' : 'text-[#6D52D8]'
+                        }`}
+                      >
+                        {formatBRL(item.product.precoPix)} PIX
+                      </p>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

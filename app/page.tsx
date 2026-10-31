@@ -69,7 +69,7 @@ function matchesQuickFilter(product: Product, filterId: QuickFilterId): boolean 
     case 'apple':
       return (
         product.id.startsWith('rr-apple-') ||
-        /\b(iphone|ipad|macbook|mac mini|airpods|airtag|apple watch|magic mouse|magic keyboard|apple pencil|magsafe)\b/i.test(
+        /\b(iphone|ipad|macbook|imac|mac mini|airpods|airtag|apple watch|magic mouse|magic keyboard|apple pencil|magsafe|cabo usb-c apple|fonte 20w apple|adaptador lightning)\b/i.test(
           name
         )
       );
@@ -84,7 +84,9 @@ function matchesQuickFilter(product: Product, filterId: QuickFilterId): boolean 
         text
       );
     case 'jbl-audio':
-      return /\b(jbl|airpods|buds|headphone|fone|caixa de som|speaker|microfone)\b/i.test(name);
+      return /\b(jbl|airpods|buds|headphone|fone|caixa de som|speaker|microfone|boombox|partybox)\b/i.test(
+        name
+      );
     case 'smartwatches':
       return /\b(smartwatch|apple watch|amazfit|haylou|rel[oó]gio)\b/i.test(name);
     case 'ssd':
@@ -94,16 +96,234 @@ function matchesQuickFilter(product: Product, filterId: QuickFilterId): boolean 
   }
 }
 
+export interface SubFilterChip {
+  id: string;
+  label: string;
+  icon: string;
+  match: (product: Product) => boolean;
+}
+
+const SUB_FILTERS_BY_TOPIC: Record<Exclude<QuickFilterId, 'todos'>, SubFilterChip[]> = {
+  apple: [
+    { id: 'all', label: 'Tudo Apple', icon: '🍏', match: () => true },
+    {
+      id: 'iphones',
+      label: 'iPhones',
+      icon: '📱',
+      match: (p) => /\biphone\b/i.test(p.nome),
+    },
+    {
+      id: 'ipads',
+      label: 'iPads',
+      icon: '📟',
+      match: (p) => /\bipad\b/i.test(p.nome) && !/\b(magic keyboard|pencil)\b/i.test(p.nome),
+    },
+    {
+      id: 'imacs-macbooks',
+      label: 'iMacs & MacBooks',
+      icon: '💻',
+      match: (p) => /\b(macbook|imac|mac mini)\b/i.test(p.nome),
+    },
+    {
+      id: 'airpods',
+      label: 'AirPods',
+      icon: '🎧',
+      match: (p) => /\bairpods\b/i.test(p.nome),
+    },
+    {
+      id: 'apple-watch',
+      label: 'Apple Watch',
+      icon: '⌚',
+      match: (p) => /\bapple watch\b/i.test(p.nome),
+    },
+    {
+      id: 'acessorios-apple',
+      label: 'Acessórios Apple',
+      icon: '🔌',
+      match: (p) =>
+        /\b(magic mouse|magic keyboard|apple pencil|airtag|magsafe|fonte|cabo|carregador|adaptador)\b/i.test(
+          p.nome
+        ),
+    },
+  ],
+  xiaomi: [
+    { id: 'all', label: 'Tudo Xiaomi', icon: '📱', match: () => true },
+    {
+      id: 'redmi-note',
+      label: 'Linha Redmi Note',
+      icon: '🔥',
+      match: (p) => /\b(redmi note|xiaomi note)\b/i.test(p.nome),
+    },
+    {
+      id: 'redmi',
+      label: 'Linha Redmi',
+      icon: '📲',
+      match: (p) => /\bredmi\b/i.test(p.nome) && !/\bredmi note\b/i.test(p.nome) && !/\buds\b/i.test(p.nome),
+    },
+    {
+      id: 'poco',
+      label: 'Linha Poco',
+      icon: '⚡',
+      match: (p) => /\bpoco\b/i.test(p.nome),
+    },
+    {
+      id: 'xiaomi-ecossistema',
+      label: 'Áudio, TV & Smart',
+      icon: '📺',
+      match: (p) => /\b(mi tv|buds|band|watch)\b/i.test(p.nome),
+    },
+  ],
+  realme: [
+    { id: 'all', label: 'Tudo Realme', icon: '⚡', match: () => true },
+    {
+      id: 'realme-note',
+      label: 'Realme Note',
+      icon: '📱',
+      match: (p) => /\brealme note\b/i.test(p.nome),
+    },
+    {
+      id: 'realme-c',
+      label: 'Linha Realme C',
+      icon: '🔋',
+      match: (p) => /\brealme c\d+/i.test(p.nome),
+    },
+    {
+      id: 'realme-audio',
+      label: 'Realme Buds & Áudio',
+      icon: '🎧',
+      match: (p) => /\b(buds|fone)\b/i.test(p.nome),
+    },
+  ],
+  samsung: [
+    { id: 'all', label: 'Tudo Samsung', icon: '✨', match: () => true },
+    {
+      id: 'galaxy-5g',
+      label: 'Galaxy 5G',
+      icon: '🚀',
+      match: (p) => /\b5g\b/i.test(p.nome),
+    },
+    {
+      id: 'galaxy-a',
+      label: 'Linha Galaxy A',
+      icon: '📱',
+      match: (p) => /\bgalaxy a\d+/i.test(p.nome),
+    },
+  ],
+  gamer: [
+    { id: 'all', label: 'Tudo Gamer', icon: '🎮', match: () => true },
+    {
+      id: 'ps5-controles',
+      label: 'PS5 & Controles',
+      icon: '🕹️',
+      match: (p) => /\b(ps5|playstation|dualsense|controle|joystick)\b/i.test(p.nome) && !/\bbase\b/i.test(p.nome),
+    },
+    {
+      id: 'bases-console',
+      label: 'Bases & Acessórios PS5',
+      icon: '⚡',
+      match: (p) => /\b(base|carregamento|suporte|cooler)\b/i.test(`${p.nome} ${p.descricao}`),
+    },
+    {
+      id: 'headsets-gamer',
+      label: 'Headsets & Áudio Gamer',
+      icon: '🎧',
+      match: (p) => /\b(headset|fone gamer|quantum)\b/i.test(`${p.nome} ${p.descricao}`),
+    },
+    {
+      id: 'perifericos-pc',
+      label: 'Mouse, Teclado & PC',
+      icon: '⌨️',
+      match: (p) => /\b(mouse|teclado|rgb|mec[aâ]nico)\b/i.test(`${p.nome} ${p.descricao}`),
+    },
+  ],
+  'jbl-audio': [
+    { id: 'all', label: 'Tudo JBL & Áudio', icon: '🔊', match: () => true },
+    {
+      id: 'caixas-jbl',
+      label: 'Caixas JBL & Speakers',
+      icon: '📻',
+      match: (p) => /\b(flip|charge|go|xtreme|boombox|partybox|caixa de som|speaker)\b/i.test(p.nome),
+    },
+    {
+      id: 'fones-tws',
+      label: 'Fones Sem Fio & TWS',
+      icon: '🎧',
+      match: (p) => /\b(airpods|buds|wave|tws|in-ear)\b/i.test(`${p.nome} ${p.descricao}`),
+    },
+    {
+      id: 'headphones',
+      label: 'Headphones & Headsets',
+      icon: '🎵',
+      match: (p) => /\b(tune|headphone|headset|quantum)\b/i.test(`${p.nome} ${p.descricao}`),
+    },
+    {
+      id: 'microfones',
+      label: 'Microfones & Estúdio',
+      icon: '🎙️',
+      match: (p) => /\b(microfone|lapela)\b/i.test(`${p.nome} ${p.descricao}`),
+    },
+  ],
+  smartwatches: [
+    { id: 'all', label: 'Todos Smartwatches', icon: '⌚', match: () => true },
+    {
+      id: 'watch-apple',
+      label: 'Apple Watch',
+      icon: '🍏',
+      match: (p) => /\bapple watch\b/i.test(p.nome),
+    },
+    {
+      id: 'watch-amazfit',
+      label: 'Amazfit',
+      icon: '🏃',
+      match: (p) => /\bamazfit\b/i.test(p.nome),
+    },
+    {
+      id: 'watch-haylou',
+      label: 'Haylou',
+      icon: '⚡',
+      match: (p) => /\bhaylou\b/i.test(p.nome),
+    },
+  ],
+  ssd: [
+    { id: 'all', label: 'Tudo Armazenamento', icon: '💾', match: () => true },
+    {
+      id: 'ssd-sandisk',
+      label: 'SSD SanDisk',
+      icon: '🚀',
+      match: (p) => /\bsandisk\b/i.test(p.nome),
+    },
+    {
+      id: 'ssd-kingston',
+      label: 'SSD Kingston',
+      icon: '⚡',
+      match: (p) => /\bkingston\b/i.test(p.nome),
+    },
+    {
+      id: 'cases-nvme',
+      label: 'Cases & Gavetas NVMe',
+      icon: '🔌',
+      match: (p) => /\b(case|gaveta|nvme)\b/i.test(p.nome),
+    },
+  ],
+};
+
+function matchesSubFilter(product: Product, topic: QuickFilterId, subId: string): boolean {
+  if (topic === 'todos' || subId === 'all') return true;
+  const subList = SUB_FILTERS_BY_TOPIC[topic];
+  const found = subList?.find((s) => s.id === subId);
+  return found ? found.match(product) : true;
+}
+
 const QUICK_FILTER_CHIPS: { id: QuickFilterId; label: string; icon: string }[] = [
   { id: 'todos', label: 'Todos', icon: '⚡' },
-  { id: 'apple', label: 'iPhone & Apple', icon: '🍏' },
-  { id: 'xiaomi', label: 'Xiaomi / Redmi', icon: '📱' },
+  { id: 'apple', label: 'Apple', icon: '🍏' },
+  { id: 'xiaomi', label: 'Xiaomi', icon: '📱' },
   { id: 'realme', label: 'Realme', icon: '⚡' },
-  { id: 'samsung', label: 'Samsung Galaxy', icon: '✨' },
-  { id: 'gamer', label: 'Gamer & PS5', icon: '🎮' },
-  { id: 'jbl-audio', label: 'JBL & Áudio', icon: '🔊' },
+  { id: 'samsung', label: 'Samsung', icon: '✨' },
+  { id: 'gamer', label: 'Gamer', icon: '🎮' },
+  { id: 'jbl-audio', label: 'JBL', icon: '🔊' },
   { id: 'smartwatches', label: 'Smartwatches', icon: '⌚' },
-  { id: 'ssd', label: 'SSD & Armazenamento', icon: '💾' },
+  { id: 'ssd', label: 'SSD & Memória', icon: '💾' },
 ];
 
 function prioritizeAppleProducts(list: Product[]): Product[] {
@@ -118,6 +338,7 @@ export default function RRStorePage() {
   const [banners, setBanners] = useState<HeroBanner[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('Todos');
   const [quickFilter, setQuickFilter] = useState<QuickFilterId>('todos');
+  const [subFilter, setSubFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<SortOption>('destaques');
   const [selectedRegion, setSelectedRegion] = useState<DFRegion>(DF_REGIONS[0]);
@@ -293,6 +514,7 @@ export default function RRStorePage() {
 
       if (!matchesCategory) return false;
       if (!matchesQuickFilter(product, quickFilter)) return false;
+      if (!matchesSubFilter(product, quickFilter, subFilter)) return false;
       if (!query) return true;
 
       return (
@@ -318,7 +540,7 @@ export default function RRStorePage() {
       );
     }
     return list;
-  }, [products, selectedCategory, searchQuery, sortBy]);
+  }, [products, selectedCategory, quickFilter, subFilter, searchQuery, sortBy]);
 
   // Funções do Carrinho
   const handleAddToCart = (product: Product, qty: number = 1) => {
@@ -432,6 +654,7 @@ export default function RRStorePage() {
         onSelectCategory={(cat) => {
           setSelectedCategory(cat);
           setQuickFilter('todos');
+          setSubFilter('all');
         }}
         products={products}
       />
@@ -502,6 +725,7 @@ export default function RRStorePage() {
                   onClick={() => {
                     setSelectedCategory('Todos');
                     setQuickFilter('todos');
+                    setSubFilter('all');
                     setSearchQuery('');
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-extrabold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 transition-colors cursor-pointer"
@@ -543,8 +767,8 @@ export default function RRStorePage() {
             </div>
           </div>
 
-          {/* Atalhos Rápidos de Busca por Marcas e Categorias Populares (Design Premium Moderno & Funcional) */}
-          <div className="relative mb-6 bg-[#0A0A0A] rounded-2xl p-3 sm:p-4 border border-zinc-800 shadow-lg">
+          {/* Atalhos Rápidos de Busca por Marcas e Categorias Populares + Subcategorias Expansíveis */}
+          <div className="relative mb-6 bg-[#0A0A0A] rounded-2xl p-3 sm:p-4 border border-zinc-800 shadow-lg space-y-3">
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
               <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/[0.06] border border-white/10 text-white shrink-0">
                 <Sparkles className="w-3.5 h-3.5 text-[#34D399]" />
@@ -562,6 +786,7 @@ export default function RRStorePage() {
                     key={chip.id}
                     onClick={() => {
                       setQuickFilter(chip.id);
+                      setSubFilter('all');
                       setSelectedCategory('Todos');
                       setSearchQuery('');
                     }}
@@ -588,6 +813,49 @@ export default function RRStorePage() {
                 );
               })}
             </div>
+
+            {/* Subcategorias Dinâmicas do Tópico Selecionado (Apple, Xiaomi, Realme, Samsung, Gamer, JBL, etc.) */}
+            {quickFilter !== 'todos' && SUB_FILTERS_BY_TOPIC[quickFilter] && (
+              <div className="pt-2.5 border-t border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#7C63E6]/20 border border-[#7C63E6]/40 text-[#C4B5FD] text-[10px] font-black uppercase tracking-wider shrink-0">
+                  <span>↳ Nichos {QUICK_FILTER_CHIPS.find((c) => c.id === quickFilter)?.label}:</span>
+                </span>
+
+                {SUB_FILTERS_BY_TOPIC[quickFilter].map((sub) => {
+                  const topicProducts = products.filter((p) => matchesQuickFilter(p, quickFilter));
+                  const subCount = topicProducts.filter((p) => sub.match(p)).length;
+                  const isSubActive = subFilter === sub.id;
+
+                  return (
+                    <button
+                      type="button"
+                      key={sub.id}
+                      onClick={() => {
+                        setSubFilter(sub.id);
+                        setSearchQuery('');
+                      }}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 cursor-pointer ${
+                        isSubActive
+                          ? 'bg-[#7C63E6] text-white shadow-[0_4px_14px_rgba(124,99,230,0.45)] border border-[#A78BFA]'
+                          : 'bg-white/[0.04] hover:bg-white/[0.10] text-zinc-300 border border-white/10 hover:border-white/20'
+                      }`}
+                    >
+                      <span className="text-xs leading-none">{sub.icon}</span>
+                      <span>{sub.label}</span>
+                      <span
+                        className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                          isSubActive
+                            ? 'bg-black/25 text-white'
+                            : 'bg-white/10 text-zinc-400'
+                        }`}
+                      >
+                        {subCount}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Grid de Produtos Responsivo (1 ou 2 Colunas no Celular -> 2 no Tablet -> 3/4 no Desktop) */}
@@ -608,6 +876,7 @@ export default function RRStorePage() {
                 onClick={() => {
                   setSelectedCategory('Todos');
                   setQuickFilter('todos');
+                  setSubFilter('all');
                   setSearchQuery('');
                 }}
                 className="bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black text-xs sm:text-sm px-6 py-3 rounded-xl transition-all cursor-pointer"
