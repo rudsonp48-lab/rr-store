@@ -17,6 +17,7 @@ import { CATEGORIES, DF_REGIONS, formatBRL, PRODUCTS } from '../data/mockData';
 import TopBarAndHeader from '../components/TopBarAndHeader';
 import HeroSection from '../components/HeroSection';
 import CategoryNav from '../components/CategoryNav';
+import BrandLogo, { BrandLogoKey } from '../components/BrandLogo';
 import ProductCard from '../components/ProductCard';
 import ProductDetailModal from '../components/ProductDetailModal';
 import CartAndCheckoutDrawer from '../components/CartAndCheckoutDrawer';
@@ -99,47 +100,47 @@ function matchesQuickFilter(product: Product, filterId: QuickFilterId): boolean 
 export interface SubFilterChip {
   id: string;
   label: string;
-  icon: string;
+  brand: BrandLogoKey;
   match: (product: Product) => boolean;
 }
 
 const SUB_FILTERS_BY_TOPIC: Record<Exclude<QuickFilterId, 'todos'>, SubFilterChip[]> = {
   apple: [
-    { id: 'all', label: 'Tudo Apple', icon: '🍏', match: () => true },
+    { id: 'all', label: 'Tudo Apple', brand: 'apple', match: () => true },
     {
       id: 'iphones',
       label: 'iPhones',
-      icon: '📱',
+      brand: 'apple',
       match: (p) => /\biphone\b/i.test(p.nome),
     },
     {
       id: 'ipads',
       label: 'iPads',
-      icon: '📟',
+      brand: 'apple',
       match: (p) => /\bipad\b/i.test(p.nome) && !/\b(magic keyboard|pencil)\b/i.test(p.nome),
     },
     {
       id: 'imacs-macbooks',
       label: 'iMacs & MacBooks',
-      icon: '💻',
+      brand: 'apple',
       match: (p) => /\b(macbook|imac|mac mini)\b/i.test(p.nome),
     },
     {
       id: 'airpods',
       label: 'AirPods',
-      icon: '🎧',
+      brand: 'apple',
       match: (p) => /\bairpods\b/i.test(p.nome),
     },
     {
       id: 'apple-watch',
       label: 'Apple Watch',
-      icon: '⌚',
+      brand: 'apple',
       match: (p) => /\bapple watch\b/i.test(p.nome),
     },
     {
       id: 'acessorios-apple',
       label: 'Acessórios Apple',
-      icon: '🔌',
+      brand: 'apple',
       match: (p) =>
         /\b(magic mouse|magic keyboard|apple pencil|airtag|magsafe|fonte|cabo|carregador|adaptador)\b/i.test(
           p.nome
@@ -147,161 +148,161 @@ const SUB_FILTERS_BY_TOPIC: Record<Exclude<QuickFilterId, 'todos'>, SubFilterChi
     },
   ],
   xiaomi: [
-    { id: 'all', label: 'Tudo Xiaomi', icon: '📱', match: () => true },
+    { id: 'all', label: 'Tudo Xiaomi', brand: 'xiaomi', match: () => true },
     {
       id: 'redmi-note',
       label: 'Linha Redmi Note',
-      icon: '🔥',
+      brand: 'xiaomi',
       match: (p) => /\b(redmi note|xiaomi note)\b/i.test(p.nome),
     },
     {
       id: 'redmi',
       label: 'Linha Redmi',
-      icon: '📲',
-      match: (p) => /\bredmi\b/i.test(p.nome) && !/\bredmi note\b/i.test(p.nome) && !/\buds\b/i.test(p.nome),
+      brand: 'xiaomi',
+      match: (p) => /\bredmi\b/i.test(p.nome) && !/\bredmi note\b/i.test(p.nome) && !/\bbuds\b/i.test(p.nome),
     },
     {
       id: 'poco',
       label: 'Linha Poco',
-      icon: '⚡',
+      brand: 'poco',
       match: (p) => /\bpoco\b/i.test(p.nome),
     },
     {
       id: 'xiaomi-ecossistema',
       label: 'Áudio, TV & Smart',
-      icon: '📺',
+      brand: 'xiaomi',
       match: (p) => /\b(mi tv|buds|band|watch)\b/i.test(p.nome),
     },
   ],
   realme: [
-    { id: 'all', label: 'Tudo Realme', icon: '⚡', match: () => true },
+    { id: 'all', label: 'Tudo Realme', brand: 'realme', match: () => true },
     {
       id: 'realme-note',
       label: 'Realme Note',
-      icon: '📱',
+      brand: 'realme',
       match: (p) => /\brealme note\b/i.test(p.nome),
     },
     {
       id: 'realme-c',
       label: 'Linha Realme C',
-      icon: '🔋',
+      brand: 'realme',
       match: (p) => /\brealme c\d+/i.test(p.nome),
     },
     {
       id: 'realme-audio',
       label: 'Realme Buds & Áudio',
-      icon: '🎧',
+      brand: 'realme',
       match: (p) => /\b(buds|fone)\b/i.test(p.nome),
     },
   ],
   samsung: [
-    { id: 'all', label: 'Tudo Samsung', icon: '✨', match: () => true },
+    { id: 'all', label: 'Tudo Samsung', brand: 'samsung', match: () => true },
     {
       id: 'galaxy-5g',
       label: 'Galaxy 5G',
-      icon: '🚀',
+      brand: 'samsung',
       match: (p) => /\b5g\b/i.test(p.nome),
     },
     {
       id: 'galaxy-a',
       label: 'Linha Galaxy A',
-      icon: '📱',
+      brand: 'samsung',
       match: (p) => /\bgalaxy a\d+/i.test(p.nome),
     },
   ],
   gamer: [
-    { id: 'all', label: 'Tudo Gamer', icon: '🎮', match: () => true },
+    { id: 'all', label: 'Tudo Gamer', brand: 'gamer', match: () => true },
     {
       id: 'ps5-controles',
       label: 'PS5 & Controles',
-      icon: '🕹️',
+      brand: 'gamer',
       match: (p) => /\b(ps5|playstation|dualsense|controle|joystick)\b/i.test(p.nome) && !/\bbase\b/i.test(p.nome),
     },
     {
       id: 'bases-console',
       label: 'Bases & Acessórios PS5',
-      icon: '⚡',
+      brand: 'gamer',
       match: (p) => /\b(base|carregamento|suporte|cooler)\b/i.test(`${p.nome} ${p.descricao}`),
     },
     {
       id: 'headsets-gamer',
       label: 'Headsets & Áudio Gamer',
-      icon: '🎧',
+      brand: 'gamer',
       match: (p) => /\b(headset|fone gamer|quantum)\b/i.test(`${p.nome} ${p.descricao}`),
     },
     {
       id: 'perifericos-pc',
       label: 'Mouse, Teclado & PC',
-      icon: '⌨️',
+      brand: 'gamer',
       match: (p) => /\b(mouse|teclado|rgb|mec[aâ]nico)\b/i.test(`${p.nome} ${p.descricao}`),
     },
   ],
   'jbl-audio': [
-    { id: 'all', label: 'Tudo JBL & Áudio', icon: '🔊', match: () => true },
+    { id: 'all', label: 'Tudo JBL & Áudio', brand: 'jbl-audio', match: () => true },
     {
       id: 'caixas-jbl',
       label: 'Caixas JBL & Speakers',
-      icon: '📻',
+      brand: 'jbl-audio',
       match: (p) => /\b(flip|charge|go|xtreme|boombox|partybox|caixa de som|speaker)\b/i.test(p.nome),
     },
     {
       id: 'fones-tws',
       label: 'Fones Sem Fio & TWS',
-      icon: '🎧',
+      brand: 'jbl-audio',
       match: (p) => /\b(airpods|buds|wave|tws|in-ear)\b/i.test(`${p.nome} ${p.descricao}`),
     },
     {
       id: 'headphones',
       label: 'Headphones & Headsets',
-      icon: '🎵',
+      brand: 'jbl-audio',
       match: (p) => /\b(tune|headphone|headset|quantum)\b/i.test(`${p.nome} ${p.descricao}`),
     },
     {
       id: 'microfones',
       label: 'Microfones & Estúdio',
-      icon: '🎙️',
+      brand: 'jbl-audio',
       match: (p) => /\b(microfone|lapela)\b/i.test(`${p.nome} ${p.descricao}`),
     },
   ],
   smartwatches: [
-    { id: 'all', label: 'Todos Smartwatches', icon: '⌚', match: () => true },
+    { id: 'all', label: 'Todos Smartwatches', brand: 'smartwatches', match: () => true },
     {
       id: 'watch-apple',
       label: 'Apple Watch',
-      icon: '🍏',
+      brand: 'apple',
       match: (p) => /\bapple watch\b/i.test(p.nome),
     },
     {
       id: 'watch-amazfit',
       label: 'Amazfit',
-      icon: '🏃',
+      brand: 'amazfit',
       match: (p) => /\bamazfit\b/i.test(p.nome),
     },
     {
       id: 'watch-haylou',
       label: 'Haylou',
-      icon: '⚡',
+      brand: 'haylou',
       match: (p) => /\bhaylou\b/i.test(p.nome),
     },
   ],
   ssd: [
-    { id: 'all', label: 'Tudo Armazenamento', icon: '💾', match: () => true },
+    { id: 'all', label: 'Tudo Armazenamento', brand: 'ssd', match: () => true },
     {
       id: 'ssd-sandisk',
       label: 'SSD SanDisk',
-      icon: '🚀',
+      brand: 'sandisk',
       match: (p) => /\bsandisk\b/i.test(p.nome),
     },
     {
       id: 'ssd-kingston',
       label: 'SSD Kingston',
-      icon: '⚡',
+      brand: 'kingston',
       match: (p) => /\bkingston\b/i.test(p.nome),
     },
     {
       id: 'cases-nvme',
       label: 'Cases & Gavetas NVMe',
-      icon: '🔌',
+      brand: 'ssd',
       match: (p) => /\b(case|gaveta|nvme)\b/i.test(p.nome),
     },
   ],
@@ -314,16 +315,16 @@ function matchesSubFilter(product: Product, topic: QuickFilterId, subId: string)
   return found ? found.match(product) : true;
 }
 
-const QUICK_FILTER_CHIPS: { id: QuickFilterId; label: string; icon: string }[] = [
-  { id: 'todos', label: 'Todos', icon: '⚡' },
-  { id: 'apple', label: 'Apple', icon: '🍏' },
-  { id: 'xiaomi', label: 'Xiaomi', icon: '📱' },
-  { id: 'realme', label: 'Realme', icon: '⚡' },
-  { id: 'samsung', label: 'Samsung', icon: '✨' },
-  { id: 'gamer', label: 'Gamer', icon: '🎮' },
-  { id: 'jbl-audio', label: 'JBL', icon: '🔊' },
-  { id: 'smartwatches', label: 'Smartwatches', icon: '⌚' },
-  { id: 'ssd', label: 'SSD & Memória', icon: '💾' },
+const QUICK_FILTER_CHIPS: { id: QuickFilterId; label: string; brand: BrandLogoKey }[] = [
+  { id: 'todos', label: 'Todos', brand: 'todos' },
+  { id: 'apple', label: 'Apple', brand: 'apple' },
+  { id: 'xiaomi', label: 'Xiaomi', brand: 'xiaomi' },
+  { id: 'realme', label: 'Realme', brand: 'realme' },
+  { id: 'samsung', label: 'Samsung', brand: 'samsung' },
+  { id: 'gamer', label: 'Gamer', brand: 'gamer' },
+  { id: 'jbl-audio', label: 'JBL', brand: 'jbl-audio' },
+  { id: 'smartwatches', label: 'Smartwatches', brand: 'smartwatches' },
+  { id: 'ssd', label: 'SSD & Memória', brand: 'ssd' },
 ];
 
 function prioritizeAppleProducts(list: Product[]): Product[] {
@@ -796,9 +797,11 @@ export default function RRStorePage() {
                         : 'bg-white/[0.05] hover:bg-white/[0.12] text-zinc-200 border border-white/10 hover:border-white/25'
                     }`}
                   >
-                    <span className="text-sm leading-none transition-transform group-hover:scale-110">
-                      {chip.icon}
-                    </span>
+                    <BrandLogo
+                      brand={chip.brand}
+                      size="md"
+                      className="transition-transform group-hover:scale-105"
+                    />
                     <span className="tracking-tight">{chip.label}</span>
                     <span
                       className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
@@ -840,7 +843,7 @@ export default function RRStorePage() {
                           : 'bg-white/[0.04] hover:bg-white/[0.10] text-zinc-300 border border-white/10 hover:border-white/20'
                       }`}
                     >
-                      <span className="text-xs leading-none">{sub.icon}</span>
+                      <BrandLogo brand={sub.brand} size="sm" />
                       <span>{sub.label}</span>
                       <span
                         className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
