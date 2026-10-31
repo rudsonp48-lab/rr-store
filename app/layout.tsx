@@ -11,6 +11,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://rrmobilestore.com.br'),
   title: 'RR Mobile | RR Store Brasília • Entrega Expressa 45–90 min no DF',
   description:
     'Tudo o que seu dia a dia em Brasília precisa, na velocidade de um clique. Departamentos oficiais com entrega via Motoboy no mesmo dia em todo o DF, Preço de Atacado no PIX ou até 12x no Cartão.',
