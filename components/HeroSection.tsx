@@ -472,275 +472,243 @@ export default function HeroSection({
       />
 
       {/* ==========================================================================
-          VERSÃO MOBILE DEDICADA (< lg): CLEAN, ATRAENTE E FLUIDA NO SCROLL
+          VERSÃO MOBILE DEDICADA (< lg): LAYOUT 2 COLUNAS — ESTILO REFERÊNCIA
           ========================================================================== */}
-      <div className="lg:hidden relative max-w-xl mx-auto px-3 pt-2.5 pb-3.5">
-        {/* Card Principal Unificado Mobile (Suporta Swipe Horizontal) */}
+      <div className="lg:hidden bg-[#0D0D14] text-white">
+        {/* BANNER PRINCIPAL — Texto à esquerda, Produto à direita */}
         <div
           onTouchStart={handleTouchStartSlide}
           onTouchEnd={handleTouchEndSlide}
-          className="relative rounded-[26px] bg-gradient-to-b from-[#6950D8] via-[#7A61E6] to-[#573EC2] text-white p-3.5 shadow-[0_14px_34px_-12px_rgba(91,67,204,0.45)] border border-white/20 overflow-hidden"
+          className="relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, #0D0D20 0%, #1a1035 40%, #0f0a2a 100%)',
+          }}
         >
-          {/* Glow interno sutil */}
+          {/* Glow radial atrás do produto */}
           <div
-            className="pointer-events-none absolute -top-12 -right-12 w-44 h-44 rounded-full blur-2xl opacity-45"
+            className="pointer-events-none absolute right-0 top-0 w-48 h-48 opacity-60"
             style={{
-              background: 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%)',
+              background: 'radial-gradient(circle at 80% 30%, rgba(124,99,230,0.55) 0%, transparent 70%)',
             }}
           />
 
-          {/* Linha 1: Tag de Destaque + Alternador Foto/Vídeo + Contador */}
-          <div className="relative z-10 flex items-center justify-between gap-2">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 truncate max-w-[52%]">
-              <Sparkles className="w-3 h-3 text-amber-300 shrink-0" />
-              <span className="truncate">{currentProduct?.categoria || 'Destaque Apple'}</span>
-            </span>
-
-            <div className="flex items-center gap-1.5 shrink-0">
-              <div className="inline-flex items-center bg-black/25 backdrop-blur-md p-0.5 rounded-full border border-white/15">
-                <button
-                  type="button"
-                  onClick={() => setStageMode('cutout')}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold transition-all cursor-pointer ${
-                    stageMode === 'cutout'
-                      ? 'bg-white text-[#5B43CC] shadow-xs'
-                      : 'text-white/85'
-                  }`}
-                >
-                  <ImageIcon className="w-2.5 h-2.5" />
-                  Foto
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStageMode('video')}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold transition-all cursor-pointer ${
-                    stageMode === 'video'
-                      ? 'bg-white text-[#5B43CC] shadow-xs'
-                      : 'text-white/85'
-                  }`}
-                >
-                  <Play className="w-2.5 h-2.5 fill-current" />
-                  Vídeo
-                </button>
-              </div>
-              <span className="text-[10px] font-extrabold text-white/80 bg-black/20 px-2 py-1 rounded-full">
-                {safeIndex + 1}/{slides.length}
+          <div className="relative z-10 px-4 pt-4 pb-3">
+            {/* Linha superior: Tag + Contador + Alternador Foto/Vídeo */}
+            <div className="flex items-center justify-between mb-3">
+              <span className="inline-flex items-center gap-1 text-xs font-extrabold uppercase tracking-widest text-[#A78BFA]">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                {currentProduct?.categoria || 'Destaque Apple'}
               </span>
-            </div>
-          </div>
-
-          {/* Linha 2: Título e Subtítulo Compactos */}
-          <div
-            className={`relative z-10 mt-2.5 text-center transition-opacity duration-200 ${
-              animPhase === 'in' ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <h2 className="text-[19px] sm:text-2xl font-black tracking-tight leading-tight text-white line-clamp-1">
-              {currentSlide.titulo || currentProduct?.nome || copy.shortName}
-            </h2>
-            <p className="text-[11px] text-white/80 font-medium line-clamp-1 mt-0.5">
-              Novo Lacrado • Pronta Entrega DF
-            </p>
-          </div>
-
-          {/* Linha 3: Palco Visual Proporcional (Foto PNG Sem Fundo OU Vídeo Oficial Apple) */}
-          <div className="relative z-10 my-2 h-[185px] sm:h-[220px] flex items-center justify-center">
-            {/* Setas laterais discretas para troca rápida */}
-            <button
-              type="button"
-              onClick={handlePrev}
-              aria-label="Produto anterior"
-              className="absolute left-0 z-20 w-8 h-8 rounded-full bg-black/20 hover:bg-black/35 backdrop-blur-md border border-white/20 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-
-            <button
-              type="button"
-              onClick={handleNext}
-              aria-label="Próximo produto"
-              className="absolute right-0 z-20 w-8 h-8 rounded-full bg-black/20 hover:bg-black/35 backdrop-blur-md border border-white/20 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-
-            {stageMode === 'video' ? (
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setStageMode('cutout');
-                }}
-                className="relative w-full h-full max-w-[290px] mx-auto rounded-2xl overflow-hidden bg-black shadow-lg border border-white/30 cursor-pointer"
-              >
-                <video
-                  key={currentSlide.videoUrl}
-                  src={currentSlide.videoUrl}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/65 backdrop-blur-md text-white text-[9px] font-bold flex items-center gap-1 border border-white/15">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                  Vídeo Oficial Apple
-                </div>
-                <div className="absolute bottom-2 right-2">
+              <div className="flex items-center gap-2">
+                <div className="inline-flex items-center bg-white/10 p-0.5 rounded-full border border-white/15">
                   <button
                     type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setStageMode('cutout');
-                    }}
-                    className="px-2.5 py-1 rounded-full bg-white/95 text-zinc-900 font-extrabold text-[10px] shadow-xs cursor-pointer"
+                    onClick={() => setStageMode('cutout')}
+                    className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      stageMode === 'cutout' ? 'bg-white text-[#5B43CC]' : 'text-white/70'
+                    }`}
                   >
-                    Ver Foto PNG
+                    <ImageIcon className="w-2.5 h-2.5" />
+                    Foto
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStageMode('video')}
+                    className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      stageMode === 'video' ? 'bg-white text-[#5B43CC]' : 'text-white/70'
+                    }`}
+                  >
+                    <Play className="w-2.5 h-2.5 fill-current" />
+                    Vídeo
                   </button>
                 </div>
               </div>
-            ) : (
+            </div>
+
+            {/* GRID: Texto à esquerda (55%) + Produto à direita (45%) */}
+            <div className="grid grid-cols-[1fr_auto] gap-3 items-center">
+              {/* Coluna ESQUERDA: Título + Descrição + Preço + Botão */}
               <div
-                onClick={() => {
-                  if (currentProduct && onSelectProduct) onSelectProduct(currentProduct);
-                }}
-                className={`relative w-full h-full flex items-center justify-center cursor-pointer transition-all duration-300 ${
-                  animPhase === 'in' ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                className={`flex flex-col gap-2 transition-opacity duration-200 ${
+                  animPhase === 'in' ? 'opacity-100' : 'opacity-0'
                 }`}
               >
-                {/* Sombra de piso realista */}
+                <h2 className="text-xl font-black leading-tight tracking-tight text-white">
+                  {copy.leftBig}
+                  <br />
+                  <span className="text-[#A78BFA]">{copy.rightBig}</span>
+                </h2>
+                <p className="text-xs text-white/65 leading-snug line-clamp-2">
+                  {currentProduct?.descricao?.slice(0, 68) || 'Entrega via motoboy • Garantia Apple • SIA Loja D439'}
+                </p>
+
+                {currentProduct && (
+                  <div>
+                    <span className="block text-xs font-extrabold text-[#34D399] uppercase tracking-wider">
+                      PIX / Dinheiro
+                    </span>
+                    <span className="text-2xl font-black text-white tracking-tight">
+                      {formatBRL(currentProduct.precoPix)}
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-2 mt-1">
+                  <button
+                    type="button"
+                    onClick={(e) => currentProduct && handleHeroAdd(currentProduct, e)}
+                    className="inline-flex items-center gap-1.5 bg-[#7C63E6] hover:bg-[#6448D6] active:scale-95 text-white font-black px-4 py-2 rounded-full text-xs shadow-lg shadow-[#7C63E6]/40 transition-all cursor-pointer"
+                  >
+                    {addedId === currentProduct?.id ? (
+                      <><Check className="w-3.5 h-3.5" /> Na Sacola</>
+                    ) : (
+                      <><ShoppingCart className="w-3.5 h-3.5" /> Comprar</>
+                    )}
+                  </button>
+                  {onSelectProduct && currentProduct && (
+                    <button
+                      type="button"
+                      onClick={() => onSelectProduct(currentProduct)}
+                      className="text-xs font-bold text-white/70 underline underline-offset-2 cursor-pointer"
+                    >
+                      Detalhes
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Coluna DIREITA: Produto PNG flutuante */}
+              <div className="relative w-[148px] h-[148px] flex items-center justify-center shrink-0">
+                {/* Halo luminoso atrás do produto */}
                 <div
-                  className="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 w-[140px] h-[18px] rounded-full blur-md opacity-45"
+                  className="pointer-events-none absolute inset-0 rounded-full blur-2xl opacity-70"
                   style={{
-                    background: 'radial-gradient(ellipse at center, rgba(10,6,30,0.85) 0%, transparent 75%)',
+                    background: 'radial-gradient(circle, rgba(167,139,250,0.5) 0%, transparent 70%)',
                   }}
                 />
-                <CutoutImage
-                  src={currentSlide.imagem}
-                  alt={currentProduct?.nome || currentSlide.titulo || 'Produto em Destaque'}
-                  tolerance={26}
-                  className="relative z-10 max-h-[175px] sm:max-h-[205px] w-auto object-contain select-none drop-shadow-[0_16px_24px_rgba(15,10,40,0.45)]"
-                />
-
-                {/* Mini Preview de Vídeo PIP no canto direito */}
-                {currentSlide.videoUrl && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setStageMode('video');
-                    }}
-                    className="absolute bottom-1 right-9 z-20 flex items-center gap-1.5 pl-1 pr-2.5 py-1 rounded-full bg-black/55 hover:bg-black/70 backdrop-blur-md border border-white/25 text-white shadow-md cursor-pointer"
+                {stageMode === 'video' && currentSlide.videoUrl ? (
+                  <div
+                    onClick={(e) => { e.stopPropagation(); setStageMode('cutout'); }}
+                    className="relative w-full h-full rounded-2xl overflow-hidden bg-black border border-white/20 cursor-pointer"
                   >
-                    <span className="w-5 h-5 rounded-full bg-[#7C63E6] flex items-center justify-center">
-                      <Play className="w-2.5 h-2.5 text-white fill-current ml-0.5" />
-                    </span>
-                    <span className="text-[10px] font-extrabold">Vídeo</span>
-                  </button>
+                    <video
+                      key={currentSlide.videoUrl}
+                      src={currentSlide.videoUrl}
+                      autoPlay loop muted playsInline
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 flex items-end justify-center pb-2">
+                      <span className="text-xs font-bold text-white bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-sm">
+                        ▶ Toque p/ fechar
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
+                    className={`relative z-10 w-full h-full flex items-center justify-center cursor-pointer transition-all duration-300 ${
+                      animPhase === 'in' ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                    }`}
+                  >
+                    <CutoutImage
+                      src={currentSlide.imagem}
+                      alt={currentProduct?.nome || 'Produto'}
+                      className="max-h-[140px] w-auto object-contain select-none"
+                      style={{ filter: 'drop-shadow(0 12px 20px rgba(124,99,230,0.5))' }}
+                    />
+                    {currentSlide.videoUrl && (
+                      <button
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); setStageMode('video'); }}
+                        className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#7C63E6] border-2 border-[#0D0D14] flex items-center justify-center shadow-lg cursor-pointer"
+                      >
+                        <Play className="w-3 h-3 text-white fill-current ml-0.5" />
+                      </button>
+                    )}
+                  </div>
                 )}
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* Linha 4: Barra Branca Clean de Preço + Botão Comprar Agora */}
-          {currentProduct ? (
-            <div className="relative z-10 bg-white/95 text-zinc-900 rounded-2xl p-2.5 sm:p-3 flex items-center justify-between gap-2 shadow-md">
-              <div className="min-w-0">
-                <span className="block text-[9px] font-extrabold uppercase tracking-wider text-emerald-700">
-                  Valor Integral no PIX
-                </span>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-lg sm:text-xl font-black tracking-tight text-zinc-950">
-                    {formatBRL(currentProduct.precoPix)}
-                  </span>
-                </div>
-                <span className="block text-[10px] text-zinc-500 font-medium truncate">
-                  {currentProduct.parcelamento}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-1.5 shrink-0">
-                {onSelectProduct && (
+            {/* Pontos de Carrossel + Setas */}
+            <div className="flex items-center justify-between mt-3">
+              <div className="flex items-center gap-1.5">
+                {slides.slice(0, Math.min(slides.length, 8)).map((_, idx) => (
                   <button
+                    key={idx}
                     type="button"
-                    onClick={() => onSelectProduct(currentProduct)}
-                    className="px-2.5 py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-bold text-xs transition-colors cursor-pointer"
-                  >
-                    Detalhes
-                  </button>
-                )}
+                    onClick={() => triggerSlideChange(idx)}
+                    className={`rounded-full transition-all duration-200 cursor-pointer ${
+                      idx === safeIndex
+                        ? 'w-5 h-1.5 bg-[#7C63E6]'
+                        : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/60'
+                    }`}
+                  />
+                ))}
+              </div>
+              <div className="flex items-center gap-1.5">
                 <button
                   type="button"
-                  onClick={(e) => handleHeroAdd(currentProduct, e)}
-                  className="inline-flex items-center gap-1.5 bg-[#6D52D8] hover:bg-[#5B41C4] active:scale-95 text-white font-black px-3.5 py-2.5 rounded-xl text-xs shadow-sm transition-all cursor-pointer"
+                  onClick={handlePrev}
+                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white active:scale-95 cursor-pointer"
                 >
-                  {addedId === currentProduct.id ? (
-                    <>
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Na Sacola</span>
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingCart className="w-3.5 h-3.5" />
-                      <span>Comprar</span>
-                    </>
-                  )}
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white active:scale-95 cursor-pointer"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
-          ) : (
-            <div className="relative z-10 flex justify-center">
-              <button
-                type="button"
-                onClick={onExploreClick}
-                className="w-full py-2.5 rounded-xl bg-white text-[#5B43CC] font-black text-xs shadow-sm cursor-pointer"
-              >
-                Explorar Catálogo
-              </button>
-            </div>
-          )}
+          </div>
         </div>
 
-        {/* Seletor Horizontal Compacto de Produtos (Pills suaves sem poluir a tela) */}
-        <div className="mt-2.5 flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+        {/* SELETOR DE PRODUTOS — Thumbnails horizontais compactos */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar px-4 py-2.5 bg-[#0D0D14] border-b border-white/8">
           {slides.map((item, idx) => {
             const isCurrent = idx === safeIndex;
             return (
               <button
-                type="button"
                 key={item.key}
+                type="button"
                 onClick={() => triggerSlideChange(idx)}
-                className={`flex items-center gap-1.5 p-1 pr-2.5 rounded-full border transition-all duration-200 shrink-0 cursor-pointer ${
-                  isCurrent
-                    ? 'bg-[#6D52D8] border-[#6D52D8] text-white shadow-xs'
-                    : 'bg-white border-zinc-200/90 text-zinc-700'
+                className={`flex flex-col items-center gap-1 shrink-0 cursor-pointer transition-all ${
+                  isCurrent ? 'opacity-100' : 'opacity-50 hover:opacity-75'
                 }`}
               >
-                <img
-                  src={item.imagem}
-                  alt={item.product?.nome || item.titulo || 'Destaque'}
-                  className="w-6 h-6 rounded-full object-contain bg-[#F4F2FB] p-0.5 shrink-0"
-                />
-                <span className="text-[11px] font-bold truncate max-w-[110px]">
-                  {item.titulo || item.product?.nome || 'Destaque'}
+                <div className={`w-10 h-10 rounded-xl overflow-hidden bg-[#1a1035] border-2 transition-all ${
+                  isCurrent ? 'border-[#7C63E6] shadow-lg shadow-[#7C63E6]/30' : 'border-white/10'
+                }`}>
+                  <img
+                    src={item.imagem}
+                    alt={item.product?.nome || item.titulo || 'Produto'}
+                    className="w-full h-full object-contain p-0.5"
+                  />
+                </div>
+                <span className="text-xs font-bold text-white/80 w-12 text-center leading-tight line-clamp-1">
+                  {item.titulo?.split(' ')[0] || item.product?.nome?.split(' ')[0] || '—'}
                 </span>
               </button>
             );
           })}
         </div>
 
-        {/* Faixa de Confiança Única e Limpa no Mobile */}
-        <div className="mt-2 flex items-center justify-between gap-2 px-3 py-1.5 rounded-xl bg-white/90 border border-zinc-200/80 text-[10px] font-bold text-zinc-600">
-          <span className="inline-flex items-center gap-1 text-zinc-800 truncate">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#6D52D8] shrink-0" />
-            Original c/ Garantia
+        {/* FAIXA DE CONFIANÇA */}
+        <div className="flex items-center justify-center gap-4 px-4 py-2 bg-[#0a0a18] border-b border-white/8 text-xs font-bold">
+          <span className="inline-flex items-center gap-1 text-[#34D399]">
+            <ShieldCheck className="w-3 h-3 shrink-0" />
+            Original Apple
           </span>
-          <span className="text-zinc-300">•</span>
-          <span className="inline-flex items-center gap-1 truncate">
-            <MapPin className="w-3 h-3 text-[#6D52D8] shrink-0" />
-            SIA Loja D439
+          <span className="text-white/20">|</span>
+          <span className="inline-flex items-center gap-1 text-white/70">
+            <MapPin className="w-3 h-3 shrink-0" />
+            SIA D439
           </span>
-          <span className="text-zinc-300">•</span>
-          <span className="inline-flex items-center gap-1 text-emerald-700 shrink-0">
+          <span className="text-white/20">|</span>
+          <span className="inline-flex items-center gap-1 text-amber-400">
             <Truck className="w-3 h-3 shrink-0" />
             {selectedRegion.tempoEstimado}
           </span>
