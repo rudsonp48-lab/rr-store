@@ -111,11 +111,11 @@ export default function ProductDetailModal({
         </div>
 
         {/* Conteúdo Rolável */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-start">
             {/* Coluna Esquerda: Foto do Produto + Selos */}
-            <div className="md:col-span-5 flex flex-col gap-3">
-              <div className="relative aspect-square w-full rounded-2xl bg-[#F8F9FA] border border-zinc-200/90 overflow-hidden flex items-center justify-center p-4">
+            <div className="md:col-span-5 flex flex-col gap-2.5 sm:gap-3">
+              <div className="relative aspect-[4/3] sm:aspect-square max-h-[210px] sm:max-h-none w-full rounded-2xl bg-[#F8F9FA] border border-zinc-200/90 overflow-hidden flex items-center justify-center p-3 sm:p-4">
                 <img
                   src={product.imagem}
                   alt={product.nome}

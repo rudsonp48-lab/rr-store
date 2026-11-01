@@ -28,37 +28,37 @@ export default function StoreLocationSection() {
   return (
     <section
       id="loja-fisica"
-      className="relative overflow-hidden bg-[#0A0A0A] text-white py-16 border-t border-white/10"
+      className="relative overflow-hidden bg-[#0A0A0A] text-white py-9 sm:py-16 border-t border-white/10"
     >
       {/* Glow atmosférico */}
       <div className="pointer-events-none absolute -top-32 -left-32 w-[420px] h-[420px] rounded-full bg-[#10B981]/15 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-32 -right-32 w-[420px] h-[420px] rounded-full bg-amber-500/10 blur-[120px]" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
         <MotionReveal>
-          <div className="text-center max-w-3xl mx-auto mb-10">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/30 px-3.5 py-1 rounded-full mb-3">
+          <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-10">
+            <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/30 px-3 sm:px-3.5 py-1 rounded-full mb-2.5 sm:mb-3">
               <Store className="w-3.5 h-3.5" />
               Loja Física em Brasília
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">
+            <h2 className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight">
               Visite nossa loja na <span className="text-[#34D399]">Feira dos Importados</span>
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-2.5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">
               Venha conhecer os produtos pessoalmente, testar seu novo aparelho e retirar seu pedido na
               hora. Estamos na <strong className="text-white">Loja D439</strong> da Feira dos Importados do SIA.
             </p>
           </div>
         </MotionReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 items-stretch">
           {/* Mapa */}
           <MotionReveal delayMs={60} className="lg:col-span-3">
-            <div className="h-full min-h-[320px] sm:min-h-[420px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] bg-[#121212]">
+            <div className="h-full min-h-[240px] sm:min-h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] bg-[#121212]">
               <iframe
                 title="Mapa - RR Store, Feira dos Importados do SIA, Loja D439"
                 src={MAP_EMBED_URL}
-                className="w-full h-full min-h-[320px] sm:min-h-[420px] border-0"
+                className="w-full h-full min-h-[240px] sm:min-h-[420px] border-0"
                 loading="lazy"
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
