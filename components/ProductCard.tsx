@@ -212,12 +212,12 @@ export default function ProductCard({
             </div>
           </div>
 
-          {/* Dois Botões de Ação Ergonômicos (Touch Target >= 42px) */}
-          <div className="space-y-1.5 sm:space-y-2">
+          {/* Botões de Ação: lado-a-lado em compactMobile, empilhados em 1-coluna */}
+          <div className={compactMobile ? 'flex items-center gap-1.5' : 'space-y-1.5 sm:space-y-2'}>
             <button
               type="button"
               onClick={handleAdd}
-              className={`touch-target w-full py-2.5 px-3 rounded-xl font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all duration-200 active:scale-95 cursor-pointer ${
+              className={`touch-target ${compactMobile ? 'flex-1' : 'w-full'} py-2.5 px-3 rounded-xl font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all duration-200 active:scale-95 cursor-pointer ${
                 isOutOfStock
                   ? 'bg-zinc-200 hover:bg-zinc-300 text-zinc-800'
                   : justAdded
@@ -241,7 +241,7 @@ export default function ProductCard({
                 <>
                   <ShoppingBag className="w-4 h-4 stroke-[2.5] shrink-0" />
                   <span className="truncate">
-                    {compactMobile ? 'Por na Sacola' : 'Adicionar ao Carrinho'}
+                    {compactMobile ? 'Sacola' : 'Adicionar ao Carrinho'}
                   </span>
                 </>
               )}
@@ -252,12 +252,12 @@ export default function ProductCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="touch-target w-full py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm bg-[#0A0A0A] hover:bg-zinc-800 active:scale-95 text-white flex items-center justify-center gap-1.5 transition-all"
+              className={`touch-target ${compactMobile ? 'w-10 h-10 rounded-xl flex items-center justify-center' : 'w-full py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5'} bg-[#0A0A0A] hover:bg-zinc-800 active:scale-95 text-white transition-all`}
             >
               <MessageCircle className="w-4 h-4 text-[#34D399] shrink-0" />
-              <span className="truncate">
-                {compactMobile ? 'Comprar Zap' : 'Comprar via WhatsApp'}
-              </span>
+              {!compactMobile && (
+                <span className="truncate">Comprar via WhatsApp</span>
+              )}
             </a>
           </div>
         </div>
