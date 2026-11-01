@@ -194,7 +194,7 @@ export default function FooterAndFloatingWhatsApp({
       </footer>
 
       {/* Balão Flutuante de WhatsApp no Canto Direito (Visível no Celular e no Desktop) */}
-      <div className="flex fixed bottom-[4.75rem] md:bottom-6 right-3 md:right-6 z-40 items-center">
+      <div className="hidden md:flex fixed bottom-6 right-6 z-40 items-center">
         <a
           href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
           target="_blank"

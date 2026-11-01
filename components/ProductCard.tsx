@@ -96,7 +96,7 @@ export default function ProductCard({
         </div>
 
         {/* Badge Preço de Atacado + Botão Rápido Ver Detalhes */}
-        <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between gap-1">
+        <div className={`absolute bottom-2 left-2.5 right-2.5 items-center justify-between gap-1 ${compactMobile ? 'hidden sm:flex' : 'flex'}`}>
           <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-black bg-[#0A0A0A] text-[#34D399] border border-[#10B981]/40">
             Preço de Atacado
           </span>
@@ -185,7 +185,7 @@ export default function ProductCard({
               compactMobile ? 'p-2.5 sm:p-3' : 'p-3'
             } border border-zinc-200/80 mb-3`}
           >
-            <div className="flex items-center justify-between text-[11px] text-zinc-500 mb-0.5">
+            <div className={`${compactMobile ? 'hidden sm:flex' : 'flex'} items-center justify-between text-[11px] text-zinc-500 mb-0.5`}>
               <span className="truncate font-semibold text-zinc-600">Valor de Atacado</span>
               <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#059669] bg-[#10B981]/15 px-1.5 py-0.5 rounded shrink-0">
                 PIX / DINHEIRO
@@ -200,8 +200,8 @@ export default function ProductCard({
               >
                 {formatBRL(product.precoPix)}
               </span>
-              <span className="text-[10px] sm:text-xs font-bold text-[#059669]">
-                à vista no PIX
+              <span className={`${compactMobile ? 'text-[10px] sm:text-xs' : 'text-[10px] sm:text-xs'} font-bold text-[#059669]`}>
+                {compactMobile ? 'PIX' : 'à vista no PIX'}
               </span>
             </div>
 
