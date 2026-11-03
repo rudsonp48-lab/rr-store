@@ -16,7 +16,6 @@ import { CartItem, CategoryId, DFRegion, HeroBanner, Product } from '../types/st
 import { CATEGORIES, DF_REGIONS, formatBRL, formatInstallment, PRODUCTS } from '../data/mockData';
 import TopBarAndHeader from '../components/TopBarAndHeader';
 import HeroSection from '../components/HeroSection';
-import CategoryNav from '../components/CategoryNav';
 import BrandLogo, { BrandLogoKey } from '../components/BrandLogo';
 import ProductCard from '../components/ProductCard';
 import ProductDetailModal from '../components/ProductDetailModal';
@@ -679,7 +678,7 @@ export default function RRStorePage() {
   };
 
   const scrollToDepartments = () => {
-    const el = document.getElementById('departamentos');
+    const el = document.getElementById('catalogo-produtos');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -717,17 +716,6 @@ export default function RRStorePage() {
         onSelectProduct={setSelectedProduct}
         products={products}
         banners={banners}
-      />
-
-      {/* 2.3 Navegação por Departamentos (Os 10 Nichos da RR Store) */}
-      <CategoryNav
-        selectedCategory={selectedCategory}
-        onSelectCategory={(cat) => {
-          setSelectedCategory(cat);
-          setQuickFilter('todos');
-          setSubFilter('all');
-        }}
-        products={products}
       />
 
       {/* 3. Área Principal de Produtos (Background Secundário #F8F9FA / #FFFFFF para Leitura Perfeita) */}
