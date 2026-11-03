@@ -17,7 +17,6 @@ import { CATEGORIES, DF_REGIONS, formatBRL, formatInstallment, PRODUCTS } from '
 import TopBarAndHeader from '../components/TopBarAndHeader';
 import HeroSection from '../components/HeroSection';
 import CategoryNav from '../components/CategoryNav';
-import CategoryShowcaseLayout from '../components/CategoryShowcaseLayout';
 import BrandLogo, { BrandLogoKey } from '../components/BrandLogo';
 import ProductCard from '../components/ProductCard';
 import ProductDetailModal from '../components/ProductDetailModal';
@@ -694,37 +693,15 @@ export default function RRStorePage() {
     }
   };
 
-  const handleSelectCategory = (cat: CategoryId) => {
-    setSelectedCategory(cat);
-    setSearchQuery('');
-    setQuickFilter('todos');
-    setSubFilter('all');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-[#0A0A0A] pb-20 md:pb-0">
-      {selectedCategory !== 'Todos' ? (
-        <CategoryShowcaseLayout
-          category={selectedCategory}
-          categories={CATEGORIES}
-          allProducts={products}
-          selectedRegion={selectedRegion}
-          cartCount={cartCount}
-          onSelectCategory={handleSelectCategory}
-          onAddToCart={handleAddToCart}
-          onSelectProduct={setSelectedProduct}
-          onOpenCart={() => setIsCartOpen(true)}
-        />
-      ) : (
-        <>
-          {/* 2.1 Top Bar & Sticky Header */}
-          <TopBarAndHeader
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            selectedCategory={selectedCategory}
-            onSelectCategory={handleSelectCategory}
-            selectedRegion={selectedRegion}
+      {/* 2.1 Top Bar & Sticky Header */}
+      <TopBarAndHeader
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        selectedRegion={selectedRegion}
         onSelectRegion={handleSelectRegion}
         cartCount={cartCount}
         cartSubtotal={cartSubtotalPix}
@@ -988,26 +965,24 @@ export default function RRStorePage() {
         </div>
       </main>
 
-          {/* 5. Seções Completas de Conversão */}
-          <TrustAndTestimonials
-            selectedRegion={selectedRegion}
-            onExploreClick={scrollToCatalog}
-          />
-
-          {/* 6. Footer Completo & Botão Flutuante de WhatsApp */}
-          <FooterAndFloatingWhatsApp
-            selectedRegion={selectedRegion}
-            onSelectCategory={handleSelectCategory}
-          />
-        </>
-      )}
-
       {/* Modal de Informações e SEO Completo ao Clicar em Qualquer Produto */}
       <ProductDetailModal
         product={selectedProduct}
         selectedRegion={selectedRegion}
         onClose={() => setSelectedProduct(null)}
         onAddToCart={handleAddToCart}
+      />
+
+      {/* 5. Seções Completas de Conversão */}
+      <TrustAndTestimonials
+        selectedRegion={selectedRegion}
+        onExploreClick={scrollToCatalog}
+      />
+
+      {/* 6. Footer Completo & Botão Flutuante de WhatsApp */}
+      <FooterAndFloatingWhatsApp
+        selectedRegion={selectedRegion}
+        onSelectCategory={setSelectedCategory}
       />
 
       {/* 7. Barra de Navegação Inferior Nativa Mobile + Fechamento Rápido 1-Toque */}
@@ -1018,7 +993,9 @@ export default function RRStorePage() {
         selectedRegion={selectedRegion}
         onOpenCart={() => setIsCartOpen(true)}
         onHomeClick={() => {
-          handleSelectCategory('Todos');
+          setSelectedCategory('Todos');
+          setSearchQuery('');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onCategoriesClick={scrollToDepartments}
         onSearchClick={focusMobileSearch}
