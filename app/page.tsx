@@ -40,7 +40,7 @@ type QuickFilterId =
   | 'ssd';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v9';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v10';
 
 const LOCAL_CURATED_MAP = new Map<string, Product>(PRODUCTS.map((p) => [p.id, p]));
 
@@ -48,30 +48,23 @@ function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
   const cloudIds = new Set(cloudProducts.map((p) => p.id));
   const sanitizedCloud = cloudProducts.map((cp) => {
     const local = LOCAL_CURATED_MAP.get(cp.id);
-    const cleanParcelamento = (local?.parcelamento || cp.parcelamento || '').replace(
+    const cleanParcelamento = (cp.parcelamento || local?.parcelamento || '').replace(
       /sem juros/gi,
       '(juros conforme taxa da operadora)'
     );
-    const safeCloudImg = (cp.imagem || '').replace(/^http:\/\//i, 'https://');
-    if (local && (cp.id.startsWith('rr-apple-') || cp.id.startsWith('sousa-'))) {
-      const livePrice = cp.precoPor > 0 ? cp.precoPor : local.precoPor;
-      return {
-        ...cp,
-        nome: local.nome,
-        imagem: local.imagem,
-        descricao: local.descricao,
-        precoPor: livePrice,
-        precoPix: cp.precoPix > 0 ? cp.precoPix : livePrice,
-        parcelamento: cleanParcelamento,
-      };
-    }
-    const integralPrice = local ? local.precoPix : cp.precoPor;
+    const safeCloudImg = (cp.imagem || local?.imagem || '').replace(/^http:\/\//i, 'https://');
+    const livePrice = cp.precoPor > 0 ? cp.precoPor : (local?.precoPor || local?.precoPix || 0);
+    const livePix = cp.precoPix > 0 ? cp.precoPix : livePrice;
     return {
+      ...(local || {}),
       ...cp,
-      imagem: safeCloudImg || local?.imagem || cp.imagem,
-      precoPor: integralPrice,
-      precoPix: integralPrice,
+      nome: local?.nome || cp.nome,
+      imagem: safeCloudImg,
+      descricao: local?.descricao || cp.descricao,
+      precoPor: livePrice,
+      precoPix: livePix,
       parcelamento: cleanParcelamento,
+      estoque: typeof cp.estoque === 'number' ? cp.estoque : (local?.estoque ?? 5),
     };
   });
   return [...PRODUCTS.filter((p) => !cloudIds.has(p.id)), ...sanitizedCloud];
