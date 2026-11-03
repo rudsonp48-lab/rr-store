@@ -9,6 +9,7 @@
   --rr-emerald: #10B981;
   --rr-emerald-hover: #059669;
   --rr-emerald-glow: #34D399;
+  --c-brand: #e0a87e;
 
   /* Animation Systems Tokens (Stripe × Linear × Apple × Vercel) */
   --dur-micro: 160ms;
@@ -24,6 +25,32 @@
   --offset-sm: 8px;
   --offset-md: 16px;
   --offset-lg: 24px;
+}
+
+.font-display { font-family: 'Oswald', sans-serif; }
+.font-script { font-family: 'Satisfy', cursive; }
+.font-sans-editorial { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif; }
+
+/* Smooth Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+
+.glass-nav {
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 html {
