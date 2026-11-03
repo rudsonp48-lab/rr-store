@@ -52,6 +52,7 @@ function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
       /sem juros/gi,
       '(juros conforme taxa da operadora)'
     );
+    const safeCloudImg = (cp.imagem || '').replace(/^http:\/\//i, 'https://');
     if (local && (cp.id.startsWith('rr-apple-') || cp.id.startsWith('sousa-'))) {
       return {
         ...cp,
@@ -66,6 +67,7 @@ function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
     const integralPrice = local ? local.precoPix : cp.precoPor;
     return {
       ...cp,
+      imagem: safeCloudImg || local?.imagem || cp.imagem,
       precoPor: integralPrice,
       precoPix: integralPrice,
       parcelamento: cleanParcelamento,
@@ -829,9 +831,9 @@ export default function RRStorePage() {
           </div>
 
           {/* Atalhos Rápidos de Busca por Marcas e Categorias Populares + Subcategorias Expansíveis */}
-          <div className="relative mb-6 bg-[#0A0A0A] rounded-2xl p-3 sm:p-4 border border-zinc-800 shadow-lg space-y-3">
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
-              <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/[0.06] border border-white/10 text-white shrink-0">
+          <div className="relative mb-5 sm:mb-6 bg-[#0A0A0A] rounded-2xl p-2.5 sm:p-4 border border-zinc-800 shadow-lg space-y-2.5 sm:space-y-3">
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
+              <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/[0.06] border border-white/10 text-white shrink-0">
                 <Sparkles className="w-3.5 h-3.5 text-[#34D399]" />
                 <span className="text-[11px] font-black uppercase tracking-[0.12em] text-zinc-200">
                   Filtro Rápido
@@ -851,7 +853,7 @@ export default function RRStorePage() {
                       setSelectedCategory('Todos');
                       setSearchQuery('');
                     }}
-                    className={`group relative inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 cursor-pointer ${
+                    className={`group relative inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-extrabold whitespace-nowrap transition-all duration-200 shrink-0 cursor-pointer ${
                       active
                         ? 'bg-[#10B981] text-[#0A0A0A] shadow-[0_6px_18px_rgba(16,185,129,0.35)] border border-[#34D399]'
                         : 'bg-white/[0.05] hover:bg-white/[0.12] text-zinc-200 border border-white/10 hover:border-white/25'
@@ -879,9 +881,9 @@ export default function RRStorePage() {
 
             {/* Subcategorias Dinâmicas do Tópico Selecionado (Apple, Xiaomi, Realme, Samsung, Gamer, JBL, etc.) */}
             {quickFilter !== 'todos' && SUB_FILTERS_BY_TOPIC[quickFilter] && (
-              <div className="pt-2.5 border-t border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#7C63E6]/20 border border-[#7C63E6]/40 text-[#C4B5FD] text-[10px] font-black uppercase tracking-wider shrink-0">
-                  <span>↳ Nichos {QUICK_FILTER_CHIPS.find((c) => c.id === quickFilter)?.label}:</span>
+              <div className="pt-2 sm:pt-2.5 border-t border-white/10 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar">
+                <span className="inline-flex items-center gap-1 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg bg-[#7C63E6]/20 border border-[#7C63E6]/40 text-[#C4B5FD] text-[10px] font-black uppercase tracking-wider shrink-0">
+                  <span>↳ {QUICK_FILTER_CHIPS.find((c) => c.id === quickFilter)?.label}:</span>
                 </span>
 
                 {SUB_FILTERS_BY_TOPIC[quickFilter].map((sub) => {

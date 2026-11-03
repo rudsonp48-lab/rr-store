@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Search,
   MapPin,
@@ -46,6 +46,23 @@ export default function TopBarAndHeader({
 }: TopBarAndHeaderProps) {
   const [isRegionModalOpen, setIsRegionModalOpen] = useState(false);
   const [cepInput, setCepInput] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Colapsa a barra de busca mobile ao rolar (< md), expande ao subir ou quando há texto
+  useEffect(() => {
+    let rafId = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 68);
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
 
   const handleCepLookup = (e: React.FormEvent) => {
     e.preventDefault();
@@ -187,30 +204,38 @@ export default function TopBarAndHeader({
             </div>
           </div>
 
-          {/* Linha 2 (Mobile): Barra de Busca Full-Width Limpa e Moderna */}
-          <div className="mt-2.5 md:hidden relative flex items-center">
-            <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 pointer-events-none" />
-            <input
-              id="rr-mobile-search-input"
-              type="search"
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Buscar na RR Store (ex: Creatina, Fone, Potes)..."
-              className="w-full bg-[#121212] text-white placeholder-zinc-500 text-base pl-10 pr-20 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-[#10B981]"
-            />
-            {searchQuery ? (
-              <button
-                type="button"
-                onClick={() => onSearchChange('')}
-                className="absolute right-2.5 bg-zinc-800 text-zinc-200 text-xs font-bold px-2.5 py-1 rounded-lg"
-              >
-                Limpar
-              </button>
-            ) : (
-              <span className="absolute right-2.5 text-[11px] font-bold text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/20 px-2 py-0.5 rounded-lg pointer-events-none flex items-center gap-1">
-                <Truck className="w-3 h-3" /> Hoje
-              </span>
-            )}
+          {/* Linha 2 (Mobile): Barra de Busca Full-Width — colapsa ao rolar, expande ao subir ou ao digitar */}
+          <div
+            className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+              isScrolled && !searchQuery
+                ? 'max-h-0 mt-0 opacity-0 pointer-events-none'
+                : 'max-h-16 mt-2.5 opacity-100'
+            }`}
+          >
+            <div className="relative flex items-center">
+              <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 pointer-events-none" />
+              <input
+                id="rr-mobile-search-input"
+                type="search"
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                placeholder="Buscar na RR Store (ex: Creatina, Fone, Potes)..."
+                className="w-full bg-[#121212] text-white placeholder-zinc-500 text-base pl-10 pr-20 py-2 rounded-xl border border-white/10 focus:outline-none focus:border-[#10B981]"
+              />
+              {searchQuery ? (
+                <button
+                  type="button"
+                  onClick={() => onSearchChange('')}
+                  className="absolute right-2.5 bg-zinc-800 text-zinc-200 text-xs font-bold px-2.5 py-1 rounded-lg"
+                >
+                  Limpar
+                </button>
+              ) : (
+                <span className="absolute right-2.5 text-[11px] font-bold text-[#34D399] bg-[#10B981]/10 border border-[#10B981]/20 px-2 py-0.5 rounded-lg pointer-events-none flex items-center gap-1">
+                  <Truck className="w-3 h-3" /> Hoje
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </header>

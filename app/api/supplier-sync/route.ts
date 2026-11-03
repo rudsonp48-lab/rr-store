@@ -211,7 +211,7 @@ export async function GET() {
       const pid = `gsm-${it.id}`;
       if (seen.has(pid)) return;
 
-      const src = it.images?.[0]?.src || '';
+      const src = (it.images?.[0]?.src || '').replace(/^http:\/\//i, 'https://');
       const rawCost = Number(it.prices?.price || 0) / 100;
 
       if (!src || rawCost <= 0 || it.is_in_stock === false) return;

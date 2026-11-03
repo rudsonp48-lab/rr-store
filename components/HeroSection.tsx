@@ -284,6 +284,7 @@ export default function HeroSection({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mouseTilt, setMouseTilt] = useState({ x: 0, y: 0 });
   const [stageMode, setStageMode] = useState<'cutout' | 'video'>('cutout');
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   // Sempre garante a coleção completa dos 10 flagships Apple em PNG recortado grande + vídeo oficial Apple
   const slides = useMemo<HeroSlide[]>(() => {
@@ -433,6 +434,23 @@ export default function HeroSection({
     setMouseTilt({ x: 0, y: 0 });
   };
 
+  const handleTouchStartSlide = (e: React.TouchEvent<HTMLDivElement>) => {
+    setIsPaused(true);
+    setTouchStartX(e.touches[0]?.clientX ?? null);
+  };
+
+  const handleTouchEndSlide = (e: React.TouchEvent<HTMLDivElement>) => {
+    setIsPaused(false);
+    if (touchStartX === null) return;
+    const endX = e.changedTouches[0]?.clientX ?? touchStartX;
+    const diff = touchStartX - endX;
+    if (Math.abs(diff) > 42) {
+      if (diff > 0) handleNext();
+      else handlePrev();
+    }
+    setTouchStartX(null);
+  };
+
   const fadeFactor = Math.max(0, scrollProgress - 0.08);
 
   return (
@@ -453,13 +471,260 @@ export default function HeroSection({
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 pb-7 sm:pt-6 sm:pb-10">
+      {/* ==========================================================================
+          VERSÃO MOBILE DEDICADA (< lg): LAYOUT 2 COLUNAS — ESTILO REFERÊNCIA
+          ========================================================================== */}
+      <div className="lg:hidden bg-[#0D0D14] text-white">
+        {/* BANNER PRINCIPAL — Texto à esquerda, Produto à direita */}
+        <div
+          onTouchStart={handleTouchStartSlide}
+          onTouchEnd={handleTouchEndSlide}
+          className="relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, #0D0D20 0%, #1a1035 40%, #0f0a2a 100%)',
+          }}
+        >
+          {/* Glow radial atrás do produto */}
+          <div
+            className="pointer-events-none absolute right-0 top-0 w-48 h-48 opacity-60"
+            style={{
+              background: 'radial-gradient(circle at 80% 30%, rgba(124,99,230,0.55) 0%, transparent 70%)',
+            }}
+          />
+
+          <div className="relative z-10 px-4 pt-4 pb-3">
+            {/* Linha superior: Tag + Contador + Alternador Foto/Vídeo */}
+            <div className="flex items-center justify-between mb-3">
+              <span className="inline-flex items-center gap-1 text-xs font-extrabold uppercase tracking-widest text-[#A78BFA]">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                {currentProduct?.categoria || 'Destaque Apple'}
+              </span>
+              <div className="flex items-center gap-2">
+                <div className="inline-flex items-center bg-white/10 p-0.5 rounded-full border border-white/15">
+                  <button
+                    type="button"
+                    onClick={() => setStageMode('cutout')}
+                    className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      stageMode === 'cutout' ? 'bg-white text-[#5B43CC]' : 'text-white/70'
+                    }`}
+                  >
+                    <ImageIcon className="w-2.5 h-2.5" />
+                    Foto
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStageMode('video')}
+                    className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      stageMode === 'video' ? 'bg-white text-[#5B43CC]' : 'text-white/70'
+                    }`}
+                  >
+                    <Play className="w-2.5 h-2.5 fill-current" />
+                    Vídeo
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* GRID: Texto à esquerda (55%) + Produto à direita (45%) */}
+            <div className="grid grid-cols-[1fr_auto] gap-3 items-center">
+              {/* Coluna ESQUERDA: Título + Descrição + Preço + Botão */}
+              <div
+                className={`flex flex-col gap-2 transition-opacity duration-200 ${
+                  animPhase === 'in' ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                <h2 className="text-xl font-black leading-tight tracking-tight text-white">
+                  {copy.leftBig}
+                  <br />
+                  <span className="text-[#A78BFA]">{copy.rightBig}</span>
+                </h2>
+                <p className="text-xs text-white/65 leading-snug line-clamp-2">
+                  {currentProduct?.descricao?.slice(0, 68) || 'Entrega via motoboy • Garantia Apple • SIA Loja D439'}
+                </p>
+
+                {currentProduct && (
+                  <div>
+                    <span className="block text-xs font-extrabold text-[#34D399] uppercase tracking-wider">
+                      PIX / Dinheiro
+                    </span>
+                    <span className="text-2xl font-black text-white tracking-tight">
+                      {formatBRL(currentProduct.precoPix)}
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-2 mt-1">
+                  <button
+                    type="button"
+                    onClick={(e) => currentProduct && handleHeroAdd(currentProduct, e)}
+                    className="inline-flex items-center gap-1.5 bg-[#7C63E6] hover:bg-[#6448D6] active:scale-95 text-white font-black px-4 py-2 rounded-full text-xs shadow-lg shadow-[#7C63E6]/40 transition-all cursor-pointer"
+                  >
+                    {addedId === currentProduct?.id ? (
+                      <><Check className="w-3.5 h-3.5" /> Na Sacola</>
+                    ) : (
+                      <><ShoppingCart className="w-3.5 h-3.5" /> Comprar</>
+                    )}
+                  </button>
+                  {onSelectProduct && currentProduct && (
+                    <button
+                      type="button"
+                      onClick={() => onSelectProduct(currentProduct)}
+                      className="text-xs font-bold text-white/70 underline underline-offset-2 cursor-pointer"
+                    >
+                      Detalhes
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Coluna DIREITA: Produto PNG flutuante */}
+              <div className="relative w-[148px] h-[148px] flex items-center justify-center shrink-0">
+                {/* Halo luminoso atrás do produto */}
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-full blur-2xl opacity-70"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(167,139,250,0.5) 0%, transparent 70%)',
+                  }}
+                />
+                {stageMode === 'video' && currentSlide.videoUrl ? (
+                  <div
+                    onClick={(e) => { e.stopPropagation(); setStageMode('cutout'); }}
+                    className="relative w-full h-full rounded-2xl overflow-hidden bg-black border border-white/20 cursor-pointer"
+                  >
+                    <video
+                      key={currentSlide.videoUrl}
+                      src={currentSlide.videoUrl}
+                      autoPlay loop muted playsInline
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 flex items-end justify-center pb-2">
+                      <span className="text-xs font-bold text-white bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-sm">
+                        ▶ Toque p/ fechar
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
+                    className={`relative z-10 w-full h-full flex items-center justify-center cursor-pointer transition-all duration-300 ${
+                      animPhase === 'in' ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                    }`}
+                  >
+                    <CutoutImage
+                      src={currentSlide.imagem}
+                      alt={currentProduct?.nome || 'Produto'}
+                      className="max-h-[140px] w-auto object-contain select-none"
+                      style={{ filter: 'drop-shadow(0 12px 20px rgba(124,99,230,0.5))' }}
+                    />
+                    {currentSlide.videoUrl && (
+                      <button
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); setStageMode('video'); }}
+                        className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#7C63E6] border-2 border-[#0D0D14] flex items-center justify-center shadow-lg cursor-pointer"
+                      >
+                        <Play className="w-3 h-3 text-white fill-current ml-0.5" />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Pontos de Carrossel + Setas */}
+            <div className="flex items-center justify-between mt-3">
+              <div className="flex items-center gap-1.5">
+                {slides.slice(0, Math.min(slides.length, 8)).map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => triggerSlideChange(idx)}
+                    className={`rounded-full transition-all duration-200 cursor-pointer ${
+                      idx === safeIndex
+                        ? 'w-5 h-1.5 bg-[#7C63E6]'
+                        : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/60'
+                    }`}
+                  />
+                ))}
+              </div>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white active:scale-95 cursor-pointer"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white active:scale-95 cursor-pointer"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SELETOR DE PRODUTOS — Thumbnails horizontais compactos */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar px-4 py-2.5 bg-[#0D0D14] border-b border-white/8">
+          {slides.map((item, idx) => {
+            const isCurrent = idx === safeIndex;
+            return (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => triggerSlideChange(idx)}
+                className={`flex flex-col items-center gap-1 shrink-0 cursor-pointer transition-all ${
+                  isCurrent ? 'opacity-100' : 'opacity-50 hover:opacity-75'
+                }`}
+              >
+                <div className={`w-10 h-10 rounded-xl overflow-hidden bg-[#1a1035] border-2 transition-all ${
+                  isCurrent ? 'border-[#7C63E6] shadow-lg shadow-[#7C63E6]/30' : 'border-white/10'
+                }`}>
+                  <img
+                    src={item.imagem}
+                    alt={item.product?.nome || item.titulo || 'Produto'}
+                    className="w-full h-full object-contain p-0.5"
+                  />
+                </div>
+                <span className="text-xs font-bold text-white/80 w-12 text-center leading-tight line-clamp-1">
+                  {item.titulo?.split(' ')[0] || item.product?.nome?.split(' ')[0] || '—'}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* FAIXA DE CONFIANÇA */}
+        <div className="flex items-center justify-center gap-4 px-4 py-2 bg-[#0a0a18] border-b border-white/8 text-xs font-bold">
+          <span className="inline-flex items-center gap-1 text-[#34D399]">
+            <ShieldCheck className="w-3 h-3 shrink-0" />
+            Original Apple
+          </span>
+          <span className="text-white/20">|</span>
+          <span className="inline-flex items-center gap-1 text-white/70">
+            <MapPin className="w-3 h-3 shrink-0" />
+            SIA D439
+          </span>
+          <span className="text-white/20">|</span>
+          <span className="inline-flex items-center gap-1 text-amber-400">
+            <Truck className="w-3 h-3 shrink-0" />
+            {selectedRegion.tempoEstimado}
+          </span>
+        </div>
+      </div>
+
+      {/* ==========================================================================
+          VERSÃO DESKTOP ORIGINAL (lg:block): 100% PRESERVADA COMO NO COMPUTADOR
+          ========================================================================== */}
+      <div className="hidden lg:block relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-2.5 pb-4 sm:pt-6 sm:pb-10">
         {/* Sub-barra superior: Localização Feira dos Importados SIA Loja D439 + Alternador PNG Sem Fundo / Vídeo Apple + Controles */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-2 sm:mb-4 border-b border-zinc-200/80">
-          <div className="flex flex-wrap items-center gap-2.5 text-xs">
-            <span className="inline-flex items-center gap-1.5 text-zinc-800 font-bold bg-white border border-zinc-200/90 px-3 py-1.5 rounded-full shadow-xs">
-              <MapPin className="w-3.5 h-3.5 text-[#7C63E6] shrink-0" />
-              <span>Feira dos Importados do SIA — Loja D439</span>
+        <div className="flex items-center justify-between gap-2 pb-2.5 sm:pb-4 mb-1.5 sm:mb-4 border-b border-zinc-200/80">
+          <div className="flex items-center gap-2 text-xs min-w-0">
+            <span className="inline-flex items-center gap-1.5 text-zinc-800 font-bold bg-white border border-zinc-200/90 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-xs truncate text-[11px] sm:text-xs">
+              <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#7C63E6] shrink-0" />
+              <span className="truncate">Feira dos Importados SIA — Loja D439</span>
             </span>
 
             <span className="hidden md:inline-flex items-center gap-1.5 text-zinc-600 font-medium">
@@ -474,30 +739,30 @@ export default function HeroSection({
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] uppercase tracking-[0.16em] text-zinc-500 font-bold hidden sm:inline">
-              Destaque {safeIndex + 1}/{slides.length}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.12em] sm:tracking-[0.16em] text-zinc-500 font-bold">
+              {safeIndex + 1}/{slides.length}
             </span>
             <button
               type="button"
               onClick={handlePrev}
-              className="w-8 h-8 rounded-full border border-zinc-300 bg-white hover:bg-[#7C63E6] hover:border-[#7C63E6] hover:text-white text-zinc-700 flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-zinc-300 bg-white hover:bg-[#7C63E6] hover:border-[#7C63E6] hover:text-white text-zinc-700 flex items-center justify-center transition-all cursor-pointer shadow-xs"
               aria-label="Produto anterior"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
             <button
               type="button"
               onClick={handleNext}
-              className="w-8 h-8 rounded-full border border-zinc-300 bg-white hover:bg-[#7C63E6] hover:border-[#7C63E6] hover:text-white text-zinc-700 flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-zinc-300 bg-white hover:bg-[#7C63E6] hover:border-[#7C63E6] hover:text-white text-zinc-700 flex items-center justify-center transition-all cursor-pointer shadow-xs"
               aria-label="Próximo produto"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           </div>
         </div>
 
-        {/* CONTAINER PRINCIPAL DO BANNER — LAYOUT FIEL À IMAGEM DE REFERÊNCIA */}
+        {/* CONTAINER PRINCIPAL DO BANNER — LAYOUT FIEL À IMAGEM DE REFERÊNCIA E PROPORCIONAL NO CELULAR */}
         <div
           className={`relative transition-all duration-300 ${
             animPhase === 'in'
@@ -506,13 +771,13 @@ export default function HeroSection({
           }`}
         >
           {/* 1. FAIXA SUPERIOR BRANCA COM OS 2 TÍTULOS MONUMENTAIS ("Define Your STYLE" / "Own Your WORLD") */}
-          <div className="relative z-10 grid grid-cols-2 lg:grid-cols-12 items-end gap-2 sm:gap-4 pt-1 pb-4 sm:pb-6 lg:pb-8 px-1 sm:px-2">
+          <div className="relative z-10 grid grid-cols-2 lg:grid-cols-12 items-end gap-2 sm:gap-4 pt-0.5 pb-2 sm:pb-6 lg:pb-8 px-0.5 sm:px-2">
             {/* Esquerda: "Define Your / STYLE" */}
-            <div className="col-span-1 lg:col-span-5 text-left">
-              <p className="text-base sm:text-2xl lg:text-[32px] font-bold italic text-[#141418] tracking-tight leading-tight">
+            <div className="col-span-1 lg:col-span-5 text-left min-w-0">
+              <p className="text-xs sm:text-2xl lg:text-[32px] font-bold italic text-[#141418] tracking-tight leading-tight truncate">
                 {copy.leftTop}
               </p>
-              <h1 className="text-3xl sm:text-6xl lg:text-[72px] xl:text-[80px] font-black uppercase tracking-[-0.04em] text-[#7B61E4] leading-[0.92] mt-0.5">
+              <h1 className="text-2xl sm:text-6xl lg:text-[72px] xl:text-[80px] font-black uppercase tracking-[-0.04em] text-[#7B61E4] leading-[0.94] mt-0.5 truncate">
                 {copy.leftBig}
               </h1>
             </div>
@@ -521,32 +786,32 @@ export default function HeroSection({
             <div className="hidden lg:block lg:col-span-2" />
 
             {/* Direita: "Own Your ✸ / WORLD" */}
-            <div className="col-span-1 lg:col-span-5 text-right lg:pl-4">
-              <div className="inline-flex items-center justify-end gap-2 sm:gap-4 w-full">
-                <p className="text-base sm:text-2xl lg:text-[32px] font-bold italic text-[#141418] tracking-tight leading-tight">
+            <div className="col-span-1 lg:col-span-5 text-right lg:pl-4 min-w-0">
+              <div className="inline-flex items-center justify-end gap-1.5 sm:gap-4 w-full">
+                <p className="text-xs sm:text-2xl lg:text-[32px] font-bold italic text-[#141418] tracking-tight leading-tight truncate">
                   {copy.rightTop}
                 </p>
                 {/* Estrela de 8 pontas idêntica à referência */}
                 <svg
                   viewBox="0 0 36 36"
-                  className="w-5 h-5 sm:w-8 sm:h-8 text-[#8C74EC] shrink-0 fill-current"
+                  className="w-3.5 h-3.5 sm:w-8 sm:h-8 text-[#8C74EC] shrink-0 fill-current"
                   aria-hidden="true"
                 >
                   <path d="M18 0L21.2 12.2L30.7 5.3L23.8 14.8L36 18L23.8 21.2L30.7 30.7L21.2 23.8L18 36L14.8 23.8L5.3 30.7L12.2 21.2L0 18L12.2 14.8L5.3 5.3L14.8 12.2L18 0Z" />
                 </svg>
               </div>
-              <div className="text-3xl sm:text-6xl lg:text-[72px] xl:text-[80px] font-black uppercase tracking-[-0.04em] text-[#7B61E4] leading-[0.92] mt-0.5">
+              <div className="text-2xl sm:text-6xl lg:text-[72px] xl:text-[80px] font-black uppercase tracking-[-0.04em] text-[#7B61E4] leading-[0.94] mt-0.5 truncate">
                 {copy.rightBig}
               </div>
             </div>
           </div>
 
-          {/* 2. CARD PRINCIPAL ROXO/LAVANDA ARREDONDADO + PRODUTO GIGANTE EM PNG SEM FUNDO SOBREPOSTO NO CENTRO */}
+          {/* 2. CARD PRINCIPAL ROXO/LAVANDA ARREDONDADO + PRODUTO EM PNG SEM FUNDO PROPORCIONAL */}
           <div className="relative">
-            {/* PRODUTO CENTRAL EM PNG SEM FUNDO TAMANHO GRANDE (OU VÍDEO OFICIAL APPLE QUANDO ALTERNADO) */}
+            {/* PRODUTO CENTRAL EM PNG SEM FUNDO (PROPORCIONAL NO CELULAR E MONUMENTAL NO DESKTOP) */}
             <div
               onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-              className="relative lg:absolute lg:inset-x-0 lg:-top-[125px] lg:bottom-0 z-20 pointer-events-none flex flex-col items-center justify-center mb-4 lg:mb-0"
+              className="relative lg:absolute lg:inset-x-0 lg:-top-[125px] lg:bottom-0 z-20 pointer-events-none flex flex-col items-center justify-center -mb-3 sm:mb-2 lg:mb-0"
             >
               {/* Anéis orbitais sutis atrás do topo do produto */}
               <div className="hidden lg:block absolute top-[28px] w-[310px] h-[80px] rounded-[50%] border border-[#7B61E4]/35 -rotate-6 pointer-events-none" />
@@ -554,14 +819,18 @@ export default function HeroSection({
 
               <div
                 onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-                className="pointer-events-auto cursor-pointer group relative w-[300px] h-[300px] sm:w-[400px] sm:h-[410px] lg:w-[520px] lg:h-[550px] flex items-center justify-center transition-all duration-300 ease-out"
+                className={`pointer-events-auto cursor-pointer group relative flex items-center justify-center transition-all duration-300 ease-out ${
+                  stageMode === 'video'
+                    ? 'w-full max-w-[280px] h-[165px] sm:max-w-[380px] sm:h-[225px] lg:max-w-none lg:w-[520px] lg:h-[550px] mb-4 sm:mb-2 lg:mb-0'
+                    : 'w-[180px] h-[180px] sm:w-[320px] sm:h-[330px] lg:w-[520px] lg:h-[550px]'
+                }`}
                 style={{
                   opacity: Math.max(0.2, 1 - fadeFactor * 0.95),
                   filter: `blur(${Math.max(0, scrollProgress - 0.14) * 3.8}px)`,
                   transform: `perspective(1000px) rotateX(${mouseTilt.y * 0.35}deg) rotateY(${
                     mouseTilt.x * 0.35
-                  }deg) translateY(${scrollProgress * -30}px) scale(${Math.max(
-                    0.9,
+                  }deg) translateY(${scrollProgress * -22}px) scale(${Math.max(
+                    0.92,
                     1 - fadeFactor * 0.08
                   )})`,
                 }}
@@ -572,7 +841,7 @@ export default function HeroSection({
                       e.stopPropagation();
                       setStageMode('cutout');
                     }}
-                    className="relative w-[94%] h-[82%] rounded-[32px] overflow-hidden border-2 border-white/60 shadow-[0_32px_70px_rgba(17,12,46,0.55)] bg-black flex items-center justify-center"
+                    className="relative w-full h-full lg:w-[94%] lg:h-[82%] rounded-[22px] sm:rounded-[32px] overflow-hidden border-2 border-white/60 shadow-[0_20px_50px_rgba(17,12,46,0.45)] bg-black flex items-center justify-center"
                   >
                     <video
                       key={currentSlide.videoUrl}
@@ -583,13 +852,13 @@ export default function HeroSection({
                       playsInline
                       className="w-full h-full object-cover"
                     />
-                    <span className="absolute top-3 left-3 bg-black/75 backdrop-blur-md text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/20">
-                      <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                      <span>Vídeo Oficial Apple.com/br</span>
+                    <span className="absolute top-2.5 left-2.5 bg-black/75 backdrop-blur-md text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full flex items-center gap-1.5 border border-white/20">
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 animate-pulse" />
+                      <span>Vídeo Oficial Apple</span>
                     </span>
-                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 text-[#111115] text-[11px] font-extrabold px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                      <ImageIcon className="w-3.5 h-3.5 text-[#7C63E6]" />
-                      <span>Voltar para Foto PNG Sem Fundo</span>
+                    <span className="absolute bottom-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/95 text-[#111115] text-[10px] sm:text-[11px] font-extrabold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                      <ImageIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#7C63E6]" />
+                      <span>Voltar para Foto PNG</span>
                     </span>
                   </div>
                 ) : (
@@ -598,21 +867,21 @@ export default function HeroSection({
                       key={currentSlide.imagem}
                       src={currentSlide.imagem}
                       alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
-                      className="max-w-[96%] max-h-[96%] w-auto h-auto object-contain group-hover:scale-[1.05] transition-transform duration-500 ease-out drop-shadow-[0_32px_50px_rgba(17,12,46,0.5)]"
+                      className="max-w-[94%] max-h-[94%] w-auto h-auto object-contain group-hover:scale-[1.05] transition-transform duration-500 ease-out drop-shadow-[0_22px_36px_rgba(17,12,46,0.45)] sm:drop-shadow-[0_32px_50px_rgba(17,12,46,0.5)]"
                     />
 
                     {/* Selo discreto de Ficha Técnica ao passar o mouse */}
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#111115]/90 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                      <Eye className="w-3.5 h-3.5 text-[#A78BFA]" />
-                      <span>Clique para ver Ficha Técnica</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#111115]/90 text-white text-[10px] sm:text-[11px] font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                      <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#A78BFA]" />
+                      <span>Ver Ficha Técnica</span>
                     </span>
                   </>
                 )}
               </div>
             </div>
 
-            {/* BLOCO ROXO ARREDONDADO (3 COLUNAS: TEXTO + BOTÃO PRETO + SOCIAL PROOF À ESQUERDA | CENTRO | 3 ÍCONES + CARD VÍDEO OFICIAL APPLE À DIREITA) */}
-            <div className="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-gradient-to-br from-[#8B72EE] via-[#7E64E6] to-[#6D52D8] text-white p-5 sm:p-8 lg:px-10 lg:py-9 shadow-[0_25px_70px_rgba(109,82,216,0.28)]">
+            {/* BLOCO ROXO ARREDONDADO (3 COLUNAS NO DESKTOP | COMPACTO E PROPORCIONAL NO CELULAR) */}
+            <div className="relative overflow-hidden rounded-[26px] sm:rounded-[40px] bg-gradient-to-br from-[#8B72EE] via-[#7E64E6] to-[#6D52D8] text-white p-4 pt-5 sm:p-8 lg:px-10 lg:py-9 shadow-[0_20px_55px_rgba(109,82,216,0.26)]">
               {/* Formas ovais diagonais decorativas ao centro do card roxo (idênticas à referência) */}
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute top-[14%] left-[33%] w-[360px] h-[78px] rounded-[50%] bg-white/[0.13] -rotate-12" />
@@ -620,12 +889,12 @@ export default function HeroSection({
                 <div className="absolute bottom-[12%] left-[32%] w-[380px] h-[80px] rounded-[50%] bg-white/[0.12] -rotate-12" />
               </div>
 
-              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-4 items-center">
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-4 items-center">
                 {/* COLUNA ESQUERDA (4 Colunas): Tag + Título 2 Linhas + Subtítulo + Botão Pill Preto + Card Social Proof */}
-                <div className="lg:col-span-4 flex flex-col justify-between space-y-5 text-left">
-                  <div className="space-y-3">
-                    <div className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white/95">
-                      <Sparkles className="w-4 h-4 fill-white text-white" />
+                <div className="lg:col-span-4 flex flex-col justify-between space-y-3 sm:space-y-5 text-left">
+                  <div className="space-y-1.5 sm:space-y-3">
+                    <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-sm font-semibold text-white/95">
+                      <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                       <span>
                         {currentProduct
                           ? `${currentProduct.tag} • Preço de Atacado`
@@ -633,13 +902,13 @@ export default function HeroSection({
                       </span>
                     </div>
 
-                    <h2 className="text-2xl sm:text-4xl lg:text-[38px] font-bold tracking-tight text-white leading-[1.12]">
+                    <h2 className="text-xl sm:text-4xl lg:text-[38px] font-bold tracking-tight text-white leading-[1.12]">
                       {copy.cardHeadline1}
                       <br />
                       {copy.cardHeadline2}
                     </h2>
 
-                    <p className="text-xs sm:text-sm text-white/85 leading-relaxed max-w-xs">
+                    <p className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-md sm:max-w-xs">
                       {currentProduct ? (
                         <>
                           <strong className="text-white">{currentProduct.nome}</strong> por{' '}
@@ -656,13 +925,13 @@ export default function HeroSection({
                   </div>
 
                   {/* Botão Pill Preto ("Explore Now (→)" da referência) + Botão Detalhes */}
-                  <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                  <div className="flex flex-wrap items-center gap-2 pt-0.5 sm:pt-1">
                     <button
                       type="button"
                       onClick={() =>
                         currentProduct ? handleHeroAdd(currentProduct) : onExploreClick()
                       }
-                      className="group inline-flex items-center gap-3 bg-[#0E0E11] hover:bg-black text-white font-bold text-xs sm:text-sm pl-5 pr-2.5 py-2.5 rounded-full shadow-lg transition-all cursor-pointer"
+                      className="group inline-flex items-center gap-2.5 sm:gap-3 bg-[#0E0E11] hover:bg-black text-white font-bold text-xs sm:text-sm pl-4 pr-2 py-2 sm:pl-5 sm:pr-2.5 sm:py-2.5 rounded-full shadow-lg transition-all cursor-pointer"
                     >
                       <span>
                         {currentProduct && addedId === currentProduct.id
@@ -671,11 +940,11 @@ export default function HeroSection({
                           ? 'Comprar Agora'
                           : 'Explorar Catálogo'}
                       </span>
-                      <span className="w-7 h-7 rounded-full border border-white/40 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                      <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-white/40 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
                         {currentProduct && addedId === currentProduct.id ? (
-                          <Check className="w-3.5 h-3.5 text-emerald-400 stroke-[3]" />
+                          <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 stroke-[3]" />
                         ) : (
-                          <ArrowRight className="w-3.5 h-3.5" />
+                          <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         )}
                       </span>
                     </button>
@@ -684,7 +953,7 @@ export default function HeroSection({
                       <button
                         type="button"
                         onClick={() => onSelectProduct?.(currentProduct)}
-                        className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white font-bold text-xs px-4 py-2.5 rounded-full transition-all cursor-pointer"
+                        className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white font-bold text-xs px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full transition-all cursor-pointer"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>Ficha Técnica</span>
@@ -693,63 +962,64 @@ export default function HeroSection({
                   </div>
 
                   {/* Card Frosted Glass Inferior Esquerdo ("Loved by 20K+ Trendsetters ♥" da referência) */}
-                  <div className="bg-white/20 backdrop-blur-md border border-white/25 rounded-[22px] p-3.5 max-w-[295px] flex items-center gap-3 shadow-sm">
-                    <div className="flex -space-x-2.5 shrink-0">
-                      <span className="w-9 h-9 rounded-full border-2 border-white bg-gradient-to-tr from-amber-500 to-orange-400 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                  <div className="bg-white/20 backdrop-blur-md border border-white/25 rounded-2xl sm:rounded-[22px] p-2.5 sm:p-3.5 max-w-full sm:max-w-[295px] flex items-center gap-2.5 sm:gap-3 shadow-sm">
+                    <div className="flex -space-x-2 shrink-0">
+                      <span className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border-2 border-white bg-gradient-to-tr from-amber-500 to-orange-400 text-white font-black text-[10px] sm:text-xs flex items-center justify-center shadow-xs">
                         R
                       </span>
-                      <span className="w-9 h-9 rounded-full border-2 border-white bg-gradient-to-tr from-emerald-600 to-teal-400 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                      <span className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border-2 border-white bg-gradient-to-tr from-emerald-600 to-teal-400 text-white font-black text-[10px] sm:text-xs flex items-center justify-center shadow-xs">
                         M
                       </span>
-                      <span className="w-9 h-9 rounded-full border-2 border-white bg-gradient-to-tr from-indigo-600 to-purple-500 text-white font-black text-xs flex items-center justify-center shadow-xs">
+                      <span className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border-2 border-white bg-gradient-to-tr from-indigo-600 to-purple-500 text-white font-black text-[10px] sm:text-xs flex items-center justify-center shadow-xs">
                         L
                       </span>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-bold text-white leading-tight">
-                        Aprovado por +20 mil
-                        <br />
-                        <span className="text-white/90 font-medium">Clientes em Brasília</span>
+                      <p className="text-[11px] sm:text-xs font-bold text-white leading-tight">
+                        Aprovado por +20 mil{' '}
+                        <span className="sm:block text-white/90 font-medium">
+                          Clientes em Brasília
+                        </span>
                       </p>
                     </div>
-                    <Heart className="w-4 h-4 fill-white text-white shrink-0 self-end" />
+                    <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white shrink-0" />
                   </div>
                 </div>
 
                 {/* COLUNA CENTRAL (4 Colunas): Espaço onde o Produto Protagonista fica posicionado */}
                 <div className="hidden lg:block lg:col-span-4 min-h-[380px]" />
 
-                {/* COLUNA DIREITA (4 Colunas): 3 Ícones de Diferenciais no Topo + Card com Vídeo Oficial Apple ao Vivo */}
-                <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-between space-y-5">
+                {/* COLUNA DIREITA (4 Colunas): 3 Ícones de Diferenciais + Card com Vídeo Oficial Apple Proporcional */}
+                <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-between space-y-3.5 sm:space-y-5">
                   {/* 3 Ícones Superiores Direitos */}
-                  <div className="grid grid-cols-3 gap-3 sm:gap-5 text-center w-full max-w-[310px]">
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-9 h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center">
-                        <ShieldCheck className="w-4 h-4 text-white" />
+                  <div className="grid grid-cols-3 gap-2 sm:gap-5 text-center w-full max-w-full sm:max-w-[310px] bg-white/10 sm:bg-transparent rounded-2xl p-2 sm:p-0 border border-white/15 sm:border-0">
+                    <div className="flex items-center sm:flex-col justify-center gap-1.5 sm:gap-1">
+                      <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/15 border border-white/25 flex items-center justify-center shrink-0">
+                        <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                       </div>
-                      <span className="text-[11px] font-semibold text-white/95 leading-tight">
+                      <span className="text-[10px] sm:text-[11px] font-semibold text-white/95 leading-tight text-left sm:text-center">
                         Qualidade
                         <br />
                         Original
                       </span>
                     </div>
 
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-9 h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center">
-                        <Store className="w-4 h-4 text-white" />
+                    <div className="flex items-center sm:flex-col justify-center gap-1.5 sm:gap-1">
+                      <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/15 border border-white/25 flex items-center justify-center shrink-0">
+                        <Store className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                       </div>
-                      <span className="text-[11px] font-semibold text-white/95 leading-tight">
+                      <span className="text-[10px] sm:text-[11px] font-semibold text-white/95 leading-tight text-left sm:text-center">
                         Loja Física
                         <br />
                         SIA D439
                       </span>
                     </div>
 
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="w-9 h-9 rounded-xl bg-white/15 border border-white/25 flex items-center justify-center">
-                        <Truck className="w-4 h-4 text-white" />
+                    <div className="flex items-center sm:flex-col justify-center gap-1.5 sm:gap-1">
+                      <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/15 border border-white/25 flex items-center justify-center shrink-0">
+                        <Truck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                       </div>
-                      <span className="text-[11px] font-semibold text-white/95 leading-tight">
+                      <span className="text-[10px] sm:text-[11px] font-semibold text-white/95 leading-tight text-left sm:text-center">
                         Motoboy
                         <br />
                         Expresso DF
@@ -757,10 +1027,10 @@ export default function HeroSection({
                     </div>
                   </div>
 
-                  {/* Card "Featured Look" com VÍDEO OFICIAL APPLE.COM/BR rodando ao vivo */}
-                  <div className="w-full max-w-[270px] flex flex-col items-center">
-                    <div className="flex items-center justify-between w-full mb-2 px-1">
-                      <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wide text-white/95">
+                  {/* Card "Featured Look" com VÍDEO OFICIAL APPLE.COM/BR (Compacto Horizontal no Celular, Vertical no Tablet/Desktop) */}
+                  <div className="w-full sm:max-w-[270px] flex flex-col items-center">
+                    <div className="flex items-center justify-between w-full mb-1.5 sm:mb-2 px-1">
+                      <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold tracking-wide text-white/95">
                         <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
                         <span>Vídeo Oficial Apple</span>
                       </span>
@@ -777,10 +1047,10 @@ export default function HeroSection({
 
                     <div
                       onClick={() => setStageMode(stageMode === 'video' ? 'cutout' : 'video')}
-                      className="w-full bg-white text-[#111115] rounded-[26px] p-2.5 border-2 border-white shadow-[0_18px_40px_rgba(17,12,46,0.28)] cursor-pointer group transition-transform hover:-translate-y-0.5"
+                      className="w-full bg-white text-[#111115] rounded-[20px] sm:rounded-[26px] p-2 sm:p-2.5 border-2 border-white shadow-[0_14px_32px_rgba(17,12,46,0.25)] cursor-pointer group transition-transform hover:-translate-y-0.5 flex sm:block items-center gap-3"
                     >
-                      {/* Moldura interna com o Vídeo Oficial Apple em Loop */}
-                      <div className="relative h-[146px] w-full rounded-[20px] bg-[#0B0B0F] flex items-center justify-center overflow-hidden">
+                      {/* Moldura interna com o Vídeo Oficial Apple em Loop (Proporcional à tela do celular) */}
+                      <div className="relative w-[132px] h-[84px] sm:w-full sm:h-[146px] rounded-[14px] sm:rounded-[20px] bg-[#0B0B0F] flex items-center justify-center overflow-hidden shrink-0">
                         <video
                           key={currentSlide.videoUrl}
                           src={currentSlide.videoUrl}
@@ -791,10 +1061,10 @@ export default function HeroSection({
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
 
-                        <span className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 border border-white/20">
-                          <Play className="w-2.5 h-2.5 fill-white" />
+                        <span className="absolute bottom-1.5 left-1.5 sm:bottom-2 sm:left-2 bg-black/75 backdrop-blur-xs text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full flex items-center gap-1 border border-white/20">
+                          <Play className="w-2.5 h-2.5 fill-white shrink-0" />
                           <span>
-                            {stageMode === 'video' ? 'Ver PNG no Centro' : 'Expandir Vídeo'}
+                            {stageMode === 'video' ? 'Ver PNG' : 'Expandir'}
                           </span>
                         </span>
 
@@ -806,7 +1076,7 @@ export default function HeroSection({
                               handleNext();
                             }}
                             title="Ver próximo destaque"
-                            className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/90 hover:bg-white text-[#6D52D8] flex items-center justify-center shadow-xs cursor-pointer"
+                            className="hidden sm:flex absolute top-2 right-2 w-6 h-6 rounded-full bg-white/90 hover:bg-white text-[#6D52D8] items-center justify-center shadow-xs cursor-pointer"
                           >
                             <ChevronRight className="w-3.5 h-3.5" />
                           </button>
@@ -814,26 +1084,28 @@ export default function HeroSection({
                       </div>
 
                       {/* Nome, Subtítulo e Botão Roxo com Preço PIX */}
-                      <div className="pt-2.5 pb-1 px-2 text-center">
+                      <div className="flex-1 min-w-0 sm:pt-2.5 sm:pb-1 sm:px-2 text-left sm:text-center">
                         <p className="text-xs sm:text-sm font-extrabold text-[#111115] truncate">
                           {copy.shortName}
                         </p>
-                        <p className="text-[11px] text-zinc-500 truncate mt-0.5">{copy.shortSub}</p>
+                        <p className="text-[10px] sm:text-[11px] text-zinc-500 truncate mt-0.5">
+                          {copy.shortSub}
+                        </p>
 
                         {currentProduct ? (
                           <button
                             type="button"
                             onClick={(e) => handleHeroAdd(currentProduct, e)}
-                            className="mt-2.5 w-full py-2 px-3 rounded-full bg-[#7C63E6] hover:bg-[#694FD6] text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#7C63E6]/30 transition-all cursor-pointer"
+                            className="mt-1.5 sm:mt-2.5 w-full py-1.5 sm:py-2 px-2.5 sm:px-3 rounded-full bg-[#7C63E6] hover:bg-[#694FD6] text-white font-extrabold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 shadow-md shadow-[#7C63E6]/30 transition-all cursor-pointer"
                           >
-                            <ShoppingCart className="w-3.5 h-3.5" />
-                            <span>{formatBRL(currentProduct.precoPix)}</span>
+                            <ShoppingCart className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                            <span className="truncate">{formatBRL(currentProduct.precoPix)}</span>
                           </button>
                         ) : (
                           <button
                             type="button"
                             onClick={onExploreClick}
-                            className="mt-2.5 w-full py-2 px-3 rounded-full bg-[#7C63E6] text-white font-extrabold text-xs cursor-pointer"
+                            className="mt-1.5 sm:mt-2.5 w-full py-1.5 sm:py-2 px-2.5 sm:px-3 rounded-full bg-[#7C63E6] text-white font-extrabold text-[11px] sm:text-xs cursor-pointer"
                           >
                             Ver Catálogo
                           </button>
@@ -847,7 +1119,7 @@ export default function HeroSection({
           </div>
 
           {/* 3. SELETOR RÁPIDO DE DESTAQUES NA BASE DO BANNER (COM MINIATURAS PNG SEM FUNDO) */}
-          <div className="mt-5 flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          <div className="mt-3 sm:mt-5 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-1">
             {slides.map((item, idx) => {
               const isCurrent = idx === safeIndex;
               return (
@@ -855,20 +1127,20 @@ export default function HeroSection({
                   type="button"
                   key={item.key}
                   onClick={() => triggerSlideChange(idx)}
-                  className={`group flex items-center gap-2.5 p-1.5 pr-3.5 rounded-2xl border transition-all duration-200 shrink-0 cursor-pointer ${
+                  className={`group flex items-center gap-2 sm:gap-2.5 p-1 pr-2.5 sm:p-1.5 sm:pr-3.5 rounded-xl sm:rounded-2xl border transition-all duration-200 shrink-0 cursor-pointer ${
                     isCurrent
-                      ? 'bg-[#7C63E6] border-[#7C63E6] text-white shadow-md shadow-[#7C63E6]/25 scale-[1.02]'
+                      ? 'bg-[#7C63E6] border-[#7C63E6] text-white shadow-md shadow-[#7C63E6]/25 scale-[1.01]'
                       : 'bg-white border-zinc-200/90 text-zinc-700 hover:border-[#7C63E6]/50'
                   }`}
                 >
                   <img
                     src={item.imagem}
                     alt={item.product?.nome || item.titulo || 'Banner'}
-                    className="w-10 h-10 rounded-xl object-contain bg-[#F4F2FB] p-1 shrink-0 border border-zinc-100"
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl object-contain bg-[#F4F2FB] p-0.5 sm:p-1 shrink-0 border border-zinc-100"
                   />
-                  <div className="text-left max-w-[140px]">
+                  <div className="text-left max-w-[115px] sm:max-w-[140px]">
                     <p
-                      className={`text-[11px] font-bold truncate ${
+                      className={`text-[10px] sm:text-[11px] font-bold truncate ${
                         isCurrent ? 'text-white' : 'text-zinc-900'
                       }`}
                     >
@@ -876,7 +1148,7 @@ export default function HeroSection({
                     </p>
                     {item.product && (
                       <p
-                        className={`text-[11px] font-black ${
+                        className={`text-[10px] sm:text-[11px] font-black ${
                           isCurrent ? 'text-amber-200' : 'text-[#6D52D8]'
                         }`}
                       >

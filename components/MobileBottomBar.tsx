@@ -8,9 +8,11 @@ import {
   ShoppingBag,
   ArrowRight,
   Sparkles,
+  MessageCircle,
 } from 'lucide-react';
 import { DFRegion } from '../types/store';
 import { formatBRL } from '../data/mockData';
+import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
 
 interface MobileBottomBarProps {
   cartCount: number;
@@ -95,7 +97,7 @@ export default function MobileBottomBar({
         aria-label="Navegação rápida mobile"
         className="pointer-events-auto bg-[#0A0A0A]/95 backdrop-blur-xl border-t border-white/15 px-2 pt-1.5 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.85)]"
       >
-        <div className="grid grid-cols-4 gap-1">
+        <div className="grid grid-cols-5 gap-1 items-end">
           <button
             type="button"
             onClick={onHomeClick}
@@ -111,7 +113,25 @@ export default function MobileBottomBar({
             className="touch-target flex flex-col items-center justify-center py-1 rounded-xl text-zinc-300 active:text-[#34D399] active:bg-white/5 transition-colors"
           >
             <LayoutGrid className="w-5 h-5 text-zinc-300" />
-            <span className="text-[10px] font-bold mt-0.5">Departamentos</span>
+            <span className="text-[10px] font-bold mt-0.5">Depart.</span>
+          </button>
+
+          {/* Sacola central em destaque (estilo app) */}
+          <button
+            type="button"
+            onClick={onOpenCart}
+            aria-label="Abrir sacola"
+            className="relative flex flex-col items-center justify-end -mt-6 pb-1 active:scale-95 transition-transform"
+          >
+            <span className="relative w-14 h-14 rounded-full bg-[#10B981] text-[#0A0A0A] border-4 border-[#0A0A0A] shadow-[0_6px_22px_rgba(16,185,129,0.55)] flex items-center justify-center">
+              <ShoppingBag className="w-6 h-6 stroke-[2.5]" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#0A0A0A] text-[#34D399] border border-[#34D399] text-[10px] font-black flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </span>
+            <span className="text-[10px] font-extrabold text-[#34D399] mt-0.5">Sacola</span>
           </button>
 
           <button
@@ -123,23 +143,15 @@ export default function MobileBottomBar({
             <span className="text-[10px] font-bold mt-0.5">Buscar</span>
           </button>
 
-          <button
-            type="button"
-            onClick={onOpenCart}
-            className="touch-target relative flex flex-col items-center justify-center py-1 rounded-xl text-zinc-300 active:text-[#34D399] active:bg-white/5 transition-colors"
+          <a
+            href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="touch-target flex flex-col items-center justify-center py-1 rounded-xl text-zinc-300 active:text-[#34D399] active:bg-white/5 transition-colors"
           >
-            <div className="relative">
-              <ShoppingBag className="w-5 h-5 text-[#34D399]" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-2.5 min-w-[16px] h-4 px-1 rounded-full bg-[#10B981] text-[#0A0A0A] text-[10px] font-black flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </div>
-            <span className="text-[10px] font-extrabold text-[#34D399] mt-0.5">
-              Sacola
-            </span>
-          </button>
+            <MessageCircle className="w-5 h-5 text-[#34D399]" />
+            <span className="text-[10px] font-bold mt-0.5">Zap</span>
+          </a>
         </div>
       </nav>
     </div>

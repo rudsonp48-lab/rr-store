@@ -49,9 +49,42 @@ export default function CategoryNav({
   };
 
   return (
-    <section id="departamentos" className="bg-[#121212] border-b border-white/10 py-5 sm:py-7">
+    <section id="departamentos" className="bg-[#121212] border-b border-white/10 py-3 sm:py-7">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between gap-2 mb-3.5 sm:mb-5">
+        {/* MOBILE: fileira de ícones circulares (estilo app) */}
+        <div className="sm:hidden flex overflow-x-auto no-scrollbar gap-3.5 -mx-3 px-3 pb-1">
+          {CATEGORIES.map((cat) => {
+            const IconComponent = iconMap[cat.icone] || LayoutGrid;
+            const isSelected = selectedCategory === cat.id;
+            return (
+              <button
+                type="button"
+                key={cat.id}
+                onClick={() => onSelectCategory(cat.id)}
+                className="flex flex-col items-center gap-1.5 shrink-0 w-[62px] active:scale-95 transition-transform cursor-pointer"
+              >
+                <span
+                  className={`w-14 h-14 rounded-full flex items-center justify-center border transition-all ${
+                    isSelected
+                      ? 'bg-[#10B981] border-[#34D399] text-[#0A0A0A] shadow-[0_0_18px_rgba(16,185,129,0.45)]'
+                      : 'bg-[#0A0A0A] border-white/15 text-[#34D399]'
+                  }`}
+                >
+                  <IconComponent className="w-6 h-6" />
+                </span>
+                <span
+                  className={`text-xs font-bold text-center leading-tight line-clamp-1 w-full ${
+                    isSelected ? 'text-[#34D399]' : 'text-zinc-300'
+                  }`}
+                >
+                  {cat.nome.split(' ')[0]}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="hidden sm:flex items-end justify-between gap-2 mb-3.5 sm:mb-5">
           <div>
             <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-[#10B981]">
               Navegue por Departamento
@@ -60,16 +93,13 @@ export default function CategoryNav({
               Departamentos Oficiais da RR Store
             </h2>
           </div>
-          <span className="sm:hidden inline-flex items-center gap-0.5 text-[11px] font-bold text-[#34D399] shrink-0">
-            Deslize <ChevronRight className="w-3.5 h-3.5" />
-          </span>
           <p className="hidden sm:block text-xs text-zinc-400">
             Toque em um departamento para filtrar os produtos em tempo real
           </p>
         </div>
 
-        {/* Carrossel Horizontal com Snap no Celular + Grid Responsivo no Tablet/Desktop */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory pb-2 sm:pb-0 sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 no-scrollbar -mx-3 px-3 sm:mx-0 sm:px-0">
+        {/* Grid Responsivo no Tablet/Desktop (no celular usa a fileira circular acima) */}
+        <div className="hidden sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 no-scrollbar">
           {CATEGORIES.map((cat) => {
             const IconComponent = iconMap[cat.icone] || LayoutGrid;
             const isSelected = selectedCategory === cat.id;
