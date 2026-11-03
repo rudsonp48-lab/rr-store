@@ -54,13 +54,14 @@ function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
     );
     const safeCloudImg = (cp.imagem || '').replace(/^http:\/\//i, 'https://');
     if (local && (cp.id.startsWith('rr-apple-') || cp.id.startsWith('sousa-'))) {
+      const livePrice = cp.precoPor > 0 ? cp.precoPor : local.precoPor;
       return {
         ...cp,
         nome: local.nome,
         imagem: local.imagem,
         descricao: local.descricao,
-        precoPor: local.precoPor,
-        precoPix: local.precoPix,
+        precoPor: livePrice,
+        precoPix: cp.precoPix > 0 ? cp.precoPix : livePrice,
         parcelamento: cleanParcelamento,
       };
     }
