@@ -1,0 +1,36 @@
+name: Sincronizar catálogo Sousa
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # a cada 30 minutos
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Ler catálogo da Sousa (Kyte)
+        run: node scripts/sync-sousa.mjs
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+
+      - name: Publicar se mudou
+        run: |
+          if git diff --quiet -- data/sousa-live.json; then
+            echo "Sem mudanças no catálogo da Sousa."
+            exit 0
+          fi
+          git config user.name "rr-store-sync-bot"
+          git config user.email "bot@rrmobilestore.com.br"
+          git add data/sousa-live.json
+          git commit -m "chore: atualiza catálogo Sousa (sync automático)"
+          git push

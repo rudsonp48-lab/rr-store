@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import sousaLiveData from '../../../data/sousa-live.json';
 import { CategoryId, Product } from '../../../types/store';
 import { applySupplierMarkup, calculatePixPrice, formatInstallment } from '../../../data/mockData';
 
@@ -129,25 +130,80 @@ function mapCategory(name: string, cats: string[]): Exclude<CategoryId, 'Todos'>
   return 'Eletrônicos & Smartphones';
 }
 
-export async function GET() {
-  try {
-    const pages = [1, 2, 3];
-    const responses = await Promise.all(
-      pages.map((page) =>
-        fetch(
-          `https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products?per_page=100&page=${page}`,
-          {
-            next: { revalidate: 300 }, // Revalida a cada 5 minutos automaticamente com o fornecedor
-            headers: {
-              Accept: 'application/json',
-              'User-Agent': 'RRStore-Brasilia-Sync/1.0',
-            },
-          }
-        ).then((r) => (r.ok ? (r.json() as Promise<WooProduct[]>) : []))
+export const maxDuration = 60;
+export const revalidate = 300;
+
+const GSM_BASE = 'https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products';
+
+/** Lê TODAS as páginas do catálogo da GSM (antes só lia 300 produtos). */
+async function fetchAllGsm(): Promise<WooProduct[]> {
+  const headers = { Accept: 'application/json', 'User-Agent': 'RRStore-Brasilia-Sync/1.0' };
+  const first = await fetch(`${GSM_BASE}?per_page=100&page=1`, {
+    next: { revalidate: 300 },
+    headers,
+  });
+  if (!first.ok) return [];
+  const totalPages = Math.min(Number(first.headers.get('x-wp-totalpages') || 1), 60);
+  const all: WooProduct[] = [...((await first.json()) as WooProduct[])];
+
+  const rest = Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => i + 2);
+  const CONCURRENCY = 6;
+  for (let i = 0; i < rest.length; i += CONCURRENCY) {
+    const chunk = rest.slice(i, i + CONCURRENCY);
+    const results = await Promise.all(
+      chunk.map((page) =>
+        fetch(`${GSM_BASE}?per_page=100&page=${page}`, { next: { revalidate: 300 }, headers })
+          .then((r) => (r.ok ? (r.json() as Promise<WooProduct[]>) : []))
+          .catch(() => [] as WooProduct[])
       )
     );
+    results.forEach((r) => all.push(...r));
+  }
+  return all;
+}
 
-    const rawItems = responses.flat();
+interface SousaLiveItem {
+  id: string;
+  nome: string;
+  preco: number;
+  imagem: string;
+  categoriaSousa: string;
+}
+
+/** Catálogo da Sousa (Kyte) lido pelo robô `scripts/sync-sousa.mjs` -> data/sousa-live.json */
+async function loadSousaLive(): Promise<Product[]> {
+  try {
+    const raw = sousaLiveData as unknown as { products: SousaLiveItem[] };
+    return (raw.products || []).map((it, idx) => {
+      const nome = it.nome.replace(/\s+/g, ' ').trim();
+      const { precoPor, precoDe } = applySupplierMarkup(it.preco);
+      const maxParcelasSemJuros = precoPor >= 200 ? 12 : precoPor >= 80 ? 6 : 3;
+      return {
+        id: it.id,
+        nome,
+        categoria: mapCategory(nome, [it.categoriaSousa]),
+        precoCusto: Number(it.preco.toFixed(2)),
+        precoDe,
+        precoPor,
+        precoPix: calculatePixPrice(precoPor),
+        parcelamento: formatInstallment(precoPor, maxParcelasSemJuros),
+        maxParcelasSemJuros,
+        avaliacao: idx % 2 === 0 ? 4.9 : 5.0,
+        avaliacoesCount: 18 + ((idx * 9) % 64),
+        tag: TAGS[idx % TAGS.length],
+        imagem: it.imagem,
+        descricao: `${nome} — produto Sousa Games & Tecnologia disponível em Brasília-DF com entrega rápida via Motoboy Express.`,
+        estoque: 10,
+      } satisfies Product;
+    });
+  } catch {
+    return [];
+  }
+}
+
+export async function GET() {
+  try {
+    const rawItems = await fetchAllGsm();
     const seen = new Set<string>();
     const syncedProducts: Product[] = [];
 
@@ -193,11 +249,16 @@ export async function GET() {
       });
     });
 
+    const sousa = await loadSousaLive();
+    const all = [...syncedProducts, ...sousa];
+
     return NextResponse.json({
       ok: true,
       syncedAt: new Date().toISOString(),
-      count: syncedProducts.length,
-      products: syncedProducts,
+      count: all.length,
+      gsm: syncedProducts.length,
+      sousa: sousa.length,
+      products: all,
     });
   } catch (err) {
     return NextResponse.json(

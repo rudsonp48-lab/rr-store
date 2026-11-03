@@ -49,10 +49,23 @@ function createDb(): Firestore | null {
 
 export const db = createDb();
 
+/** Item publicado pelo StockMaster (rr_store_settings/stockmaster). */
+export interface StockmasterItem {
+  id: string; // id do produto no StockMaster
+  sku?: string;
+  nome: string;
+  preco: number; // preço de vitrine (storefrontPrice) já com valor integral de atacado
+  estoque: number;
+  imagem?: string;
+  categoria?: string;
+  ativo?: boolean;
+}
+
 export interface StoreSettings {
   products: Product[] | null;
   regions: DFRegion[] | null;
   banners: HeroBanner[] | null;
+  stockmaster: StockmasterItem[] | null;
 }
 
 /**
@@ -60,7 +73,7 @@ export interface StoreSettings {
  * Retorna `null` nos campos ausentes para o site usar o catálogo padrão embutido.
  */
 export async function loadStoreSettings(): Promise<StoreSettings> {
-  const result: StoreSettings = { products: null, regions: null, banners: null };
+  const result: StoreSettings = { products: null, regions: null, banners: null, stockmaster: null };
   if (!db) return result;
   try {
     const snap = await getDocs(collection(db, 'rr_store_settings'));
@@ -74,6 +87,9 @@ export async function loadStoreSettings(): Promise<StoreSettings> {
       }
       if (d.id === 'banners' && Array.isArray(data.banners)) {
         result.banners = data.banners as HeroBanner[];
+      }
+      if (d.id === 'stockmaster' && Array.isArray(data.items)) {
+        result.stockmaster = data.items as StockmasterItem[];
       }
     });
   } catch (err) {

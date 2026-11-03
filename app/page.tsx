@@ -13,7 +13,7 @@ import {
   Rows3,
 } from 'lucide-react';
 import { CartItem, CategoryId, DFRegion, HeroBanner, Product } from '../types/store';
-import { CATEGORIES, DF_REGIONS, formatBRL, PRODUCTS } from '../data/mockData';
+import { CATEGORIES, DF_REGIONS, formatBRL, formatInstallment, PRODUCTS } from '../data/mockData';
 import TopBarAndHeader from '../components/TopBarAndHeader';
 import HeroSection from '../components/HeroSection';
 import CategoryNav from '../components/CategoryNav';
@@ -25,7 +25,7 @@ import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
-import { loadStoreSettings } from '../lib/firebase';
+import { loadStoreSettings, StockmasterItem } from '../lib/firebase';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
 type QuickFilterId =
@@ -72,6 +72,56 @@ function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
     };
   });
   return [...PRODUCTS.filter((p) => !cloudIds.has(p.id)), ...sanitizedCloud];
+}
+
+/**
+ * StockMaster é a fonte da verdade dos preços da RR: o valor publicado lá (storefrontPrice) vale
+ * integralmente na vitrine. Itens com o mesmo id/SKU atualizam preço e estoque; itens novos entram.
+ */
+function applyStockmaster(base: Product[], items: StockmasterItem[]): Product[] {
+  const norm = (v?: string) => (v || '').trim().toLowerCase();
+  const bySmId = new Map(base.map((p) => [norm(p.id), p]));
+  const result = new Map<string, Product>(base.map((p) => [p.id, p]));
+
+  for (const it of items) {
+    if (!it || !(it.preco > 0)) continue;
+    const smId = `sm-${it.id}`;
+    const match = bySmId.get(norm(smId)) || (it.sku ? bySmId.get(norm(it.sku)) : undefined);
+    if (it.ativo === false || it.estoque <= 0) {
+      if (match) result.delete(match.id);
+      continue;
+    }
+    const parcelas = it.preco >= 200 ? 12 : it.preco >= 80 ? 6 : 3;
+    if (match) {
+      result.set(match.id, {
+        ...match,
+        precoDe: it.preco,
+        precoPor: it.preco,
+        precoPix: it.preco,
+        parcelamento: formatInstallment(it.preco, parcelas),
+        estoque: it.estoque,
+        imagem: it.imagem || match.imagem,
+      });
+    } else {
+      result.set(smId, {
+        id: smId,
+        nome: it.nome,
+        categoria: (it.categoria as Product['categoria']) || 'Eletrônicos & Smartphones',
+        precoDe: it.preco,
+        precoPor: it.preco,
+        precoPix: it.preco,
+        parcelamento: formatInstallment(it.preco, parcelas),
+        maxParcelasSemJuros: parcelas,
+        avaliacao: 5,
+        avaliacoesCount: 12,
+        tag: 'Novidade',
+        imagem: it.imagem || '',
+        descricao: `${it.nome} — disponível em Brasília-DF com entrega rápida via Motoboy Express.`,
+        estoque: it.estoque,
+      });
+    }
+  }
+  return Array.from(result.values());
 }
 
 function matchesQuickFilter(product: Product, filterId: QuickFilterId): boolean {
@@ -443,10 +493,24 @@ export default function RRStorePage() {
             });
             const newFromSupplier = Array.from(supplierMap.values());
             baseProducts = [...updatedExisting, ...newFromSupplier];
+
+            // Remove itens que saíram do catálogo do fornecedor (esgotados/excluídos lá).
+            // Só ocorre quando a leitura veio completa, para nunca esvaziar a loja por falha de rede.
+            const liveIds = new Set<string>(supplierData.products.map((p: Product) => p.id));
+            if ((supplierData.gsm ?? 0) > 500) {
+              baseProducts = baseProducts.filter((p) => !p.id.startsWith('gsm-') || liveIds.has(p.id));
+            }
+            if ((supplierData.sousa ?? 0) > 10) {
+              baseProducts = baseProducts.filter((p) => !p.id.startsWith('sousa-') || liveIds.has(p.id));
+            }
           }
         }
       } catch {
         // Fallback silencioso para o catálogo local/cloud
+      }
+
+      if (cloud.stockmaster && cloud.stockmaster.length > 0) {
+        baseProducts = applyStockmaster(baseProducts, cloud.stockmaster);
       }
 
       baseProducts = prioritizeAppleProducts(baseProducts);
