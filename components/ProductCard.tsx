@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   ShoppingBag,
   MessageCircle,
@@ -10,16 +10,24 @@ import {
   Truck,
   Eye,
   AlertTriangle,
+  RefreshCw,
 } from 'lucide-react';
 import { DFRegion, Product } from '../types/store';
 import { formatBRL } from '../data/mockData';
 import { buildSingleProductWhatsAppUrl } from '../data/whatsappUtils';
+import {
+  getProductVariantConfig,
+  buildConfiguredProduct,
+  ColorSwatch,
+  StorageTier,
+} from '../data/productVariantUtils';
 
 interface ProductCardProps {
   product: Product;
   selectedRegion: DFRegion;
   onAddToCart: (product: Product) => void;
   onSelectProduct?: (product: Product) => void;
+  onOpenTradeIn?: (product: Product) => void;
   compactMobile?: boolean;
 }
 
@@ -28,27 +36,54 @@ export default function ProductCard({
   selectedRegion,
   onAddToCart,
   onSelectProduct,
+  onOpenTradeIn,
   compactMobile = false,
 }: ProductCardProps) {
   const [justAdded, setJustAdded] = useState(false);
+
+  // Variantes de Cores e Armazenamento Interativos
+  const variantConfig = useMemo(() => getProductVariantConfig(product), [product]);
+  const [selectedStorage, setSelectedStorage] = useState<StorageTier>(variantConfig.defaultStorage);
+  const [selectedColor, setSelectedColor] = useState<ColorSwatch>(variantConfig.defaultColor);
+
+  // Produto com preço e nome atualizados pela variante selecionada
+  const activeProduct = useMemo(
+    () => buildConfiguredProduct(product, selectedColor, selectedStorage),
+    [product, selectedColor, selectedStorage]
+  );
 
   const isApple = product.id.startsWith('rr-apple-');
   const isOutOfStock = product.estoque <= 0;
   const cleanDescription = product.descricao.split(' | Pagamento:')[0];
 
   const discountPercent = Math.round(
-    ((product.precoDe - product.precoPix) / product.precoDe) * 100
+    ((activeProduct.precoDe - activeProduct.precoPix) / activeProduct.precoDe) * 100
   );
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isOutOfStock) {
-      onSelectProduct?.(product);
+      onSelectProduct?.(activeProduct);
       return;
     }
-    onAddToCart(product);
+    onAddToCart(activeProduct);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1400);
+  };
+
+  const handleTradeInClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onOpenTradeIn?.(activeProduct);
+  };
+
+  const handleSelectStorage = (storage: StorageTier, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedStorage(storage);
+  };
+
+  const handleSelectColor = (color: ColorSwatch, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedColor(color);
   };
 
   return (
@@ -165,17 +200,79 @@ export default function ProductCard({
               compactMobile ? 'text-xs sm:text-base' : 'text-sm sm:text-base'
             } font-extrabold text-[#0A0A0A] group-hover:text-[#059669] transition-colors line-clamp-2 leading-snug mb-1.5`}
           >
-            {product.nome}
+            {activeProduct.nome}
           </h3>
 
           {/* Descrição Curta */}
           <p
             className={`${
-              compactMobile ? 'hidden sm: -webkit-box sm:line-clamp-2' : 'line-clamp-2'
-            } text-xs text-zinc-600 leading-relaxed mb-3.5`}
+              compactMobile ? 'hidden sm:-webkit-box sm:line-clamp-2' : 'line-clamp-2'
+            } text-xs text-zinc-600 leading-relaxed mb-2.5`}
           >
             {cleanDescription}
           </p>
+
+          {/* SELETORES INTERATIVOS: Armazenamento & Cores (Estilo Apple / Loja Moderna) */}
+          {variantConfig.hasVariants && (
+            <div className="space-y-2 mb-3 pt-1 border-t border-zinc-100">
+              {/* Pílulas de Armazenamento / Capacidade */}
+              {variantConfig.storageTiers.length > 1 && (
+                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider shrink-0 mr-0.5">
+                    Cap:
+                  </span>
+                  {variantConfig.storageTiers.map((tier) => {
+                    const isSelected = selectedStorage.id === tier.id;
+                    return (
+                      <button
+                        key={tier.id}
+                        type="button"
+                        onClick={(e) => handleSelectStorage(tier, e)}
+                        className={`px-2 py-0.5 rounded-md text-[10px] font-black transition-all cursor-pointer shrink-0 border ${
+                          isSelected
+                            ? 'bg-[#0A0A0A] border-[#0A0A0A] text-[#34D399] shadow-xs'
+                            : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200'
+                        }`}
+                      >
+                        {tier.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Bolinhas de Cores Reais */}
+              {variantConfig.colors.length > 1 && (
+                <div className="flex items-center justify-between gap-1">
+                  <div className="flex items-center gap-1.5">
+                    {variantConfig.colors.slice(0, 5).map((color) => {
+                      const isSelected = selectedColor.id === color.id;
+                      return (
+                        <button
+                          key={color.id}
+                          type="button"
+                          title={color.name}
+                          onClick={(e) => handleSelectColor(color, e)}
+                          className={`w-4 h-4 rounded-full transition-all cursor-pointer relative ${
+                            isSelected
+                              ? 'ring-2 ring-[#10B981] ring-offset-2 scale-110'
+                              : 'hover:scale-105 opacity-80 hover:opacity-100'
+                          }`}
+                          style={{
+                            backgroundColor: color.hex,
+                            border: color.borderHex ? `1px solid ${color.borderHex}` : '1px solid rgba(0,0,0,0.15)',
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                  <span className="text-[10px] font-bold text-zinc-500 truncate max-w-[110px] text-right">
+                    {selectedColor.name}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div>
@@ -183,7 +280,7 @@ export default function ProductCard({
           <div
             className={`bg-[#F8F9FA] rounded-xl ${
               compactMobile ? 'p-2.5 sm:p-3' : 'p-3'
-            } border border-zinc-200/80 mb-3`}
+            } border border-zinc-200/80 mb-2.5`}
           >
             <div className={`${compactMobile ? 'hidden sm:flex' : 'flex'} items-center justify-between text-[11px] text-zinc-500 mb-0.5`}>
               <span className="truncate font-semibold text-zinc-600">Valor de Atacado</span>
@@ -198,7 +295,7 @@ export default function ProductCard({
                   compactMobile ? 'text-base sm:text-2xl' : 'text-xl sm:text-2xl'
                 } font-black text-[#059669] tracking-tight`}
               >
-                {formatBRL(product.precoPix)}
+                {formatBRL(activeProduct.precoPix)}
               </span>
               <span className={`${compactMobile ? 'text-[10px] sm:text-xs' : 'text-[10px] sm:text-xs'} font-bold text-[#059669]`}>
                 {compactMobile ? 'PIX' : 'à vista no PIX'}
@@ -207,10 +304,22 @@ export default function ProductCard({
 
             <div className="mt-1 pt-1 border-t border-zinc-200/70 flex flex-col sm:flex-row sm:items-center justify-between text-[10px] sm:text-[11px] text-zinc-600">
               <span className="truncate font-semibold text-zinc-700">
-                {product.parcelamento}
+                {activeProduct.parcelamento}
               </span>
             </div>
           </div>
+
+          {/* Botão de Troca Fácil (Trade-In) se for produto tech de alto valor */}
+          {variantConfig.isTechDevice && activeProduct.precoPix >= 1200 && (
+            <button
+              type="button"
+              onClick={handleTradeInClick}
+              className="w-full mb-2 py-1.5 px-2 rounded-lg bg-[#7C63E6]/10 hover:bg-[#7C63E6]/20 border border-[#7C63E6]/30 text-[#6D52D8] text-[10px] sm:text-[11px] font-black flex items-center justify-center gap-1 transition-all cursor-pointer"
+            >
+              <RefreshCw className="w-3 h-3 text-[#7C63E6] shrink-0" />
+              <span>Dar Usado na Troca (Simular)</span>
+            </button>
+          )}
 
           {/* Botões de Ação: lado-a-lado em compactMobile, empilhados em 1-coluna */}
           <div className={compactMobile ? 'flex items-center gap-1.5' : 'space-y-1.5 sm:space-y-2'}>
@@ -248,7 +357,7 @@ export default function ProductCard({
             </button>
 
             <a
-              href={buildSingleProductWhatsAppUrl(product, selectedRegion.nome)}
+              href={buildSingleProductWhatsAppUrl(activeProduct, selectedRegion.nome)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}

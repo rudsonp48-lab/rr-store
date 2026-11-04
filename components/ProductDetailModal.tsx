@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   X,
   ShoppingBag,
@@ -18,17 +18,25 @@ import {
   CreditCard,
   Plus,
   Minus,
+  RefreshCw,
 } from 'lucide-react';
 import { DFRegion, Product } from '../types/store';
 import { formatBRL } from '../data/mockData';
 import { buildSingleProductWhatsAppUrl } from '../data/whatsappUtils';
 import { getProductSeoDetails } from '../data/productSeoUtils';
+import {
+  getProductVariantConfig,
+  buildConfiguredProduct,
+  ColorSwatch,
+  StorageTier,
+} from '../data/productVariantUtils';
 
 interface ProductDetailModalProps {
   product: Product | null;
   selectedRegion: DFRegion;
   onClose: () => void;
   onAddToCart: (product: Product, quantity?: number) => void;
+  onOpenTradeIn?: (product: Product) => void;
 }
 
 export default function ProductDetailModal({
@@ -36,18 +44,37 @@ export default function ProductDetailModal({
   selectedRegion,
   onClose,
   onAddToCart,
+  onOpenTradeIn,
 }: ProductDetailModalProps) {
   const [quantity, setQuantity] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<'sobre' | 'ficha' | 'parcelas'>('sobre');
   const [justAdded, setJustAdded] = useState<boolean>(false);
 
+  // Variantes Interativas de Cores e Capacidade
+  const variantConfig = useMemo(() => {
+    if (!product) return null;
+    return getProductVariantConfig(product);
+  }, [product]);
+
+  const [selectedStorage, setSelectedStorage] = useState<StorageTier | null>(null);
+  const [selectedColor, setSelectedColor] = useState<ColorSwatch | null>(null);
+
   useEffect(() => {
-    if (product) {
+    if (product && variantConfig) {
       setQuantity(1);
       setActiveTab('sobre');
       setJustAdded(false);
+      setSelectedStorage(variantConfig.defaultStorage);
+      setSelectedColor(variantConfig.defaultColor);
     }
-  }, [product]);
+  }, [product, variantConfig]);
+
+  // Produto com preço recalculado dinamicamente
+  const activeProduct = useMemo(() => {
+    if (!product) return null;
+    if (!selectedStorage || !selectedColor) return product;
+    return buildConfiguredProduct(product, selectedColor, selectedStorage);
+  }, [product, selectedStorage, selectedColor]);
 
   // Fecha com ESC
   useEffect(() => {
@@ -59,21 +86,26 @@ export default function ProductDetailModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [product, onClose]);
 
-  if (!product) return null;
+  if (!product || !activeProduct) return null;
 
-  const seo = getProductSeoDetails(product);
-  const isOutOfStock = product.estoque <= 0;
+  const seo = getProductSeoDetails(activeProduct);
+  const isOutOfStock = activeProduct.estoque <= 0;
   const discountPercent = Math.round(
-    ((product.precoDe - product.precoPix) / product.precoDe) * 100
+    ((activeProduct.precoDe - activeProduct.precoPix) / activeProduct.precoDe) * 100
   );
-  const savingsAmount = Math.max(0, product.precoDe - product.precoPix);
-  const qualifiesFreeShipping = product.precoPix * quantity >= selectedRegion.freteGratisAcimaDe;
+  const savingsAmount = Math.max(0, activeProduct.precoDe - activeProduct.precoPix);
+  const qualifiesFreeShipping = activeProduct.precoPix * quantity >= selectedRegion.freteGratisAcimaDe;
 
   const handleAdd = () => {
     if (isOutOfStock) return;
-    onAddToCart(product, quantity);
+    onAddToCart(activeProduct, quantity);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1500);
+  };
+
+  const handleTradeIn = () => {
+    onClose();
+    onOpenTradeIn?.(activeProduct);
   };
 
   return (
@@ -183,13 +215,82 @@ export default function ProductDetailModal({
                   id="product-modal-title"
                   className="text-xl sm:text-2xl font-black text-[#0A0A0A] leading-tight"
                 >
-                  {product.nome}
+                  {activeProduct.nome}
                 </h2>
 
                 <p className="text-xs sm:text-sm font-bold text-[#059669] mt-1">
                   {seo.subtituloSeo}
                 </p>
               </div>
+
+              {/* SELETORES INTERATIVOS: Capacidade & Cores no Modal */}
+              {variantConfig && variantConfig.hasVariants && (
+                <div className="bg-[#F4F4F6] border border-zinc-200 rounded-2xl p-3.5 space-y-3">
+                  {/* Capacidade */}
+                  {variantConfig.storageTiers.length > 1 && (
+                    <div>
+                      <span className="block text-xs font-black uppercase tracking-wider text-zinc-500 mb-1.5">
+                        Armazenamento / Capacidade:
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {variantConfig.storageTiers.map((tier) => {
+                          const isSelected = selectedStorage?.id === tier.id;
+                          return (
+                            <button
+                              key={tier.id}
+                              type="button"
+                              onClick={() => setSelectedStorage(tier)}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer border ${
+                                isSelected
+                                  ? 'bg-[#0A0A0A] border-[#0A0A0A] text-[#34D399] shadow-sm'
+                                  : 'bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-100'
+                              }`}
+                            >
+                              {tier.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Cores Reais */}
+                  {variantConfig.colors.length > 1 && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs font-black uppercase tracking-wider text-zinc-500">
+                          Cor Selecionada:
+                        </span>
+                        <span className="text-xs font-bold text-zinc-900">
+                          {selectedColor?.name}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {variantConfig.colors.map((color) => {
+                          const isSelected = selectedColor?.id === color.id;
+                          return (
+                            <button
+                              key={color.id}
+                              type="button"
+                              title={color.name}
+                              onClick={() => setSelectedColor(color)}
+                              className={`w-6 h-6 rounded-full transition-all cursor-pointer ${
+                                isSelected
+                                  ? 'ring-2 ring-[#10B981] ring-offset-2 scale-110'
+                                  : 'hover:scale-105 opacity-80 hover:opacity-100'
+                              }`}
+                              style={{
+                                backgroundColor: color.hex,
+                                border: color.borderHex ? `1px solid ${color.borderHex}` : '1px solid rgba(0,0,0,0.15)',
+                              }}
+                            />
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Card de Preços (Valor Integral de Atacado) */}
               <div className="bg-[#F8F9FA] border-2 border-[#10B981]/35 rounded-2xl p-4 space-y-2">
@@ -202,7 +303,7 @@ export default function ProductDetailModal({
 
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-2xl sm:text-3xl font-black text-[#059669] tracking-tight">
-                    {formatBRL(product.precoPix)}
+                    {formatBRL(activeProduct.precoPix)}
                   </span>
                   <span className="text-xs sm:text-sm font-extrabold text-[#0A0A0A] bg-[#34D399] px-2 py-0.5 rounded-md">
                     à vista no PIX ou Dinheiro
@@ -211,7 +312,7 @@ export default function ProductDetailModal({
 
                 <div className="pt-2 border-t border-zinc-200 flex items-center justify-between gap-2 text-xs text-zinc-700">
                   <span className="font-bold">
-                    Cartão em até {product.maxParcelasSemJuros}x{' '}
+                    Cartão em até {activeProduct.maxParcelasSemJuros}x{' '}
                     <span className="text-zinc-500 font-semibold">
                       (juros de acordo com a taxa da operadora)
                     </span>
@@ -225,6 +326,32 @@ export default function ProductDetailModal({
                   </button>
                 </div>
               </div>
+
+              {/* Botão de Troca Fácil (Trade-In) com Usado como Entrada */}
+              {variantConfig?.isTechDevice && activeProduct.precoPix >= 1200 && (
+                <div className="bg-gradient-to-r from-[#171130] to-[#0d1629] border border-[#7C63E6]/40 rounded-2xl p-3.5 flex items-center justify-between gap-3 text-white">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-9 h-9 rounded-xl bg-[#7C63E6]/30 border border-[#7C63E6]/50 flex items-center justify-center text-[#A78BFA] shrink-0">
+                      <RefreshCw className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-black text-white truncate">
+                        Tem um aparelho usado para dar de entrada?
+                      </p>
+                      <p className="text-[11px] text-[#A78BFA] truncate">
+                        Economize até R$ 4.000 na compra deste {activeProduct.nome.split(' ')[0]}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleTradeIn}
+                    className="px-3 py-1.5 rounded-xl bg-[#7C63E6] hover:bg-[#684ddb] text-white text-xs font-black transition-all cursor-pointer shrink-0 shadow-md shadow-[#7C63E6]/30"
+                  >
+                    Simular Troca
+                  </button>
+                </div>
+              )}
 
               {/* Estimativa de Entrega na Região Selecionada */}
               <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-3.5 flex items-center justify-between gap-3">
@@ -461,7 +588,7 @@ export default function ProductDetailModal({
                 </button>
               </div>
               <span className="text-xs font-black text-[#059669]">
-                Total PIX: {formatBRL(product.precoPix * quantity)}
+                Total PIX: {formatBRL(activeProduct.precoPix * quantity)}
               </span>
             </div>
           )}
@@ -492,7 +619,7 @@ export default function ProductDetailModal({
             )}
 
             <a
-              href={buildSingleProductWhatsAppUrl(product, selectedRegion.nome)}
+              href={buildSingleProductWhatsAppUrl(activeProduct, selectedRegion.nome)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 sm:flex-initial px-5 py-3 rounded-xl font-bold text-xs sm:text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white flex items-center justify-center gap-2 transition-all"

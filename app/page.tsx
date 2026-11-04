@@ -11,6 +11,7 @@ import {
   EyeOff,
   Grid2x2,
   Rows3,
+  ArrowRight,
 } from 'lucide-react';
 import { CartItem, CategoryId, DFRegion, HeroBanner, Product } from '../types/store';
 import { CATEGORIES, DF_REGIONS, formatBRL, formatInstallment, PRODUCTS } from '../data/mockData';
@@ -24,6 +25,12 @@ import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
+import StoriesBar from '../components/StoriesBar';
+import StoryViewerModal from '../components/StoryViewerModal';
+import TradeInModal from '../components/TradeInModal';
+import LiveSocialProofToast from '../components/LiveSocialProofToast';
+import DeviceComparatorModal from '../components/DeviceComparatorModal';
+import { STORE_STORIES, StoryGroup } from '../data/storiesData';
 import { loadStoreSettings, StockmasterItem } from '../lib/firebase';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
@@ -408,6 +415,27 @@ export default function RRStorePage() {
   const [reducedMotion, setReducedMotion] = useState<boolean>(false);
   const [mobileColumns, setMobileColumns] = useState<1 | 2>(2);
 
+  // Estados dos Novos Módulos de Conversão & UX
+  const [isTradeInOpen, setIsTradeInOpen] = useState<boolean>(false);
+  const [tradeInTargetProduct, setTradeInTargetProduct] = useState<Product | null>(null);
+  const [activeStoryGroupIdx, setActiveStoryGroupIdx] = useState<number | null>(null);
+  const [isComparatorOpen, setIsComparatorOpen] = useState<boolean>(false);
+  const [comparatorProductA, setComparatorProductA] = useState<Product | null>(null);
+
+  const handleOpenTradeIn = (product?: Product) => {
+    setTradeInTargetProduct(product || null);
+    setIsTradeInOpen(true);
+  };
+
+  const handleOpenComparator = (product?: Product) => {
+    setComparatorProductA(product || null);
+    setIsComparatorOpen(true);
+  };
+
+  const handleSelectStory = (_group: StoryGroup, idx: number) => {
+    setActiveStoryGroupIdx(idx);
+  };
+
   // Carrega preferências locais e, em seguida, o catálogo/fretes/banners publicados no Firestore
   useEffect(() => {
     let currentRegions = DF_REGIONS;
@@ -718,9 +746,67 @@ export default function RRStorePage() {
         banners={banners}
       />
 
+      {/* 2.3 Stories Interativos em Vídeo e Foto da Loja Física SIA D439 & Clientes */}
+      <StoriesBar onSelectStory={handleSelectStory} />
+
       {/* 3. Área Principal de Produtos (Background Secundário #F8F9FA / #FFFFFF para Leitura Perfeita) */}
       <main id="catalogo-produtos" className="flex-1 bg-[#F8F9FA] text-[#0A0A0A] py-6 sm:py-14">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          {/* Banner de Ação Rápida: Troca Fácil (Trade-In) & Comparador de Aparelhos */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-5 sm:mb-6">
+            {/* Card 1: Troca Fácil */}
+            <div
+              onClick={() => handleOpenTradeIn()}
+              className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#16122c] to-[#0e1628] border border-[#7C63E6]/40 p-4 sm:p-5 text-white shadow-md hover:shadow-lg hover:border-[#7C63E6] transition-all cursor-pointer flex items-center justify-between gap-3"
+            >
+              <div className="space-y-1 min-w-0">
+                <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-[#A78BFA] bg-[#7C63E6]/20 px-2 py-0.5 rounded-md">
+                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  Troca Fácil • Trade-In
+                </span>
+                <h3 className="text-sm sm:text-base font-black text-white leading-tight">
+                  Quer dar seu usado como entrada?
+                </h3>
+                <p className="text-xs text-white/70 line-clamp-1">
+                  Avaliamos seu iPhone, Samsung ou Xiaomi na hora pelo melhor valor de Brasília.
+                </p>
+              </div>
+              <button
+                type="button"
+                className="shrink-0 px-3.5 py-2 rounded-xl bg-[#7C63E6] group-hover:bg-[#684ddb] text-white text-xs font-black flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
+              >
+                <span>Simular</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Card 2: Comparador de Modelos */}
+            <div
+              onClick={() => handleOpenComparator()}
+              className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0d1e18] to-[#0f172a] border border-[#10B981]/40 p-4 sm:p-5 text-white shadow-md hover:shadow-lg hover:border-[#10B981] transition-all cursor-pointer flex items-center justify-between gap-3"
+            >
+              <div className="space-y-1 min-w-0">
+                <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-[#34D399] bg-[#10B981]/20 px-2 py-0.5 rounded-md">
+                  <Sparkles className="w-3 h-3 text-emerald-400" />
+                  Comparador Lado a Lado
+                </span>
+                <h3 className="text-sm sm:text-base font-black text-white leading-tight">
+                  Dúvida entre dois aparelhos?
+                </h3>
+                <p className="text-xs text-white/70 line-clamp-1">
+                  Compare câmeras, processador, bateria e preço para decidir a melhor compra.
+                </p>
+              </div>
+              <button
+                type="button"
+                className="shrink-0 px-3.5 py-2 rounded-xl bg-[#10B981] group-hover:bg-[#059669] text-[#0A0A0A] text-xs font-black flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
+              >
+                <span>Comparar</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
           {/* Cabeçalho da Vitrine & Controles de Filtro/Ordenação/Painel Admin */}
           <div className="bg-[#FFFFFF] rounded-2xl p-3.5 sm:p-6 border border-zinc-200/90 shadow-sm mb-5 sm:mb-8 flex flex-col md:flex-row md:items-center justify-between gap-3.5">
             <div>
@@ -944,6 +1030,7 @@ export default function RRStorePage() {
                     selectedRegion={selectedRegion}
                     onAddToCart={handleAddToCart}
                     onSelectProduct={setSelectedProduct}
+                    onOpenTradeIn={handleOpenTradeIn}
                     compactMobile={mobileColumns === 2}
                   />
                 </MotionReveal>
@@ -959,6 +1046,7 @@ export default function RRStorePage() {
         selectedRegion={selectedRegion}
         onClose={() => setSelectedProduct(null)}
         onAddToCart={handleAddToCart}
+        onOpenTradeIn={handleOpenTradeIn}
       />
 
       {/* 5. Seções Completas de Conversão */}
@@ -1001,6 +1089,38 @@ export default function RRStorePage() {
         onSelectRegion={handleSelectRegion}
         regions={regions}
       />
+
+      {/* 8. Simulador Interativo de Troca Fácil (Trade-In / Usado como Entrada) */}
+      <TradeInModal
+        isOpen={isTradeInOpen}
+        onClose={() => setIsTradeInOpen(false)}
+        preSelectedProduct={tradeInTargetProduct}
+        selectedRegion={selectedRegion}
+        allProducts={products}
+      />
+
+      {/* 9. Visualizador Interativo de Stories em Vídeo/Foto (Estilo Instagram) */}
+      <StoryViewerModal
+        isOpen={activeStoryGroupIdx !== null}
+        onClose={() => setActiveStoryGroupIdx(null)}
+        storyGroups={STORE_STORIES}
+        initialGroupIndex={activeStoryGroupIdx || 0}
+        onOpenTradeIn={() => handleOpenTradeIn()}
+        onExploreCatalog={scrollToCatalog}
+      />
+
+      {/* 10. Comparador Lado a Lado de Aparelhos (Vale a Pena o Upgrade?) */}
+      <DeviceComparatorModal
+        isOpen={isComparatorOpen}
+        onClose={() => setIsComparatorOpen(false)}
+        onAddToCart={handleAddToCart}
+        onOpenTradeIn={handleOpenTradeIn}
+        initialProductA={comparatorProductA}
+        allProducts={products}
+      />
+
+      {/* 11. Prova Social em Tempo Real (Toasts de Pedidos e Entregas no DF) */}
+      <LiveSocialProofToast />
 
 
       {/* Toast de Feedback Visual Rápido ao Adicionar Produto */}
