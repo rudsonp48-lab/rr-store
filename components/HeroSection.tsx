@@ -280,7 +280,6 @@ export default function HeroSection({
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [addedId, setAddedId] = useState<string | null>(null);
-  const [animPhase, setAnimPhase] = useState<'in' | 'out'>('in');
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mouseTilt, setMouseTilt] = useState({ x: 0, y: 0 });
   const [stageMode, setStageMode] = useState<'cutout' | 'video'>('cutout');
@@ -348,22 +347,15 @@ export default function HeroSection({
   const nextSlide = slides[nextIndex];
 
   const triggerSlideChange = (idx: number) => {
-    setAnimPhase('out');
-    setTimeout(() => {
-      setActiveIndex(idx);
-      setAnimPhase('in');
-    }, 180);
+    if (idx === activeIndex) return;
+    setActiveIndex(idx);
   };
 
-  // Auto-play fluido a cada 6 segundos (pausa quando o usuário está assistindo vídeo no palco principal)
+  // Auto-play fluido a cada 6 segundos (pausa quando o usuário interage ou assiste vídeo)
   useEffect(() => {
     if (isPaused || stageMode === 'video' || slides.length <= 1) return;
     const timer = setInterval(() => {
-      setAnimPhase('out');
-      setTimeout(() => {
-        setActiveIndex((prev) => (prev + 1) % slides.length);
-        setAnimPhase('in');
-      }, 180);
+      setActiveIndex((prev) => (prev + 1) % slides.length);
     }, 6000);
     return () => clearInterval(timer);
   }, [isPaused, stageMode, slides.length]);
@@ -529,9 +521,8 @@ export default function HeroSection({
             <div className="grid grid-cols-[1fr_auto] gap-3 items-center">
               {/* Coluna ESQUERDA: Título + Descrição + Preço + Botão */}
               <div
-                className={`flex flex-col gap-2 transition-opacity duration-200 ${
-                  animPhase === 'in' ? 'opacity-100' : 'opacity-0'
-                }`}
+                key={`mob-text-${safeIndex}`}
+                className="flex flex-col gap-2 animate-hero-glide"
               >
                 <h2 className="text-xl font-black leading-tight tracking-tight text-white">
                   {copy.leftBig}
@@ -577,7 +568,7 @@ export default function HeroSection({
                 </div>
               </div>
 
-              {/* Coluna DIREITA: Produto PNG flutuante */}
+              {/* Coluna DIREITA: Produto PNG flutuante com transição cross-dissolve contínua */}
               <div className="relative w-[148px] h-[148px] flex items-center justify-center shrink-0">
                 {/* Halo luminoso atrás do produto */}
                 <div
@@ -606,21 +597,33 @@ export default function HeroSection({
                 ) : (
                   <div
                     onClick={() => currentProduct && onSelectProduct?.(currentProduct)}
-                    className={`relative z-10 w-full h-full flex items-center justify-center cursor-pointer transition-all duration-300 ${
-                      animPhase === 'in' ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-                    }`}
+                    className="relative z-10 w-full h-full flex items-center justify-center cursor-pointer"
                   >
-                    <CutoutImage
-                      src={currentSlide.imagem}
-                      alt={currentProduct?.nome || 'Produto'}
-                      className="max-h-[140px] w-auto object-contain select-none"
-                      style={{ filter: 'drop-shadow(0 12px 20px rgba(124,99,230,0.5))' }}
-                    />
+                    {slides.map((slide, idx) => {
+                      const isCurrent = idx === safeIndex;
+                      return (
+                        <div
+                          key={slide.key}
+                          className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu will-change-[transform,opacity] ${
+                            isCurrent
+                              ? 'opacity-100 scale-100 z-10'
+                              : 'opacity-0 scale-[1.05] z-0 pointer-events-none'
+                          }`}
+                        >
+                          <CutoutImage
+                            src={slide.imagem}
+                            alt={slide.product?.nome || 'Produto'}
+                            className="max-h-[140px] w-auto object-contain select-none"
+                            style={{ filter: 'drop-shadow(0 12px 20px rgba(124,99,230,0.5))' }}
+                          />
+                        </div>
+                      );
+                    })}
                     {currentSlide.videoUrl && (
                       <button
                         type="button"
                         onClick={(e) => { e.stopPropagation(); setStageMode('video'); }}
-                        className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#7C63E6] border-2 border-[#0D0D14] flex items-center justify-center shadow-lg cursor-pointer"
+                        className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#7C63E6] border-2 border-[#0D0D14] flex items-center justify-center shadow-lg cursor-pointer z-20"
                       >
                         <Play className="w-3 h-3 text-white fill-current ml-0.5" />
                       </button>
@@ -638,9 +641,9 @@ export default function HeroSection({
                     key={idx}
                     type="button"
                     onClick={() => triggerSlideChange(idx)}
-                    className={`rounded-full transition-all duration-200 cursor-pointer ${
+                    className={`rounded-full transition-all duration-300 cursor-pointer ${
                       idx === safeIndex
-                        ? 'w-5 h-1.5 bg-[#7C63E6]'
+                        ? 'w-6 h-1.5 bg-[#7C63E6]'
                         : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/60'
                     }`}
                   />
@@ -762,16 +765,13 @@ export default function HeroSection({
           </div>
         </div>
 
-        {/* CONTAINER PRINCIPAL DO BANNER — LAYOUT FIEL À IMAGEM DE REFERÊNCIA E PROPORCIONAL NO CELULAR */}
-        <div
-          className={`relative transition-all duration-300 ${
-            animPhase === 'in'
-              ? 'opacity-100 translate-y-0 scale-100'
-              : 'opacity-0 translate-y-1.5 scale-[0.99]'
-          }`}
-        >
+        {/* CONTAINER PRINCIPAL DO BANNER — TRANSIÇÃO CONTÍNUA E SOFISTICADA */}
+        <div className="relative">
           {/* 1. FAIXA SUPERIOR BRANCA COM OS 2 TÍTULOS MONUMENTAIS ("Define Your STYLE" / "Own Your WORLD") */}
-          <div className="relative z-10 grid grid-cols-2 lg:grid-cols-12 items-end gap-2 sm:gap-4 pt-0.5 pb-2 sm:pb-6 lg:pb-8 px-0.5 sm:px-2">
+          <div
+            key={`desk-top-${safeIndex}`}
+            className="relative z-10 grid grid-cols-2 lg:grid-cols-12 items-end gap-2 sm:gap-4 pt-0.5 pb-2 sm:pb-6 lg:pb-8 px-0.5 sm:px-2 animate-hero-glide"
+          >
             {/* Esquerda: "Define Your / STYLE" */}
             <div className="col-span-1 lg:col-span-5 text-left min-w-0">
               <p className="text-xs sm:text-2xl lg:text-[32px] font-bold italic text-[#141418] tracking-tight leading-tight truncate">
@@ -862,20 +862,33 @@ export default function HeroSection({
                     </span>
                   </div>
                 ) : (
-                  <>
-                    <CutoutImage
-                      key={currentSlide.imagem}
-                      src={currentSlide.imagem}
-                      alt={currentProduct?.nome || currentSlide.titulo || 'Destaque RR Store'}
-                      className="max-w-[94%] max-h-[94%] w-auto h-auto object-contain group-hover:scale-[1.05] transition-transform duration-500 ease-out drop-shadow-[0_22px_36px_rgba(17,12,46,0.45)] sm:drop-shadow-[0_32px_50px_rgba(17,12,46,0.5)]"
-                    />
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    {slides.map((slide, idx) => {
+                      const isCurrent = idx === safeIndex;
+                      return (
+                        <div
+                          key={slide.key}
+                          className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu will-change-[transform,opacity] ${
+                            isCurrent
+                              ? 'opacity-100 scale-100 z-10 pointer-events-auto'
+                              : 'opacity-0 scale-[1.04] z-0 pointer-events-none'
+                          }`}
+                        >
+                          <CutoutImage
+                            src={slide.imagem}
+                            alt={slide.product?.nome || slide.titulo || 'Destaque RR Store'}
+                            className="max-w-[94%] max-h-[94%] w-auto h-auto object-contain group-hover:scale-[1.05] transition-transform duration-500 ease-out drop-shadow-[0_22px_36px_rgba(17,12,46,0.45)] sm:drop-shadow-[0_32px_50px_rgba(17,12,46,0.5)] select-none"
+                          />
+                        </div>
+                      );
+                    })}
 
                     {/* Selo discreto de Ficha Técnica ao passar o mouse */}
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#111115]/90 text-white text-[10px] sm:text-[11px] font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#111115]/90 text-white text-[10px] sm:text-[11px] font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow-lg flex items-center gap-1.5 pointer-events-none z-20">
                       <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#A78BFA]" />
                       <span>Ver Ficha Técnica</span>
                     </span>
-                  </>
+                  </div>
                 )}
               </div>
             </div>
@@ -892,7 +905,7 @@ export default function HeroSection({
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-4 items-center">
                 {/* COLUNA ESQUERDA (4 Colunas): Tag + Título 2 Linhas + Subtítulo + Botão Pill Preto + Card Social Proof */}
                 <div className="lg:col-span-4 flex flex-col justify-between space-y-3 sm:space-y-5 text-left">
-                  <div className="space-y-1.5 sm:space-y-3">
+                  <div key={`card-text-${safeIndex}`} className="space-y-1.5 sm:space-y-3 animate-hero-glide">
                     <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-sm font-semibold text-white/95">
                       <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                       <span>
@@ -1084,7 +1097,10 @@ export default function HeroSection({
                       </div>
 
                       {/* Nome, Subtítulo e Botão Roxo com Preço PIX */}
-                      <div className="flex-1 min-w-0 sm:pt-2.5 sm:pb-1 sm:px-2 text-left sm:text-center">
+                      <div
+                        key={`side-text-${safeIndex}`}
+                        className="flex-1 min-w-0 sm:pt-2.5 sm:pb-1 sm:px-2 text-left sm:text-center animate-hero-glide"
+                      >
                         <p className="text-xs sm:text-sm font-extrabold text-[#111115] truncate">
                           {copy.shortName}
                         </p>
