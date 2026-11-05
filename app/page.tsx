@@ -1032,6 +1032,7 @@ export default function RRStorePage() {
                     onSelectProduct={setSelectedProduct}
                     onOpenTradeIn={handleOpenTradeIn}
                     compactMobile={mobileColumns === 2}
+                    allProducts={products}
                   />
                 </MotionReveal>
               ))}
@@ -1047,6 +1048,7 @@ export default function RRStorePage() {
         onClose={() => setSelectedProduct(null)}
         onAddToCart={handleAddToCart}
         onOpenTradeIn={handleOpenTradeIn}
+        allProducts={products}
       />
 
       {/* 5. Seções Completas de Conversão */}

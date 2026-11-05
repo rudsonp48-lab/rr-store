@@ -29,6 +29,7 @@ interface ProductCardProps {
   onSelectProduct?: (product: Product) => void;
   onOpenTradeIn?: (product: Product) => void;
   compactMobile?: boolean;
+  allProducts?: Product[];
 }
 
 export default function ProductCard({
@@ -38,23 +39,31 @@ export default function ProductCard({
   onSelectProduct,
   onOpenTradeIn,
   compactMobile = false,
+  allProducts,
 }: ProductCardProps) {
   const [justAdded, setJustAdded] = useState(false);
+  const [activeProduct, setActiveProduct] = useState<Product>(product);
 
-  // Variantes de Cores e Armazenamento Interativos
-  const variantConfig = useMemo(() => getProductVariantConfig(product), [product]);
-  const [selectedStorage, setSelectedStorage] = useState<StorageTier>(variantConfig.defaultStorage);
-  const [selectedColor, setSelectedColor] = useState<ColorSwatch>(variantConfig.defaultColor);
+  // Sincroniza se o produto mudar externamente
+  React.useEffect(() => {
+    setActiveProduct(product);
+  }, [product]);
 
-  // Produto com preço e nome atualizados pela variante selecionada
-  const activeProduct = useMemo(
-    () => buildConfiguredProduct(product, selectedColor, selectedStorage),
-    [product, selectedColor, selectedStorage]
+  // Variantes e Irmãos Reais do Catálogo
+  const variantConfig = useMemo(
+    () => getProductVariantConfig(activeProduct, allProducts),
+    [activeProduct, allProducts]
+  );
+  const [selectedStorage, setSelectedStorage] = useState<StorageTier | null>(
+    variantConfig.currentStorage
+  );
+  const [selectedColor, setSelectedColor] = useState<ColorSwatch | null>(
+    variantConfig.currentColor
   );
 
-  const isApple = product.id.startsWith('rr-apple-');
-  const isOutOfStock = product.estoque <= 0;
-  const cleanDescription = product.descricao.split(' | Pagamento:')[0];
+  const isApple = activeProduct.id.startsWith('rr-apple-');
+  const isOutOfStock = activeProduct.estoque <= 0;
+  const cleanDescription = activeProduct.descricao.split(' | Pagamento:')[0];
 
   const discountPercent = Math.round(
     ((activeProduct.precoDe - activeProduct.precoPix) / activeProduct.precoDe) * 100
@@ -76,13 +85,29 @@ export default function ProductCard({
     onOpenTradeIn?.(activeProduct);
   };
 
-  const handleSelectStorage = (storage: StorageTier, e: React.MouseEvent) => {
+  const handleSelectStorage = (tier: StorageTier, e: React.MouseEvent) => {
     e.stopPropagation();
-    setSelectedStorage(storage);
+    if (tier.targetProductId && allProducts) {
+      const brother = allProducts.find((p) => p.id === tier.targetProductId);
+      if (brother) {
+        setActiveProduct(brother);
+        setSelectedStorage(tier);
+        return;
+      }
+    }
+    setSelectedStorage(tier);
   };
 
   const handleSelectColor = (color: ColorSwatch, e: React.MouseEvent) => {
     e.stopPropagation();
+    if (color.targetProductId && allProducts) {
+      const brother = allProducts.find((p) => p.id === color.targetProductId);
+      if (brother) {
+        setActiveProduct(brother);
+        setSelectedColor(color);
+        return;
+      }
+    }
     setSelectedColor(color);
   };
 
@@ -212,17 +237,22 @@ export default function ProductCard({
             {cleanDescription}
           </p>
 
-          {/* SELETORES INTERATIVOS: Armazenamento & Cores (Estilo Apple / Loja Moderna) */}
-          {variantConfig.hasVariants && (
-            <div className="space-y-2 mb-3 pt-1 border-t border-zinc-100">
-              {/* Pílulas de Armazenamento / Capacidade */}
-              {variantConfig.storageTiers.length > 1 && (
+          {/* ESPECIFICAÇÕES OFICIAIS & CORES REAIS (100% Autêntico) */}
+          {(variantConfig.hasColorOptions ||
+            variantConfig.currentColor ||
+            variantConfig.hasStorageOptions ||
+            variantConfig.officialSpecBadge) && (
+            <div className="space-y-1.5 mb-2.5 pt-1.5 border-t border-zinc-100">
+              {/* Opções Reais de Capacidade no Catálogo */}
+              {variantConfig.hasStorageOptions && (
                 <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
                   <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider shrink-0 mr-0.5">
                     Cap:
                   </span>
-                  {variantConfig.storageTiers.map((tier) => {
-                    const isSelected = selectedStorage.id === tier.id;
+                  {variantConfig.availableStorages.map((tier) => {
+                    const isSelected =
+                      activeProduct.id === tier.targetProductId ||
+                      selectedStorage?.id === tier.id;
                     return (
                       <button
                         key={tier.id}
@@ -241,36 +271,69 @@ export default function ProductCard({
                 </div>
               )}
 
-              {/* Bolinhas de Cores Reais */}
-              {variantConfig.colors.length > 1 && (
+              {/* Opções Reais de Cores no Catálogo */}
+              {variantConfig.hasColorOptions ? (
                 <div className="flex items-center justify-between gap-1">
                   <div className="flex items-center gap-1.5">
-                    {variantConfig.colors.slice(0, 5).map((color) => {
-                      const isSelected = selectedColor.id === color.id;
+                    {variantConfig.availableColors.map((color) => {
+                      const isSelected =
+                        activeProduct.id === color.targetProductId ||
+                        selectedColor?.id === color.id;
                       return (
                         <button
                           key={color.id}
                           type="button"
-                          title={color.name}
+                          title={`Cor: ${color.name}`}
                           onClick={(e) => handleSelectColor(color, e)}
                           className={`w-4 h-4 rounded-full transition-all cursor-pointer relative ${
                             isSelected
-                              ? 'ring-2 ring-[#10B981] ring-offset-2 scale-110'
+                              ? 'ring-2 ring-[#10B981] ring-offset-2 scale-110 shadow-xs'
                               : 'hover:scale-105 opacity-80 hover:opacity-100'
                           }`}
                           style={{
                             backgroundColor: color.hex,
-                            border: color.borderHex ? `1px solid ${color.borderHex}` : '1px solid rgba(0,0,0,0.15)',
+                            border: color.borderHex
+                              ? `1px solid ${color.borderHex}`
+                              : '1px solid rgba(0,0,0,0.18)',
                           }}
                         />
                       );
                     })}
                   </div>
-                  <span className="text-[10px] font-bold text-zinc-500 truncate max-w-[110px] text-right">
-                    {selectedColor.name}
+                  <span className="text-[10px] font-bold text-zinc-600 truncate max-w-[120px] text-right">
+                    {variantConfig.currentColor?.name || selectedColor?.name}
                   </span>
                 </div>
-              )}
+              ) : variantConfig.currentColor ? (
+                /* Cor Oficial Única do Modelo */
+                <div className="flex items-center justify-between gap-1.5 py-0.5">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <span
+                      className="w-3 h-3 rounded-full shrink-0 shadow-xs ring-1 ring-black/10"
+                      style={{
+                        backgroundColor: variantConfig.currentColor.hex,
+                        border: variantConfig.currentColor.borderHex
+                          ? `1px solid ${variantConfig.currentColor.borderHex}`
+                          : '1px solid rgba(0,0,0,0.18)',
+                      }}
+                    />
+                    <span className="text-[10px] sm:text-[11px] font-semibold text-zinc-600 truncate">
+                      Cor: <strong className="text-zinc-950 font-black">{variantConfig.currentColor.name}</strong>
+                    </span>
+                  </div>
+                  {variantConfig.officialSpecBadge && (
+                    <span className="text-[9px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">
+                      {variantConfig.officialSpecBadge}
+                    </span>
+                  )}
+                </div>
+              ) : variantConfig.officialSpecBadge ? (
+                <div className="flex items-center justify-start py-0.5">
+                  <span className="text-[9px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+                    {variantConfig.officialSpecBadge}
+                  </span>
+                </div>
+              ) : null}
             </div>
           )}
         </div>

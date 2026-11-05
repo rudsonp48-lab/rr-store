@@ -1,211 +1,445 @@
 import { Product } from '../types/store';
-import { formatBRL, formatInstallment } from './mockData';
+import { PRODUCTS } from './mockData';
 
 export interface ColorSwatch {
   id: string;
   name: string;
   hex: string;
+  secondaryHex?: string;
   borderHex?: string;
+  glowColor?: string;
+  targetProductId?: string;
 }
 
 export interface StorageTier {
   id: string;
   label: string;
-  priceDelta: number; // Diferença em relação ao preço base do produto
+  price?: number;
+  targetProductId?: string;
 }
 
 export interface ProductVariantConfig {
-  hasVariants: boolean;
   isTechDevice: boolean;
-  colors: ColorSwatch[];
-  storageTiers: StorageTier[];
-  defaultColor: ColorSwatch;
-  defaultStorage: StorageTier;
+  hasColorOptions: boolean;
+  hasStorageOptions: boolean;
+  currentColor: ColorSwatch | null;
+  availableColors: ColorSwatch[];
+  currentStorage: StorageTier | null;
+  availableStorages: StorageTier[];
+  officialSpecBadge?: string;
+  modelFamilyName: string;
 }
 
-const IPHONE_PRO_COLORS: ColorSwatch[] = [
-  { id: 'tit-preto', name: 'Titânio Preto', hex: '#212124' },
-  { id: 'tit-natural', name: 'Titânio Natural', hex: '#9a9893' },
-  { id: 'tit-branco', name: 'Titânio Branco', hex: '#f0f0f2', borderHex: '#d1d1d6' },
-  { id: 'tit-deserto', name: 'Titânio Deserto', hex: '#c5b09c' },
-];
+// Catálogo Mestre de Cores Oficiais com Acabamento e HEX Metálico Realista
+const COLOR_DEFINITIONS: Record<
+  string,
+  { name: string; hex: string; secondaryHex?: string; borderHex?: string; glowColor?: string }
+> = {
+  bordo: {
+    name: 'Bordô',
+    hex: '#5C1D2E',
+    borderHex: '#3E121E',
+    glowColor: 'rgba(92, 29, 46, 0.45)',
+  },
+  'laranja-cosmico': {
+    name: 'Laranja Cósmico',
+    hex: '#E36836',
+    borderHex: '#C44F1F',
+    glowColor: 'rgba(227, 104, 54, 0.45)',
+  },
+  'azul-intenso': {
+    name: 'Azul Intenso',
+    hex: '#234975',
+    borderHex: '#173354',
+    glowColor: 'rgba(35, 73, 117, 0.45)',
+  },
+  azul: {
+    name: 'Azul',
+    hex: '#28496E',
+    borderHex: '#1B3450',
+    glowColor: 'rgba(40, 73, 110, 0.45)',
+  },
+  'azul-celeste': {
+    name: 'Azul Celeste',
+    hex: '#387BB2',
+    borderHex: '#265E8C',
+    glowColor: 'rgba(56, 123, 178, 0.45)',
+  },
+  'azul-indigo': {
+    name: 'Azul (Índigo)',
+    hex: '#284364',
+    borderHex: '#1A2F49',
+    glowColor: 'rgba(40, 67, 100, 0.45)',
+  },
+  silver: {
+    name: 'Silver (Prateado)',
+    hex: '#E2E4E8',
+    borderHex: '#CBD0D8',
+    glowColor: 'rgba(226, 228, 232, 0.55)',
+  },
+  starlight: {
+    name: 'Starlight (Estelar)',
+    hex: '#EFE7DE',
+    borderHex: '#D9CFBF',
+    glowColor: 'rgba(239, 231, 222, 0.45)',
+  },
+  midnight: {
+    name: 'Midnight (Meia-Noite)',
+    hex: '#19202B',
+    borderHex: '#0F151E',
+    glowColor: 'rgba(25, 32, 43, 0.55)',
+  },
+  preto: {
+    name: 'Preto / Space Black',
+    hex: '#1C1C1E',
+    borderHex: '#0A0A0A',
+    glowColor: 'rgba(28, 28, 30, 0.55)',
+  },
+  grafite: {
+    name: 'Grafite / Space Gray',
+    hex: '#4B4D53',
+    borderHex: '#36383D',
+    glowColor: 'rgba(75, 77, 83, 0.45)',
+  },
+  'titanium-gray': {
+    name: 'Titanium Gray',
+    hex: '#727479',
+    borderHex: '#57595D',
+    glowColor: 'rgba(114, 116, 121, 0.45)',
+  },
+  'tit-natural': {
+    name: 'Titânio Natural',
+    hex: '#9E9B94',
+    borderHex: '#7E7A73',
+    glowColor: 'rgba(158, 155, 148, 0.45)',
+  },
+  'rose-gold': {
+    name: 'Rose Gold',
+    hex: '#E5A898',
+    borderHex: '#C98878',
+    glowColor: 'rgba(229, 168, 152, 0.45)',
+  },
+  'dourado-bordo': {
+    name: 'Dourado + Pulseira Bordô',
+    hex: '#CFAC4B',
+    secondaryHex: '#5C1D2E',
+    borderHex: '#B08E35',
+    glowColor: 'rgba(207, 172, 75, 0.45)',
+  },
+  'ouro-dourado': {
+    name: 'Ouro Dourado',
+    hex: '#D4AF37',
+    borderHex: '#B8952B',
+    glowColor: 'rgba(212, 175, 55, 0.45)',
+  },
+  citrus: {
+    name: 'Citrus',
+    hex: '#D2DE38',
+    borderHex: '#B5C122',
+    glowColor: 'rgba(210, 222, 56, 0.45)',
+  },
+  roxo: {
+    name: 'Roxo Cósmico',
+    hex: '#6B3C8C',
+    borderHex: '#4E2868',
+    glowColor: 'rgba(107, 60, 140, 0.45)',
+  },
+  'verde-gamer': {
+    name: 'Verde Gamer',
+    hex: '#1E7E34',
+    borderHex: '#145A24',
+    glowColor: 'rgba(30, 126, 52, 0.45)',
+  },
+  branco: {
+    name: 'Branco',
+    hex: '#FFFFFF',
+    borderHex: '#D1D5DB',
+    glowColor: 'rgba(255, 255, 255, 0.6)',
+  },
+  'camuflado-grey': {
+    name: 'Camuflado Grey',
+    hex: '#5E6360',
+    borderHex: '#464B48',
+    glowColor: 'rgba(94, 99, 96, 0.45)',
+  },
+};
 
-const IPHONE_BASE_COLORS: ColorSwatch[] = [
-  { id: 'preto', name: 'Preto', hex: '#1c1c1e' },
-  { id: 'branco', name: 'Branco', hex: '#fafafa', borderHex: '#d1d1d6' },
-  { id: 'ultramarino', name: 'Ultramarino', hex: '#3b5575' },
-  { id: 'verde', name: 'Verde Menta', hex: '#9dc2b0' },
-  { id: 'rosa', name: 'Rosa Suave', hex: '#ebd0da' },
-];
+/**
+ * Detecta a cor oficial e específica do produto com base no seu nome, id e descrição.
+ */
+export function detectProductColor(product: Product): ColorSwatch | null {
+  const name = product.nome;
+  const desc = product.descricao || '';
+  const id = product.id.toLowerCase();
+  const text = `${name} ${desc} ${id}`.toLowerCase();
 
-const WATCH_COLORS: ColorSwatch[] = [
-  { id: 'preto', name: 'Preto / Midnight', hex: '#1c1c1e' },
-  { id: 'prata', name: 'Prata / Starlight', hex: '#e5e5ea', borderHex: '#c7c7cc' },
-  { id: 'dourado', name: 'Dourado / Rose Gold', hex: '#e4c4b5' },
-  { id: 'natural-ultra', name: 'Titânio Natural Ultra', hex: '#9e9b94' },
-];
+  // 1. Tenta extrair a cor após o hífen ' - ' no nome
+  let rawColor = '';
+  if (name.includes(' - ')) {
+    const parts = name.split(' - ');
+    const lastPart = parts[parts.length - 1].trim();
+    // Limpa complementos como (Zerou no Estoque), (Lacrado), etc.
+    const clean = lastPart
+      .replace(/\(Zerou no Estoque\)/gi, '')
+      .replace(/\(Lacrado\)/gi, '')
+      .replace(/\(Sem Lacre e Sem Ativação\)/gi, '')
+      .replace(/\(Americano [^)]+\)/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim();
 
-const SAMSUNG_COLORS: ColorSwatch[] = [
-  { id: 'titanium-black', name: 'Titanium Black', hex: '#1c1c1e' },
-  { id: 'titanium-gray', name: 'Titanium Gray', hex: '#8a8883' },
-  { id: 'titanium-violet', name: 'Titanium Violet', hex: '#4e425a' },
-  { id: 'titanium-yellow', name: 'Titanium Yellow', hex: '#d9cc99' },
-];
+    // Se não for código de produto
+    if (clean && !/^[A-Z0-9\/]{6,}$/.test(clean)) {
+      rawColor = clean;
+    }
+  }
 
-const DEFAULT_TECH_COLORS: ColorSwatch[] = [
-  { id: 'preto', name: 'Space Black', hex: '#1a1a1a' },
-  { id: 'cinza', name: 'Space Gray', hex: '#636366' },
-  { id: 'prata', name: 'Silver', hex: '#e5e5ea', borderHex: '#c7c7cc' },
-];
+  const rawLower = rawColor.toLowerCase();
 
-export function getProductVariantConfig(product: Product): ProductVariantConfig {
-  const name = product.nome.toLowerCase();
-  const desc = product.descricao.toLowerCase();
-  const isApple = product.id.startsWith('rr-apple-') || name.includes('apple') || name.includes('iphone');
-  const isSamsung = name.includes('samsung') || name.includes('galaxy');
-  const isXiaomi = name.includes('xiaomi') || name.includes('redmi') || name.includes('poco');
-  const isWatch = name.includes('watch') || name.includes('relógio');
-  const isMac = name.includes('macbook') || name.includes('mac mini') || name.includes('imac');
-  const isIpad = name.includes('ipad');
+  // Mapeamento prioritário
+  if (rawLower.includes('dourado') && (rawLower.includes('bordô') || rawLower.includes('bordo'))) {
+    return { id: 'dourado-bordo', ...COLOR_DEFINITIONS['dourado-bordo'] };
+  }
+  if (rawLower.includes('bordô') || rawLower.includes('bordo') || id.includes('bordo')) {
+    return { id: 'bordo', ...COLOR_DEFINITIONS['bordo'] };
+  }
+  if (rawLower.includes('laranja') || id.includes('laranja')) {
+    return { id: 'laranja-cosmico', ...COLOR_DEFINITIONS['laranja-cosmico'] };
+  }
+  if (rawLower.includes('azul intenso') || id.includes('azul-intenso')) {
+    return { id: 'azul-intenso', ...COLOR_DEFINITIONS['azul-intenso'] };
+  }
+  if (rawLower.includes('azul celeste') || id.includes('azul-celeste')) {
+    return { id: 'azul-celeste', ...COLOR_DEFINITIONS['azul-celeste'] };
+  }
+  if (rawLower.includes('índigo') || rawLower.includes('indigo')) {
+    return { id: 'azul-indigo', ...COLOR_DEFINITIONS['azul-indigo'] };
+  }
+  if (rawLower.includes('rose gold') || rawLower.includes('ouro rosa') || id.includes('rosegold')) {
+    return { id: 'rose-gold', ...COLOR_DEFINITIONS['rose-gold'] };
+  }
+  if (rawLower.includes('ouro dourado')) {
+    return { id: 'ouro-dourado', ...COLOR_DEFINITIONS['ouro-dourado'] };
+  }
+  if (rawLower.includes('starlight') || rawLower.includes('estelar') || id.includes('starlight')) {
+    return { id: 'starlight', ...COLOR_DEFINITIONS['starlight'] };
+  }
+  if (rawLower.includes('midnight') || id.includes('midnight')) {
+    return { id: 'midnight', ...COLOR_DEFINITIONS['midnight'] };
+  }
+  if (rawLower.includes('citrus') || id.includes('citrus')) {
+    return { id: 'citrus', ...COLOR_DEFINITIONS['citrus'] };
+  }
+  if (rawLower.includes('verde gamer') || id.includes('verde')) {
+    return { id: 'verde-gamer', ...COLOR_DEFINITIONS['verde-gamer'] };
+  }
+  if (rawLower.includes('camuflado') || id.includes('camu')) {
+    return { id: 'camuflado-grey', ...COLOR_DEFINITIONS['camuflado-grey'] };
+  }
+  if (rawLower.includes('titanium gray') || id.includes('titanium-gray')) {
+    return { id: 'titanium-gray', ...COLOR_DEFINITIONS['titanium-gray'] };
+  }
+  if (rawLower.includes('grafite') || id.includes('grafite')) {
+    return { id: 'grafite', ...COLOR_DEFINITIONS['grafite'] };
+  }
+  if (rawLower.includes('gray') || rawLower.includes('cinza') || id.includes('gray')) {
+    return { id: 'grafite', ...COLOR_DEFINITIONS['grafite'], name: 'Gray' };
+  }
+  if (rawLower.includes('silver') || rawLower.includes('pratead') || id.includes('silver')) {
+    return { id: 'silver', ...COLOR_DEFINITIONS['silver'] };
+  }
+  if (rawLower.includes('branco') || rawLower.includes('white') || id.includes('branco')) {
+    return { id: 'branco', ...COLOR_DEFINITIONS['branco'] };
+  }
+  if (rawLower.includes('roxo') || id.includes('roxo')) {
+    return { id: 'roxo', ...COLOR_DEFINITIONS['roxo'] };
+  }
+  if (
+    rawLower.includes('preto') ||
+    rawLower.includes('preta') ||
+    rawLower.includes('black') ||
+    id.includes('preto') ||
+    id.includes('black')
+  ) {
+    return { id: 'preto', ...COLOR_DEFINITIONS['preto'] };
+  }
+  if (rawLower.includes('azul') || id.includes('azul')) {
+    return { id: 'azul', ...COLOR_DEFINITIONS['azul'] };
+  }
+  if (rawLower.includes('natural') || id.includes('natural')) {
+    return { id: 'tit-natural', ...COLOR_DEFINITIONS['tit-natural'] };
+  }
 
+  // Se não foi identificado pelo sufixo do nome, analisa palavras-chave no texto
+  if (text.includes('bordô') || text.includes('bordo')) {
+    return { id: 'bordo', ...COLOR_DEFINITIONS['bordo'] };
+  }
+  if (text.includes('laranja cósmico') || text.includes('laranja-cósmico')) {
+    return { id: 'laranja-cosmico', ...COLOR_DEFINITIONS['laranja-cosmico'] };
+  }
+  if (text.includes('rose gold')) {
+    return { id: 'rose-gold', ...COLOR_DEFINITIONS['rose-gold'] };
+  }
+  if (text.includes('starlight')) {
+    return { id: 'starlight', ...COLOR_DEFINITIONS['starlight'] };
+  }
+  if (text.includes('citrus')) {
+    return { id: 'citrus', ...COLOR_DEFINITIONS['citrus'] };
+  }
+  if (text.includes('verde gamer')) {
+    return { id: 'verde-gamer', ...COLOR_DEFINITIONS['verde-gamer'] };
+  }
+
+  return null;
+}
+
+/**
+ * Normaliza o nome do produto para o modelo puro (removendo cor e detalhes específicos).
+ */
+export function getPureModelName(productName: string): string {
+  let base = productName;
+  if (base.includes(' - ')) {
+    base = base.split(' - ')[0].trim();
+  }
+  // Remove capacidades conhecidas (128GB, 256GB, 512GB, 1TB, etc.)
+  const pure = base
+    .replace(/\b(128gb|256gb|512gb|1tb|64gb|32gb|240gb|16gb ram|8gb ram|4gb ram|8gb|12gb ram)\b/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return pure;
+}
+
+/**
+ * Extrai a capacidade declarada no título ou descrição.
+ */
+export function extractStorageLabel(productName: string): string | null {
+  const matchWatch = productName.match(/\b(40mm|42mm|44mm|46mm|49mm)\b/i);
+  if (matchWatch) return matchWatch[1].toUpperCase();
+
+  const matchStorage = productName.match(/\b(128GB|256GB|512GB|1TB|240GB)\b/i);
+  if (matchStorage) return matchStorage[1].toUpperCase();
+
+  return null;
+}
+
+/**
+ * Retorna as especificações de variantes e irmãos no catálogo para o produto.
+ */
+export function getProductVariantConfig(
+  product: Product,
+  catalog: Product[] = PRODUCTS
+): ProductVariantConfig {
+  const pureModel = getPureModelName(product.nome);
+  const currentColor = detectProductColor(product);
+  const currentStorageLabel = extractStorageLabel(product.nome);
+
+  const isApple = product.id.startsWith('rr-apple-') || product.nome.toLowerCase().includes('apple');
   const isSmartphone =
-    name.includes('iphone') ||
-    name.includes('galaxy') ||
-    name.includes('xiaomi') ||
-    name.includes('redmi') ||
-    name.includes('poco') ||
-    name.includes('realme');
+    /iphone|galaxy|redmi|poco|realme|smartphone/i.test(product.nome);
+  const isWatch = /watch|relógio|smartwatch/i.test(product.nome);
+  const isLaptopOrTablet = /macbook|ipad/i.test(product.nome);
+  const isTechDevice = isSmartphone || isWatch || isLaptopOrTablet || isApple;
 
-  const isTechDevice = isSmartphone || isWatch || isMac || isIpad;
+  // Busca produtos irmãos que pertencem à mesma família de modelo no catálogo
+  const siblings = catalog.filter((item) => {
+    return getPureModelName(item.nome).toLowerCase() === pureModel.toLowerCase();
+  });
 
-  if (!isTechDevice) {
-    return {
-      hasVariants: false,
-      isTechDevice: false,
-      colors: [],
-      storageTiers: [],
-      defaultColor: DEFAULT_TECH_COLORS[0],
-      defaultStorage: { id: 'base', label: 'Padrão', priceDelta: 0 },
-    };
+  // Mapeia Cores Reais do Catálogo
+  const colorMap = new Map<string, ColorSwatch>();
+  if (currentColor) {
+    colorMap.set(currentColor.id, { ...currentColor, targetProductId: product.id });
   }
 
-  // 1. Define Cores
-  let colors = DEFAULT_TECH_COLORS;
-  if (name.includes('pro')) {
-    colors = IPHONE_PRO_COLORS;
-  } else if (name.includes('iphone')) {
-    colors = IPHONE_BASE_COLORS;
-  } else if (isWatch) {
-    colors = WATCH_COLORS;
-  } else if (isSamsung) {
-    colors = SAMSUNG_COLORS;
-  }
-
-  // Se o nome já tiver uma cor específica, seleciona ela como default
-  let defaultColor = colors[0];
-  for (const c of colors) {
-    if (name.includes(c.name.toLowerCase()) || name.includes(c.id)) {
-      defaultColor = c;
-      break;
+  for (const sib of siblings) {
+    const sibColor = detectProductColor(sib);
+    if (sibColor && !colorMap.has(sibColor.id)) {
+      colorMap.set(sibColor.id, { ...sibColor, targetProductId: sib.id });
     }
   }
 
-  // 2. Define Armazenamento / Capacidade
-  let storageTiers: StorageTier[] = [];
+  const availableColors = Array.from(colorMap.values());
+  const hasColorOptions = availableColors.length > 1;
 
-  if (isWatch) {
-    // Para relógios, opções de tamanho de caixa
-    if (name.includes('ultra')) {
-      storageTiers = [{ id: '49mm', label: '49mm Titanium', priceDelta: 0 }];
-    } else if (name.includes('s12') || name.includes('s11') || name.includes('s10')) {
-      storageTiers = [
-        { id: '42mm', label: '42mm', priceDelta: 0 },
-        { id: '46mm', label: '46mm', priceDelta: 200 },
-      ];
+  // Mapeia Capacidades Reais do Catálogo
+  const storageMap = new Map<string, StorageTier>();
+  if (currentStorageLabel) {
+    storageMap.set(currentStorageLabel, {
+      id: currentStorageLabel.toLowerCase(),
+      label: currentStorageLabel,
+      price: product.precoPix,
+      targetProductId: product.id,
+    });
+  }
+
+  for (const sib of siblings) {
+    const sibStorage = extractStorageLabel(sib.nome);
+    if (sibStorage && !storageMap.has(sibStorage)) {
+      storageMap.set(sibStorage, {
+        id: sibStorage.toLowerCase(),
+        label: sibStorage,
+        price: sib.precoPix,
+        targetProductId: sib.id,
+      });
+    }
+  }
+
+  const availableStorages = Array.from(storageMap.values());
+  const hasStorageOptions = availableStorages.length > 1;
+
+  // Badge de especificação oficial se não houver múltiplos botões
+  let officialSpecBadge = '';
+  if (currentStorageLabel) {
+    if (isWatch) {
+      officialSpecBadge = `Caixa ${currentStorageLabel}`;
     } else {
-      storageTiers = [
-        { id: '40mm', label: '40mm', priceDelta: 0 },
-        { id: '44mm', label: '44mm', priceDelta: 250 },
-      ];
+      // Extrai RAM se existir (ex: 8GB RAM, 12GB RAM)
+      const ramMatch = product.nome.match(/\b(\d+GB\s+RAM)\b/i);
+      officialSpecBadge = ramMatch
+        ? `${currentStorageLabel} • ${ramMatch[1].toUpperCase()}`
+        : `${currentStorageLabel} Oficial`;
     }
-  } else if (name.includes('pro max') || name.includes('promax')) {
-    storageTiers = [
-      { id: '256gb', label: '256GB', priceDelta: 0 },
-      { id: '512gb', label: '512GB', priceDelta: 950 },
-      { id: '1tb', label: '1TB', priceDelta: 1950 },
-    ];
-  } else if (name.includes('pro') && !name.includes('macbook')) {
-    storageTiers = [
-      { id: '128gb', label: '128GB', priceDelta: 0 },
-      { id: '256gb', label: '256GB', priceDelta: 650 },
-      { id: '512gb', label: '512GB', priceDelta: 1650 },
-    ];
-  } else if (isMac) {
-    storageTiers = [
-      { id: '256gb', label: '256GB SSD', priceDelta: 0 },
-      { id: '512gb', label: '512GB SSD', priceDelta: 1200 },
-      { id: '1tb', label: '1TB SSD', priceDelta: 2400 },
-    ];
-  } else if (isIpad) {
-    storageTiers = [
-      { id: '128gb', label: '128GB', priceDelta: 0 },
-      { id: '256gb', label: '256GB', priceDelta: 600 },
-      { id: '512gb', label: '512GB', priceDelta: 1500 },
-    ];
-  } else if (isSmartphone) {
-    storageTiers = [
-      { id: '128gb', label: '128GB', priceDelta: 0 },
-      { id: '256gb', label: '256GB', priceDelta: 450 },
-      { id: '512gb', label: '512GB', priceDelta: 1100 },
-    ];
-  }
-
-  // Identifica se o produto base já está em 256GB ou 512GB
-  let defaultStorage = storageTiers[0] || { id: 'base', label: 'Padrão', priceDelta: 0 };
-  if (name.includes('512') && storageTiers.some((s) => s.id.includes('512'))) {
-    const match = storageTiers.find((s) => s.id.includes('512'));
-    if (match) defaultStorage = match;
-  } else if (name.includes('256') && storageTiers.some((s) => s.id.includes('256'))) {
-    const match = storageTiers.find((s) => s.id.includes('256'));
-    if (match) defaultStorage = match;
-  } else if (name.includes('1tb') && storageTiers.some((s) => s.id.includes('1tb'))) {
-    const match = storageTiers.find((s) => s.id.includes('1tb'));
-    if (match) defaultStorage = match;
+  } else if (isApple && !isTechDevice) {
+    officialSpecBadge = '100% Original Apple';
   }
 
   return {
-    hasVariants: storageTiers.length > 1 || colors.length > 1,
-    isTechDevice: true,
-    colors,
-    storageTiers,
-    defaultColor,
-    defaultStorage,
+    isTechDevice,
+    hasColorOptions,
+    hasStorageOptions,
+    currentColor,
+    availableColors,
+    currentStorage: currentStorageLabel
+      ? {
+          id: currentStorageLabel.toLowerCase(),
+          label: currentStorageLabel,
+          price: product.precoPix,
+          targetProductId: product.id,
+        }
+      : null,
+    availableStorages,
+    officialSpecBadge,
+    modelFamilyName: pureModel,
   };
 }
 
+/**
+ * Cria uma cópia do produto com a variante selecionada (se não for irmão direto no catálogo).
+ */
 export function buildConfiguredProduct(
   baseProduct: Product,
-  selectedColor: ColorSwatch,
-  selectedStorage: StorageTier
+  selectedColor?: ColorSwatch | null,
+  selectedStorage?: StorageTier | null
 ): Product {
-  const priceDelta = selectedStorage.priceDelta || 0;
-  const newPrecoPix = baseProduct.precoPix + priceDelta;
-  const newPrecoPor = baseProduct.precoPor + priceDelta;
-  const newPrecoDe = baseProduct.precoDe + Math.round(priceDelta * 1.15);
+  let nome = baseProduct.nome;
 
-  const parcelas = newPrecoPor >= 200 ? 12 : newPrecoPor >= 80 ? 6 : 3;
-  const newParcelamento = formatInstallment(newPrecoPor, parcelas);
-
-  // Remove qualquer cor/capacidade repetida do nome base
-  const cleanName = baseProduct.nome.split(' - ')[0];
+  // Se o usuário selecionou uma cor diferente, reflete no nome com elegância
+  if (selectedColor && !nome.toLowerCase().includes(selectedColor.name.toLowerCase())) {
+    const baseClean = nome.split(' - ')[0];
+    nome = `${baseClean} - ${selectedColor.name}`;
+  }
 
   return {
     ...baseProduct,
-    id: `${baseProduct.id}-${selectedStorage.id}-${selectedColor.id}`,
-    nome: `${cleanName} ${selectedStorage.label} • ${selectedColor.name}`,
-    precoDe: newPrecoDe,
-    precoPor: newPrecoPor,
-    precoPix: newPrecoPix,
-    parcelamento: newParcelamento,
+    nome,
   };
 }

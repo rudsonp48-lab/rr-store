@@ -37,6 +37,7 @@ interface ProductDetailModalProps {
   onClose: () => void;
   onAddToCart: (product: Product, quantity?: number) => void;
   onOpenTradeIn?: (product: Product) => void;
+  allProducts?: Product[];
 }
 
 export default function ProductDetailModal({
@@ -45,36 +46,59 @@ export default function ProductDetailModal({
   onClose,
   onAddToCart,
   onOpenTradeIn,
+  allProducts,
 }: ProductDetailModalProps) {
   const [quantity, setQuantity] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<'sobre' | 'ficha' | 'parcelas'>('sobre');
   const [justAdded, setJustAdded] = useState<boolean>(false);
+  const [activeProduct, setActiveProduct] = useState<Product | null>(product);
 
-  // Variantes Interativas de Cores e Capacidade
-  const variantConfig = useMemo(() => {
-    if (!product) return null;
-    return getProductVariantConfig(product);
+  useEffect(() => {
+    setActiveProduct(product);
   }, [product]);
+
+  // Variantes e Irmãos Reais do Catálogo
+  const variantConfig = useMemo(() => {
+    if (!activeProduct) return null;
+    return getProductVariantConfig(activeProduct, allProducts);
+  }, [activeProduct, allProducts]);
 
   const [selectedStorage, setSelectedStorage] = useState<StorageTier | null>(null);
   const [selectedColor, setSelectedColor] = useState<ColorSwatch | null>(null);
 
   useEffect(() => {
-    if (product && variantConfig) {
+    if (activeProduct && variantConfig) {
       setQuantity(1);
       setActiveTab('sobre');
       setJustAdded(false);
-      setSelectedStorage(variantConfig.defaultStorage);
-      setSelectedColor(variantConfig.defaultColor);
+      setSelectedStorage(variantConfig.currentStorage);
+      setSelectedColor(variantConfig.currentColor);
     }
-  }, [product, variantConfig]);
+  }, [activeProduct, variantConfig]);
 
-  // Produto com preço recalculado dinamicamente
-  const activeProduct = useMemo(() => {
-    if (!product) return null;
-    if (!selectedStorage || !selectedColor) return product;
-    return buildConfiguredProduct(product, selectedColor, selectedStorage);
-  }, [product, selectedStorage, selectedColor]);
+  const handleSelectColor = (color: ColorSwatch) => {
+    if (color.targetProductId && allProducts) {
+      const brother = allProducts.find((p) => p.id === color.targetProductId);
+      if (brother) {
+        setActiveProduct(brother);
+        setSelectedColor(color);
+        return;
+      }
+    }
+    setSelectedColor(color);
+  };
+
+  const handleSelectStorage = (tier: StorageTier) => {
+    if (tier.targetProductId && allProducts) {
+      const brother = allProducts.find((p) => p.id === tier.targetProductId);
+      if (brother) {
+        setActiveProduct(brother);
+        setSelectedStorage(tier);
+        return;
+      }
+    }
+    setSelectedStorage(tier);
+  };
 
   // Fecha com ESC
   useEffect(() => {
@@ -223,74 +247,118 @@ export default function ProductDetailModal({
                 </p>
               </div>
 
-              {/* SELETORES INTERATIVOS: Capacidade & Cores no Modal */}
-              {variantConfig && variantConfig.hasVariants && (
-                <div className="bg-[#F4F4F6] border border-zinc-200 rounded-2xl p-3.5 space-y-3">
-                  {/* Capacidade */}
-                  {variantConfig.storageTiers.length > 1 && (
-                    <div>
-                      <span className="block text-xs font-black uppercase tracking-wider text-zinc-500 mb-1.5">
-                        Armazenamento / Capacidade:
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        {variantConfig.storageTiers.map((tier) => {
-                          const isSelected = selectedStorage?.id === tier.id;
-                          return (
-                            <button
-                              key={tier.id}
-                              type="button"
-                              onClick={() => setSelectedStorage(tier)}
-                              className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer border ${
-                                isSelected
-                                  ? 'bg-[#0A0A0A] border-[#0A0A0A] text-[#34D399] shadow-sm'
-                                  : 'bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-100'
-                              }`}
-                            >
-                              {tier.label}
-                            </button>
-                          );
-                        })}
+              {/* ESPECIFICAÇÕES OFICIAIS & CORES REAIS (100% Autêntico) */}
+              {variantConfig &&
+                (variantConfig.hasColorOptions ||
+                  variantConfig.currentColor ||
+                  variantConfig.hasStorageOptions ||
+                  variantConfig.officialSpecBadge) && (
+                  <div className="bg-[#F4F4F6] border border-zinc-200 rounded-2xl p-3.5 space-y-3">
+                    {/* Capacidades Reais do Catálogo */}
+                    {variantConfig.hasStorageOptions && (
+                      <div>
+                        <span className="block text-xs font-black uppercase tracking-wider text-zinc-500 mb-1.5">
+                          Capacidade / Armazenamento Disponível:
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          {variantConfig.availableStorages.map((tier) => {
+                            const isSelected =
+                              activeProduct.id === tier.targetProductId ||
+                              selectedStorage?.id === tier.id;
+                            return (
+                              <button
+                                key={tier.id}
+                                type="button"
+                                onClick={() => handleSelectStorage(tier)}
+                                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer border ${
+                                  isSelected
+                                    ? 'bg-[#0A0A0A] border-[#0A0A0A] text-[#34D399] shadow-sm'
+                                    : 'bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-100'
+                                }`}
+                              >
+                                {tier.label}
+                              </button>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Cores Reais */}
-                  {variantConfig.colors.length > 1 && (
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-xs font-black uppercase tracking-wider text-zinc-500">
-                          Cor Selecionada:
-                        </span>
-                        <span className="text-xs font-bold text-zinc-900">
-                          {selectedColor?.name}
+                    {/* Cores Reais do Catálogo */}
+                    {variantConfig.hasColorOptions ? (
+                      <div>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="text-xs font-black uppercase tracking-wider text-zinc-500">
+                            Cores Disponíveis para este Modelo:
+                          </span>
+                          <span className="text-xs font-black text-zinc-900">
+                            {variantConfig.currentColor?.name || selectedColor?.name}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2.5">
+                          {variantConfig.availableColors.map((color) => {
+                            const isSelected =
+                              activeProduct.id === color.targetProductId ||
+                              selectedColor?.id === color.id;
+                            return (
+                              <button
+                                key={color.id}
+                                type="button"
+                                title={`Selecionar cor: ${color.name}`}
+                                onClick={() => handleSelectColor(color)}
+                                className={`w-7 h-7 rounded-full transition-all cursor-pointer relative ${
+                                  isSelected
+                                    ? 'ring-2 ring-[#10B981] ring-offset-2 scale-110 shadow-sm'
+                                    : 'hover:scale-105 opacity-80 hover:opacity-100'
+                                }`}
+                                style={{
+                                  backgroundColor: color.hex,
+                                  border: color.borderHex
+                                    ? `1px solid ${color.borderHex}`
+                                    : '1px solid rgba(0,0,0,0.18)',
+                                }}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ) : variantConfig.currentColor ? (
+                      /* Cor Oficial Única Autêntica */
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-white border border-zinc-200">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <span
+                            className="w-5 h-5 rounded-full shadow-xs ring-1 ring-black/10 shrink-0"
+                            style={{
+                              backgroundColor: variantConfig.currentColor.hex,
+                              border: variantConfig.currentColor.borderHex
+                                ? `1px solid ${variantConfig.currentColor.borderHex}`
+                                : '1px solid rgba(0,0,0,0.18)',
+                            }}
+                          />
+                          <div className="min-w-0">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-zinc-400 block leading-tight">
+                              Cor Oficial do Modelo:
+                            </span>
+                            <span className="text-xs sm:text-sm font-extrabold text-zinc-900 truncate block">
+                              {variantConfig.currentColor.name}
+                            </span>
+                          </div>
+                        </div>
+                        {variantConfig.officialSpecBadge && (
+                          <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-1 rounded-md shrink-0">
+                            {variantConfig.officialSpecBadge}
+                          </span>
+                        )}
+                      </div>
+                    ) : variantConfig.officialSpecBadge ? (
+                      <div className="flex items-center justify-start p-2 rounded-xl bg-white border border-zinc-200">
+                        <span className="text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md">
+                          {variantConfig.officialSpecBadge}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        {variantConfig.colors.map((color) => {
-                          const isSelected = selectedColor?.id === color.id;
-                          return (
-                            <button
-                              key={color.id}
-                              type="button"
-                              title={color.name}
-                              onClick={() => setSelectedColor(color)}
-                              className={`w-6 h-6 rounded-full transition-all cursor-pointer ${
-                                isSelected
-                                  ? 'ring-2 ring-[#10B981] ring-offset-2 scale-110'
-                                  : 'hover:scale-105 opacity-80 hover:opacity-100'
-                              }`}
-                              style={{
-                                backgroundColor: color.hex,
-                                border: color.borderHex ? `1px solid ${color.borderHex}` : '1px solid rgba(0,0,0,0.15)',
-                              }}
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
+                    ) : null}
+                  </div>
+                )}
 
               {/* Card de Preços (Valor Integral de Atacado) */}
               <div className="bg-[#F8F9FA] border-2 border-[#10B981]/35 rounded-2xl p-4 space-y-2">
