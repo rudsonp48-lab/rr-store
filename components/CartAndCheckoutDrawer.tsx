@@ -35,6 +35,7 @@ import {
   generateSimulatedPixPayload,
 } from '../data/whatsappUtils';
 import { saveOrderToFirebase } from '../lib/firebase';
+import { trackContact, trackInitiateCheckout } from '../lib/metaPixel';
 
 interface CartAndCheckoutDrawerProps {
   isOpen: boolean;
@@ -82,6 +83,11 @@ export default function CartAndCheckoutDrawer({
     cvvCartao: '',
   });
 
+  // Calculations — Preço de Atacado Integral (sem abater descontos do valor postado)
+  const subtotal = useMemo(() => {
+    return items.reduce((acc, item) => acc + item.product.precoPix * item.quantity, 0);
+  }, [items]);
+
   // Sync selectedRegion with form
   useEffect(() => {
     setCustomer((prev) => ({ ...prev, regiaoId: selectedRegion.id }));
@@ -91,13 +97,9 @@ export default function CartAndCheckoutDrawer({
   useEffect(() => {
     if (isOpen && step === 'checkout') {
       setOrderCode(generateOrderCode());
+      trackInitiateCheckout(items, subtotal);
     }
-  }, [isOpen, step]);
-
-  // Calculations — Preço de Atacado Integral (sem abater descontos do valor postado)
-  const subtotal = useMemo(() => {
-    return items.reduce((acc, item) => acc + item.product.precoPix * item.quantity, 0);
-  }, [items]);
+  }, [isOpen, step, items, subtotal]);
 
   const pixDiscount = 0;
 
@@ -216,6 +218,12 @@ export default function CartAndCheckoutDrawer({
       pixDiscount,
       shippingCost,
       finalTotal,
+    });
+
+    trackContact('Checkout Pedido WhatsApp', finalTotal, {
+      order_code: orderCode,
+      num_items: items.length,
+      payment_method: customer.metodoPagamento,
     });
 
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');

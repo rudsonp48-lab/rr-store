@@ -13,6 +13,7 @@ import {
 import { DFRegion } from '../types/store';
 import { formatBRL } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
+import { trackContact } from '../lib/metaPixel';
 
 interface MobileBottomBarProps {
   cartCount: number;
@@ -147,6 +148,7 @@ export default function MobileBottomBar({
             href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackContact('Mobile Bottom Bar WhatsApp')}
             className="touch-target flex flex-col items-center justify-center py-1 rounded-xl text-zinc-300 active:text-[#34D399] active:bg-white/5 transition-colors"
           >
             <MessageCircle className="w-5 h-5 text-[#34D399]" />

@@ -3,6 +3,7 @@
 import React from 'react';
 import { MapPin, Navigation, MessageCircle, PhoneCall, Clock, Store } from 'lucide-react';
 import { STORE_ADDRESS, WHATSAPP_NUMBER, WHATSAPP_NUMBER_SECONDARY } from '../data/mockData';
+import { trackContact } from '../lib/metaPixel';
 import MotionReveal from './MotionReveal';
 
 const MAP_QUERY = 'Feira dos Importados de Brasília, SIA Trecho 7, Loja D439, Brasília - DF';
@@ -137,6 +138,7 @@ export default function StoreLocationSection() {
                         href={`https://wa.me/${c.number}?text=${waMessage}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackContact(`Loja Fisica WhatsApp (${c.label})`)}
                         aria-label={`WhatsApp ${formatPhone(c.number)}`}
                         className="w-10 h-10 rounded-xl bg-[#10B981] hover:bg-[#059669] flex items-center justify-center text-[#0A0A0A] transition-colors"
                       >

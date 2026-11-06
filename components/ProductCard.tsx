@@ -21,6 +21,7 @@ import {
   ColorSwatch,
   StorageTier,
 } from '../data/productVariantUtils';
+import { trackAddToCart, trackContact } from '../lib/metaPixel';
 
 interface ProductCardProps {
   product: Product;
@@ -75,6 +76,7 @@ export default function ProductCard({
       onSelectProduct?.(activeProduct);
       return;
     }
+    trackAddToCart(activeProduct, 1);
     onAddToCart(activeProduct);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1400);
@@ -423,7 +425,13 @@ export default function ProductCard({
               href={buildSingleProductWhatsAppUrl(activeProduct, selectedRegion.nome)}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                trackContact('Card Produto WhatsApp', activeProduct.precoPix, {
+                  product_id: activeProduct.id,
+                  product_name: activeProduct.nome,
+                });
+              }}
               className={`touch-target ${compactMobile ? 'w-10 h-10 rounded-xl flex items-center justify-center' : 'w-full py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5'} bg-[#0A0A0A] hover:bg-zinc-800 active:scale-95 text-white transition-all`}
             >
               <MessageCircle className="w-4 h-4 text-[#34D399] shrink-0" />

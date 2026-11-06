@@ -20,6 +20,7 @@ import {
 import { DFRegion } from '../types/store';
 import { FAQ_ITEMS, formatBRL, TESTIMONIALS } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
+import { trackContact } from '../lib/metaPixel';
 import MotionReveal from './MotionReveal';
 
 interface TrustAndTestimonialsProps {
@@ -414,6 +415,7 @@ export default function TrustAndTestimonials({
                   href={buildConsultantWhatsAppUrl(selectedRegion?.nome)}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackContact('Garantia Blindada WhatsApp')}
                   className="motion-hover-lift inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/20 font-bold text-sm sm:text-base px-6 py-4 rounded-2xl"
                 >
                   <MessageCircle className="w-5 h-5 text-[#34D399]" />

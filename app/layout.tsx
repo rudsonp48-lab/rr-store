@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 import './globals.css';
 import { FAQ_ITEMS } from '../data/mockData';
 import PlatformLoader from '../components/PlatformLoader';
+import MetaPixelScript from '../components/MetaPixelScript';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -92,6 +94,9 @@ export default function RootLayout({
             '"Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         }}
       >
+        <Suspense fallback={null}>
+          <MetaPixelScript />
+        </Suspense>
         <PlatformLoader />
         {children}
       </body>

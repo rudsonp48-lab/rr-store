@@ -25,6 +25,7 @@ import {
   calculateTradeInValue,
   buildTradeInWhatsAppUrl,
 } from '../data/tradeInData';
+import { trackTradeInSimulation, trackContact } from '../lib/metaPixel';
 
 interface TradeInModalProps {
   isOpen: boolean;
@@ -114,6 +115,20 @@ export default function TradeInModal({
 
   const handleWhatsAppClick = () => {
     if (!currentModel || !effectiveStorageOption || !targetProduct) return;
+    trackTradeInSimulation({
+      usedModel: currentModel.name,
+      usedStorage: effectiveStorageOption.storage,
+      condition: selectedCondition,
+      evaluatedValue,
+      targetProductId: targetProduct.id,
+      targetProductName: targetProduct.nome,
+      differencePix,
+    });
+    trackContact('Trade-In Simulador WhatsApp', differencePix, {
+      used_device: `${currentModel.name} ${effectiveStorageOption.storage}`,
+      condition: selectedCondition,
+      target_product: targetProduct.nome,
+    });
     const url = buildTradeInWhatsAppUrl({
       usedModelName: currentModel.name,
       usedStorage: effectiveStorageOption.storage,

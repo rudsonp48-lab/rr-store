@@ -19,8 +19,8 @@ Este arquivo serve como **memória sincronizada** para quando você abrir o proj
 
 ## 3. Endereço Físico & Contatos Configurados
 - **Endereço**: Feira dos Importados do SIA — Conjunto D, Loja D439 • SIA Trecho 7, Brasília - DF
-- **WhatsApp Principal**: `5561998151299`
-- **WhatsApp Secundário**: `5561985964112`
+- **WhatsApp Principal**: `5561996598552` (Vendas e Atendimento Oficial)
+- **WhatsApp Secundário**: `5561998151299`
 
 ## 4. Regras de Negócio e Arquitetura Implementadas
 1. **Banner Principal (`components/HeroSection.tsx`)**:

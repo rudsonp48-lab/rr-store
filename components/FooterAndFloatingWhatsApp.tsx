@@ -14,6 +14,7 @@ import {
 import { CategoryId, DFRegion } from '../types/store';
 import { CATEGORIES, DF_REGIONS } from '../data/mockData';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
+import { trackContact } from '../lib/metaPixel';
 import InteractiveLogo3D from './InteractiveLogo3D';
 import StoreLocationSection from './StoreLocationSection';
 
@@ -88,12 +89,12 @@ export default function FooterAndFloatingWhatsApp({
                   <PhoneCall className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white block">WhatsApp / Contato:</strong>
-                    <a href="https://wa.me/5561998151299" target="_blank" rel="noopener noreferrer" className="hover:text-[#34D399] transition-colors">
-                      (61) 99815-1299
+                    <a href="https://wa.me/5561996598552" target="_blank" rel="noopener noreferrer" className="hover:text-[#34D399] transition-colors">
+                      (61) 99659-8552
                     </a>
                     <span className="text-zinc-500"> • </span>
-                    <a href="https://wa.me/5561985964112" target="_blank" rel="noopener noreferrer" className="hover:text-[#34D399] transition-colors">
-                      (61) 98596-4112
+                    <a href="https://wa.me/5561998151299" target="_blank" rel="noopener noreferrer" className="hover:text-[#34D399] transition-colors">
+                      (61) 99815-1299
                     </a>
                   </div>
                 </div>
@@ -199,6 +200,7 @@ export default function FooterAndFloatingWhatsApp({
           href={buildConsultantWhatsAppUrl(selectedRegion.nome)}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackContact('Botao Flutuante WhatsApp')}
           className="group relative flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#059669] text-[#0A0A0A] font-black w-11 h-11 md:w-auto md:h-auto md:px-4 md:py-3.5 rounded-full shadow-[0_8px_22px_rgba(16,185,129,0.5)] hover:shadow-[0_12px_36px_rgba(52,211,153,0.75)] transition-all duration-300 hover:scale-105"
           aria-label="Falar no WhatsApp da RR Store"
           title="Atendimento Rápido no WhatsApp"

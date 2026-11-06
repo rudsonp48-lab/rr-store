@@ -30,6 +30,7 @@ import {
   ColorSwatch,
   StorageTier,
 } from '../data/productVariantUtils';
+import { trackAddToCart, trackContact, trackViewContent } from '../lib/metaPixel';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -73,6 +74,7 @@ export default function ProductDetailModal({
       setJustAdded(false);
       setSelectedStorage(variantConfig.currentStorage);
       setSelectedColor(variantConfig.currentColor);
+      trackViewContent(activeProduct);
     }
   }, [activeProduct, variantConfig]);
 
@@ -122,6 +124,7 @@ export default function ProductDetailModal({
 
   const handleAdd = () => {
     if (isOutOfStock) return;
+    trackAddToCart(activeProduct, quantity);
     onAddToCart(activeProduct, quantity);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1500);
@@ -690,6 +693,13 @@ export default function ProductDetailModal({
               href={buildSingleProductWhatsAppUrl(activeProduct, selectedRegion.nome)}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                trackContact('Modal Produto WhatsApp', activeProduct.precoPix * quantity, {
+                  product_id: activeProduct.id,
+                  product_name: activeProduct.nome,
+                  quantity,
+                });
+              }}
               className="flex-1 sm:flex-initial px-5 py-3 rounded-xl font-bold text-xs sm:text-sm bg-[#0A0A0A] hover:bg-zinc-800 text-white flex items-center justify-center gap-2 transition-all"
             >
               <MessageCircle className="w-4 h-4 text-[#34D399] shrink-0" />
