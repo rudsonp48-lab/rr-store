@@ -25,12 +25,9 @@ import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
-import StoriesBar from '../components/StoriesBar';
-import StoryViewerModal from '../components/StoryViewerModal';
 import TradeInModal from '../components/TradeInModal';
 import LiveSocialProofToast from '../components/LiveSocialProofToast';
 import DeviceComparatorModal from '../components/DeviceComparatorModal';
-import { STORE_STORIES, StoryGroup } from '../data/storiesData';
 import { loadStoreSettings, StockmasterItem } from '../lib/firebase';
 
 type SortOption = 'destaques' | 'menor-preco' | 'maior-desconto' | 'melhor-avaliacao';
@@ -418,7 +415,6 @@ export default function RRStorePage() {
   // Estados dos Novos Módulos de Conversão & UX
   const [isTradeInOpen, setIsTradeInOpen] = useState<boolean>(false);
   const [tradeInTargetProduct, setTradeInTargetProduct] = useState<Product | null>(null);
-  const [activeStoryGroupIdx, setActiveStoryGroupIdx] = useState<number | null>(null);
   const [isComparatorOpen, setIsComparatorOpen] = useState<boolean>(false);
   const [comparatorProductA, setComparatorProductA] = useState<Product | null>(null);
 
@@ -430,10 +426,6 @@ export default function RRStorePage() {
   const handleOpenComparator = (product?: Product) => {
     setComparatorProductA(product || null);
     setIsComparatorOpen(true);
-  };
-
-  const handleSelectStory = (_group: StoryGroup, idx: number) => {
-    setActiveStoryGroupIdx(idx);
   };
 
   // Carrega preferências locais e, em seguida, o catálogo/fretes/banners publicados no Firestore
@@ -746,9 +738,6 @@ export default function RRStorePage() {
         banners={banners}
       />
 
-      {/* 2.3 Stories Interativos em Vídeo e Foto da Loja Física SIA D439 & Clientes */}
-      <StoriesBar onSelectStory={handleSelectStory} />
-
       {/* 3. Área Principal de Produtos (Background Secundário #F8F9FA / #FFFFFF para Leitura Perfeita) */}
       <main id="catalogo-produtos" className="flex-1 bg-[#F8F9FA] text-[#0A0A0A] py-6 sm:py-14">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
@@ -804,97 +793,6 @@ export default function RRStorePage() {
                 <span>Comparar</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
-            </div>
-          </div>
-
-          {/* Cabeçalho da Vitrine & Controles de Filtro/Ordenação/Painel Admin */}
-          <div className="bg-[#FFFFFF] rounded-2xl p-3.5 sm:p-6 border border-zinc-200/90 shadow-sm mb-5 sm:mb-8 flex flex-col md:flex-row md:items-center justify-between gap-3.5">
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-[#0A0A0A] text-[#34D399] px-2.5 py-1 rounded-lg">
-                  <Sparkles className="w-3 h-3" />
-                  Vitrine Oficial RR Store
-                </span>
-                <span className="text-xs font-bold text-zinc-500">
-                  • <strong className="text-[#0A0A0A]">{filteredProducts.length}</strong>{' '}
-                  {filteredProducts.length === 1 ? 'produto' : 'produtos'}
-                </span>
-              </div>
-
-              <h2 className="text-lg sm:text-2xl font-black text-[#0A0A0A] tracking-tight mt-1">
-                {activeCategoryObj.nome}
-              </h2>
-              <p className="text-xs sm:text-sm text-zinc-600 mt-0.5">
-                {searchQuery
-                  ? `Resultados em tempo real para "${searchQuery}"`
-                  : activeCategoryObj.subtitulo}
-              </p>
-            </div>
-
-            {/* Controles Mobile-First: Alternador 1/2 Colunas + Botão Painel Admin + Ordenação */}
-            <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2">
-              <div className="sm:hidden inline-flex items-center bg-[#F8F9FA] border border-zinc-200 rounded-xl p-1">
-                <button
-                  type="button"
-                  onClick={() => setMobileColumns(2)}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold transition-colors ${
-                    mobileColumns === 2
-                      ? 'bg-[#0A0A0A] text-[#34D399]'
-                      : 'text-zinc-600'
-                  }`}
-                  aria-label="Visualizar em 2 colunas no celular"
-                >
-                  <Grid2x2 className="w-3.5 h-3.5" />
-                  <span>2 Col</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMobileColumns(1)}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold transition-colors ${
-                    mobileColumns === 1
-                      ? 'bg-[#0A0A0A] text-[#34D399]'
-                      : 'text-zinc-600'
-                  }`}
-                  aria-label="Visualizar em 1 coluna detalhada no celular"
-                >
-                  <Rows3 className="w-3.5 h-3.5" />
-                  <span>1 Col</span>
-                </button>
-              </div>
-
-              {(selectedCategory !== 'Todos' ||
-                quickFilter !== 'todos' ||
-                searchQuery.trim() !== '') && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedCategory('Todos');
-                    setQuickFilter('todos');
-                    setSubFilter('all');
-                    setSearchQuery('');
-                  }}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-extrabold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 transition-colors cursor-pointer"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Ver Tudo ({products.length})</span>
-                </button>
-              )}
-
-              <div className="flex items-center gap-1.5 bg-[#F8F9FA] border border-zinc-200 rounded-xl px-2.5 py-2">
-                <SlidersHorizontal className="w-3.5 h-3.5 text-[#059669] shrink-0" />
-                <select
-                  id="sort-select"
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  aria-label="Ordenar produtos"
-                  className="bg-transparent text-xs font-extrabold text-[#0A0A0A] focus:outline-none cursor-pointer"
-                >
-                  <option value="destaques">Destaques</option>
-                  <option value="menor-preco">Menor Preço PIX</option>
-                  <option value="maior-desconto">Maior Desconto</option>
-                  <option value="melhor-avaliacao">Melhor Avaliação</option>
-                </select>
-              </div>
             </div>
           </div>
 
@@ -989,6 +887,74 @@ export default function RRStorePage() {
                 })}
               </div>
             )}
+          </div>
+
+          {/* Barra Compacta de Ordenação e Visualização */}
+          <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4 px-1 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-zinc-500">
+                <strong className="text-zinc-900">{filteredProducts.length}</strong>{' '}
+                {filteredProducts.length === 1 ? 'produto' : 'produtos'}
+              </span>
+              {(selectedCategory !== 'Todos' ||
+                quickFilter !== 'todos' ||
+                searchQuery.trim() !== '') && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory('Todos');
+                    setQuickFilter('todos');
+                    setSubFilter('all');
+                    setSearchQuery('');
+                  }}
+                  className="inline-flex items-center gap-1 text-[11px] font-extrabold text-[#059669] hover:underline cursor-pointer ml-1"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Ver Todos</span>
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="sm:hidden inline-flex items-center bg-white border border-zinc-200 rounded-lg p-0.5 shadow-2xs">
+                <button
+                  type="button"
+                  onClick={() => setMobileColumns(2)}
+                  className={`px-2 py-1 rounded text-[11px] font-extrabold transition-colors ${
+                    mobileColumns === 2 ? 'bg-[#0A0A0A] text-[#34D399]' : 'text-zinc-500'
+                  }`}
+                  aria-label="2 colunas no celular"
+                >
+                  <Grid2x2 className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMobileColumns(1)}
+                  className={`px-2 py-1 rounded text-[11px] font-extrabold transition-colors ${
+                    mobileColumns === 1 ? 'bg-[#0A0A0A] text-[#34D399]' : 'text-zinc-500'
+                  }`}
+                  aria-label="1 coluna no celular"
+                >
+                  <Rows3 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              <div className="flex items-center gap-1.5 bg-white border border-zinc-200 rounded-lg px-2.5 py-1.5 shadow-2xs">
+                <SlidersHorizontal className="w-3 h-3 text-[#059669] shrink-0" />
+                <select
+                  id="sort-select"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  aria-label="Ordenar produtos"
+                  className="bg-transparent text-[11px] sm:text-xs font-extrabold text-[#0A0A0A] focus:outline-none cursor-pointer"
+                >
+                  <option value="destaques">Destaques</option>
+                  <option value="menor-preco">Menor Preço PIX</option>
+                  <option value="maior-desconto">Maior Desconto</option>
+                  <option value="melhor-avaliacao">Melhor Avaliação</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           {/* Grid de Produtos Responsivo (1 ou 2 Colunas no Celular -> 2 no Tablet -> 3/4 no Desktop) */}
@@ -1101,17 +1067,7 @@ export default function RRStorePage() {
         allProducts={products}
       />
 
-      {/* 9. Visualizador Interativo de Stories em Vídeo/Foto (Estilo Instagram) */}
-      <StoryViewerModal
-        isOpen={activeStoryGroupIdx !== null}
-        onClose={() => setActiveStoryGroupIdx(null)}
-        storyGroups={STORE_STORIES}
-        initialGroupIndex={activeStoryGroupIdx || 0}
-        onOpenTradeIn={() => handleOpenTradeIn()}
-        onExploreCatalog={scrollToCatalog}
-      />
-
-      {/* 10. Comparador Lado a Lado de Aparelhos (Vale a Pena o Upgrade?) */}
+      {/* 9. Comparador Lado a Lado de Aparelhos (Vale a Pena o Upgrade?) */}
       <DeviceComparatorModal
         isOpen={isComparatorOpen}
         onClose={() => setIsComparatorOpen(false)}
@@ -1121,7 +1077,7 @@ export default function RRStorePage() {
         allProducts={products}
       />
 
-      {/* 11. Prova Social em Tempo Real (Toasts de Pedidos e Entregas no DF) */}
+      {/* 10. Prova Social em Tempo Real (Toasts de Pedidos e Entregas no DF) */}
       <LiveSocialProofToast />
 
 
