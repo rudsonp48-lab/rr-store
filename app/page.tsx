@@ -25,7 +25,6 @@ import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
-import MobileDiscoverView from '../components/mobile/MobileDiscoverView';
 import TradeInModal from '../components/TradeInModal';
 import LiveSocialProofToast from '../components/LiveSocialProofToast';
 import DeviceComparatorModal from '../components/DeviceComparatorModal';
@@ -714,57 +713,30 @@ export default function RRStorePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FFFFFF] md:bg-[#0A0A0A] pb-0">
-      {/* =========================================================================
-          VERSÃO MOBILE DEDICADA (< md) — IDÊNTICA AO MOCKUP DO PINTEREST
-         ========================================================================= */}
-      <div className="block md:hidden">
-        <MobileDiscoverView
-          products={products}
-          banners={banners}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedRegion={selectedRegion}
-          onSelectRegion={handleSelectRegion}
-          regions={regions}
-          cartCount={cartCount}
-          cartSubtotal={cartSubtotalPix}
-          onOpenCart={() => setIsCartOpen(true)}
-          onSelectProduct={setSelectedProduct}
-          onAddToCart={handleAddToCart}
-          onOpenTradeIn={handleOpenTradeIn}
-        />
-      </div>
+    <div className="min-h-screen flex flex-col bg-[#0A0A0A] pb-20 md:pb-0">
+      {/* 2.1 Top Bar & Sticky Header */}
+      <TopBarAndHeader
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        selectedRegion={selectedRegion}
+        onSelectRegion={handleSelectRegion}
+        cartCount={cartCount}
+        cartSubtotal={cartSubtotalPix}
+        onOpenCart={() => setIsCartOpen(true)}
+        regions={regions}
+      />
 
-      {/* =========================================================================
-          VERSÃO DESKTOP (hidden md:block) — WIDESCREEN COMPLETO & DARK TECH
-         ========================================================================= */}
-      <div className="hidden md:block">
-        {/* 2.1 Top Bar & Sticky Header */}
-        <TopBarAndHeader
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          selectedRegion={selectedRegion}
-          onSelectRegion={handleSelectRegion}
-          cartCount={cartCount}
-          cartSubtotal={cartSubtotalPix}
-          onOpenCart={() => setIsCartOpen(true)}
-          regions={regions}
-        />
-
-        {/* 2.2 Hero Section Compactada + Super Banner (imagens gerenciadas no painel externo) */}
-        <HeroSection
-          selectedRegion={selectedRegion}
-          onExploreClick={scrollToCatalog}
-          onAddToCart={handleAddToCart}
-          onSelectProduct={setSelectedProduct}
-          products={products}
-          banners={banners}
-        />
+      {/* 2.2 Hero Section Compactada + Super Banner (imagens gerenciadas no painel externo) */}
+      <HeroSection
+        selectedRegion={selectedRegion}
+        onExploreClick={scrollToCatalog}
+        onAddToCart={handleAddToCart}
+        onSelectProduct={setSelectedProduct}
+        products={products}
+        banners={banners}
+      />
 
       {/* 3. Área Principal de Produtos (Background Secundário #F8F9FA / #FFFFFF para Leitura Perfeita) */}
       <main id="catalogo-produtos" className="flex-1 bg-[#F8F9FA] text-[#0A0A0A] py-6 sm:py-14">
@@ -1108,7 +1080,22 @@ export default function RRStorePage() {
         selectedRegion={selectedRegion}
         onSelectCategory={setSelectedCategory}
       />
-      </div>
+
+      {/* 7. Barra de Navegação Inferior Nativa Mobile + Fechamento Rápido 1-Toque */}
+      <MobileBottomBar
+        cartCount={cartCount}
+        cartSubtotalPix={cartSubtotalPix}
+        cartSubtotalRaw={cartSubtotalRaw}
+        selectedRegion={selectedRegion}
+        onOpenCart={() => setIsCartOpen(true)}
+        onHomeClick={() => {
+          setSelectedCategory('Todos');
+          setSearchQuery('');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onCategoriesClick={scrollToDepartments}
+        onSearchClick={focusMobileSearch}
+      />
 
       {/* 4. Carrinho Lateral (Drawer) & Fluxo de Checkout Híbrido com Cálculo de Frete por Localidade */}
       <CartAndCheckoutDrawer
