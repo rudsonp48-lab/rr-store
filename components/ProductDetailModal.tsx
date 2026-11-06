@@ -19,6 +19,10 @@ import {
   Plus,
   Minus,
   RefreshCw,
+  ArrowLeft,
+  Heart,
+  Share2,
+  Percent,
 } from 'lucide-react';
 import { DFRegion, Product } from '../types/store';
 import { formatBRL } from '../data/mockData';
@@ -135,6 +139,9 @@ export default function ProductDetailModal({
     onOpenTradeIn?.(activeProduct);
   };
 
+  const cleanDescription = (activeProduct?.descricao || '').split(' | Pagamento:')[0];
+  const cleanTitle = (activeProduct?.nome || '').replace(/\(.*?\)/g, '').trim();
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm p-0 sm:p-4 overflow-y-auto"
@@ -147,8 +154,186 @@ export default function ProductDetailModal({
         className="relative w-full max-w-4xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-zinc-200 overflow-hidden max-h-[92vh] flex flex-col my-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Header Fixo */}
-        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-[#0A0A0A] text-white border-b border-zinc-800 shrink-0">
+        {/* =========================================================================
+            VERSÃO MOBILE (md:hidden) — IDÊNTICA AO SCREEN 2 DO PINTEREST
+           ========================================================================= */}
+        <div className="md:hidden flex flex-col h-full max-h-[92vh] bg-white text-zinc-950 overflow-hidden">
+          {/* Top Bar: < (Back) à esquerda | Heart (Fav) + Share à direita */}
+          <div className="flex items-center justify-between p-4 bg-white border-b border-zinc-100 shrink-0">
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Voltar"
+              className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-800 active:bg-zinc-100 transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                aria-label="Favoritar produto"
+                className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-rose-500 fill-rose-500 active:bg-zinc-100 transition-colors cursor-pointer"
+              >
+                <Heart className="w-5 h-5 fill-current" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator
+                      .share({ title: activeProduct.nome, url: window.location.href })
+                      .catch(() => {});
+                  }
+                }}
+                aria-label="Compartilhar"
+                className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-700 active:bg-zinc-100 transition-colors cursor-pointer"
+              >
+                <Share2 className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Conteúdo Rolável */}
+          <div className="flex-1 overflow-y-auto px-4 py-2 space-y-3.5">
+            {/* Imagem do Produto no Card Cinza Suave (#F5F5F7) */}
+            <div className="w-full bg-[#F5F5F7] rounded-3xl p-5 aspect-square max-h-64 flex items-center justify-center mx-auto">
+              <img
+                src={activeProduct.imagem}
+                alt={activeProduct.nome}
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+
+            {/* Título + Tag % On Sale */}
+            <div className="flex items-start justify-between gap-3 pt-1">
+              <h2 className="text-xl font-black text-zinc-950 tracking-tight leading-snug flex-1">
+                {cleanTitle}
+              </h2>
+              <span className="bg-rose-50 text-rose-600 border border-rose-200 text-xs font-black px-2.5 py-1 rounded-full inline-flex items-center gap-1 shrink-0">
+                <Percent className="w-3 h-3 stroke-[3]" />
+                <span>On sale</span>
+              </span>
+            </div>
+
+            {/* Social Proof: Avaliação, % de recomendação e contagem */}
+            <div className="flex items-center gap-3 text-xs font-bold text-zinc-600">
+              <span className="flex items-center gap-1 font-black text-zinc-950">
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <span>{product.avaliacao.toFixed(1)}</span>
+              </span>
+              <span className="text-emerald-600 flex items-center gap-1 font-extrabold">
+                👍 94%
+              </span>
+              <span className="text-zinc-400">
+                {product.avaliacoesCount || 117} reviews
+              </span>
+            </div>
+
+            {/* Descrição Curta & Direta */}
+            <p className="text-xs text-zinc-600 leading-relaxed">
+              {cleanDescription}
+            </p>
+
+            {/* Pílulas de Armazenamento / Capacidade */}
+            {variantConfig?.hasStorageOptions && (
+              <div className="pt-1">
+                <span className="block text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">
+                  Capacidade
+                </span>
+                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                  {variantConfig.availableStorages.map((tier) => {
+                    const isSelected =
+                      activeProduct.id === tier.targetProductId || selectedStorage?.id === tier.id;
+                    return (
+                      <button
+                        key={tier.id}
+                        type="button"
+                        onClick={() => handleSelectStorage(tier)}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                          isSelected
+                            ? 'bg-[#10B981] text-white shadow-sm'
+                            : 'bg-white border border-zinc-300 text-zinc-800'
+                        }`}
+                      >
+                        {tier.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Pílulas de Cor (se houver) */}
+            {variantConfig?.hasColorOptions && (
+              <div className="pt-1">
+                <span className="block text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-1.5">
+                  Cor: {variantConfig.currentColor?.name || selectedColor?.name}
+                </span>
+                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                  {variantConfig.availableColors.map((color) => {
+                    const isSelected =
+                      activeProduct.id === color.targetProductId || selectedColor?.id === color.id;
+                    return (
+                      <button
+                        key={color.id}
+                        type="button"
+                        onClick={() => handleSelectColor(color)}
+                        style={{ backgroundColor: color.hex }}
+                        className={`w-7 h-7 rounded-full border-2 transition-transform cursor-pointer ${
+                          isSelected
+                            ? 'border-[#10B981] scale-110 shadow-md ring-2 ring-[#10B981]/30'
+                            : 'border-zinc-300'
+                        }`}
+                        title={color.name}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Barra Inferior Fixa: Preço Riscado + Preço Vigente + Botão Verde Add to Cart */}
+          <div className="p-4 bg-white border-t border-zinc-100 flex items-center justify-between gap-4 shrink-0">
+            <div>
+              {activeProduct.precoDe > activeProduct.precoPix && (
+                <span className="line-through text-xs text-zinc-400 font-semibold block leading-tight">
+                  {formatBRL(activeProduct.precoDe)}
+                </span>
+              )}
+              <span className="text-xl font-black text-zinc-950 tracking-tight block">
+                {formatBRL(activeProduct.precoPix)}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleAdd}
+              className="bg-[#10B981] hover:bg-[#059669] active:scale-95 text-white font-black px-6 py-3.5 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-[#10B981]/25 transition-all cursor-pointer flex-1 max-w-[200px]"
+            >
+              {justAdded ? (
+                <>
+                  <Check className="w-4 h-4 stroke-[3]" />
+                  <span>Adicionado!</span>
+                </>
+              ) : (
+                <>
+                  <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
+                  <span>Add to Cart</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* =========================================================================
+            VERSÃO DESKTOP (hidden md:flex) — WIDESCREEN COMPLETO COM DETALHES
+           ========================================================================= */}
+        <div className="hidden md:flex flex-col flex-1 overflow-hidden">
+          {/* Top Header Fixo */}
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-[#0A0A0A] text-white border-b border-zinc-800 shrink-0">
           <div className="flex items-center gap-2 min-w-0">
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-wider bg-[#10B981] text-[#0A0A0A] shrink-0">
               <Zap className="w-3 h-3 fill-current" />
@@ -709,5 +894,6 @@ export default function ProductDetailModal({
         </div>
       </div>
     </div>
+  </div>
   );
 }
