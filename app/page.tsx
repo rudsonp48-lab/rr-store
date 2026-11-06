@@ -741,58 +741,110 @@ export default function RRStorePage() {
       {/* 3. Área Principal de Produtos (Background Secundário #F8F9FA / #FFFFFF para Leitura Perfeita) */}
       <main id="catalogo-produtos" className="flex-1 bg-[#F8F9FA] text-[#0A0A0A] py-6 sm:py-14">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          {/* Banner de Ação Rápida: Troca Fácil (Trade-In) & Comparador de Aparelhos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-5 sm:mb-6">
-            {/* Card 1: Troca Fácil */}
+          {/* Tópicos de Conversão Premium & Alta Performance UX */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 mb-6 sm:mb-8">
+            {/* Tópico 1: Trade-In (Seu Usado como Entrada) */}
             <div
               onClick={() => handleOpenTradeIn()}
-              className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#16122c] to-[#0e1628] border border-[#7C63E6]/40 p-4 sm:p-5 text-white shadow-md hover:shadow-lg hover:border-[#7C63E6] transition-all cursor-pointer flex items-center justify-between gap-3"
+              className="border-gradient grid-corners group relative overflow-hidden rounded-2xl bg-[#0B0B0F] p-5 sm:p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 border border-white/5"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle at 92% 18%, rgba(192, 132, 252, 0.12) 0%, rgba(11, 11, 15, 0) 65%)',
+              }}
             >
-              <div className="space-y-1 min-w-0">
-                <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-[#A78BFA] bg-[#7C63E6]/20 px-2 py-0.5 rounded-md">
-                  <Sparkles className="w-3 h-3 text-amber-400" />
-                  Troca Fácil • Trade-In
-                </span>
-                <h3 className="text-sm sm:text-base font-black text-white leading-tight">
-                  Quer dar seu usado como entrada?
+              <div className="space-y-2 min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C084FC] animate-pulse shadow-[0_0_8px_#C084FC]" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[#D8B4FE]">
+                    Trade-In Oficial • Avaliação DF
+                  </span>
+                </div>
+                <h3 className="text-base sm:text-lg font-black text-white tracking-tight leading-snug">
+                  Dê seu smartphone usado na troca
                 </h3>
-                <p className="text-xs text-white/70 line-clamp-1">
-                  Avaliamos seu iPhone, Samsung ou Xiaomi na hora pelo melhor valor de Brasília.
+                <p className="text-xs text-zinc-400 leading-relaxed max-w-md">
+                  Avaliamos seu iPhone, Samsung ou Xiaomi na hora com desconto imediato no novo aparelho lacrado.
                 </p>
               </div>
-              <button
-                type="button"
-                className="shrink-0 px-3.5 py-2 rounded-xl bg-[#7C63E6] group-hover:bg-[#684ddb] text-white text-xs font-black flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
-              >
-                <span>Simular</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+
+              <div className="shrink-0 pt-1 sm:pt-0">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpenTradeIn();
+                  }}
+                  className="animated-button"
+                  style={
+                    {
+                      '--btn-accent': '#C084FC',
+                      '--btn-accent-glow': 'rgba(192, 132, 252, 0.4)',
+                    } as React.CSSProperties
+                  }
+                  aria-label="Simular avaliação do usado"
+                >
+                  <svg viewBox="0 0 24 24" className="arr-2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                  </svg>
+                  <span className="text">Simular Troca</span>
+                  <span className="circle" />
+                  <svg viewBox="0 0 24 24" className="arr-1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
-            {/* Card 2: Comparador de Modelos */}
+            {/* Tópico 2: Comparador de Modelos */}
             <div
               onClick={() => handleOpenComparator()}
-              className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#0d1e18] to-[#0f172a] border border-[#10B981]/40 p-4 sm:p-5 text-white shadow-md hover:shadow-lg hover:border-[#10B981] transition-all cursor-pointer flex items-center justify-between gap-3"
+              className="border-gradient grid-corners group relative overflow-hidden rounded-2xl bg-[#090D0B] p-5 sm:p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 border border-white/5"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle at 92% 18%, rgba(163, 230, 53, 0.12) 0%, rgba(9, 13, 11, 0) 65%)',
+              }}
             >
-              <div className="space-y-1 min-w-0">
-                <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-[#34D399] bg-[#10B981]/20 px-2 py-0.5 rounded-md">
-                  <Sparkles className="w-3 h-3 text-emerald-400" />
-                  Comparador Lado a Lado
-                </span>
-                <h3 className="text-sm sm:text-base font-black text-white leading-tight">
-                  Dúvida entre dois aparelhos?
+              <div className="space-y-2 min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-greenyellow animate-pulse shadow-[0_0_8px_greenyellow]" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[#BEF264]">
+                    Comparador Lado a Lado
+                  </span>
+                </div>
+                <h3 className="text-base sm:text-lg font-black text-white tracking-tight leading-snug">
+                  Compare especificações técnicas
                 </h3>
-                <p className="text-xs text-white/70 line-clamp-1">
-                  Compare câmeras, processador, bateria e preço para decidir a melhor compra.
+                <p className="text-xs text-zinc-400 leading-relaxed max-w-md">
+                  Analise processador, câmeras, bateria e valores reais lado a lado para tomar a decisão perfeita.
                 </p>
               </div>
-              <button
-                type="button"
-                className="shrink-0 px-3.5 py-2 rounded-xl bg-[#10B981] group-hover:bg-[#059669] text-[#0A0A0A] text-xs font-black flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
-              >
-                <span>Comparar</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+
+              <div className="shrink-0 pt-1 sm:pt-0">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpenComparator();
+                  }}
+                  className="animated-button"
+                  style={
+                    {
+                      '--btn-accent': 'greenyellow',
+                      '--btn-accent-glow': 'rgba(173, 255, 47, 0.4)',
+                    } as React.CSSProperties
+                  }
+                  aria-label="Abrir comparador técnico de modelos"
+                >
+                  <svg viewBox="0 0 24 24" className="arr-2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                  </svg>
+                  <span className="text">Comparar Agora</span>
+                  <span className="circle" />
+                  <svg viewBox="0 0 24 24" className="arr-1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 

@@ -377,3 +377,166 @@ html.reduced-motion .motion-hover-lift:hover {
 .animate-hero-glide {
   animation: heroTextGlide 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* ============================================================================
+   PREMIUM TOPICS & ANIMATED ACTION BUTTONS
+   ============================================================================ */
+
+.animated-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 34px;
+  border: 2px solid var(--btn-accent, greenyellow);
+  font-size: 14px;
+  background-color: transparent;
+  border-radius: 100px;
+  font-weight: 700;
+  color: var(--btn-accent, greenyellow);
+  box-shadow: 0 0 0 2px transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.animated-button svg {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  fill: var(--btn-accent, greenyellow);
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .arr-1 {
+  right: 14px;
+}
+
+.animated-button .arr-2 {
+  left: -35%;
+}
+
+.animated-button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background-color: var(--btn-accent, greenyellow);
+  border-radius: 100px;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-10px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button:hover {
+  box-shadow: 0 0 24px -4px var(--btn-accent-glow, rgba(173, 255, 47, 0.4));
+  color: #0A0A0A;
+  border-radius: 14px;
+  border-color: var(--btn-accent, greenyellow);
+}
+
+.animated-button:hover .arr-1 {
+  right: -35%;
+}
+
+.animated-button:hover .arr-2 {
+  left: 14px;
+}
+
+.animated-button:hover .text {
+  transform: translateX(10px);
+}
+
+.animated-button:hover svg {
+  fill: #0A0A0A;
+}
+
+.animated-button:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 0 4px var(--btn-accent, greenyellow);
+}
+
+.animated-button:hover .circle {
+  width: 280px;
+  height: 280px;
+  opacity: 1;
+}
+
+/* Border Gradient Metálico de Alta Precisão */
+.border-gradient {
+  position: relative;
+}
+
+.border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  background: linear-gradient(
+    225deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  pointer-events: none;
+}
+
+/* Cantos Arquiteturais Tech */
+.grid-corners {
+  position: relative;
+}
+
+.grid-corners::before,
+.grid-corners::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.grid-corners::before {
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  border-top-left-radius: 20px;
+}
+
+.grid-corners::after {
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+  border-top-right-radius: 20px;
+}
+
+@media (max-width: 768px) {
+  .animated-button {
+    padding: 10px 24px;
+    font-size: 13px;
+  }
+  .animated-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
