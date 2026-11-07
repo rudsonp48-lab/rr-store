@@ -133,33 +133,46 @@ function mapCategory(name: string, cats: string[]): Exclude<CategoryId, 'Todos'>
 export const maxDuration = 60;
 export const revalidate = 300;
 
+// Cache em memória para resposta instantânea (< 5ms)
+let memoryCache: { data: any; timestamp: number } | null = null;
+const CACHE_TTL_MS = 20 * 60 * 1000; // 20 minutos
+
 const GSM_BASE = 'https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products';
 
-/** Lê TODAS as páginas do catálogo da GSM (antes só lia 300 produtos). */
+/** Lê páginas essenciais do catálogo da GSM com timeout rápido para não travar a vitrine. */
 async function fetchAllGsm(): Promise<WooProduct[]> {
   const headers = { Accept: 'application/json', 'User-Agent': 'RRStore-Brasilia-Sync/1.0' };
-  const first = await fetch(`${GSM_BASE}?per_page=100&page=1`, {
-    next: { revalidate: 300 },
-    headers,
-  });
-  if (!first.ok) return [];
-  const totalPages = Math.min(Number(first.headers.get('x-wp-totalpages') || 1), 60);
-  const all: WooProduct[] = [...((await first.json()) as WooProduct[])];
+  try {
+    const first = await fetch(`${GSM_BASE}?per_page=100&page=1`, {
+      next: { revalidate: 300 },
+      headers,
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!first.ok) return [];
+    const totalPages = Math.min(Number(first.headers.get('x-wp-totalpages') || 1), 6);
+    const all: WooProduct[] = [...((await first.json()) as WooProduct[])];
 
-  const rest = Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => i + 2);
-  const CONCURRENCY = 6;
-  for (let i = 0; i < rest.length; i += CONCURRENCY) {
-    const chunk = rest.slice(i, i + CONCURRENCY);
-    const results = await Promise.all(
-      chunk.map((page) =>
-        fetch(`${GSM_BASE}?per_page=100&page=${page}`, { next: { revalidate: 300 }, headers })
-          .then((r) => (r.ok ? (r.json() as Promise<WooProduct[]>) : []))
-          .catch(() => [] as WooProduct[])
-      )
-    );
-    results.forEach((r) => all.push(...r));
+    const rest = Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => i + 2);
+    const CONCURRENCY = 3;
+    for (let i = 0; i < rest.length; i += CONCURRENCY) {
+      const chunk = rest.slice(i, i + CONCURRENCY);
+      const results = await Promise.all(
+        chunk.map((page) =>
+          fetch(`${GSM_BASE}?per_page=100&page=${page}`, {
+            next: { revalidate: 300 },
+            headers,
+            signal: AbortSignal.timeout(4000),
+          })
+            .then((r) => (r.ok ? (r.json() as Promise<WooProduct[]>) : []))
+            .catch(() => [] as WooProduct[])
+        )
+      );
+      results.forEach((r) => all.push(...r));
+    }
+    return all;
+  } catch {
+    return [];
   }
-  return all;
 }
 
 interface SousaLiveItem {
@@ -202,6 +215,10 @@ async function loadSousaLive(): Promise<Product[]> {
 }
 
 export async function GET() {
+  if (memoryCache && Date.now() - memoryCache.timestamp < CACHE_TTL_MS) {
+    return NextResponse.json(memoryCache.data);
+  }
+
   try {
     const rawItems = await fetchAllGsm();
     const seen = new Set<string>();
@@ -252,14 +269,17 @@ export async function GET() {
     const sousa = await loadSousaLive();
     const all = [...syncedProducts, ...sousa];
 
-    return NextResponse.json({
+    const payload = {
       ok: true,
       syncedAt: new Date().toISOString(),
       count: all.length,
       gsm: syncedProducts.length,
       sousa: sousa.length,
       products: all,
-    });
+    };
+    memoryCache = { data: payload, timestamp: Date.now() };
+
+    return NextResponse.json(payload);
   } catch (err) {
     return NextResponse.json(
       {

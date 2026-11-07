@@ -33,7 +33,7 @@ interface ProductCardProps {
   allProducts?: Product[];
 }
 
-export default function ProductCard({
+function ProductCard({
   product,
   selectedRegion,
   onAddToCart,
@@ -128,6 +128,7 @@ export default function ProductCard({
           src={product.imagem}
           alt={product.nome}
           loading="lazy"
+          decoding="async"
           className={`w-full h-full ${
             isApple ? 'object-contain' : 'object-cover'
           } object-center group-hover:scale-105 transition-transform duration-500 ease-out`}
@@ -445,3 +446,5 @@ export default function ProductCard({
     </article>
   );
 }
+
+export default React.memo(ProductCard);

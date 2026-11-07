@@ -417,6 +417,8 @@ export default function RRStorePage() {
   const [tradeInTargetProduct, setTradeInTargetProduct] = useState<Product | null>(null);
   const [isComparatorOpen, setIsComparatorOpen] = useState<boolean>(false);
   const [comparatorProductA, setComparatorProductA] = useState<Product | null>(null);
+  const [visibleCount, setVisibleCount] = useState<number>(32);
+  const loadMoreRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleOpenTradeIn = (product?: Product) => {
     setTradeInTargetProduct(product || null);
@@ -475,88 +477,100 @@ export default function RRStorePage() {
     }
 
     const syncWithSupplierAndCloud = async () => {
-      const cloud = await loadStoreSettings();
-      let baseProducts = PRODUCTS;
-      if (cloud.products && cloud.products.length > 0) {
-        baseProducts = mergeWithVerifiedCatalog(cloud.products);
-      }
-
-      // Sincroniza em tempo real com o fornecedor GSM Digital Acessórios
       try {
-        const res = await fetch('/api/supplier-sync');
-        if (res.ok) {
-          const supplierData = await res.json();
-          if (Array.isArray(supplierData.products) && supplierData.products.length > 0) {
-            const supplierMap = new Map<string, Product>(
-              supplierData.products.map((p: Product) => [p.id, p])
-            );
-            // Atualiza preço, foto e estoque dos itens GSM Digital e adiciona novos produtos do fornecedor
-            const updatedExisting = baseProducts.map((p) => {
-              const live = supplierMap.get(p.id);
-              if (!live) return p;
-              supplierMap.delete(p.id);
-              return {
-                ...p,
-                nome: live.nome,
-                precoDe: live.precoDe,
-                precoPor: live.precoPor,
-                precoPix: live.precoPix,
-                parcelamento: live.parcelamento,
-                imagem: live.imagem || p.imagem,
-                estoque: live.estoque,
-              };
-            });
-            const newFromSupplier = Array.from(supplierMap.values());
-            baseProducts = [...updatedExisting, ...newFromSupplier];
+        const cloud = await loadStoreSettings();
+        let baseProducts = PRODUCTS;
+        if (cloud.products && cloud.products.length > 0) {
+          baseProducts = mergeWithVerifiedCatalog(cloud.products);
+        }
 
-            // Remove itens que saíram do catálogo do fornecedor (esgotados/excluídos lá).
-            // Só ocorre quando a leitura veio completa, para nunca esvaziar a loja por falha de rede.
-            const liveIds = new Set<string>(supplierData.products.map((p: Product) => p.id));
-            if ((supplierData.gsm ?? 0) > 500) {
-              baseProducts = baseProducts.filter((p) => !p.id.startsWith('gsm-') || liveIds.has(p.id));
-            }
-            if ((supplierData.sousa ?? 0) > 10) {
-              baseProducts = baseProducts.filter((p) => !p.id.startsWith('sousa-') || liveIds.has(p.id));
+        // Sincroniza em segundo plano com timeout de 4 segundos para nunca travar a vitrine
+        try {
+          const res = await fetch('/api/supplier-sync', {
+            signal: AbortSignal.timeout(4000),
+          });
+          if (res.ok) {
+            const supplierData = await res.json();
+            if (Array.isArray(supplierData.products) && supplierData.products.length > 0) {
+              const supplierMap = new Map<string, Product>(
+                supplierData.products.map((p: Product) => [p.id, p])
+              );
+              // Atualiza preço, foto e estoque dos itens GSM Digital e adiciona novos produtos do fornecedor
+              const updatedExisting = baseProducts.map((p) => {
+                const live = supplierMap.get(p.id);
+                if (!live) return p;
+                supplierMap.delete(p.id);
+                return {
+                  ...p,
+                  nome: live.nome,
+                  precoDe: live.precoDe,
+                  precoPor: live.precoPor,
+                  precoPix: live.precoPix,
+                  parcelamento: live.parcelamento,
+                  imagem: live.imagem || p.imagem,
+                  estoque: live.estoque,
+                };
+              });
+              const newFromSupplier = Array.from(supplierMap.values());
+              baseProducts = [...updatedExisting, ...newFromSupplier];
+
+              const liveIds = new Set<string>(supplierData.products.map((p: Product) => p.id));
+              if ((supplierData.gsm ?? 0) > 500) {
+                baseProducts = baseProducts.filter((p) => !p.id.startsWith('gsm-') || liveIds.has(p.id));
+              }
+              if ((supplierData.sousa ?? 0) > 10) {
+                baseProducts = baseProducts.filter((p) => !p.id.startsWith('sousa-') || liveIds.has(p.id));
+              }
             }
           }
+        } catch {
+          // Fallback silencioso para o catálogo local/cloud
         }
-      } catch {
-        // Fallback silencioso para o catálogo local/cloud
-      }
 
-      if (cloud.stockmaster && cloud.stockmaster.length > 0) {
-        baseProducts = applyStockmaster(baseProducts, cloud.stockmaster);
-      }
+        if (cloud.stockmaster && cloud.stockmaster.length > 0) {
+          baseProducts = applyStockmaster(baseProducts, cloud.stockmaster);
+        }
 
-      baseProducts = prioritizeAppleProducts(baseProducts);
-      setProducts(baseProducts);
-      setCartItems((prev) =>
-        prev.map((item) => ({
-          ...item,
-          product: baseProducts.find((p) => p.id === item.product.id) || item.product,
-        }))
-      );
-
-      if (cloud.regions) {
-        setRegions(cloud.regions);
-        setSelectedRegion((prev) => cloud.regions!.find((r) => r.id === prev.id) || prev);
-      }
-      if (cloud.banners) setBanners(cloud.banners);
-      try {
-        localStorage.setItem(
-          SETTINGS_CACHE_KEY,
-          JSON.stringify({ ...cloud, products: baseProducts })
+        baseProducts = prioritizeAppleProducts(baseProducts);
+        setProducts(baseProducts);
+        setCartItems((prev) =>
+          prev.map((item) => ({
+            ...item,
+            product: baseProducts.find((p) => p.id === item.product.id) || item.product,
+          }))
         );
+
+        if (cloud.regions) {
+          setRegions(cloud.regions);
+          setSelectedRegion((prev) => cloud.regions!.find((r) => r.id === prev.id) || prev);
+        }
+        if (cloud.banners) setBanners(cloud.banners);
+        try {
+          localStorage.setItem(
+            SETTINGS_CACHE_KEY,
+            JSON.stringify({ ...cloud, products: baseProducts })
+          );
+        } catch {
+          // Ignore
+        }
       } catch {
         // Ignore
       }
     };
 
-    void syncWithSupplierAndCloud();
+    // Sincronização em segundo plano não-bloqueante: a vitrine abre imediatamente
+    const initialSyncTimer = setTimeout(() => {
+      void syncWithSupplierAndCloud();
+    }, 400);
+
     const interval = setInterval(() => {
       void syncWithSupplierAndCloud();
     }, 5 * 60 * 1000);
-    return () => clearInterval(interval);
+
+    return () => {
+      clearTimeout(initialSyncTimer);
+      clearInterval(interval);
+    };
   }, []);
 
   const toggleReducedMotion = () => {
@@ -631,6 +645,32 @@ export default function RRStorePage() {
     }
     return list;
   }, [products, selectedCategory, quickFilter, subFilter, searchQuery, sortBy]);
+
+  // Reseta paginação quando o usuário muda filtros ou busca
+  useEffect(() => {
+    setVisibleCount(32);
+  }, [selectedCategory, quickFilter, subFilter, searchQuery, sortBy]);
+
+  // Produtos visíveis na tela (carregamento instantâneo de 32 itens e expansão sob demanda)
+  const visibleProducts = useMemo(() => {
+    return filteredProducts.slice(0, visibleCount);
+  }, [filteredProducts, visibleCount]);
+
+  // Observer para carregar mais produtos automaticamente ao rolar próximo ao fim da lista
+  useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + 32, filteredProducts.length));
+        }
+      },
+      { rootMargin: '400px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [filteredProducts.length]);
 
   // Funções do Carrinho
   const handleAddToCart = (product: Product, qty: number = 1) => {
@@ -1036,25 +1076,50 @@ export default function RRStorePage() {
               </button>
             </div>
           ) : (
-            <div
-              className={`grid ${
-                mobileColumns === 2 ? 'grid-cols-2 gap-2.5' : 'grid-cols-1 gap-4'
-              } sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4`}
-            >
-              {filteredProducts.map((product, idx) => (
-                <MotionReveal key={product.id} delayMs={(idx % 4) * 45} offsetY={14}>
-                  <ProductCard
-                    product={product}
-                    selectedRegion={selectedRegion}
-                    onAddToCart={handleAddToCart}
-                    onSelectProduct={setSelectedProduct}
-                    onOpenTradeIn={handleOpenTradeIn}
-                    compactMobile={mobileColumns === 2}
-                    allProducts={products}
-                  />
-                </MotionReveal>
-              ))}
-            </div>
+            <>
+              <div
+                className={`grid ${
+                  mobileColumns === 2 ? 'grid-cols-2 gap-2.5' : 'grid-cols-1 gap-4'
+                } sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4`}
+              >
+                {visibleProducts.map((product, idx) => (
+                  <MotionReveal key={product.id} delayMs={(idx % 4) * 30} offsetY={14}>
+                    <ProductCard
+                      product={product}
+                      selectedRegion={selectedRegion}
+                      onAddToCart={handleAddToCart}
+                      onSelectProduct={setSelectedProduct}
+                      onOpenTradeIn={handleOpenTradeIn}
+                      compactMobile={mobileColumns === 2}
+                      allProducts={products}
+                    />
+                  </MotionReveal>
+                ))}
+              </div>
+
+              {/* Sentinela de rolagem infinita e botão manual de carregar mais */}
+              {visibleCount < filteredProducts.length && (
+                <div className="pt-8 sm:pt-10 flex flex-col items-center justify-center gap-3">
+                  <div ref={loadMoreRef} className="h-4 w-full" />
+                  <p className="text-xs text-zinc-500 font-medium">
+                    Exibindo <strong className="text-zinc-900">{visibleProducts.length}</strong> de{' '}
+                    <strong className="text-zinc-900">{filteredProducts.length}</strong> produtos
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setVisibleCount((prev) => Math.min(prev + 32, filteredProducts.length))
+                    }
+                    className="inline-flex items-center gap-2 bg-[#0A0A0A] hover:bg-zinc-800 active:scale-95 text-white px-7 py-3 rounded-2xl font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
+                  >
+                    <span>Carregar Mais Produtos</span>
+                    <span className="text-[#34D399] font-black">
+                      (+{Math.min(32, filteredProducts.length - visibleProducts.length)})
+                    </span>
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>
