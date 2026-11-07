@@ -12,20 +12,28 @@ export interface TradeInModel {
   category: string;
   storageOptions: {
     storage: string;
-    baseValue: number; // Valor de avaliação base (condição excelente)
+    baseValue: number; // Valor de avaliação base de recompra comercial (condição excelente)
   }[];
 }
 
+/**
+ * Tabela Comercial de Recompra / Trade-In RR Store Brasília 2026
+ * Calibrada para margem segura de atacado/lojista (compra para revenda/troca com volta):
+ * - iPhone 12: R$ 850 a R$ 900 (máx 950 em 256GB)
+ * - iPhone 13: R$ 1.000 a R$ 1.100 (128GB a R$ 1.050)
+ * - iPhone 14: R$ 1.200 a R$ 1.350
+ * - Proporcionalidade mantida para linhas 11, Pro, Pro Max, 15, Samsung e Xiaomi.
+ */
 export const TRADE_IN_MODELS: TradeInModel[] = [
-  // Apple iPhones
+  // ==================== APPLE IPHONES ====================
   {
     id: 'apple-ip11',
     brand: 'Apple',
     name: 'iPhone 11',
     category: 'iPhone',
     storageOptions: [
-      { storage: '64GB', baseValue: 1150 },
-      { storage: '128GB', baseValue: 1300 },
+      { storage: '64GB', baseValue: 600 },
+      { storage: '128GB', baseValue: 700 },
     ],
   },
   {
@@ -34,9 +42,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 11 Pro / Pro Max',
     category: 'iPhone',
     storageOptions: [
-      { storage: '64GB', baseValue: 1400 },
-      { storage: '256GB', baseValue: 1650 },
-      { storage: '512GB', baseValue: 1800 },
+      { storage: '64GB', baseValue: 750 },
+      { storage: '256GB', baseValue: 850 },
+      { storage: '512GB', baseValue: 950 },
     ],
   },
   {
@@ -45,9 +53,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 12',
     category: 'iPhone',
     storageOptions: [
-      { storage: '64GB', baseValue: 1550 },
-      { storage: '128GB', baseValue: 1750 },
-      { storage: '256GB', baseValue: 1950 },
+      { storage: '64GB', baseValue: 850 },
+      { storage: '128GB', baseValue: 900 },
+      { storage: '256GB', baseValue: 950 },
     ],
   },
   {
@@ -56,9 +64,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 12 Pro / Pro Max',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 2150 },
-      { storage: '256GB', baseValue: 2400 },
-      { storage: '512GB', baseValue: 2600 },
+      { storage: '128GB', baseValue: 1050 },
+      { storage: '256GB', baseValue: 1150 },
+      { storage: '512GB', baseValue: 1250 },
     ],
   },
   {
@@ -67,9 +75,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 13',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 2450 },
-      { storage: '256GB', baseValue: 2750 },
-      { storage: '512GB', baseValue: 3000 },
+      { storage: '128GB', baseValue: 1050 },
+      { storage: '256GB', baseValue: 1150 },
+      { storage: '512GB', baseValue: 1250 },
     ],
   },
   {
@@ -78,9 +86,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 13 Pro',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 2950 },
-      { storage: '256GB', baseValue: 3300 },
-      { storage: '512GB', baseValue: 3600 },
+      { storage: '128GB', baseValue: 1300 },
+      { storage: '256GB', baseValue: 1450 },
+      { storage: '512GB', baseValue: 1600 },
     ],
   },
   {
@@ -89,10 +97,10 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 13 Pro Max',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 3300 },
-      { storage: '256GB', baseValue: 3650 },
-      { storage: '512GB', baseValue: 3950 },
-      { storage: '1TB', baseValue: 4200 },
+      { storage: '128GB', baseValue: 1500 },
+      { storage: '256GB', baseValue: 1650 },
+      { storage: '512GB', baseValue: 1800 },
+      { storage: '1TB', baseValue: 1950 },
     ],
   },
   {
@@ -101,9 +109,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 14 / 14 Plus',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 2850 },
-      { storage: '256GB', baseValue: 3200 },
-      { storage: '512GB', baseValue: 3500 },
+      { storage: '128GB', baseValue: 1200 },
+      { storage: '256GB', baseValue: 1350 },
+      { storage: '512GB', baseValue: 1500 },
     ],
   },
   {
@@ -112,9 +120,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 14 Pro',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 3650 },
-      { storage: '256GB', baseValue: 4050 },
-      { storage: '512GB', baseValue: 4400 },
+      { storage: '128GB', baseValue: 1700 },
+      { storage: '256GB', baseValue: 1850 },
+      { storage: '512GB', baseValue: 2050 },
     ],
   },
   {
@@ -123,10 +131,10 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 14 Pro Max',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 4000 },
-      { storage: '256GB', baseValue: 4400 },
-      { storage: '512GB', baseValue: 4750 },
-      { storage: '1TB', baseValue: 5050 },
+      { storage: '128GB', baseValue: 1950 },
+      { storage: '256GB', baseValue: 2150 },
+      { storage: '512GB', baseValue: 2350 },
+      { storage: '1TB', baseValue: 2500 },
     ],
   },
   {
@@ -135,9 +143,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 15 / 15 Plus',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 3550 },
-      { storage: '256GB', baseValue: 3950 },
-      { storage: '512GB', baseValue: 4350 },
+      { storage: '128GB', baseValue: 1800 },
+      { storage: '256GB', baseValue: 2000 },
+      { storage: '512GB', baseValue: 2200 },
     ],
   },
   {
@@ -146,10 +154,10 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 15 Pro',
     category: 'iPhone',
     storageOptions: [
-      { storage: '128GB', baseValue: 4500 },
-      { storage: '256GB', baseValue: 4950 },
-      { storage: '512GB', baseValue: 5450 },
-      { storage: '1TB', baseValue: 5900 },
+      { storage: '128GB', baseValue: 2400 },
+      { storage: '256GB', baseValue: 2650 },
+      { storage: '512GB', baseValue: 2900 },
+      { storage: '1TB', baseValue: 3100 },
     ],
   },
   {
@@ -158,21 +166,21 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'iPhone 15 Pro Max',
     category: 'iPhone',
     storageOptions: [
-      { storage: '256GB', baseValue: 5350 },
-      { storage: '512GB', baseValue: 5850 },
-      { storage: '1TB', baseValue: 6300 },
+      { storage: '256GB', baseValue: 2900 },
+      { storage: '512GB', baseValue: 3200 },
+      { storage: '1TB', baseValue: 3500 },
     ],
   },
 
-  // Samsung Galaxy
+  // ==================== SAMSUNG GALAXY ====================
   {
     id: 'sam-s22',
     brand: 'Samsung',
     name: 'Galaxy S22 / S22+',
     category: 'Samsung',
     storageOptions: [
-      { storage: '128GB', baseValue: 1350 },
-      { storage: '256GB', baseValue: 1550 },
+      { storage: '128GB', baseValue: 650 },
+      { storage: '256GB', baseValue: 750 },
     ],
   },
   {
@@ -181,8 +189,8 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'Galaxy S22 Ultra',
     category: 'Samsung',
     storageOptions: [
-      { storage: '256GB', baseValue: 2050 },
-      { storage: '512GB', baseValue: 2300 },
+      { storage: '256GB', baseValue: 950 },
+      { storage: '512GB', baseValue: 1100 },
     ],
   },
   {
@@ -191,9 +199,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'Galaxy S23 / S23+',
     category: 'Samsung',
     storageOptions: [
-      { storage: '128GB', baseValue: 1950 },
-      { storage: '256GB', baseValue: 2250 },
-      { storage: '512GB', baseValue: 2500 },
+      { storage: '128GB', baseValue: 1000 },
+      { storage: '256GB', baseValue: 1150 },
+      { storage: '512GB', baseValue: 1300 },
     ],
   },
   {
@@ -202,9 +210,9 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'Galaxy S23 Ultra',
     category: 'Samsung',
     storageOptions: [
-      { storage: '256GB', baseValue: 2950 },
-      { storage: '512GB', baseValue: 3300 },
-      { storage: '1TB', baseValue: 3600 },
+      { storage: '256GB', baseValue: 1500 },
+      { storage: '512GB', baseValue: 1700 },
+      { storage: '1TB', baseValue: 1900 },
     ],
   },
   {
@@ -213,8 +221,8 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'Galaxy S24 Ultra',
     category: 'Samsung',
     storageOptions: [
-      { storage: '256GB', baseValue: 4300 },
-      { storage: '512GB', baseValue: 4750 },
+      { storage: '256GB', baseValue: 2200 },
+      { storage: '512GB', baseValue: 2450 },
     ],
   },
   {
@@ -223,20 +231,20 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'Galaxy Z Flip 4 / 5',
     category: 'Samsung',
     storageOptions: [
-      { storage: '256GB', baseValue: 1850 },
-      { storage: '512GB', baseValue: 2150 },
+      { storage: '256GB', baseValue: 900 },
+      { storage: '512GB', baseValue: 1050 },
     ],
   },
 
-  // Xiaomi
+  // ==================== XIAOMI ====================
   {
     id: 'xiaomi-note13pro',
     brand: 'Xiaomi',
     name: 'Redmi Note 13 Pro / Pro+ 5G',
     category: 'Xiaomi',
     storageOptions: [
-      { storage: '256GB', baseValue: 950 },
-      { storage: '512GB', baseValue: 1200 },
+      { storage: '256GB', baseValue: 450 },
+      { storage: '512GB', baseValue: 550 },
     ],
   },
   {
@@ -245,8 +253,8 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'Poco X6 / X6 Pro 5G',
     category: 'Xiaomi',
     storageOptions: [
-      { storage: '256GB', baseValue: 900 },
-      { storage: '512GB', baseValue: 1150 },
+      { storage: '256GB', baseValue: 450 },
+      { storage: '512GB', baseValue: 550 },
     ],
   },
   {
@@ -255,8 +263,8 @@ export const TRADE_IN_MODELS: TradeInModel[] = [
     name: 'Poco F5 / F6 Pro',
     category: 'Xiaomi',
     storageOptions: [
-      { storage: '256GB', baseValue: 1450 },
-      { storage: '512GB', baseValue: 1750 },
+      { storage: '256GB', baseValue: 700 },
+      { storage: '512GB', baseValue: 850 },
     ],
   },
 ];
@@ -274,13 +282,13 @@ export const CONDITION_MULTIPLIERS: Record<
   bom: {
     label: 'Bom (Uso Normal)',
     desc: 'Bateria entre 80% e 84%, pequenos sinais normais de capinha ou aro.',
-    factor: 0.88,
+    factor: 0.85,
     badgeColor: 'text-blue-400 border-blue-500/40 bg-blue-950/40',
   },
   marcas: {
     label: 'Com Marcas Visíveis',
     desc: 'Bateria <80% ou marcas de uso nítidas (sem trincos na tela ou traseira).',
-    factor: 0.75,
+    factor: 0.70,
     badgeColor: 'text-amber-400 border-amber-500/40 bg-amber-950/40',
   },
 };
@@ -317,7 +325,7 @@ export function buildTradeInWhatsAppUrl(params: {
     '📱 *Meu Aparelho Atual (Entrada):*',
     `• *Modelo:* ${params.usedModelName} (${params.usedStorage})`,
     `• *Condição:* ${condLabel}`,
-    `• *Estimativa do Site:* ~${formatBRL(params.evaluatedValue)}`,
+    `• *Pré-Avaliação Estimada:* ~${formatBRL(params.evaluatedValue)}`,
     '',
     '🎯 *Aparelho Novo que Desejo Comprar:*',
     `• *Produto:* ${params.targetProduct.nome}`,
@@ -328,6 +336,8 @@ export function buildTradeInWhatsAppUrl(params: {
     `• *Ou Cartão:* em até 12x (conforme operadora)`,
     '',
     `📍 *Preferência:* ${methodText}`,
+    '',
+    '_*Nota:* Entendo que esta é uma pré-avaliação comercial e que o valor final é validado no teste de tela, carcaça e bateria na Loja D439 (SIA) ou com o motoboy express._',
     '',
     'Podem confirmar a disponibilidade do novo aparelho para eu levar o meu na Loja D439 ou receber o motoboy hoje? 🚀',
   ];

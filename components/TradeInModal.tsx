@@ -308,6 +308,16 @@ export default function TradeInModal({
                 Crédito na Troca
               </span>
             </div>
+
+            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-2.5 text-[11px] text-white/70 flex items-start gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#34D399] shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-white/90">Pré-avaliação comercial da RR Store</p>
+                <p className="text-[10px] text-white/60 mt-0.5 leading-relaxed">
+                  Cotação estimada para desconto imediato na compra do seu novo aparelho. O valor final é confirmado após breve checagem de tela, Face ID, bateria e carcaça na Loja D439 (Feira dos Importados SIA) ou com nosso motoboy express.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* PASSO 2: ESCOLHA DO NOVO APARELHO */}
