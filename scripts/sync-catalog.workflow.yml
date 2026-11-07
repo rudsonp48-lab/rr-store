@@ -1,0 +1,41 @@
+name: Sincronização Diária de Catálogo (Sousa Games & GSM Digital)
+
+on:
+  schedule:
+    # Roda diariamente às 06:00 e às 12:00 (Horário de Brasília -> UTC 09:00 e 15:00)
+    - cron: '0 9,15 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Extrair e Atualizar Catálogo
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Executar Robô de Sincronização
+        run: node scripts/sync-all.mjs
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+
+      - name: Publicar Atualizações no Repositório
+        run: |
+          if git diff --quiet -- data/; then
+            echo "Nenhuma alteração detectada nos catálogos da Sousa e GSM Digital."
+            exit 0
+          fi
+          git config user.name "rr-store-sync-bot"
+          git config user.email "bot@rrmobilestore.com.br"
+          git add data/
+          git commit -m "chore(sync): atualização diária de produtos e preços (Sousa & GSM Digital) [skip ci]"
+          git push origin main

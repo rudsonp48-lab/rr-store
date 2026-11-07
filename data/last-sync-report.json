@@ -1,0 +1,174 @@
+{
+  "executedAt": "2026-11-07T15:40:08.426Z",
+  "brasiliaTime": "07/11/2026, 12:40:08",
+  "summary": {
+    "sousaTotal": 107,
+    "sousaNovos": 0,
+    "sousaPrecosAlterados": 0,
+    "gsmTotal": 1141,
+    "gsmNovos": 1141,
+    "gsmPrecosAlterados": 0,
+    "totalGeralSincronizado": 1248
+  },
+  "alteracoesDetectadas": {
+    "sousa": {
+      "novos": [],
+      "precosAlterados": []
+    },
+    "gsm": {
+      "novos": [
+        {
+          "id": "gsm-21362",
+          "nome": "TRICICLO DE DRIFT TIRANOSSAURO 8.5 SUMEXR ZZ-285",
+          "precoCusto": 1134.33
+        },
+        {
+          "id": "gsm-21361",
+          "nome": "TRICICLO DRIFT 8.5 AZUL PRETO SUMERX ZZ-283",
+          "precoCusto": 1134.33
+        },
+        {
+          "id": "gsm-21360",
+          "nome": "TRICICLO DRIFT 8.5 RELÂMPAGO SUMERX ZZ-279",
+          "precoCusto": 1134.33
+        },
+        {
+          "id": "gsm-21359",
+          "nome": "TRICICLO DRIFT 8.5 VERDE PRETO SUMERX ZZ-284",
+          "precoCusto": 1134.33
+        },
+        {
+          "id": "gsm-21358",
+          "nome": "TRICICLO DRIFT 8.5 SUMERX PIRATE ZZ-273",
+          "precoCusto": 1134.33
+        },
+        {
+          "id": "gsm-21357",
+          "nome": "TRICICLO DRIFT 8.5 SUMERX FOGO VERMELHO ZZ-288",
+          "precoCusto": 1134.33
+        },
+        {
+          "id": "gsm-21354",
+          "nome": "PATINETE ELÉTRICO SUMEXR SF-03",
+          "precoCusto": 1123.88
+        },
+        {
+          "id": "gsm-21353",
+          "nome": "LUMINARIA ELETRICA MATA MOSQUITO BMAX BM-F1421",
+          "precoCusto": 15.03
+        },
+        {
+          "id": "gsm-21352",
+          "nome": "LUMINARIA CRIATIVA USB BMAX BM-F1427",
+          "precoCusto": 31.98
+        },
+        {
+          "id": "gsm-21351",
+          "nome": "CARREGADOR BMAX BM-F4262",
+          "precoCusto": 7.13
+        },
+        {
+          "id": "gsm-21347",
+          "nome": "BOLAS DE NATAL BMAX BM-N040",
+          "precoCusto": 10.21
+        },
+        {
+          "id": "gsm-21346",
+          "nome": "VEDA ROSCA BMAX 3M &#8211; 48MM BT-640",
+          "precoCusto": 1.6
+        },
+        {
+          "id": "gsm-21345",
+          "nome": "LUMINARIA CRIATIVA USB BMAX BM-F1404",
+          "precoCusto": 41.82
+        },
+        {
+          "id": "gsm-21344",
+          "nome": "GARRAFA TERMICA 450ML BMAX BM-P1843",
+          "precoCusto": 23.22
+        },
+        {
+          "id": "gsm-21343",
+          "nome": "GARRAFA TERMICA 420ML BMAX BP-11702",
+          "precoCusto": 24.6
+        },
+        {
+          "id": "gsm-21342",
+          "nome": "AFIADOR ELETRICO BMAX BP-13013",
+          "precoCusto": 13.53
+        },
+        {
+          "id": "gsm-21337",
+          "nome": "GARRAFA TERMICA BMAX BM-P2070",
+          "precoCusto": 28.7
+        },
+        {
+          "id": "gsm-21336",
+          "nome": "GARRAFA TERMICA BMAX BP-11022",
+          "precoCusto": 23.22
+        },
+        {
+          "id": "gsm-21333",
+          "nome": "CAIXA DE HD EXTERNO BMAX BM-757",
+          "precoCusto": 14.15
+        },
+        {
+          "id": "gsm-21332",
+          "nome": "ADAPTADOR UNIVERSAL BMAX BM-8807",
+          "precoCusto": 8.61
+        },
+        {
+          "id": "gsm-21329",
+          "nome": "MULTIPROCESSADOR DE ALIMENTOS BMAX BM-F3311",
+          "precoCusto": 39.36
+        },
+        {
+          "id": "gsm-21327",
+          "nome": "NEBULIZADOR HIDRATANTE PORTÁTIL BMAX BM-F4239",
+          "precoCusto": 7.13
+        },
+        {
+          "id": "gsm-21324",
+          "nome": "FAQUEIRO INOX BTOP BP-17283",
+          "precoCusto": 40.59
+        },
+        {
+          "id": "gsm-21323",
+          "nome": "CORTADOR BMAX DE CABELO BM-C033",
+          "precoCusto": 79.9
+        },
+        {
+          "id": "gsm-21301",
+          "nome": "MOUSE PAD KNUP KP-S018",
+          "precoCusto": 43.3
+        },
+        {
+          "id": "gsm-21300",
+          "nome": "MOUSE PAD KNUP KP-S017",
+          "precoCusto": 38.47
+        },
+        {
+          "id": "gsm-21299",
+          "nome": "ALTO-FALANTE MULTIMIDEA COM 2.0 CANAIS KNUP KP-RO802",
+          "precoCusto": 36.08
+        },
+        {
+          "id": "gsm-21298",
+          "nome": "CAIXA DE SOM MULTIMIDEA COM 2.0 KNUP KP-RO822",
+          "precoCusto": 26.46
+        },
+        {
+          "id": "gsm-21281",
+          "nome": "EXTENSÃO ELETRICA 4 TOMADAS KNUP SL7604-5M",
+          "precoCusto": 21.65
+        },
+        {
+          "id": "gsm-21280",
+          "nome": "CABO KNUP HDMI 20M KP-YP5003/20M",
+          "precoCusto": 32.47
+        }
+      ],
+      "precosAlterados": []
+    }
+  }
+}

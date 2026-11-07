@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import sousaLiveData from '../../../data/sousa-live.json';
+import gsmLiveData from '../../../data/gsm-live.json';
 import { CategoryId, Product } from '../../../types/store';
 import { applySupplierMarkup, calculatePixPrice, formatInstallment } from '../../../data/mockData';
 
@@ -214,44 +215,42 @@ async function loadSousaLive(): Promise<Product[]> {
   }
 }
 
-export async function GET() {
-  if (memoryCache && Date.now() - memoryCache.timestamp < CACHE_TTL_MS) {
-    return NextResponse.json(memoryCache.data);
-  }
+interface GsmLiveItem {
+  id: string;
+  originalId: number;
+  nome: string;
+  sku: string;
+  precoCusto: number;
+  imagem: string;
+  categorias: string[];
+  estoqueTexto?: string;
+}
 
+/** Lê o catálogo pré-sincronizado da GSM Digital (`data/gsm-live.json`) com resposta instantânea em ~0ms */
+function loadGsmLive(): Product[] {
   try {
-    const rawItems = await fetchAllGsm();
-    const seen = new Set<string>();
-    const syncedProducts: Product[] = [];
+    const raw = gsmLiveData as unknown as { products: GsmLiveItem[] };
+    if (!raw.products || raw.products.length === 0) return [];
 
-    rawItems.forEach((it, idx) => {
-      const pid = `gsm-${it.id}`;
-      if (seen.has(pid)) return;
-
-      const src = (it.images?.[0]?.src || '').replace(/^http:\/\//i, 'https://');
-      const rawCost = Number(it.prices?.price || 0) / 100;
-
-      if (!src || rawCost <= 0 || it.is_in_stock === false) return;
-      seen.add(pid);
-
-      const cleanName = (it.name || '').replace(/\s+/g, ' ').trim();
-      const catNames = (it.categories || []).map((c) => c.name || '');
+    return raw.products.map((it, idx) => {
+      const cleanName = it.nome.replace(/\s+/g, ' ').trim();
+      const catNames = it.categorias || [];
       const categoria = mapCategory(cleanName, catNames);
-      const { precoPor, precoDe } = applySupplierMarkup(rawCost);
+      const { precoPor, precoDe } = applySupplierMarkup(it.precoCusto);
       const precoPix = calculatePixPrice(precoPor);
       const maxParcelasSemJuros = precoPor >= 200 ? 12 : precoPor >= 80 ? 6 : 3;
       const parcelamento = formatInstallment(precoPor, maxParcelasSemJuros);
 
-      const stockMatch = (it.stock_availability?.text || '').match(/(\d+)/);
+      const stockMatch = (it.estoqueTexto || '').match(/(\d+)/);
       const estoque = stockMatch ? Math.max(1, Math.min(Number(stockMatch[1]), 200)) : 25;
       const sku = (it.sku || '').trim();
       const brand = catNames.find((c) => KNOWN_BRANDS.has(c.toUpperCase())) || 'GSM Digital';
 
-      syncedProducts.push({
-        id: pid,
+      return {
+        id: it.id,
         nome: cleanName,
         categoria,
-        precoCusto: Number(rawCost.toFixed(2)),
+        precoCusto: Number(it.precoCusto.toFixed(2)),
         precoDe,
         precoPor,
         precoPix,
@@ -260,11 +259,72 @@ export async function GET() {
         avaliacao: idx % 2 === 0 ? 4.9 : 5.0,
         avaliacoesCount: 24 + ((idx * 7) % 180),
         tag: TAGS[idx % TAGS.length],
-        imagem: src,
-        descricao: `Produto ${brand}${sku ? ` (Ref: ${sku})` : ''} sincronizado em tempo real com o estoque do fornecedor em Brasília-DF.`,
+        imagem: it.imagem,
+        descricao: `Produto ${brand}${sku ? ` (Ref: ${sku})` : ''} sincronizado com a GSM Digital Brasília-DF.`,
         estoque,
-      });
+      };
     });
+  } catch {
+    return [];
+  }
+}
+
+export async function GET() {
+  if (memoryCache && Date.now() - memoryCache.timestamp < CACHE_TTL_MS) {
+    return NextResponse.json(memoryCache.data);
+  }
+
+  try {
+    // 1. Tenta carregar do cache local pré-sincronizado (0ms)
+    let syncedProducts = loadGsmLive();
+
+    // 2. Fallback sob demanda se o arquivo ainda estiver vazio
+    if (syncedProducts.length === 0) {
+      const rawItems = await fetchAllGsm();
+      const seen = new Set<string>();
+
+      rawItems.forEach((it, idx) => {
+        const pid = `gsm-${it.id}`;
+        if (seen.has(pid)) return;
+
+        const src = (it.images?.[0]?.src || '').replace(/^http:\/\//i, 'https://');
+        const rawCost = Number(it.prices?.price || 0) / 100;
+
+        if (!src || rawCost <= 0 || it.is_in_stock === false) return;
+        seen.add(pid);
+
+        const cleanName = (it.name || '').replace(/\s+/g, ' ').trim();
+        const catNames = (it.categories || []).map((c) => c.name || '');
+        const categoria = mapCategory(cleanName, catNames);
+        const { precoPor, precoDe } = applySupplierMarkup(rawCost);
+        const precoPix = calculatePixPrice(precoPor);
+        const maxParcelasSemJuros = precoPor >= 200 ? 12 : precoPor >= 80 ? 6 : 3;
+        const parcelamento = formatInstallment(precoPor, maxParcelasSemJuros);
+
+        const stockMatch = (it.stock_availability?.text || '').match(/(\d+)/);
+        const estoque = stockMatch ? Math.max(1, Math.min(Number(stockMatch[1]), 200)) : 25;
+        const sku = (it.sku || '').trim();
+        const brand = catNames.find((c) => KNOWN_BRANDS.has(c.toUpperCase())) || 'GSM Digital';
+
+        syncedProducts.push({
+          id: pid,
+          nome: cleanName,
+          categoria,
+          precoCusto: Number(rawCost.toFixed(2)),
+          precoDe,
+          precoPor,
+          precoPix,
+          parcelamento,
+          maxParcelasSemJuros,
+          avaliacao: idx % 2 === 0 ? 4.9 : 5.0,
+          avaliacoesCount: 24 + ((idx * 7) % 180),
+          tag: TAGS[idx % TAGS.length],
+          imagem: src,
+          descricao: `Produto ${brand}${sku ? ` (Ref: ${sku})` : ''} sincronizado em tempo real com o estoque do fornecedor em Brasília-DF.`,
+          estoque,
+        });
+      });
+    }
 
     const sousa = await loadSousaLive();
     const all = [...syncedProducts, ...sousa];
