@@ -199,7 +199,7 @@ export default function ProductDetailModal({
       aria-labelledby="product-modal-title"
     >
       <div
-        className="relative w-full max-w-4xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-zinc-200 overflow-hidden max-h-[92vh] flex flex-col my-auto"
+        className="relative w-full max-w-3xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-zinc-200 overflow-hidden max-h-[92vh] flex flex-col my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Fixo */}
@@ -224,140 +224,111 @@ export default function ProductDetailModal({
           </button>
         </div>
 
-        {/* Conteúdo Rolável */}
-        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-start">
-            {/* Coluna Esquerda: Foto do Produto + Galeria de Miniaturas FastShop + Selos */}
-            <div className="md:col-span-6 flex flex-col gap-2.5 sm:gap-3">
-              <div className="flex gap-2.5 sm:gap-3 items-stretch">
-                {/* Miniaturas Verticais (FastShop / Apple Store Style) em Telas sm+ */}
-                {productGallery.length > 1 && (
-                  <div className="hidden sm:flex flex-col gap-2 shrink-0 max-h-[380px] overflow-y-auto pr-1 select-none custom-scrollbar">
-                    {productGallery.map((imgUrl, idx) => {
-                      const isCurrent = currentMainImage === imgUrl;
+        {/* Conteúdo Rolável: Foto Centralizada, Miniaturas Embaixo e Informações Organizadas */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
+          <div className="max-w-2xl mx-auto w-full flex flex-col items-center">
+            {/* 1. Foto Principal Grande no Centro */}
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="relative w-full max-w-md sm:max-w-lg aspect-square rounded-3xl bg-[#F8F9FA] border border-zinc-200/90 overflow-hidden flex items-center justify-center p-4 sm:p-8 select-none shadow-xs"
+            >
+              <img
+                src={currentMainImage}
+                alt={activeProduct.nome}
+                className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
+              />
+
+              {variantConfig?.hasColorOptions && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => handleCycleColor(-1)}
+                    aria-label="Cor anterior"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/95 hover:bg-white border border-zinc-200 text-zinc-700 flex items-center justify-center shadow-md transition-all cursor-pointer"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCycleColor(1)}
+                    aria-label="Próxima cor"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/95 hover:bg-white border border-zinc-200 text-zinc-700 flex items-center justify-center shadow-md transition-all cursor-pointer"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
+              )}
+
+              <div className="absolute top-3.5 left-3.5 flex flex-col gap-1.5">
+                <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-black bg-[#0A0A0A] text-[#34D399] shadow">
+                  Preço de Atacado
+                </span>
+              </div>
+
+              <div className="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2">
+                {isOutOfStock ? (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-500 text-black shadow">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    Zerou no Estoque • Sob Consulta
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    Pronta Entrega ({activeProduct.estoque} un.)
+                  </span>
+                )}
+
+                {variantConfig?.hasColorOptions && (
+                  <div className="flex items-center gap-1 bg-black/50 backdrop-blur-xs px-2.5 py-1 rounded-full">
+                    {variantConfig.availableColors.map((color) => {
+                      const isSelected =
+                        activeProduct.id === color.targetProductId ||
+                        selectedColor?.id === color.id;
                       return (
-                        <button
-                          key={`thumb-${idx}`}
-                          type="button"
-                          onClick={() => setSelectedImage(imgUrl)}
-                          title={`Ver foto ${idx + 1}`}
-                          className={`w-14 h-14 rounded-xl p-1 bg-white border transition-all cursor-pointer flex items-center justify-center shrink-0 ${
-                            isCurrent
-                              ? 'border-zinc-900 ring-2 ring-zinc-900 shadow-xs'
-                              : 'border-zinc-200/90 hover:border-zinc-400 opacity-70 hover:opacity-100'
+                        <span
+                          key={`modal-dot-${color.id}`}
+                          className={`rounded-full transition-all ${
+                            isSelected ? 'w-4 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/50'
                           }`}
-                        >
-                          <img
-                            src={imgUrl}
-                            alt={`Ângulo ${idx + 1}`}
-                            className="w-full h-full object-contain"
-                          />
-                        </button>
+                        />
                       );
                     })}
                   </div>
                 )}
-
-                {/* Foto Principal do Produto */}
-                <div
-                  onTouchStart={handleTouchStart}
-                  onTouchEnd={handleTouchEnd}
-                  className="flex-1 relative aspect-[4/3] sm:aspect-square max-h-[240px] sm:max-h-none w-full rounded-2xl bg-[#F8F9FA] border border-zinc-200/90 overflow-hidden flex items-center justify-center p-3 sm:p-4 select-none"
-                >
-                  <img
-                    src={currentMainImage}
-                    alt={activeProduct.nome}
-                    className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
-                  />
-
-                  {variantConfig?.hasColorOptions && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => handleCycleColor(-1)}
-                        aria-label="Cor anterior"
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white/90 hover:bg-white border border-zinc-200 text-zinc-700 flex items-center justify-center shadow-sm transition-all cursor-pointer"
-                      >
-                        <ChevronLeft className="w-4 h-4" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleCycleColor(1)}
-                        aria-label="Próxima cor"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white/90 hover:bg-white border border-zinc-200 text-zinc-700 flex items-center justify-center shadow-sm transition-all cursor-pointer"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </>
-                  )}
-
-                  <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-black bg-[#0A0A0A] text-[#34D399] shadow">
-                      Preço de Atacado
-                    </span>
-                  </div>
-
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
-                    {isOutOfStock ? (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-500 text-black shadow">
-                        <AlertTriangle className="w-3.5 h-3.5" />
-                        Zerou no Estoque • Sob Consulta
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow">
-                        <Check className="w-3.5 h-3.5 stroke-[3]" />
-                        Pronta Entrega ({activeProduct.estoque} un.)
-                      </span>
-                    )}
-
-                    {variantConfig?.hasColorOptions && (
-                      <div className="flex items-center gap-1 bg-black/50 backdrop-blur-xs px-2 py-1 rounded-full">
-                        {variantConfig.availableColors.map((color) => {
-                          const isSelected =
-                            activeProduct.id === color.targetProductId ||
-                            selectedColor?.id === color.id;
-                          return (
-                            <span
-                              key={`modal-dot-${color.id}`}
-                              className={`rounded-full transition-all ${
-                                isSelected ? 'w-3.5 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/50'
-                              }`}
-                            />
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                </div>
               </div>
+            </div>
 
-              {/* Miniaturas Horizontais para Mobile */}
-              {productGallery.length > 1 && (
-                <div className="sm:hidden flex gap-2 overflow-x-auto py-1 px-0.5 select-none no-scrollbar">
-                  {productGallery.map((imgUrl, idx) => {
-                    const isCurrent = currentMainImage === imgUrl;
-                    return (
-                      <button
-                        key={`m-thumb-${idx}`}
-                        type="button"
-                        onClick={() => setSelectedImage(imgUrl)}
-                        className={`w-12 h-12 rounded-xl p-1 bg-white border transition-all shrink-0 cursor-pointer flex items-center justify-center ${
-                          isCurrent
-                            ? 'border-zinc-900 ring-2 ring-zinc-900 shadow-xs'
-                            : 'border-zinc-200/90 opacity-70 hover:opacity-100'
-                        }`}
-                      >
-                        <img
-                          src={imgUrl}
-                          alt={`Ângulo ${idx + 1}`}
-                          className="w-full h-full object-contain"
-                        />
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+            {/* 2. Demais Fotos Embaixo da Foto Principal (Miniaturas da Galeria) */}
+            {productGallery.length > 1 && (
+              <div className="w-full max-w-md sm:max-w-lg mt-3.5 flex items-center justify-center gap-2 sm:gap-2.5 overflow-x-auto py-1 px-1 select-none no-scrollbar">
+                {productGallery.map((imgUrl, idx) => {
+                  const isCurrent = currentMainImage === imgUrl;
+                  return (
+                    <button
+                      key={`gallery-thumb-${idx}`}
+                      type="button"
+                      onClick={() => setSelectedImage(imgUrl)}
+                      title={`Ver foto ${idx + 1}`}
+                      className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl p-1 bg-white border-2 transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                        isCurrent
+                          ? 'border-zinc-950 ring-2 ring-zinc-950 shadow-sm scale-105'
+                          : 'border-zinc-200 hover:border-zinc-400 opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <img
+                        src={imgUrl}
+                        alt={`Ângulo ${idx + 1}`}
+                        className="w-full h-full object-contain"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
+            {/* 3. Informações Logo Abaixo */}
+            <div className="w-full space-y-4 mt-5">
               {/* Selos de Confiança Rápida */}
               <div className="grid grid-cols-2 gap-2">
                 <div className="bg-[#F8F9FA] border border-zinc-200 rounded-xl p-2.5 flex items-center gap-2">
@@ -373,10 +344,7 @@ export default function ProductDetailModal({
                   </span>
                 </div>
               </div>
-            </div>
 
-            {/* Coluna Direita: Título, SEO Curto, Preço e Simulador de Frete */}
-            <div className="md:col-span-7 flex flex-col justify-between space-y-4">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   <div className="inline-flex items-center gap-1 bg-amber-50 border border-amber-200/80 px-2.5 py-0.5 rounded-full">
@@ -639,10 +607,9 @@ export default function ProductDetailModal({
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Abas de Informações de SEO, Ficha Técnica e Parcelamento */}
-          <div className="border-t border-zinc-200 pt-5">
+            {/* Abas de Informações de SEO, Ficha Técnica e Parcelamento */}
+            <div className="w-full border-t border-zinc-200 pt-5 mt-4">
             <div className="flex flex-wrap gap-2 mb-4">
               <button
                 type="button"
@@ -805,8 +772,9 @@ export default function ProductDetailModal({
             )}
           </div>
         </div>
+      </div>
 
-        {/* Barra Inferior Fixa de Compra */}
+      {/* Barra Inferior Fixa de Compra */}
         <div className="px-4 sm:px-6 py-3.5 bg-white border-t border-zinc-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
           {!isOutOfStock && (
             <div className="flex items-center justify-between sm:justify-start gap-3">
