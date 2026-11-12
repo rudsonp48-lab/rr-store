@@ -15,6 +15,13 @@ import {
 } from 'lucide-react';
 import { CartItem, CategoryId, DFRegion, HeroBanner, Product } from '../types/store';
 import { CATEGORIES, DF_REGIONS, formatBRL, formatInstallment, PRODUCTS } from '../data/mockData';
+import FASTSHOP_GALLERY_JSON from '../data/fastshop_gallery.json';
+const FASTSHOP_GALLERY = FASTSHOP_GALLERY_JSON as Record<string, string[]>;
+import {
+  getPureModelName,
+  detectProductColor,
+  extractStorageLabel,
+} from '../data/productVariantUtils';
 import TopBarAndHeader from '../components/TopBarAndHeader';
 import HeroSection from '../components/HeroSection';
 import BrandLogo, { BrandLogoKey } from '../components/BrandLogo';
@@ -43,70 +50,175 @@ type QuickFilterId =
   | 'ssd';
 
 // Cache da última versão publicada pelo painel (abre a loja instantaneamente na próxima visita)
-const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v10';
+const SETTINGS_CACHE_KEY = 'rr_store_settings_cache_v15';
+const CURRENT_PRICE_CATALOG_VERSION = 15;
 
 const LOCAL_CURATED_MAP = new Map<string, Product>(PRODUCTS.map((p) => [p.id, p]));
+const SOUSA_IMAGE_URLS = new Set(
+  PRODUCTS.filter((p) => p.id.startsWith('sousa-')).map((p) => p.imagem)
+);
+
+function normalizeDuoText(text?: string): string {
+  return (text || '').replace(/\biphone\s*18\s*duo\b/gi, 'iPhone Duo');
+}
 
 function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
-  const cloudIds = new Set(cloudProducts.map((p) => p.id));
-  const sanitizedCloud = cloudProducts.map((cp) => {
+  const seen = new Set<string>();
+  const uniqueCloud = cloudProducts.filter((cp) => {
+    if (!cp?.id || cp.id === 'rr-apple-airtag-2pack') return false;
+    if (seen.has(cp.id)) return false;
+    seen.add(cp.id);
+    return true;
+  });
+
+  const sanitizedCloud = uniqueCloud.map((cp) => {
     const local = LOCAL_CURATED_MAP.get(cp.id);
-    const cleanParcelamento = (cp.parcelamento || local?.parcelamento || '').replace(
-      /sem juros/gi,
-      '(juros conforme taxa da operadora)'
-    );
-    const safeCloudImg = (cp.imagem || local?.imagem || '').replace(/^http:\/\//i, 'https://');
-    const livePrice = cp.precoPor > 0 ? cp.precoPor : (local?.precoPor || local?.precoPix || 0);
-    const livePix = cp.precoPix > 0 ? cp.precoPix : livePrice;
+    const hasCurrentPriceVersion =
+      (cp as Product & { priceCatalogVersion?: number }).priceCatalogVersion ===
+      CURRENT_PRICE_CATALOG_VERSION;
+    const isApple = cp.id.startsWith('rr-apple-');
+
+    const isCustomFirebaseImg = cp.imagem?.includes('firebasestorage.googleapis.com');
+    const isStaleSousaOnApple = isApple && SOUSA_IMAGE_URLS.has(cp.imagem);
+    const chosenImg =
+      local && (isApple || cp.id.startsWith('sousa-')) && !isCustomFirebaseImg
+        ? local.imagem
+        : isStaleSousaOnApple
+        ? local?.imagem || 'https://fastshopbr.vtexassets.com/arquivos/ids/5582702/17892121899730.jpg?v=639248107988200000'
+        : cp.imagem || local?.imagem || '';
+    const safeCloudImg = chosenImg.replace(/^http:\/\//i, 'https://');
+
+    // Para produtos Apple curados: se o documento na nuvem for anterior à versão 15
+    // (ex: preços antigos com * 0.95 ou lista anterior), usa o preço integral atualizado da lista oficial
+    const useLocalOfficialPrice = isApple && !!local && !hasCurrentPriceVersion;
+
+    const livePrice = useLocalOfficialPrice
+      ? local!.precoPor
+      : cp.precoPor > 0
+      ? cp.precoPor
+      : local?.precoPor || local?.precoPix || 0;
+    const livePix = useLocalOfficialPrice
+      ? local!.precoPix
+      : cp.precoPix > 0
+      ? cp.precoPix
+      : livePrice;
+    const liveDe = useLocalOfficialPrice
+      ? local!.precoDe
+      : cp.precoDe > livePrice
+      ? cp.precoDe
+      : Math.round(livePrice * 1.15);
+    const parcelas = livePrice >= 200 ? 12 : livePrice >= 80 ? 6 : 3;
+    const cleanParcelamento = formatInstallment(livePrice, parcelas);
+
     return {
       ...(local || {}),
       ...cp,
-      nome: local?.nome || cp.nome,
+      nome: normalizeDuoText(local?.nome || cp.nome),
       imagem: safeCloudImg,
-      descricao: local?.descricao || cp.descricao,
+      gallery: local?.gallery || cp.gallery || FASTSHOP_GALLERY[cp.id],
+      descricao: normalizeDuoText(local?.descricao || cp.descricao),
+      precoDe: liveDe,
       precoPor: livePrice,
       precoPix: livePix,
+      maxParcelasSemJuros: parcelas,
       parcelamento: cleanParcelamento,
-      estoque: typeof cp.estoque === 'number' ? cp.estoque : (local?.estoque ?? 5),
+      estoque: useLocalOfficialPrice
+        ? local!.estoque
+        : typeof cp.estoque === 'number'
+        ? cp.estoque
+        : local?.estoque ?? 5,
     };
   });
-  return [...PRODUCTS.filter((p) => !cloudIds.has(p.id)), ...sanitizedCloud];
+
+  const cloudById = new Map<string, Product>(sanitizedCloud.map((p) => [p.id, p]));
+  const localIds = new Set<string>(PRODUCTS.map((p) => p.id));
+  const canonicalMerged = PRODUCTS.map((p) => cloudById.get(p.id) || p);
+  const newCloudOnly = sanitizedCloud.filter((p) => !localIds.has(p.id));
+  return [...newCloudOnly, ...canonicalMerged];
 }
 
 /**
  * StockMaster é a fonte da verdade dos preços da RR: o valor publicado lá (storefrontPrice) vale
- * integralmente na vitrine. Itens com o mesmo id/SKU atualizam preço e estoque; itens novos entram.
+ * integralmente na vitrine. Itens com o mesmo id/SKU/variante atualizam preço e estoque; itens novos entram.
  */
 function applyStockmaster(base: Product[], items: StockmasterItem[]): Product[] {
   const norm = (v?: string) => (v || '').trim().toLowerCase();
   const bySmId = new Map(base.map((p) => [norm(p.id), p]));
+  const byVariantKey = new Map<string, Product>();
+  for (const p of base) {
+    const modelKey = getPureModelName(p.nome).toLowerCase();
+    const storageKey = (extractStorageLabel(p.nome) || '').toLowerCase();
+    const colorKey = (detectProductColor(p)?.id || '').toLowerCase();
+    const key = `${modelKey}|${storageKey}|${colorKey}`;
+    if (!byVariantKey.has(key)) {
+      byVariantKey.set(key, p);
+    }
+  }
   const result = new Map<string, Product>(base.map((p) => [p.id, p]));
 
   for (const it of items) {
     if (!it || !(it.preco > 0)) continue;
+    const hasCurrentSyncVersion =
+      (it as StockmasterItem & { syncVersion?: number }).syncVersion ===
+      CURRENT_PRICE_CATALOG_VERSION;
+    const cleanName = normalizeDuoText(it.nome);
     const smId = `sm-${it.id}`;
-    const match = bySmId.get(norm(smId)) || (it.sku ? bySmId.get(norm(it.sku)) : undefined);
+    const fakeProdForMatch: Product = {
+      id: smId,
+      nome: cleanName,
+      categoria: 'Eletrônicos & Smartphones',
+      precoDe: it.preco,
+      precoPor: it.preco,
+      precoPix: it.preco,
+      parcelamento: '',
+      maxParcelasSemJuros: 12,
+      avaliacao: 5,
+      avaliacoesCount: 12,
+      tag: 'Novidade',
+      imagem: it.imagem || '',
+      descricao: cleanName,
+      estoque: it.estoque,
+    };
+    const variantKey = `${getPureModelName(cleanName).toLowerCase()}|${(
+      extractStorageLabel(cleanName) || ''
+    ).toLowerCase()}|${(detectProductColor(fakeProdForMatch)?.id || '').toLowerCase()}`;
+
+    const match =
+      bySmId.get(norm(smId)) ||
+      (it.sku ? bySmId.get(norm(it.sku)) : undefined) ||
+      byVariantKey.get(variantKey);
+
+    // Ignora snapshots antigos do StockMaster sobre itens Apple curados até que o StockMaster sincronize na v15
+    if (match && match.id.startsWith('rr-apple-') && !hasCurrentSyncVersion) {
+      continue;
+    }
+
     if (it.ativo === false || it.estoque <= 0) {
-      if (match) result.delete(match.id);
+      if (match && match.id.startsWith('sm-')) {
+        result.delete(match.id);
+      } else if (match) {
+        result.set(match.id, { ...match, estoque: 0 });
+      }
       continue;
     }
     const parcelas = it.preco >= 200 ? 12 : it.preco >= 80 ? 6 : 3;
     if (match) {
       result.set(match.id, {
         ...match,
-        precoDe: it.preco,
+        nome: normalizeDuoText(match.nome),
+        precoDe: Math.max(match.precoDe || it.preco, Math.round(it.preco * 1.12)),
         precoPor: it.preco,
         precoPix: it.preco,
         parcelamento: formatInstallment(it.preco, parcelas),
         estoque: it.estoque,
-        imagem: it.imagem || match.imagem,
+        imagem: match.id.startsWith('rr-apple-') ? match.imagem || it.imagem || '' : it.imagem || match.imagem,
       });
     } else {
       result.set(smId, {
         id: smId,
-        nome: it.nome,
+        nome: cleanName,
         categoria: (it.categoria as Product['categoria']) || 'Eletrônicos & Smartphones',
-        precoDe: it.preco,
+        precoDe: Math.round(it.preco * 1.12),
         precoPor: it.preco,
         precoPix: it.preco,
         parcelamento: formatInstallment(it.preco, parcelas),
@@ -115,7 +227,7 @@ function applyStockmaster(base: Product[], items: StockmasterItem[]): Product[] 
         avaliacoesCount: 12,
         tag: 'Novidade',
         imagem: it.imagem || '',
-        descricao: `${it.nome} — disponível em Brasília-DF com entrega rápida via Motoboy Express.`,
+        descricao: `${cleanName} — disponível em Brasília-DF com entrega rápida via Motoboy Express.`,
         estoque: it.estoque,
       });
     }
@@ -629,21 +741,34 @@ export default function RRStorePage() {
       );
     });
 
+    let sorted = list;
     if (sortBy === 'menor-preco') {
-      return [...list].sort((a, b) => a.precoPix - b.precoPix);
-    }
-    if (sortBy === 'maior-desconto') {
-      return [...list].sort(
+      sorted = [...list].sort((a, b) => a.precoPix - b.precoPix);
+    } else if (sortBy === 'maior-desconto') {
+      sorted = [...list].sort(
         (a, b) =>
           (b.precoDe - b.precoPix) / b.precoDe - (a.precoDe - a.precoPix) / a.precoDe
       );
-    }
-    if (sortBy === 'melhor-avaliacao') {
-      return [...list].sort(
+    } else if (sortBy === 'melhor-avaliacao') {
+      sorted = [...list].sort(
         (a, b) => b.avaliacao - a.avaliacao || b.avaliacoesCount - a.avaliacoesCount
       );
     }
-    return list;
+
+    // Agrupa variantes (cores e capacidades) em 1 único card por modelo na vitrine
+    const groupedMap = new Map<string, Product>();
+    for (const item of sorted) {
+      const modelKey = getPureModelName(item.nome).toLowerCase() || item.id;
+      const existing = groupedMap.get(modelKey);
+      if (!existing) {
+        groupedMap.set(modelKey, item);
+      } else if (existing.estoque <= 0 && item.estoque > 0) {
+        // Prefere iniciar o card com uma variante que tenha estoque disponível
+        groupedMap.set(modelKey, item);
+      }
+    }
+
+    return Array.from(groupedMap.values());
   }, [products, selectedCategory, quickFilter, subFilter, searchQuery, sortBy]);
 
   // Reseta paginação quando o usuário muda filtros ou busca

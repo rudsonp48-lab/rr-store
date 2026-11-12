@@ -9,6 +9,7 @@ export interface ColorSwatch {
   borderHex?: string;
   glowColor?: string;
   targetProductId?: string;
+  inStock?: boolean;
 }
 
 export interface StorageTier {
@@ -28,6 +29,8 @@ export interface ProductVariantConfig {
   availableStorages: StorageTier[];
   officialSpecBadge?: string;
   modelFamilyName: string;
+  variantSummaryLabel?: string;
+  siblings: Product[];
 }
 
 // Catálogo Mestre de Cores Oficiais com Acabamento e HEX Metálico Realista
@@ -58,6 +61,12 @@ const COLOR_DEFINITIONS: Record<
     hex: '#28496E',
     borderHex: '#1B3450',
     glowColor: 'rgba(40, 73, 110, 0.45)',
+  },
+  'sky-blue': {
+    name: 'Sky Blue (Azul Céu)',
+    hex: '#8BB8D6',
+    borderHex: '#6899BA',
+    glowColor: 'rgba(139, 184, 214, 0.45)',
   },
   'azul-celeste': {
     name: 'Azul Celeste',
@@ -119,6 +128,12 @@ const COLOR_DEFINITIONS: Record<
     borderHex: '#C98878',
     glowColor: 'rgba(229, 168, 152, 0.45)',
   },
+  rosa: {
+    name: 'Rosa',
+    hex: '#F2B8C6',
+    borderHex: '#D996A6',
+    glowColor: 'rgba(242, 184, 198, 0.45)',
+  },
   'dourado-bordo': {
     name: 'Dourado + Pulseira Bordô',
     hex: '#CFAC4B',
@@ -127,7 +142,7 @@ const COLOR_DEFINITIONS: Record<
     glowColor: 'rgba(207, 172, 75, 0.45)',
   },
   'ouro-dourado': {
-    name: 'Ouro Dourado',
+    name: 'Gold (Dourado)',
     hex: '#D4AF37',
     borderHex: '#B8952B',
     glowColor: 'rgba(212, 175, 55, 0.45)',
@@ -196,6 +211,9 @@ export function detectProductColor(product: Product): ColorSwatch | null {
   const rawLower = rawColor.toLowerCase();
 
   // Mapeamento prioritário
+  if (rawLower.includes('natural') || id.includes('natural')) {
+    return { id: 'tit-natural', ...COLOR_DEFINITIONS['tit-natural'] };
+  }
   if (rawLower.includes('dourado') && (rawLower.includes('bordô') || rawLower.includes('bordo'))) {
     return { id: 'dourado-bordo', ...COLOR_DEFINITIONS['dourado-bordo'] };
   }
@@ -204,6 +222,9 @@ export function detectProductColor(product: Product): ColorSwatch | null {
   }
   if (rawLower.includes('laranja') || id.includes('laranja')) {
     return { id: 'laranja-cosmico', ...COLOR_DEFINITIONS['laranja-cosmico'] };
+  }
+  if (rawLower.includes('sky blue') || rawLower.includes('skyblue') || id.includes('skyblue')) {
+    return { id: 'sky-blue', ...COLOR_DEFINITIONS['sky-blue'] };
   }
   if (rawLower.includes('azul intenso') || id.includes('azul-intenso')) {
     return { id: 'azul-intenso', ...COLOR_DEFINITIONS['azul-intenso'] };
@@ -217,7 +238,10 @@ export function detectProductColor(product: Product): ColorSwatch | null {
   if (rawLower.includes('rose gold') || rawLower.includes('ouro rosa') || id.includes('rosegold')) {
     return { id: 'rose-gold', ...COLOR_DEFINITIONS['rose-gold'] };
   }
-  if (rawLower.includes('ouro dourado')) {
+  if (rawLower.includes('rosa') || rawLower.includes('pink') || id.includes('-rosa')) {
+    return { id: 'rosa', ...COLOR_DEFINITIONS['rosa'] };
+  }
+  if (rawLower.includes('ouro dourado') || rawLower.includes('gold') || rawLower.includes('dourado') || id.includes('-gold')) {
     return { id: 'ouro-dourado', ...COLOR_DEFINITIONS['ouro-dourado'] };
   }
   if (rawLower.includes('starlight') || rawLower.includes('estelar') || id.includes('starlight')) {
@@ -242,7 +266,7 @@ export function detectProductColor(product: Product): ColorSwatch | null {
     return { id: 'grafite', ...COLOR_DEFINITIONS['grafite'] };
   }
   if (rawLower.includes('gray') || rawLower.includes('cinza') || id.includes('gray')) {
-    return { id: 'grafite', ...COLOR_DEFINITIONS['grafite'], name: 'Gray' };
+    return { id: 'grafite', ...COLOR_DEFINITIONS['grafite'], name: 'Space Gray' };
   }
   if (rawLower.includes('silver') || rawLower.includes('pratead') || id.includes('silver')) {
     return { id: 'silver', ...COLOR_DEFINITIONS['silver'] };
@@ -265,9 +289,6 @@ export function detectProductColor(product: Product): ColorSwatch | null {
   if (rawLower.includes('azul') || id.includes('azul')) {
     return { id: 'azul', ...COLOR_DEFINITIONS['azul'] };
   }
-  if (rawLower.includes('natural') || id.includes('natural')) {
-    return { id: 'tit-natural', ...COLOR_DEFINITIONS['tit-natural'] };
-  }
 
   // Se não foi identificado pelo sufixo do nome, analisa palavras-chave no texto
   if (text.includes('bordô') || text.includes('bordo')) {
@@ -276,7 +297,16 @@ export function detectProductColor(product: Product): ColorSwatch | null {
   if (text.includes('laranja cósmico') || text.includes('laranja-cósmico')) {
     return { id: 'laranja-cosmico', ...COLOR_DEFINITIONS['laranja-cosmico'] };
   }
-  if (text.includes('rose gold')) {
+  if (text.includes('azul intenso') || text.includes('azul-intenso')) {
+    return { id: 'azul-intenso', ...COLOR_DEFINITIONS['azul-intenso'] };
+  }
+  if (text.includes('céu-noturno') || text.includes('ceu-noturno')) {
+    return { id: 'preto', ...COLOR_DEFINITIONS['preto'] };
+  }
+  if (text.includes('branco-estrela') || text.includes('prateado') || text.includes('silver')) {
+    return { id: 'silver', ...COLOR_DEFINITIONS['silver'] };
+  }
+  if (text.includes('rose gold') || text.includes('rosegold')) {
     return { id: 'rose-gold', ...COLOR_DEFINITIONS['rose-gold'] };
   }
   if (text.includes('starlight')) {
@@ -293,16 +323,31 @@ export function detectProductColor(product: Product): ColorSwatch | null {
 }
 
 /**
- * Normaliza o nome do produto para o modelo puro (removendo cor e detalhes específicos).
+ * Normaliza o nome do produto para o modelo puro (removendo cor, capacidade e detalhes específicos),
+ * garantindo que todas as variantes de cor e armazenamento do mesmo aparelho fiquem agrupadas em 1 único card.
  */
 export function getPureModelName(productName: string): string {
-  let base = productName;
+  let base = productName
+    .replace(/\biphone\s*18\s*duo\b/gi, 'iPhone Duo')
+    .replace(/^apple\s+(?=(iphone|ipad|macbook|imac|mac mini|airpods|airtag|magic)\b)/i, '');
   if (base.includes(' - ')) {
     base = base.split(' - ')[0].trim();
   }
-  // Remove capacidades conhecidas (128GB, 256GB, 512GB, 1TB, etc.)
+  // Normaliza teclado numérico com Touch ID independentemente da ordem
+  if (/magic\s*keyboard/i.test(base) && /num[eé]rico/i.test(base) && /touch\s*id/i.test(base)) {
+    return 'Magic Keyboard com Touch ID e Teclado Numérico';
+  }
+  // Remove capacidades, tamanhos de caixa de Watch, cores soltas no final e sufixos de condição/conectividade
   const pure = base
-    .replace(/\b(128gb|256gb|512gb|1tb|64gb|32gb|240gb|16gb ram|8gb ram|4gb ram|8gb|12gb ram)\b/gi, '')
+    .replace(/\(Americano[^)]*\)/gi, '')
+    .replace(/\(Lacrado\)/gi, '')
+    .replace(/\(Sem Lacre[^)]*\)/gi, '')
+    .replace(/\(Zerou[^)]*\)/gi, '')
+    .replace(/\(C[eé]u-Noturno\)/gi, '')
+    .replace(/\b(128gb|256gb|512gb|1tb|2tb|64gb|32gb|240gb|16gb ram|8gb ram|4gb ram|12gb ram|16gb|8gb)\b/gi, '')
+    .replace(/\b(40mm|42mm|44mm|46mm|49mm)\b/gi, '')
+    .replace(/\b(wi-fi\s*\+\s*cellular|wi-fi|wifi|ssd\s+touch\s*id|ssd|tela)\b/gi, '')
+    .replace(/\b(prateado|silver|preto|preta|black|natural|branco-estrela|branco|azul\s+intenso|azul|bord[oô]|laranja\s+c[oó]smico|rose\s*gold|starlight|midnight|space\s*gray|space\s*black|sky\s*blue|rosa|roxo|gold|dourado)\b$/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
   return pure;
@@ -315,10 +360,22 @@ export function extractStorageLabel(productName: string): string | null {
   const matchWatch = productName.match(/\b(40mm|42mm|44mm|46mm|49mm)\b/i);
   if (matchWatch) return matchWatch[1].toUpperCase();
 
-  const matchStorage = productName.match(/\b(128GB|256GB|512GB|1TB|240GB)\b/i);
-  if (matchStorage) return matchStorage[1].toUpperCase();
+  const matchStorage = productName.match(/\b(128GB|256GB|512GB|1TB|2TB|240GB)\b/i);
+  if (matchStorage) {
+    const cap = matchStorage[1].toUpperCase();
+    if (/cellular/i.test(productName)) return `${cap} 5G`;
+    return cap;
+  }
 
   return null;
+}
+
+function parseStorageSortOrder(label: string): number {
+  const upper = label.toUpperCase();
+  if (upper.includes('TB')) return parseFloat(upper) * 1024;
+  if (upper.includes('GB')) return parseFloat(upper) + (upper.includes('5G') ? 1 : 0);
+  if (upper.includes('MM')) return parseFloat(upper);
+  return 999;
 }
 
 /**
@@ -344,47 +401,119 @@ export function getProductVariantConfig(
     return getPureModelName(item.nome).toLowerCase() === pureModel.toLowerCase();
   });
 
-  // Mapeia Cores Reais do Catálogo
+  // Mapeia Cores Reais do Catálogo em ordem fixa (para que as bolinhas nunca pulem de lugar ao clicar)
   const colorMap = new Map<string, ColorSwatch>();
-  if (currentColor) {
-    colorMap.set(currentColor.id, { ...currentColor, targetProductId: product.id });
+  const allColorSiblings = siblings.length > 0 ? siblings : [product];
+
+  for (const sib of allColorSiblings) {
+    const sibColor = detectProductColor(sib);
+    if (!sibColor) continue;
+    const sibStorage = extractStorageLabel(sib.nome);
+    const existing = colorMap.get(sibColor.id);
+    const sibInStock = (sib.estoque ?? 0) > 0;
+
+    if (!existing) {
+      colorMap.set(sibColor.id, {
+        ...sibColor,
+        targetProductId: sib.id,
+        inStock: sibInStock,
+      });
+    } else {
+      // Prefere o irmão que tem a MESMA capacidade selecionada atualmente (ou que tenha estoque)
+      const matchesCurrentStorage = currentStorageLabel && sibStorage === currentStorageLabel;
+      const existingProd = allColorSiblings.find((p) => p.id === existing.targetProductId);
+      const existingMatchesStorage =
+        currentStorageLabel && existingProd && extractStorageLabel(existingProd.nome) === currentStorageLabel;
+
+      if (
+        (!existing.inStock && sibInStock) ||
+        (matchesCurrentStorage && !existingMatchesStorage) ||
+        (matchesCurrentStorage && existingMatchesStorage && (sib.estoque ?? 0) > (existingProd?.estoque ?? 0))
+      ) {
+        colorMap.set(sibColor.id, {
+          ...sibColor,
+          targetProductId: sib.id,
+          inStock: existing.inStock || sibInStock,
+        });
+      } else if (sibInStock) {
+        existing.inStock = true;
+      }
+    }
   }
 
-  for (const sib of siblings) {
-    const sibColor = detectProductColor(sib);
-    if (sibColor && !colorMap.has(sibColor.id)) {
-      colorMap.set(sibColor.id, { ...sibColor, targetProductId: sib.id });
-    }
+  // Se o próprio produto ativo tem a cor no mapa e a mesma capacidade, aponta para ele mesmo
+  if (currentColor && colorMap.has(currentColor.id)) {
+    const selfInStock = (product.estoque ?? 0) > 0;
+    const curr = colorMap.get(currentColor.id)!;
+    colorMap.set(currentColor.id, {
+      ...curr,
+      targetProductId: product.id,
+      inStock: selfInStock || curr.inStock,
+    });
   }
 
   const availableColors = Array.from(colorMap.values());
   const hasColorOptions = availableColors.length > 1;
 
-  // Mapeia Capacidades Reais do Catálogo
+  // Mapeia Capacidades Reais do Catálogo ordenadas (128GB -> 256GB -> 512GB / 40MM -> 44MM)
   const storageMap = new Map<string, StorageTier>();
-  if (currentStorageLabel) {
-    storageMap.set(currentStorageLabel, {
-      id: currentStorageLabel.toLowerCase(),
-      label: currentStorageLabel,
-      price: product.precoPix,
-      targetProductId: product.id,
-    });
-  }
-
-  for (const sib of siblings) {
+  for (const sib of allColorSiblings) {
     const sibStorage = extractStorageLabel(sib.nome);
-    if (sibStorage && !storageMap.has(sibStorage)) {
+    if (!sibStorage) continue;
+    const sibColor = detectProductColor(sib);
+    const existing = storageMap.get(sibStorage);
+
+    if (!existing) {
       storageMap.set(sibStorage, {
         id: sibStorage.toLowerCase(),
         label: sibStorage,
         price: sib.precoPix,
         targetProductId: sib.id,
       });
+    } else {
+      // Prefere o irmão que tem a MESMA cor selecionada atualmente
+      const matchesCurrentColor = currentColor && sibColor?.id === currentColor.id;
+      const existingProd = allColorSiblings.find((p) => p.id === existing.targetProductId);
+      const existingMatchesColor =
+        currentColor && existingProd && detectProductColor(existingProd)?.id === currentColor.id;
+
+      if (matchesCurrentColor && !existingMatchesColor) {
+        storageMap.set(sibStorage, {
+          id: sibStorage.toLowerCase(),
+          label: sibStorage,
+          price: sib.precoPix,
+          targetProductId: sib.id,
+        });
+      }
     }
   }
 
-  const availableStorages = Array.from(storageMap.values());
+  if (currentStorageLabel && storageMap.has(currentStorageLabel)) {
+    storageMap.set(currentStorageLabel, {
+      ...storageMap.get(currentStorageLabel)!,
+      price: product.precoPix,
+      targetProductId: product.id,
+    });
+  }
+
+  const availableStorages = Array.from(storageMap.values()).sort(
+    (a, b) => parseStorageSortOrder(a.label) - parseStorageSortOrder(b.label)
+  );
   const hasStorageOptions = availableStorages.length > 1;
+
+  // Resumo estilo vitrine Apple ("256GB a 512GB · 4 cores")
+  const summaryParts: string[] = [];
+  if (availableStorages.length > 1) {
+    summaryParts.push(
+      `${availableStorages[0].label} a ${availableStorages[availableStorages.length - 1].label}`
+    );
+  } else if (availableStorages.length === 1) {
+    summaryParts.push(availableStorages[0].label);
+  }
+  if (availableColors.length > 1) {
+    summaryParts.push(`${availableColors.length} cores`);
+  }
+  const variantSummaryLabel = summaryParts.length > 0 ? summaryParts.join(' · ') : undefined;
 
   // Badge de especificação oficial se não houver múltiplos botões
   let officialSpecBadge = '';
@@ -419,6 +548,8 @@ export function getProductVariantConfig(
     availableStorages,
     officialSpecBadge,
     modelFamilyName: pureModel,
+    variantSummaryLabel,
+    siblings: allColorSiblings,
   };
 }
 

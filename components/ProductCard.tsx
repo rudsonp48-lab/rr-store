@@ -11,6 +11,8 @@ import {
   Eye,
   AlertTriangle,
   RefreshCw,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { DFRegion, Product } from '../types/store';
 import { formatBRL } from '../data/mockData';
@@ -61,6 +63,12 @@ function ProductCard({
   const [selectedColor, setSelectedColor] = useState<ColorSwatch | null>(
     variantConfig.currentColor
   );
+  const touchStartXRef = React.useRef<number | null>(null);
+
+  React.useEffect(() => {
+    setSelectedStorage(variantConfig.currentStorage);
+    setSelectedColor(variantConfig.currentColor);
+  }, [variantConfig.currentStorage, variantConfig.currentColor]);
 
   const isApple = activeProduct.id.startsWith('rr-apple-');
   const isOutOfStock = activeProduct.estoque <= 0;
@@ -100,8 +108,7 @@ function ProductCard({
     setSelectedStorage(tier);
   };
 
-  const handleSelectColor = (color: ColorSwatch, e: React.MouseEvent) => {
-    e.stopPropagation();
+  const applyColorChoice = (color: ColorSwatch) => {
     if (color.targetProductId && allProducts) {
       const brother = allProducts.find((p) => p.id === color.targetProductId);
       if (brother) {
@@ -113,26 +120,99 @@ function ProductCard({
     setSelectedColor(color);
   };
 
+  const handleSelectColor = (color: ColorSwatch, e: React.MouseEvent) => {
+    e.stopPropagation();
+    applyColorChoice(color);
+  };
+
+  const currentColorIndex = useMemo(() => {
+    if (!variantConfig.hasColorOptions) return 0;
+    const activeColorId = variantConfig.currentColor?.id || selectedColor?.id;
+    const idx = variantConfig.availableColors.findIndex((c) => c.id === activeColorId);
+    return idx >= 0 ? idx : 0;
+  }, [variantConfig, selectedColor]);
+
+  const stepColor = (delta: number, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    const colors = variantConfig.availableColors;
+    if (colors.length <= 1) return;
+    const nextIdx = (currentColorIndex + delta + colors.length) % colors.length;
+    applyColorChoice(colors[nextIdx]);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null || !variantConfig.hasColorOptions) return;
+    const endX = e.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const diff = endX - touchStartXRef.current;
+    touchStartXRef.current = null;
+    if (Math.abs(diff) > 32) {
+      e.stopPropagation();
+      stepColor(diff < 0 ? 1 : -1);
+    }
+  };
+
   return (
     <article
-      onClick={() => onSelectProduct?.(product)}
+      onClick={() => onSelectProduct?.(activeProduct)}
       className="motion-hover-lift group h-full bg-[#FFFFFF] rounded-2xl border border-zinc-200/90 hover:border-[#10B981] shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(16,185,129,0.22)] flex flex-col overflow-hidden cursor-pointer"
     >
-      {/* Container da Imagem com Zoom Suave */}
+      {/* Container da Imagem com Zoom Suave + Swipe de Cores */}
       <div
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         className={`relative aspect-[4/3] w-full ${
           isApple ? 'bg-white p-3' : 'bg-[#F8F9FA]'
-        } overflow-hidden`}
+        } overflow-hidden select-none`}
       >
         <img
-          src={product.imagem}
-          alt={product.nome}
+          src={activeProduct.imagem}
+          alt={activeProduct.nome}
           loading="lazy"
           decoding="async"
           className={`w-full h-full ${
             isApple ? 'object-contain' : 'object-cover'
           } object-center group-hover:scale-105 transition-transform duration-500 ease-out`}
         />
+
+        {/* Setas Laterais para Deslizar Cores (quando houver +1 cor) */}
+        {variantConfig.hasColorOptions && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => stepColor(-1, e)}
+              aria-label="Cor anterior"
+              className="absolute left-1.5 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-black/55 hover:bg-black/80 text-white flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer shadow"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => stepColor(1, e)}
+              aria-label="Próxima cor"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-black/55 hover:bg-black/80 text-white flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer shadow"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+            {/* Indicadores estilo Carrossel de Cores */}
+            <div className="absolute bottom-9 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/45 backdrop-blur-xs">
+              {variantConfig.availableColors.map((col, idx) => (
+                <button
+                  key={col.id}
+                  type="button"
+                  onClick={(e) => handleSelectColor(col, e)}
+                  aria-label={`Cor ${col.name}`}
+                  className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                    idx === currentColorIndex ? 'w-3.5 bg-[#34D399]' : 'w-1.5 bg-white/60 hover:bg-white'
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
         <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
 
@@ -143,7 +223,7 @@ function ProductCard({
               compactMobile ? 'hidden sm:inline-flex' : 'inline-flex'
             } items-center px-2 py-0.5 rounded-lg text-[10px] sm:text-[11px] font-bold bg-[#0A0A0A]/85 text-white backdrop-blur-md border border-white/15 truncate max-w-[62%]`}
           >
-            {isApple ? '💎 Joias Apple' : product.categoria}
+            {isApple ? '💎 Joias Apple' : activeProduct.categoria}
           </span>
 
           <span
@@ -154,7 +234,7 @@ function ProductCard({
             }`}
           >
             <Zap className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" />
-            {isOutOfStock ? 'Zerou Estoque' : product.tag}
+            {isOutOfStock ? 'Zerou Estoque' : activeProduct.tag}
           </span>
         </div>
 
@@ -197,10 +277,10 @@ function ProductCard({
                 </span>
               </div>
               <span className="text-[11px] sm:text-xs font-extrabold text-zinc-900">
-                {product.avaliacao.toFixed(1)}
+                {activeProduct.avaliacao.toFixed(1)}
               </span>
               <span className="text-[10px] sm:text-[11px] text-zinc-500">
-                ({product.avaliacoesCount})
+                ({activeProduct.avaliacoesCount})
               </span>
             </div>
             {isOutOfStock ? (
@@ -217,19 +297,24 @@ function ProductCard({
                   compactMobile ? 'hidden sm:inline-block' : 'inline-block'
                 } text-[10px] sm:text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full`}
               >
-                Estoque ({product.estoque})
+                Estoque ({activeProduct.estoque})
               </span>
             )}
           </div>
 
-          {/* Título do Produto */}
+          {/* Título do Produto + Resumo de Capacidades/Cores */}
           <h3
             className={`${
               compactMobile ? 'text-xs sm:text-base' : 'text-sm sm:text-base'
-            } font-extrabold text-[#0A0A0A] group-hover:text-[#059669] transition-colors line-clamp-2 leading-snug mb-1.5`}
+            } font-extrabold text-[#0A0A0A] group-hover:text-[#059669] transition-colors line-clamp-2 leading-snug mb-1`}
           >
             {activeProduct.nome}
           </h3>
+          {variantConfig.variantSummaryLabel && (
+            <p className="text-[10px] sm:text-[11px] font-bold text-emerald-700 mb-1.5">
+              {variantConfig.variantSummaryLabel}
+            </p>
+          )}
 
           {/* Descrição Curta */}
           <p
@@ -282,15 +367,18 @@ function ProductCard({
                       const isSelected =
                         activeProduct.id === color.targetProductId ||
                         selectedColor?.id === color.id;
+                      const isOutOfStock = color.inStock === false;
                       return (
                         <button
                           key={color.id}
                           type="button"
-                          title={`Cor: ${color.name}`}
+                          title={isOutOfStock ? `Cor: ${color.name} (Indisponível no momento)` : `Cor: ${color.name}`}
                           onClick={(e) => handleSelectColor(color, e)}
-                          className={`w-4 h-4 rounded-full transition-all cursor-pointer relative ${
+                          className={`w-4 h-4 rounded-full transition-all cursor-pointer relative overflow-hidden ${
                             isSelected
                               ? 'ring-2 ring-[#10B981] ring-offset-2 scale-110 shadow-xs'
+                              : isOutOfStock
+                              ? 'opacity-40 hover:opacity-75'
                               : 'hover:scale-105 opacity-80 hover:opacity-100'
                           }`}
                           style={{
@@ -299,7 +387,16 @@ function ProductCard({
                               ? `1px solid ${color.borderHex}`
                               : '1px solid rgba(0,0,0,0.18)',
                           }}
-                        />
+                        >
+                          {isOutOfStock && (
+                            <span
+                              aria-hidden="true"
+                              className="absolute inset-0 pointer-events-none flex items-center justify-center"
+                            >
+                              <span className="w-[140%] h-[1.5px] bg-red-500/90 -rotate-45" />
+                            </span>
+                          )}
+                        </button>
                       );
                     })}
                   </div>

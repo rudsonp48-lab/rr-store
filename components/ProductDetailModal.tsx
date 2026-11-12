@@ -19,6 +19,8 @@ import {
   Plus,
   Minus,
   RefreshCw,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { DFRegion, Product } from '../types/store';
 import { formatBRL } from '../data/mockData';
@@ -66,6 +68,32 @@ export default function ProductDetailModal({
 
   const [selectedStorage, setSelectedStorage] = useState<StorageTier | null>(null);
   const [selectedColor, setSelectedColor] = useState<ColorSwatch | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (activeProduct) {
+      setSelectedImage(activeProduct.imagem);
+    }
+  }, [activeProduct?.id, activeProduct?.imagem]);
+
+  const productGallery = useMemo(() => {
+    if (!activeProduct) return [];
+    const list: string[] = [];
+    if (activeProduct.imagem) {
+      list.push(activeProduct.imagem);
+    }
+    if (Array.isArray(activeProduct.gallery)) {
+      for (const img of activeProduct.gallery) {
+        if (img && !list.includes(img)) {
+          list.push(img);
+        }
+      }
+    }
+    return list;
+  }, [activeProduct?.id, activeProduct?.imagem, activeProduct?.gallery]);
+
+  const currentMainImage = selectedImage || activeProduct?.imagem || '';
 
   useEffect(() => {
     if (activeProduct && variantConfig) {
@@ -88,6 +116,33 @@ export default function ProductDetailModal({
       }
     }
     setSelectedColor(color);
+  };
+
+  const handleCycleColor = (direction: -1 | 1) => {
+    if (!variantConfig || variantConfig.availableColors.length <= 1) return;
+    const colors = variantConfig.availableColors;
+    const currentIndex = colors.findIndex(
+      (c) => c.targetProductId === activeProduct?.id || c.id === selectedColor?.id
+    );
+    const nextIndex =
+      currentIndex === -1
+        ? 0
+        : (currentIndex + direction + colors.length) % colors.length;
+    handleSelectColor(colors[nextIndex]);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!variantConfig?.hasColorOptions) return;
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || !variantConfig?.hasColorOptions) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    setTouchStartX(null);
+    if (Math.abs(deltaX) > 35) {
+      handleCycleColor(deltaX < 0 ? 1 : -1);
+    }
   };
 
   const handleSelectStorage = (tier: StorageTier) => {
@@ -152,10 +207,10 @@ export default function ProductDetailModal({
           <div className="flex items-center gap-2 min-w-0">
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-wider bg-[#10B981] text-[#0A0A0A] shrink-0">
               <Zap className="w-3 h-3 fill-current" />
-              {product.tag}
+              {activeProduct.tag}
             </span>
             <span className="text-xs text-zinc-300 font-bold truncate">
-              {seo.isAppleOfficial ? '💎 Joias Apple • Catálogo Oficial RR-MOBILE' : product.categoria}
+              {seo.isAppleOfficial ? '💎 Joias Apple • Catálogo Oficial RR-MOBILE' : activeProduct.categoria}
             </span>
           </div>
 
@@ -172,35 +227,136 @@ export default function ProductDetailModal({
         {/* Conteúdo Rolável */}
         <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-start">
-            {/* Coluna Esquerda: Foto do Produto + Selos */}
-            <div className="md:col-span-5 flex flex-col gap-2.5 sm:gap-3">
-              <div className="relative aspect-[4/3] sm:aspect-square max-h-[210px] sm:max-h-none w-full rounded-2xl bg-[#F8F9FA] border border-zinc-200/90 overflow-hidden flex items-center justify-center p-3 sm:p-4">
-                <img
-                  src={product.imagem}
-                  alt={product.nome}
-                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
-                />
+            {/* Coluna Esquerda: Foto do Produto + Galeria de Miniaturas FastShop + Selos */}
+            <div className="md:col-span-6 flex flex-col gap-2.5 sm:gap-3">
+              <div className="flex gap-2.5 sm:gap-3 items-stretch">
+                {/* Miniaturas Verticais (FastShop / Apple Store Style) em Telas sm+ */}
+                {productGallery.length > 1 && (
+                  <div className="hidden sm:flex flex-col gap-2 shrink-0 max-h-[380px] overflow-y-auto pr-1 select-none custom-scrollbar">
+                    {productGallery.map((imgUrl, idx) => {
+                      const isCurrent = currentMainImage === imgUrl;
+                      return (
+                        <button
+                          key={`thumb-${idx}`}
+                          type="button"
+                          onClick={() => setSelectedImage(imgUrl)}
+                          title={`Ver foto ${idx + 1}`}
+                          className={`w-14 h-14 rounded-xl p-1 bg-white border transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                            isCurrent
+                              ? 'border-zinc-900 ring-2 ring-zinc-900 shadow-xs'
+                              : 'border-zinc-200/90 hover:border-zinc-400 opacity-70 hover:opacity-100'
+                          }`}
+                        >
+                          <img
+                            src={imgUrl}
+                            alt={`Ângulo ${idx + 1}`}
+                            className="w-full h-full object-contain"
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
 
-                <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-black bg-[#0A0A0A] text-[#34D399] shadow">
-                    Preço de Atacado
-                  </span>
-                </div>
+                {/* Foto Principal do Produto */}
+                <div
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  className="flex-1 relative aspect-[4/3] sm:aspect-square max-h-[240px] sm:max-h-none w-full rounded-2xl bg-[#F8F9FA] border border-zinc-200/90 overflow-hidden flex items-center justify-center p-3 sm:p-4 select-none"
+                >
+                  <img
+                    src={currentMainImage}
+                    alt={activeProduct.nome}
+                    className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
+                  />
 
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
-                  {isOutOfStock ? (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-500 text-black shadow">
-                      <AlertTriangle className="w-3.5 h-3.5" />
-                      Zerou no Estoque • Sob Consulta
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      Pronta Entrega ({product.estoque} un.)
-                    </span>
+                  {variantConfig?.hasColorOptions && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => handleCycleColor(-1)}
+                        aria-label="Cor anterior"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white/90 hover:bg-white border border-zinc-200 text-zinc-700 flex items-center justify-center shadow-sm transition-all cursor-pointer"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCycleColor(1)}
+                        aria-label="Próxima cor"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white/90 hover:bg-white border border-zinc-200 text-zinc-700 flex items-center justify-center shadow-sm transition-all cursor-pointer"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </>
                   )}
+
+                  <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-black bg-[#0A0A0A] text-[#34D399] shadow">
+                      Preço de Atacado
+                    </span>
+                  </div>
+
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
+                    {isOutOfStock ? (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-500 text-black shadow">
+                        <AlertTriangle className="w-3.5 h-3.5" />
+                        Zerou no Estoque • Sob Consulta
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shadow">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        Pronta Entrega ({activeProduct.estoque} un.)
+                      </span>
+                    )}
+
+                    {variantConfig?.hasColorOptions && (
+                      <div className="flex items-center gap-1 bg-black/50 backdrop-blur-xs px-2 py-1 rounded-full">
+                        {variantConfig.availableColors.map((color) => {
+                          const isSelected =
+                            activeProduct.id === color.targetProductId ||
+                            selectedColor?.id === color.id;
+                          return (
+                            <span
+                              key={`modal-dot-${color.id}`}
+                              className={`rounded-full transition-all ${
+                                isSelected ? 'w-3.5 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/50'
+                              }`}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
+
+              {/* Miniaturas Horizontais para Mobile */}
+              {productGallery.length > 1 && (
+                <div className="sm:hidden flex gap-2 overflow-x-auto py-1 px-0.5 select-none no-scrollbar">
+                  {productGallery.map((imgUrl, idx) => {
+                    const isCurrent = currentMainImage === imgUrl;
+                    return (
+                      <button
+                        key={`m-thumb-${idx}`}
+                        type="button"
+                        onClick={() => setSelectedImage(imgUrl)}
+                        className={`w-12 h-12 rounded-xl p-1 bg-white border transition-all shrink-0 cursor-pointer flex items-center justify-center ${
+                          isCurrent
+                            ? 'border-zinc-900 ring-2 ring-zinc-900 shadow-xs'
+                            : 'border-zinc-200/90 opacity-70 hover:opacity-100'
+                        }`}
+                      >
+                        <img
+                          src={imgUrl}
+                          alt={`Ângulo ${idx + 1}`}
+                          className="w-full h-full object-contain"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
               {/* Selos de Confiança Rápida */}
               <div className="grid grid-cols-2 gap-2">
@@ -226,15 +382,15 @@ export default function ProductDetailModal({
                   <div className="inline-flex items-center gap-1 bg-amber-50 border border-amber-200/80 px-2.5 py-0.5 rounded-full">
                     <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                     <span className="text-xs font-black text-zinc-900">
-                      {product.avaliacao.toFixed(1)}
+                      {activeProduct.avaliacao.toFixed(1)}
                     </span>
                     <span className="text-[11px] text-zinc-500">
-                      ({product.avaliacoesCount} avaliações)
+                      ({activeProduct.avaliacoesCount} avaliações)
                     </span>
                   </div>
 
                   <span className="text-[11px] font-bold text-zinc-500 bg-zinc-100 px-2.5 py-0.5 rounded-full">
-                    Cód: {product.id}
+                    Cód: {activeProduct.id}
                   </span>
                 </div>
 
@@ -303,15 +459,22 @@ export default function ProductDetailModal({
                             const isSelected =
                               activeProduct.id === color.targetProductId ||
                               selectedColor?.id === color.id;
+                            const isOutOfStock = color.inStock === false;
                             return (
                               <button
                                 key={color.id}
                                 type="button"
-                                title={`Selecionar cor: ${color.name}`}
+                                title={
+                                  isOutOfStock
+                                    ? `Cor: ${color.name} (Indisponível no momento)`
+                                    : `Selecionar cor: ${color.name}`
+                                }
                                 onClick={() => handleSelectColor(color)}
-                                className={`w-7 h-7 rounded-full transition-all cursor-pointer relative ${
+                                className={`w-7 h-7 rounded-full transition-all cursor-pointer relative overflow-hidden ${
                                   isSelected
                                     ? 'ring-2 ring-[#10B981] ring-offset-2 scale-110 shadow-sm'
+                                    : isOutOfStock
+                                    ? 'opacity-40 hover:opacity-75'
                                     : 'hover:scale-105 opacity-80 hover:opacity-100'
                                 }`}
                                 style={{
@@ -320,7 +483,16 @@ export default function ProductDetailModal({
                                     ? `1px solid ${color.borderHex}`
                                     : '1px solid rgba(0,0,0,0.18)',
                                 }}
-                              />
+                              >
+                                {isOutOfStock && (
+                                  <span
+                                    aria-hidden="true"
+                                    className="absolute inset-0 pointer-events-none flex items-center justify-center"
+                                  >
+                                    <span className="w-[140%] h-[2px] bg-red-500/90 -rotate-45 shadow-xs" />
+                                  </span>
+                                )}
+                              </button>
                             );
                           })}
                         </div>
@@ -591,7 +763,7 @@ export default function ProductDetailModal({
                     </p>
                   </div>
                   <span className="text-lg font-black text-[#059669]">
-                    {formatBRL(product.precoPix)}
+                    {formatBRL(activeProduct.precoPix)}
                   </span>
                 </div>
 
@@ -600,7 +772,7 @@ export default function ProductDetailModal({
                   <CreditCard className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <div className="text-xs leading-relaxed">
                     <p className="font-black text-amber-900">
-                      Parcelamento no Cartão de Crédito em até {product.maxParcelasSemJuros}x
+                      Parcelamento no Cartão de Crédito em até {activeProduct.maxParcelasSemJuros}x
                     </p>
                     <p className="font-semibold text-amber-800 mt-0.5">
                       Os juros do parcelamento serão calculados de acordo com a taxa da operadora do cartão/maquininha.
@@ -609,7 +781,7 @@ export default function ProductDetailModal({
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {Array.from({ length: product.maxParcelasSemJuros }, (_, i) => i + 1).map(
+                  {Array.from({ length: activeProduct.maxParcelasSemJuros }, (_, i) => i + 1).map(
                     (parcela) => (
                       <div
                         key={parcela}
@@ -619,7 +791,7 @@ export default function ProductDetailModal({
                           {parcela}x <span className="text-[10px] text-zinc-500 font-semibold">(+ taxa da operadora)</span>
                         </span>
                         <span className="font-extrabold text-[#0A0A0A]">
-                          {formatBRL(product.precoPix / parcela)}*
+                          {formatBRL(activeProduct.precoPix / parcela)}*
                         </span>
                       </div>
                     )
@@ -651,7 +823,7 @@ export default function ProductDetailModal({
                 <span className="px-3 text-sm font-black text-[#0A0A0A]">{quantity}</span>
                 <button
                   type="button"
-                  onClick={() => setQuantity((q) => Math.min(product.estoque, q + 1))}
+                  onClick={() => setQuantity((q) => Math.min(activeProduct.estoque, q + 1))}
                   className="w-8 h-8 rounded-lg hover:bg-zinc-200 flex items-center justify-center text-zinc-800 cursor-pointer"
                   aria-label="Aumentar quantidade"
                 >

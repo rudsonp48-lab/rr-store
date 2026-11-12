@@ -37,13 +37,20 @@ export function getProductSeoDetails(product: Product): ProductSeoDetails {
     ];
 
     if (nomeUpper.includes('IPHONE')) {
-      const is18 = nomeUpper.includes('IPHONE 18');
+      const isDuo = nomeUpper.includes('DUO');
+      const is18 = nomeUpper.includes('IPHONE 18') || isDuo;
       const isProMax = nomeUpper.includes('PRO MAX');
       const storage = nomeUpper.includes('512') ? '512 GB NVMe' : '256 GB NVMe';
-      const tela = isProMax ? 'Super Retina XDR OLED de 6,9" (ProMotion 120Hz)' : 'Super Retina XDR OLED de 6,3" (ProMotion 120Hz)';
+      const tela = isDuo
+        ? 'Interna Dobrável 7,6" + Externa 5,4" Super Retina XDR OLED (ProMotion 120Hz)'
+        : isProMax
+        ? 'Super Retina XDR OLED de 6,9" (ProMotion 120Hz)'
+        : 'Super Retina XDR OLED de 6,3" (ProMotion 120Hz)';
       const chip = is18 ? 'Chip Apple A20 Pro com Neural Engine Avançado' : 'Chip Apple A19 Pro com Apple Intelligence';
 
-      subtituloSeo = `Smartphone Apple ${is18 ? 'iPhone 18' : 'iPhone 17'} Series • Modelo Americano 🇺🇸 • 5G e Câmera Pro 48MP`;
+      subtituloSeo = isDuo
+        ? 'Smartphone Dobrável Apple iPhone Duo • Tela 7,6" • Modelo Americano 🇺🇸 • 5G e Câmera 48MP'
+        : `Smartphone Apple ${is18 ? 'iPhone 18' : 'iPhone 17'} Series • Modelo Americano 🇺🇸 • 5G e Câmera Pro 48MP`;
       fichaTecnica.push(
         { label: 'Modelo / Linha', valor: product.nome.replace(' (Americano 🇺🇸)', '') },
         { label: 'Armazenamento Interno', valor: storage },
