@@ -32,6 +32,7 @@ import TrustAndTestimonials from '../components/TrustAndTestimonials';
 import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
+import MobileStorefront from '../components/MobileStorefront';
 import TradeInModal from '../components/TradeInModal';
 import LiveSocialProofToast from '../components/LiveSocialProofToast';
 import DeviceComparatorModal from '../components/DeviceComparatorModal';
@@ -878,7 +879,39 @@ export default function RRStorePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0A0A] pb-20 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#FAF8FE] md:bg-[#0A0A0A]">
+      {/* Experiência Mobile Exclusiva (< 768px) */}
+      <MobileStorefront
+        products={products}
+        filteredProducts={filteredProducts}
+        visibleProducts={visibleProducts}
+        visibleCount={visibleCount}
+        onLoadMore={() =>
+          setVisibleCount((prev) => Math.min(prev + 32, filteredProducts.length))
+        }
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        quickFilter={quickFilter}
+        onSelectQuickFilter={(id) => {
+          setQuickFilter(id);
+          setSelectedCategory('Todos');
+        }}
+        onSelectCategory={setSelectedCategory}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        selectedRegion={selectedRegion}
+        onSelectRegion={handleSelectRegion}
+        regions={regions}
+        cartCount={cartCount}
+        cartSubtotalPix={cartSubtotalPix}
+        onOpenCart={() => setIsCartOpen(true)}
+        onSelectProduct={setSelectedProduct}
+        onOpenTradeIn={handleOpenTradeIn}
+        onOpenComparator={() => handleOpenComparator()}
+      />
+
+      {/* Experiência Desktop Intacta (>= 768px) */}
+      <div className="hidden md:flex md:flex-col flex-1">
       {/* 2.1 Top Bar & Sticky Header */}
       <TopBarAndHeader
         searchQuery={searchQuery}
@@ -1248,6 +1281,7 @@ export default function RRStorePage() {
           )}
         </div>
       </main>
+      </div>
 
       {/* Modal de Informações e SEO Completo ao Clicar em Qualquer Produto */}
       <ProductDetailModal
@@ -1259,33 +1293,37 @@ export default function RRStorePage() {
         allProducts={products}
       />
 
-      {/* 5. Seções Completas de Conversão */}
-      <TrustAndTestimonials
-        selectedRegion={selectedRegion}
-        onExploreClick={scrollToCatalog}
-      />
+      {/* 5. Seções Completas de Conversão & Footer (Desktop Intacto) */}
+      <div className="hidden md:block">
+        <TrustAndTestimonials
+          selectedRegion={selectedRegion}
+          onExploreClick={scrollToCatalog}
+        />
 
-      {/* 6. Footer Completo & Botão Flutuante de WhatsApp */}
-      <FooterAndFloatingWhatsApp
-        selectedRegion={selectedRegion}
-        onSelectCategory={setSelectedCategory}
-      />
+        {/* 6. Footer Completo & Botão Flutuante de WhatsApp */}
+        <FooterAndFloatingWhatsApp
+          selectedRegion={selectedRegion}
+          onSelectCategory={setSelectedCategory}
+        />
+      </div>
 
-      {/* 7. Barra de Navegação Inferior Nativa Mobile + Fechamento Rápido 1-Toque */}
-      <MobileBottomBar
-        cartCount={cartCount}
-        cartSubtotalPix={cartSubtotalPix}
-        cartSubtotalRaw={cartSubtotalRaw}
-        selectedRegion={selectedRegion}
-        onOpenCart={() => setIsCartOpen(true)}
-        onHomeClick={() => {
-          setSelectedCategory('Todos');
-          setSearchQuery('');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        onCategoriesClick={scrollToDepartments}
-        onSearchClick={focusMobileSearch}
-      />
+      {/* 7. Barra de Navegação Inferior Legada (Oculta no novo layout mobile) */}
+      <div className="hidden">
+        <MobileBottomBar
+          cartCount={cartCount}
+          cartSubtotalPix={cartSubtotalPix}
+          cartSubtotalRaw={cartSubtotalRaw}
+          selectedRegion={selectedRegion}
+          onOpenCart={() => setIsCartOpen(true)}
+          onHomeClick={() => {
+            setSelectedCategory('Todos');
+            setSearchQuery('');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          onCategoriesClick={scrollToDepartments}
+          onSearchClick={focusMobileSearch}
+        />
+      </div>
 
       {/* 4. Carrinho Lateral (Drawer) & Fluxo de Checkout Híbrido com Cálculo de Frete por Localidade */}
       <CartAndCheckoutDrawer

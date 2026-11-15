@@ -198,8 +198,257 @@ export default function ProductDetailModal({
       aria-modal="true"
       aria-labelledby="product-modal-title"
     >
+      {/* =========================================================
+          EXPERIÊNCIA MOBILE EXCLUSIVA (Modelo Lavanda / Apple App)
+         ========================================================= */}
       <div
-        className="relative w-full max-w-3xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-zinc-200 overflow-hidden max-h-[92vh] flex flex-col my-auto"
+        className="md:hidden fixed inset-0 z-50 bg-[#FAF8FE] flex flex-col overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex-1 overflow-y-auto pb-24">
+          {/* Topo Lavanda com Foto Grande e Cores */}
+          <div className="bg-gradient-to-b from-[#D2C1F5] via-[#E5DCFA] to-[#FAF8FE] pt-3.5 pb-8 px-4">
+            <div className="flex items-center justify-between mb-2">
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Voltar"
+                className="w-10 h-10 rounded-full bg-white/65 backdrop-blur-md flex items-center justify-center text-[#1B1130] shadow-xs active:scale-95 transition-transform"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <span className="px-3 py-1 rounded-full bg-white/60 backdrop-blur-md text-[11px] font-black text-[#2D1B4E]">
+                {isOutOfStock ? 'Sob Consulta' : `Pronta Entrega (${activeProduct.estoque} un.)`}
+              </span>
+
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Fechar"
+                className="w-10 h-10 rounded-full bg-white/65 backdrop-blur-md flex items-center justify-center text-[#1B1130] shadow-xs active:scale-95 transition-transform"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Foto Principal Grande Centralizada */}
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              className="relative h-60 w-full flex items-center justify-center my-1 select-none"
+            >
+              <img
+                src={currentMainImage}
+                alt={activeProduct.nome}
+                className="h-full w-full object-contain drop-shadow-[0_14px_26px_rgba(45,27,78,0.18)]"
+              />
+            </div>
+
+            {/* Miniaturas da Galeria FastShop Embaixo da Foto */}
+            {productGallery.length > 1 && (
+              <div className="flex items-center justify-center gap-2 overflow-x-auto py-1.5 px-1 no-scrollbar mt-1">
+                {productGallery.map((imgUrl, idx) => {
+                  const isCurrent = currentMainImage === imgUrl;
+                  return (
+                    <button
+                      key={`mob-thumb-${idx}`}
+                      type="button"
+                      onClick={() => setSelectedImage(imgUrl)}
+                      className={`w-12 h-12 rounded-2xl p-1 bg-white/90 border-2 transition-all shrink-0 flex items-center justify-center ${
+                        isCurrent
+                          ? 'border-[#2D1B4E] scale-105 shadow-sm'
+                          : 'border-white/70 opacity-70'
+                      }`}
+                    >
+                      <img src={imgUrl} alt={`Foto ${idx + 1}`} className="w-full h-full object-contain" />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Seletor de Cores Estilo Quadradinhos Arredondados do Mockup */}
+            {variantConfig && variantConfig.availableColors.length > 0 && (
+              <div className="flex items-center justify-center gap-2.5 mt-4 flex-wrap">
+                {variantConfig.availableColors.map((color) => {
+                  const isSelected =
+                    activeProduct.id === color.targetProductId ||
+                    selectedColor?.id === color.id;
+                  const isColOut = color.inStock === false;
+                  return (
+                    <button
+                      key={`mob-col-${color.id}`}
+                      type="button"
+                      onClick={() => handleSelectColor(color)}
+                      title={isColOut ? `${color.name} (Indisponível)` : color.name}
+                      className={`w-11 h-11 rounded-2xl bg-white/85 p-1.5 flex items-center justify-center transition-all shadow-xs ${
+                        isSelected
+                          ? 'ring-2 ring-[#2D1B4E] scale-105 bg-white'
+                          : isColOut
+                          ? 'opacity-45'
+                          : 'opacity-85'
+                      }`}
+                    >
+                      <span
+                        className="w-full h-full rounded-xl relative overflow-hidden border border-black/10"
+                        style={{ backgroundColor: color.hex }}
+                      >
+                        {isColOut && (
+                          <span className="absolute inset-0 flex items-center justify-center">
+                            <span className="w-[140%] h-[2px] bg-red-500 -rotate-45" />
+                          </span>
+                        )}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Bottom Sheet Branca com Informações */}
+          <div className="bg-white rounded-t-[36px] -mt-5 px-5 pt-6 pb-8 shadow-[0_-10px_30px_rgba(45,27,78,0.08)] space-y-4">
+            <div>
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <span className="text-[11px] font-black uppercase tracking-wider text-[#6D48B8]">
+                  {variantConfig?.currentColor?.name || activeProduct.tag}
+                </span>
+                <div className="inline-flex items-center gap-1 text-xs font-black text-[#1B1130]">
+                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  {activeProduct.avaliacao.toFixed(1)}
+                </div>
+              </div>
+
+              <h2 className="text-2xl font-black text-[#1B1130] leading-tight">
+                {activeProduct.nome}
+              </h2>
+
+              <p className="text-xs text-[#6B5B8E] font-medium leading-relaxed mt-2">
+                {seo.subtituloSeo}
+              </p>
+            </div>
+
+            {/* Capacidades / Armazenamento */}
+            {variantConfig && variantConfig.hasStorageOptions && (
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-wider text-[#8E7DB3] mb-2">
+                  Armazenamento
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {variantConfig.availableStorages.map((tier) => {
+                    const isSelected =
+                      activeProduct.id === tier.targetProductId ||
+                      selectedStorage?.id === tier.id;
+                    return (
+                      <button
+                        key={`mob-stor-${tier.id}`}
+                        type="button"
+                        onClick={() => handleSelectStorage(tier)}
+                        className={`px-4 py-2 rounded-full text-xs font-black transition-all ${
+                          isSelected
+                            ? 'bg-[#2D1B4E] text-white shadow-sm'
+                            : 'bg-[#F4F0FC] text-[#4B3973]'
+                        }`}
+                      >
+                        {tier.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Descrição Completa / Detalhes */}
+            <div className="bg-[#FAF8FE] border border-[#EFEAFB] rounded-2xl p-4 space-y-2">
+              <p className="text-xs text-[#3D2E5E] leading-relaxed">
+                {activeProduct.descricao}
+              </p>
+              <div className="flex items-center justify-between pt-2 border-t border-[#EFEAFB] text-[11px] font-bold text-[#6D48B8]">
+                <span>Entrega {selectedRegion.nome}: {selectedRegion.tempoEstimado}</span>
+                <span>{qualifiesFreeShipping ? 'FRETE GRÁTIS' : formatBRL(selectedRegion.taxaEntrega)}</span>
+              </div>
+            </div>
+
+            {/* Botão Trade-In */}
+            <button
+              type="button"
+              onClick={handleTradeIn}
+              className="w-full rounded-2xl bg-[#2D1B4E] p-3.5 text-white flex items-center justify-between"
+            >
+              <div className="flex items-center gap-2.5 text-left">
+                <RefreshCw className="w-4 h-4 text-[#D8CEFA] shrink-0" />
+                <div>
+                  <p className="text-xs font-black">Dar usado na troca</p>
+                  <p className="text-[11px] text-[#D8CEFA]">Avalie seu aparelho com desconto na hora</p>
+                </div>
+              </div>
+              <span className="px-3 py-1.5 rounded-full bg-[#C4B5FD] text-[#1B1130] text-[11px] font-black">
+                Simular
+              </span>
+            </button>
+
+            {/* Regras RR-MOBILE */}
+            {seo.avisosLoja && seo.avisosLoja.length > 0 && (
+              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 space-y-1">
+                <p className="text-[11px] font-black text-amber-900 uppercase">
+                  Informações Importantes RR-MOBILE
+                </p>
+                {seo.avisosLoja.map((aviso, i) => (
+                  <p key={`mob-av-${i}`} className="text-[11px] text-amber-950 leading-relaxed">
+                    {aviso}
+                  </p>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Barra Inferior Fixa Estilo Tela 3 (Preço na esquerda + Botão Pílula Lilás na direita) */}
+        <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-[#EFEAFB] px-5 py-3.5 flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xl font-black text-[#1B1130] leading-none">
+              {formatBRL(activeProduct.precoPix * quantity)}
+            </p>
+            <p className="text-[11px] font-bold text-[#6D48B8] mt-1">
+              à vista no PIX • até {activeProduct.maxParcelasSemJuros}x
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {!isOutOfStock && (
+              <button
+                type="button"
+                onClick={handleAdd}
+                className={`px-5 py-3 rounded-full font-black text-xs flex items-center gap-2 transition-all shadow-sm ${
+                  justAdded
+                    ? 'bg-[#2D1B4E] text-white'
+                    : 'bg-[#C4B5FD] hover:bg-[#B29DFC] text-[#1B1130]'
+                }`}
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>{justAdded ? 'Adicionado!' : 'Adicionar'}</span>
+              </button>
+            )}
+
+            <a
+              href={buildSingleProductWhatsAppUrl(activeProduct, selectedRegion.nome)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Comprar no WhatsApp"
+              className="w-11 h-11 rounded-full bg-[#2D1B4E] text-white flex items-center justify-center shrink-0 shadow-md"
+            >
+              <MessageCircle className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================================
+          EXPERIÊNCIA DESKTOP (100% PRESERVADA COMO ESTAVA)
+         ========================================================= */}
+      <div
+        className="hidden md:flex relative w-full max-w-3xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border border-zinc-200 overflow-hidden max-h-[92vh] flex-col my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Fixo */}
