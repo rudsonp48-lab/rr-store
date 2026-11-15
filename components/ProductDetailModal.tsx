@@ -26,6 +26,7 @@ import { DFRegion, Product } from '../types/store';
 import { formatBRL } from '../data/mockData';
 import { buildSingleProductWhatsAppUrl } from '../data/whatsappUtils';
 import { getProductSeoDetails } from '../data/productSeoUtils';
+import CutoutImage from './CutoutImage';
 import {
   getProductVariantConfig,
   buildConfiguredProduct,
@@ -206,19 +207,22 @@ export default function ProductDetailModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex-1 overflow-y-auto pb-24">
-          {/* Topo Lavanda com Foto Grande e Cores */}
-          <div className="bg-gradient-to-b from-[#D2C1F5] via-[#E5DCFA] to-[#FAF8FE] pt-3.5 pb-8 px-4">
-            <div className="flex items-center justify-between mb-2">
+          {/* Topo Lavanda Premium com Foto Grande Flutuante e Cores */}
+          <div className="bg-gradient-to-b from-[#CDB9F6] via-[#E5DCFA] to-[#FAF8FE] pt-3.5 pb-8 px-4 relative overflow-hidden">
+            {/* Aura luminosa atrás do produto */}
+            <div className="absolute top-16 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-white/45 blur-3xl pointer-events-none" />
+
+            <div className="flex items-center justify-between mb-1 relative z-10">
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Voltar"
-                className="w-10 h-10 rounded-full bg-white/65 backdrop-blur-md flex items-center justify-center text-[#1B1130] shadow-xs active:scale-95 transition-transform"
+                className="w-10 h-10 rounded-full bg-white/75 backdrop-blur-md border border-white/60 flex items-center justify-center text-[#1B1130] shadow-sm active:scale-95 transition-transform"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <span className="px-3 py-1 rounded-full bg-white/60 backdrop-blur-md text-[11px] font-black text-[#2D1B4E]">
+              <span className="px-3.5 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/60 text-[11px] font-black text-[#2D1B4E] shadow-2xs">
                 {isOutOfStock ? 'Sob Consulta' : `Pronta Entrega (${activeProduct.estoque} un.)`}
               </span>
 
@@ -226,28 +230,36 @@ export default function ProductDetailModal({
                 type="button"
                 onClick={onClose}
                 aria-label="Fechar"
-                className="w-10 h-10 rounded-full bg-white/65 backdrop-blur-md flex items-center justify-center text-[#1B1130] shadow-xs active:scale-95 transition-transform"
+                className="w-10 h-10 rounded-full bg-white/75 backdrop-blur-md border border-white/60 flex items-center justify-center text-[#1B1130] shadow-sm active:scale-95 transition-transform"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Foto Principal Grande Centralizada */}
+            {/* Foto Principal Grande Centralizada (sem caixa branca, com recorte limpo) */}
             <div
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
-              className="relative h-60 w-full flex items-center justify-center my-1 select-none"
+              className="relative h-[300px] w-full flex items-center justify-center my-1 select-none z-10 px-2"
             >
-              <img
-                src={currentMainImage}
-                alt={activeProduct.nome}
-                className="h-full w-full object-contain drop-shadow-[0_14px_26px_rgba(45,27,78,0.18)]"
-              />
+              {currentMainImage === activeProduct.imagem ? (
+                <CutoutImage
+                  src={currentMainImage}
+                  alt={activeProduct.nome}
+                  className="h-full w-full object-contain scale-110 drop-shadow-[0_22px_36px_rgba(45,27,78,0.28)] transition-all duration-300"
+                />
+              ) : (
+                <img
+                  src={currentMainImage}
+                  alt={activeProduct.nome}
+                  className="max-h-full max-w-full object-contain rounded-[24px] shadow-[0_20px_38px_rgba(45,27,78,0.22)] transition-all duration-300"
+                />
+              )}
             </div>
 
             {/* Miniaturas da Galeria FastShop Embaixo da Foto */}
             {productGallery.length > 1 && (
-              <div className="flex items-center justify-center gap-2 overflow-x-auto py-1.5 px-1 no-scrollbar mt-1">
+              <div className="flex items-center justify-center gap-2 overflow-x-auto py-1.5 px-1 no-scrollbar mt-1 relative z-10">
                 {productGallery.map((imgUrl, idx) => {
                   const isCurrent = currentMainImage === imgUrl;
                   return (
@@ -255,13 +267,13 @@ export default function ProductDetailModal({
                       key={`mob-thumb-${idx}`}
                       type="button"
                       onClick={() => setSelectedImage(imgUrl)}
-                      className={`w-12 h-12 rounded-2xl p-1 bg-white/90 border-2 transition-all shrink-0 flex items-center justify-center ${
+                      className={`w-12 h-12 rounded-2xl p-1 bg-white/85 backdrop-blur-xs border-2 transition-all shrink-0 flex items-center justify-center shadow-2xs ${
                         isCurrent
-                          ? 'border-[#2D1B4E] scale-105 shadow-sm'
-                          : 'border-white/70 opacity-70'
+                          ? 'border-[#2D1B4E] scale-105 shadow-md bg-white'
+                          : 'border-white/70 opacity-70 hover:opacity-100'
                       }`}
                     >
-                      <img src={imgUrl} alt={`Foto ${idx + 1}`} className="w-full h-full object-contain" />
+                      <img src={imgUrl} alt={`Foto ${idx + 1}`} className="w-full h-full object-contain rounded-lg" />
                     </button>
                   );
                 })}
@@ -270,7 +282,7 @@ export default function ProductDetailModal({
 
             {/* Seletor de Cores Estilo Quadradinhos Arredondados do Mockup */}
             {variantConfig && variantConfig.availableColors.length > 0 && (
-              <div className="flex items-center justify-center gap-2.5 mt-4 flex-wrap">
+              <div className="flex items-center justify-center gap-3 mt-4 flex-wrap relative z-10">
                 {variantConfig.availableColors.map((color) => {
                   const isSelected =
                     activeProduct.id === color.targetProductId ||
@@ -282,9 +294,9 @@ export default function ProductDetailModal({
                       type="button"
                       onClick={() => handleSelectColor(color)}
                       title={isColOut ? `${color.name} (Indisponível)` : color.name}
-                      className={`w-11 h-11 rounded-2xl bg-white/85 p-1.5 flex items-center justify-center transition-all shadow-xs ${
+                      className={`w-11 h-11 rounded-2xl bg-white/90 backdrop-blur-xs p-1.5 flex items-center justify-center transition-all shadow-sm ${
                         isSelected
-                          ? 'ring-2 ring-[#2D1B4E] scale-105 bg-white'
+                          ? 'ring-2 ring-[#2D1B4E] scale-110 bg-white shadow-md'
                           : isColOut
                           ? 'opacity-45'
                           : 'opacity-85'
