@@ -233,9 +233,9 @@ export default function MobileStorefront({
                   <div
                     key={slide.id}
                     onClick={() => onSelectProduct(slide)}
-                    className="w-full h-full shrink-0 px-4 pt-4 pb-7 flex items-center justify-between gap-2 cursor-pointer relative z-10"
+                    className="w-full h-full shrink-0 pl-4 pr-2 py-2 flex items-center justify-between gap-1 cursor-pointer relative z-10"
                   >
-                    <div className="flex-1 min-w-0 flex flex-col justify-between h-full py-1">
+                    <div className="flex-1 min-w-0 flex flex-col justify-between h-full pt-2 pb-5">
                       <div>
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#E3DAFB] text-[#2D1B4E] text-[10px] font-black tracking-wide">
                           <Sparkles className="w-3 h-3 text-[#5E35B1]" />
@@ -262,12 +262,12 @@ export default function MobileStorefront({
                       </div>
                     </div>
 
-                    {/* Foto Grande do Produto no Banner */}
-                    <div className="w-40 h-40 shrink-0 flex items-center justify-center">
+                    {/* Foto Grande Ocupando Toda a Metade Direita do Banner */}
+                    <div className="w-[49%] h-full shrink-0 flex items-center justify-center py-1">
                       <CutoutImage
                         src={slide.imagem}
                         alt={slide.nome}
-                        className="w-full h-full object-contain scale-105 drop-shadow-[0_14px_24px_rgba(0,0,0,0.42)]"
+                        className="w-full h-full object-contain scale-110 drop-shadow-[0_16px_28px_rgba(0,0,0,0.45)]"
                       />
                     </div>
                   </div>
