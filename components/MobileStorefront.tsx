@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Search,
   X,
@@ -93,16 +93,78 @@ export default function MobileStorefront({
   onOpenComparator,
 }: MobileStorefrontProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const touchStartXRef = useRef<number | null>(null);
 
-  // Produto destaque para o banner roxo estilo Apple/AirPods do mockup
-  const featuredProduct = useMemo(() => {
-    return (
-      products.find((p) => p.id === 'rr-apple-ip18pro-256-bordo' && p.estoque > 0) ||
-      products.find((p) => p.id === 'rr-apple-ip18duo-256-silver' && p.estoque > 0) ||
-      products.find((p) => p.id.startsWith('rr-apple-') && p.estoque > 0) ||
-      products[0]
-    );
+  // Produtos em destaque para o slider do banner mobile (modelos distintos em estoque)
+  const bannerSlides = useMemo(() => {
+    const inStock = products.filter((p) => p.estoque > 0 && p.imagem);
+    const prioritizedIds = [
+      'rr-apple-ip18duo-256-silver',
+      'rr-apple-ip18promax-256-bordo',
+      'rr-apple-ip18pro-256-bordo',
+      'rr-apple-watch-s12-46-preto',
+      'rr-apple-macbook-air-m5-16-512-midnight',
+      'rr-apple-ipad-pro-m5-13-256-preto',
+      'rr-apple-airpods-max-2-roxo',
+    ];
+
+    const picked: Product[] = [];
+    const seenModels = new Set<string>();
+
+    const tryPush = (p?: Product) => {
+      if (!p || p.estoque <= 0 || !p.imagem) return;
+      const modelKey = getPureModelName(p.nome).toLowerCase() || p.id;
+      if (seenModels.has(modelKey)) return;
+      seenModels.add(modelKey);
+      picked.push(p);
+    };
+
+    for (const id of prioritizedIds) {
+      tryPush(inStock.find((p) => p.id === id));
+    }
+
+    for (const p of inStock) {
+      if (picked.length >= 7) break;
+      tryPush(p);
+    }
+
+    if (picked.length === 0 && products[0]) {
+      picked.push(products[0]);
+    }
+    return picked;
   }, [products]);
+
+  useEffect(() => {
+    if (bannerSlides.length <= 1) return;
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % bannerSlides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [bannerSlides.length]);
+
+  useEffect(() => {
+    if (activeSlide >= bannerSlides.length && bannerSlides.length > 0) {
+      setActiveSlide(0);
+    }
+  }, [activeSlide, bannerSlides.length]);
+
+  const handleBannerTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0]?.clientX ?? null;
+  };
+
+  const handleBannerTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null || bannerSlides.length <= 1) return;
+    const endX = e.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const delta = endX - touchStartXRef.current;
+    touchStartXRef.current = null;
+    if (Math.abs(delta) < 35) return;
+    if (delta < 0) {
+      setActiveSlide((prev) => (prev + 1) % bannerSlides.length);
+    } else {
+      setActiveSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length);
+    }
+  };
 
   const activeTitle = useMemo(() => {
     if (searchQuery.trim()) return 'Resultados';
@@ -149,45 +211,91 @@ export default function MobileStorefront({
           </button>
         </div>
 
-        {/* Card Hero Roxo Vibrante (Inspirado na Tela 1 do Mockup) */}
-        {!searchQuery.trim() && featuredProduct && (
+        {/* Banner Slider Roxo Vibrante com Proporção Ampliada e Fotos Maiores */}
+        {!searchQuery.trim() && bannerSlides.length > 0 && (
           <div
-            onClick={() => onSelectProduct(featuredProduct)}
-            className="mt-4 rounded-[28px] bg-gradient-to-br from-[#3B1D6E] via-[#5E35B1] to-[#4A258C] p-4 text-white relative overflow-hidden shadow-[0_14px_30px_rgba(74,37,140,0.28)] cursor-pointer active:scale-[0.99] transition-transform"
+            onTouchStart={handleBannerTouchStart}
+            onTouchEnd={handleBannerTouchEnd}
+            className="mt-3.5 rounded-[28px] bg-gradient-to-br from-[#3B1D6E] via-[#5E35B1] to-[#4A258C] h-[230px] text-white relative overflow-hidden shadow-[0_16px_34px_rgba(74,37,140,0.3)]"
           >
             {/* Brilho suave ao fundo */}
-            <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-[#9D7CE8]/30 blur-2xl pointer-events-none" />
+            <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-[#9D7CE8]/35 blur-2xl pointer-events-none" />
+            <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full bg-[#7C4DFF]/25 blur-2xl pointer-events-none" />
 
-            <div className="flex items-center justify-between gap-2 relative z-10">
-              <div className="flex-1 min-w-0 space-y-2">
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E3DAFB] text-[#2D1B4E] text-[10px] font-black tracking-wide">
-                  <Sparkles className="w-3 h-3 text-[#5E35B1]" />
-                  Novidades
-                </span>
+            {/* Trilha do Slider */}
+            <div
+              className="flex h-full transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+            >
+              {bannerSlides.map((slide) => {
+                const slideModel = getPureModelName(slide.nome) || slide.nome;
+                return (
+                  <div
+                    key={slide.id}
+                    onClick={() => onSelectProduct(slide)}
+                    className="w-full h-full shrink-0 px-4 pt-4 pb-7 flex items-center justify-between gap-2 cursor-pointer relative z-10"
+                  >
+                    <div className="flex-1 min-w-0 flex flex-col justify-between h-full py-1">
+                      <div>
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#E3DAFB] text-[#2D1B4E] text-[10px] font-black tracking-wide">
+                          <Sparkles className="w-3 h-3 text-[#5E35B1]" />
+                          Novidades
+                        </span>
 
-                <div>
-                  <h2 className="text-xl font-black leading-tight tracking-tight">
-                    Joias Apple.
-                  </h2>
-                  <p className="text-[11px] text-[#DFD5F8] font-medium leading-snug mt-0.5">
-                    Preço oficial de atacado no PIX com entrega no DF.
-                  </p>
-                </div>
+                        <h2 className="text-[20px] font-black leading-[1.12] tracking-tight mt-2.5 line-clamp-2">
+                          {slideModel}
+                        </h2>
 
-                <div className="inline-flex items-center gap-1 text-[11px] font-bold text-white/95 bg-white/15 px-3 py-1 rounded-full backdrop-blur-xs">
-                  <span>Ver {getPureModelName(featuredProduct.nome)}</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </div>
-              </div>
+                        <p className="text-[13px] font-black text-[#E3DAFB] mt-1">
+                          {formatBRL(slide.precoPix)}{' '}
+                          <span className="text-[10px] font-semibold text-white/75">
+                            no PIX
+                          </span>
+                        </p>
+                      </div>
 
-              <div className="w-28 h-28 shrink-0 flex items-center justify-center">
-                <CutoutImage
-                  src={featuredProduct.imagem}
-                  alt={featuredProduct.nome}
-                  className="w-full h-full object-contain drop-shadow-[0_10px_18px_rgba(0,0,0,0.35)]"
-                />
-              </div>
+                      <div>
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-white bg-white/15 px-3 py-1.5 rounded-full backdrop-blur-xs border border-white/15">
+                          <span>Ver detalhes</span>
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Foto Grande do Produto no Banner */}
+                    <div className="w-40 h-40 shrink-0 flex items-center justify-center">
+                      <CutoutImage
+                        src={slide.imagem}
+                        alt={slide.nome}
+                        className="w-full h-full object-contain scale-105 drop-shadow-[0_14px_24px_rgba(0,0,0,0.42)]"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+
+            {/* Indicadores (Dots) do Slider */}
+            {bannerSlides.length > 1 && (
+              <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
+                {bannerSlides.map((slide, idx) => (
+                  <button
+                    key={slide.id}
+                    type="button"
+                    aria-label={`Ir para slide ${idx + 1}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveSlide(idx);
+                    }}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      idx === activeSlide
+                        ? 'w-5 bg-white'
+                        : 'w-1.5 bg-white/40 hover:bg-white/60'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </header>
@@ -282,12 +390,12 @@ export default function MobileStorefront({
                       </span>
                     )}
 
-                    {/* Foto Flutuante Centralizada */}
-                    <div className="w-full h-28 flex items-center justify-center my-1">
+                    {/* Foto Flutuante Centralizada Ampliada */}
+                    <div className="w-full h-36 flex items-center justify-center my-0.5">
                       <CutoutImage
                         src={product.imagem}
                         alt={product.nome}
-                        className="w-full h-full object-contain drop-shadow-[0_6px_12px_rgba(45,27,78,0.12)]"
+                        className="w-full h-full object-contain scale-105 drop-shadow-[0_6px_12px_rgba(45,27,78,0.12)]"
                       />
                     </div>
 
