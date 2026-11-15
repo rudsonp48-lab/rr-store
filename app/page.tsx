@@ -521,6 +521,7 @@ export default function RRStorePage() {
   const [selectedRegion, setSelectedRegion] = useState<DFRegion>(DF_REGIONS[0]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [toastProduct, setToastProduct] = useState<Product | null>(null);
   const [reducedMotion, setReducedMotion] = useState<boolean>(false);
@@ -909,6 +910,8 @@ export default function RRStorePage() {
         onSelectProduct={setSelectedProduct}
         onOpenTradeIn={handleOpenTradeIn}
         onOpenComparator={() => handleOpenComparator()}
+        isMenuOpen={isMobileMenuOpen}
+        onMenuOpenChange={setIsMobileMenuOpen}
       />
 
       {/* Experiência Desktop Intacta (>= 768px) */}
@@ -1364,44 +1367,43 @@ export default function RRStorePage() {
       {/* Menu Flutuante Fixo Mobile (Exibe em todas as telas/modais) */}
       <MobileFloatingNav
         activeTab={
-          (isComparatorOpen
+          (isMobileMenuOpen
+            ? 'menu'
+            : isComparatorOpen
             ? 'compare'
             : isCartOpen
-            ? 'account'
-            : selectedProduct
-            ? 'catalog'
+            ? 'sales'
             : 'home') as MobileNavTab
         }
+        cartCount={cartCount}
         onHome={() => {
           setSelectedProduct(null);
           setIsCartOpen(false);
           setIsTradeInOpen(false);
           setIsComparatorOpen(false);
+          setIsMobileMenuOpen(false);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
-        onCatalog={() => {
+        onSales={() => {
           setSelectedProduct(null);
-          setIsCartOpen(false);
           setIsTradeInOpen(false);
           setIsComparatorOpen(false);
-          const el = document.getElementById('mobile-filter-pills');
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            scrollToCatalog();
-          }
+          setIsMobileMenuOpen(false);
+          setIsCartOpen(true);
         }}
         onCompare={() => {
           setSelectedProduct(null);
           setIsCartOpen(false);
           setIsTradeInOpen(false);
+          setIsMobileMenuOpen(false);
           handleOpenComparator();
         }}
-        onAccount={() => {
+        onMenu={() => {
           setSelectedProduct(null);
+          setIsCartOpen(false);
           setIsTradeInOpen(false);
           setIsComparatorOpen(false);
-          setIsCartOpen(true);
+          setIsMobileMenuOpen((prev) => !prev);
         }}
       />
 

@@ -55,6 +55,8 @@ interface MobileStorefrontProps {
   onSelectProduct: (product: Product) => void;
   onOpenTradeIn: (product?: Product) => void;
   onOpenComparator: () => void;
+  isMenuOpen?: boolean;
+  onMenuOpenChange?: (open: boolean) => void;
 }
 
 const MOBILE_FILTER_PILLS: { id: MobileQuickFilterId; label: string }[] = [
@@ -91,8 +93,18 @@ export default function MobileStorefront({
   onSelectProduct,
   onOpenTradeIn,
   onOpenComparator,
+  isMenuOpen: controlledMenuOpen,
+  onMenuOpenChange,
 }: MobileStorefrontProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [internalMenuOpen, setInternalMenuOpen] = useState(false);
+  const isMenuOpen = controlledMenuOpen !== undefined ? controlledMenuOpen : internalMenuOpen;
+  const setIsMenuOpen = (open: boolean) => {
+    if (onMenuOpenChange) {
+      onMenuOpenChange(open);
+    } else {
+      setInternalMenuOpen(open);
+    }
+  };
   const [activeSlide, setActiveSlide] = useState(0);
   const touchStartXRef = useRef<number | null>(null);
 
@@ -281,12 +293,12 @@ export default function MobileStorefront({
                       </div>
                     </div>
 
-                    {/* Foto Grande Ocupando Toda a Metade Direita do Banner */}
-                    <div className="w-[55%] h-full shrink-0 flex items-center justify-center">
+                    {/* Foto Grande Proporcional (sem cortar topo nem base) */}
+                    <div className="w-[48%] h-full shrink-0 flex items-center justify-center py-2.5 pr-2">
                       <CutoutImage
                         src={slide.imagem}
                         alt={slide.nome}
-                        className="w-full h-full object-contain scale-[1.22] drop-shadow-[0_18px_30px_rgba(0,0,0,0.48)]"
+                        className="w-full h-full object-contain drop-shadow-[0_14px_24px_rgba(0,0,0,0.4)]"
                       />
                     </div>
                   </div>
