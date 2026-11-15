@@ -725,23 +725,31 @@ export default function RRStorePage() {
 
   // Filtragem e Ordenação Inteligente em Tempo Real
   const filteredProducts = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
+    const normalizeText = (s: string) =>
+      s
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
+    const query = normalizeText(searchQuery.trim());
+    const queryTokens = query ? query.split(/\s+/).filter(Boolean) : [];
 
     const list = products.filter((product) => {
+      if (queryTokens.length > 0) {
+        // Na busca textual, pesquisa em TODO o catálogo sem bloquear por aba/filtro ativo
+        const haystack = normalizeText(
+          `${product.nome} ${product.categoria} ${product.descricao} ${product.tag}`
+        );
+        return queryTokens.every((token) => haystack.includes(token));
+      }
+
       const matchesCategory =
         selectedCategory === 'Todos' || product.categoria === selectedCategory;
 
       if (!matchesCategory) return false;
       if (!matchesQuickFilter(product, quickFilter)) return false;
       if (!matchesSubFilter(product, quickFilter, subFilter)) return false;
-      if (!query) return true;
-
-      return (
-        product.nome.toLowerCase().includes(query) ||
-        product.categoria.toLowerCase().includes(query) ||
-        product.descricao.toLowerCase().includes(query) ||
-        product.tag.toLowerCase().includes(query)
-      );
+      return true;
     });
 
     let sorted = list;

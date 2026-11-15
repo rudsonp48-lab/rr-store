@@ -346,7 +346,7 @@ export function getPureModelName(productName: string): string {
     .replace(/\(C[eé]u-Noturno\)/gi, '')
     .replace(/\b(128gb|256gb|512gb|1tb|2tb|64gb|32gb|240gb|16gb ram|8gb ram|4gb ram|12gb ram|16gb|8gb)\b/gi, '')
     .replace(/\b(40mm|42mm|44mm|46mm|49mm)\b/gi, '')
-    .replace(/\b(wi-fi\s*\+\s*cellular|wi-fi|wifi|ssd\s+touch\s*id|ssd|tela)\b/gi, '')
+    .replace(/\b(wi-fi\s*\+\s*cellular|wi-fi|wifi|ssd\s+touch\s*id|tela)\b/gi, '')
     .replace(/\b(prateado|silver|preto|preta|black|natural|branco-estrela|branco|azul\s+intenso|azul|bord[oô]|laranja\s+c[oó]smico|rose\s*gold|starlight|midnight|space\s*gray|space\s*black|sky\s*blue|rosa|roxo|gold|dourado)\b$/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
