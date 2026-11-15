@@ -200,14 +200,33 @@ export default function MobileStorefront({
             )}
           </div>
 
-          {/* Botão Circular RR / Ferramentas */}
+          {/* Botão Compacto de Sacola */}
+          <button
+            type="button"
+            onClick={onOpenCart}
+            aria-label="Abrir sacola"
+            className="relative w-10 h-10 rounded-full bg-white text-[#2D1B4E] flex items-center justify-center shadow-[0_4px_16px_rgba(45,27,78,0.08)] shrink-0 border border-white active:scale-95 transition-transform"
+          >
+            <ShoppingBag className="w-4 h-4" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#5E35B1] text-white text-[10px] font-black flex items-center justify-center border-2 border-[#E8DFFA]">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
+          {/* Logo Circular RR Mobile no Perfil */}
           <button
             type="button"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Abrir opções da loja"
-            className="w-10 h-10 rounded-full bg-[#2D1B4E] text-white flex items-center justify-center shadow-md shrink-0 font-black text-xs tracking-tight border-2 border-white"
+            className="w-10 h-10 rounded-full bg-[#0A0A0A] overflow-hidden flex items-center justify-center shadow-md shrink-0 border-2 border-white active:scale-95 transition-transform"
           >
-            RR
+            <img
+              src="/rr-mobile-logo.jpg"
+              alt="RR Mobile"
+              className="w-full h-full object-cover"
+            />
           </button>
         </div>
 
@@ -263,11 +282,11 @@ export default function MobileStorefront({
                     </div>
 
                     {/* Foto Grande Ocupando Toda a Metade Direita do Banner */}
-                    <div className="w-[49%] h-full shrink-0 flex items-center justify-center py-1">
+                    <div className="w-[55%] h-full shrink-0 flex items-center justify-center">
                       <CutoutImage
                         src={slide.imagem}
                         alt={slide.nome}
-                        className="w-full h-full object-contain scale-110 drop-shadow-[0_16px_28px_rgba(0,0,0,0.45)]"
+                        className="w-full h-full object-contain scale-[1.22] drop-shadow-[0_18px_30px_rgba(0,0,0,0.48)]"
                       />
                     </div>
                   </div>
@@ -324,7 +343,10 @@ export default function MobileStorefront({
         </div>
 
         {/* Pílulas de Filtro Horizontal */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1.5 mb-3">
+        <div
+          id="mobile-filter-pills"
+          className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1.5 mb-3"
+        >
           {MOBILE_FILTER_PILLS.map((pill) => {
             const active = quickFilter === pill.id && searchQuery.trim() === '';
             return (
@@ -452,27 +474,7 @@ export default function MobileStorefront({
         )}
       </main>
 
-      {/* 3. Pílula Flutuante de Carrinho Roxo Escuro (Idêntica à Tela 2 do Mockup) */}
-      <button
-        type="button"
-        onClick={onOpenCart}
-        aria-label="Abrir sacola"
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-[#2D1B4E] hover:bg-[#3A2463] text-white rounded-full px-6 py-3 shadow-[0_12px_32px_rgba(45,27,78,0.45)] flex items-center gap-3 active:scale-95 transition-all cursor-pointer border border-white/10"
-      >
-        <span className="text-sm font-black tracking-tight">
-          {cartCount > 0 ? formatBRL(cartSubtotalPix) : 'Ver Sacola'}
-        </span>
-        <div className="relative flex items-center justify-center">
-          <ShoppingBag className="w-4 h-4 text-white" />
-          {cartCount > 0 && (
-            <span className="ml-1.5 px-1.5 py-0.2 rounded-full bg-[#8B68D6] text-[10px] font-black">
-              {cartCount}
-            </span>
-          )}
-        </div>
-      </button>
-
-      {/* 4. Gaveta de Opções / Ordenação / Troca / Comparador / Região */}
+      {/* 3. Gaveta de Opções / Ordenação / Troca / Comparador / Região */}
       {isMenuOpen && (
         <div
           className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-end"

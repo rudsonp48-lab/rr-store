@@ -33,6 +33,7 @@ import FooterAndFloatingWhatsApp from '../components/FooterAndFloatingWhatsApp';
 import MotionReveal from '../components/MotionReveal';
 import MobileBottomBar from '../components/MobileBottomBar';
 import MobileStorefront from '../components/MobileStorefront';
+import MobileFloatingNav, { MobileNavTab } from '../components/MobileFloatingNav';
 import TradeInModal from '../components/TradeInModal';
 import LiveSocialProofToast from '../components/LiveSocialProofToast';
 import DeviceComparatorModal from '../components/DeviceComparatorModal';
@@ -1359,6 +1360,50 @@ export default function RRStorePage() {
 
       {/* 10. Prova Social em Tempo Real (Toasts de Pedidos e Entregas no DF) */}
       <LiveSocialProofToast />
+
+      {/* Menu Flutuante Fixo Mobile (Exibe em todas as telas/modais) */}
+      <MobileFloatingNav
+        activeTab={
+          (isComparatorOpen
+            ? 'compare'
+            : isCartOpen
+            ? 'account'
+            : selectedProduct
+            ? 'catalog'
+            : 'home') as MobileNavTab
+        }
+        onHome={() => {
+          setSelectedProduct(null);
+          setIsCartOpen(false);
+          setIsTradeInOpen(false);
+          setIsComparatorOpen(false);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onCatalog={() => {
+          setSelectedProduct(null);
+          setIsCartOpen(false);
+          setIsTradeInOpen(false);
+          setIsComparatorOpen(false);
+          const el = document.getElementById('mobile-filter-pills');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            scrollToCatalog();
+          }
+        }}
+        onCompare={() => {
+          setSelectedProduct(null);
+          setIsCartOpen(false);
+          setIsTradeInOpen(false);
+          handleOpenComparator();
+        }}
+        onAccount={() => {
+          setSelectedProduct(null);
+          setIsTradeInOpen(false);
+          setIsComparatorOpen(false);
+          setIsCartOpen(true);
+        }}
+      />
 
 
       {/* Toast de Feedback Visual Rápido ao Adicionar Produto */}

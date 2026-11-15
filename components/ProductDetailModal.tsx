@@ -206,7 +206,7 @@ export default function ProductDetailModal({
         className="md:hidden fixed inset-0 z-50 bg-[#FAF8FE] flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex-1 overflow-y-auto pb-24">
+        <div className="flex-1 overflow-y-auto pb-40">
           {/* Topo Lavanda Premium com Foto Grande Flutuante e Cores */}
           <div className="bg-gradient-to-b from-[#CDB9F6] via-[#E5DCFA] to-[#FAF8FE] pt-3.5 pb-8 px-4 relative overflow-hidden">
             {/* Aura luminosa atrás do produto */}
@@ -416,8 +416,8 @@ export default function ProductDetailModal({
           </div>
         </div>
 
-        {/* Barra Inferior Fixa Estilo Tela 3 (Preço na esquerda + Botão Pílula Lilás na direita) */}
-        <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-[#EFEAFB] px-5 py-3.5 flex items-center justify-between gap-3">
+        {/* Barra Inferior Fixa Estilo Tela 3 (Acima do Menu Flutuante Fixo) */}
+        <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-[#EFEAFB] px-5 pt-3 pb-[78px] flex items-center justify-between gap-3">
           <div>
             <p className="text-xl font-black text-[#1B1130] leading-none">
               {formatBRL(activeProduct.precoPix * quantity)}
