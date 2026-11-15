@@ -62,13 +62,13 @@ interface MobileStorefrontProps {
 }
 
 const MOBILE_FILTER_PILLS: { id: MobileQuickFilterId; label: string; brand: BrandLogoKey }[] = [
-  { id: 'todos', label: 'Todos', brand: 'all' },
+  { id: 'todos', label: 'Todos', brand: 'todos' },
   { id: 'apple', label: 'Apple', brand: 'apple' },
   { id: 'xiaomi', label: 'Xiaomi', brand: 'xiaomi' },
   { id: 'realme', label: 'Realme', brand: 'realme' },
   { id: 'samsung', label: 'Samsung', brand: 'samsung' },
   { id: 'gamer', label: 'Gamer', brand: 'gamer' },
-  { id: 'jbl-audio', label: 'JBL', brand: 'jbl' },
+  { id: 'jbl-audio', label: 'JBL', brand: 'jbl-audio' },
   { id: 'smartwatches', label: 'Smartwatches', brand: 'smartwatches' },
   { id: 'ssd', label: 'SSD & Memória', brand: 'ssd' },
 ];
