@@ -19,6 +19,7 @@ import { formatBRL } from '../data/mockData';
 import { getProductVariantConfig, getPureModelName } from '../data/productVariantUtils';
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
 import CutoutImage from './CutoutImage';
+import BrandLogo, { BrandLogoKey } from './BrandLogo';
 
 export type MobileQuickFilterId =
   | 'todos'
@@ -57,18 +58,19 @@ interface MobileStorefrontProps {
   onOpenComparator: () => void;
   isMenuOpen?: boolean;
   onMenuOpenChange?: (open: boolean) => void;
+  filterCounts?: Record<string, number>;
 }
 
-const MOBILE_FILTER_PILLS: { id: MobileQuickFilterId; label: string }[] = [
-  { id: 'todos', label: 'Todos' },
-  { id: 'apple', label: 'Apple' },
-  { id: 'xiaomi', label: 'Xiaomi' },
-  { id: 'realme', label: 'Realme' },
-  { id: 'samsung', label: 'Samsung' },
-  { id: 'gamer', label: 'Gamer' },
-  { id: 'jbl-audio', label: 'JBL & Áudio' },
-  { id: 'smartwatches', label: 'Watches' },
-  { id: 'ssd', label: 'SSD' },
+const MOBILE_FILTER_PILLS: { id: MobileQuickFilterId; label: string; brand: BrandLogoKey }[] = [
+  { id: 'todos', label: 'Todos', brand: 'all' },
+  { id: 'apple', label: 'Apple', brand: 'apple' },
+  { id: 'xiaomi', label: 'Xiaomi', brand: 'xiaomi' },
+  { id: 'realme', label: 'Realme', brand: 'realme' },
+  { id: 'samsung', label: 'Samsung', brand: 'samsung' },
+  { id: 'gamer', label: 'Gamer', brand: 'gamer' },
+  { id: 'jbl-audio', label: 'JBL', brand: 'jbl' },
+  { id: 'smartwatches', label: 'Smartwatches', brand: 'smartwatches' },
+  { id: 'ssd', label: 'SSD & Memória', brand: 'ssd' },
 ];
 
 export default function MobileStorefront({
@@ -95,6 +97,7 @@ export default function MobileStorefront({
   onOpenComparator,
   isMenuOpen: controlledMenuOpen,
   onMenuOpenChange,
+  filterCounts,
 }: MobileStorefrontProps) {
   const [internalMenuOpen, setInternalMenuOpen] = useState(false);
   const isMenuOpen = controlledMenuOpen !== undefined ? controlledMenuOpen : internalMenuOpen;
@@ -354,32 +357,45 @@ export default function MobileStorefront({
           </button>
         </div>
 
-        {/* Pílulas de Filtro Horizontal */}
+        {/* Pílulas de Filtro Horizontal com Logos e Contagem (Igual Referência 2) */}
         <div
           id="mobile-filter-pills"
-          className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1.5 mb-3"
+          className="bg-[#0A0A0A] rounded-2xl p-2 border border-zinc-800 shadow-md mb-3.5"
         >
-          {MOBILE_FILTER_PILLS.map((pill) => {
-            const active = quickFilter === pill.id && searchQuery.trim() === '';
-            return (
-              <button
-                key={pill.id}
-                type="button"
-                onClick={() => {
-                  onSelectQuickFilter(pill.id);
-                  onSelectCategory('Todos');
-                  onSearchChange('');
-                }}
-                className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
-                  active
-                    ? 'bg-[#2D1B4E] text-white shadow-[0_4px_12px_rgba(45,27,78,0.25)]'
-                    : 'bg-white text-[#4B3973] border border-[#E7DFF8]'
-                }`}
-              >
-                {pill.label}
-              </button>
-            );
-          })}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+            {MOBILE_FILTER_PILLS.map((pill) => {
+              const active = quickFilter === pill.id && searchQuery.trim() === '';
+              const count = filterCounts?.[pill.id] ?? (pill.id === 'todos' ? products.length : 0);
+              return (
+                <button
+                  key={pill.id}
+                  type="button"
+                  onClick={() => {
+                    onSelectQuickFilter(pill.id);
+                    onSelectCategory('Todos');
+                    onSearchChange('');
+                  }}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-[11px] font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
+                    active
+                      ? 'bg-[#5E35B1] text-white shadow-[0_6px_18px_rgba(94,53,177,0.4)] border border-[#8B68D6]'
+                      : 'bg-white/[0.06] text-zinc-200 border border-white/10'
+                  }`}
+                >
+                  <BrandLogo brand={pill.brand} size="md" />
+                  <span className="tracking-tight">{pill.label}</span>
+                  <span
+                    className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
+                      active
+                        ? 'bg-white/20 text-white'
+                        : 'bg-white/10 text-zinc-400'
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Grid 2 Colunas Estilo Apple/Lavanda do Mockup */}

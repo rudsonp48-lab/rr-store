@@ -787,6 +787,15 @@ export default function RRStorePage() {
     setVisibleCount(32);
   }, [selectedCategory, quickFilter, subFilter, searchQuery, sortBy]);
 
+  // Contagem de produtos por filtro rápido (compartilhada entre Mobile e Desktop)
+  const quickFilterCounts = useMemo(() => {
+    const counts: Record<string, number> = { todos: products.length };
+    for (const chip of QUICK_FILTER_CHIPS) {
+      counts[chip.id] = products.filter((p) => matchesQuickFilter(p, chip.id)).length;
+    }
+    return counts;
+  }, [products]);
+
   // Produtos visíveis na tela (carregamento instantâneo de 32 itens e expansão sob demanda)
   const visibleProducts = useMemo(() => {
     return filteredProducts.slice(0, visibleCount);
@@ -920,6 +929,7 @@ export default function RRStorePage() {
         onOpenComparator={() => handleOpenComparator()}
         isMenuOpen={isMobileMenuOpen}
         onMenuOpenChange={setIsMobileMenuOpen}
+        filterCounts={quickFilterCounts}
       />
 
       {/* Experiência Desktop Intacta (>= 768px) */}
