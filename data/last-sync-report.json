@@ -1,88 +1,182 @@
 {
-  "executedAt": "2026-11-18T14:52:36.348Z",
-  "brasiliaTime": "18/11/2026, 11:52:36",
+  "executedAt": "2026-11-18T16:58:14.466Z",
+  "brasiliaTime": "18/11/2026, 13:58:14",
   "summary": {
-    "sousaTotal": 104,
-    "sousaNovos": 3,
-    "sousaPrecosAlterados": 2,
+    "sousaTotal": 133,
+    "sousaNovos": 31,
+    "sousaPrecosAlterados": 1,
     "gsmTotal": 1139,
-    "gsmNovos": 5,
-    "gsmPrecosAlterados": 1,
-    "totalGeralSincronizado": 1243
+    "gsmNovos": 0,
+    "gsmPrecosAlterados": 0,
+    "totalGeralSincronizado": 1272
   },
   "alteracoesDetectadas": {
     "sousa": {
       "novos": [
         {
-          "id": "sousa-1781616044371-yQqe8",
-          "nome": "TV BOX tomate",
-          "preco": 145
+          "id": "sousa-1792507862858-yQqe8",
+          "nome": "CEL.A7 PRO AZUL 64GB 4RAM",
+          "preco": 710
         },
         {
-          "id": "sousa-1781277236695-yQqe8",
-          "nome": "Unitv v10",
-          "preco": 230
+          "id": "sousa-1791562517707-yQqe8",
+          "nome": "CEL.A7 PRO PRETO 64GB 4RAM",
+          "preco": 710
         },
         {
-          "id": "sousa-1795013177342-yQqe8",
-          "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
-          "preco": 1080
+          "id": "sousa-1792507891495-yQqe8",
+          "nome": "CEL.A7 PRO VERDE 64GB 4RAM",
+          "preco": 710
+        },
+        {
+          "id": "sousa-1787663486485-yQqe8",
+          "nome": "CEL.SAMSUNG A17 NFC CINZA 256GB 8RAM",
+          "preco": 1030
+        },
+        {
+          "id": "sousa-1771431200659-yQqe8",
+          "nome": "CEL.SAMSUNG A17 NFC PRETO 256GB 8RAM",
+          "preco": 1030
+        },
+        {
+          "id": "sousa-1767716516871-yQqe8",
+          "nome": "CONTROLE PLAY 5 PRETO",
+          "preco": 380
+        },
+        {
+          "id": "sousa-1723501381340-yQqe8",
+          "nome": "Câmera Xiaomi 360 C201",
+          "preco": 140
+        },
+        {
+          "id": "sousa-1781277158613-yQqe8",
+          "nome": "UNITV V12",
+          "preco": 280
+        },
+        {
+          "id": "sousa-1791300602096-yQqe8",
+          "nome": "TAB. Infantil azul",
+          "preco": 260
+        },
+        {
+          "id": "sousa-1791301166438-yQqe8",
+          "nome": "TAB. Infantil ROSA",
+          "preco": 260
+        },
+        {
+          "id": "sousa-1792176419758-yQqe8",
+          "nome": "AMAZFIT BIP 6 BLACK",
+          "preco": 530
+        },
+        {
+          "id": "sousa-1729022526335-yQqe8",
+          "nome": "HAYLOU SOLAR NEO PRETO",
+          "preco": 115
+        },
+        {
+          "id": "sousa-1726663840199-yQqe8",
+          "nome": "REDMI WATCH 5 ACTIVE PRETO",
+          "preco": 195
+        },
+        {
+          "id": "sousa-1787758892015-yQqe8",
+          "nome": "REDMI WATCH 6 ACTIVE",
+          "preco": 240
+        },
+        {
+          "id": "sousa-1787759064308-yQqe8",
+          "nome": "REDMI WATCH 6 LITE",
+          "preco": 350
+        },
+        {
+          "id": "sousa-1770129718932-yQqe8",
+          "nome": "XIAOMI SMART BAND 9 ACTIVE PRETA",
+          "preco": 135
+        },
+        {
+          "id": "sousa-1775586252941-yQqe8",
+          "nome": "JBL CLIP 5 AZUL",
+          "preco": 265
+        },
+        {
+          "id": "sousa-1775586078266-yQqe8",
+          "nome": "Jbl CLIP 5 PRETA",
+          "preco": 265
+        },
+        {
+          "id": "sousa-1772205995714-yQqe8",
+          "nome": "JBL GO5 AZUL",
+          "preco": 250
+        },
+        {
+          "id": "sousa-1772205810646-yQqe8",
+          "nome": "JBL GO5 PRETA",
+          "preco": 250
+        },
+        {
+          "id": "sousa-1775831064751-yQqe8",
+          "nome": "MEMÓRIA 128GB MICRO SANDISK ULTRA",
+          "preco": 117
+        },
+        {
+          "id": "sousa-1729275149803-yQqe8",
+          "nome": "MEMÓRIA 32GB MICRO SANDISK ULTRA",
+          "preco": 65
+        },
+        {
+          "id": "sousa-1775830922132-yQqe8",
+          "nome": "MEMÓRIA 64GB MICRO SD SANDISK ULTRA",
+          "preco": 83
+        },
+        {
+          "id": "sousa-1776778304522-yQqe8",
+          "nome": "PENDRIVE 128GB SANDISK ORIGINAL",
+          "preco": 64
+        },
+        {
+          "id": "sousa-1776778136466-yQqe8",
+          "nome": "PENDRIVE 16GB SANDISK ORIGINAL",
+          "preco": 33
+        },
+        {
+          "id": "sousa-1776778191686-yQqe8",
+          "nome": "PENDRIVE 32GB SANDISK ORIGINAL",
+          "preco": 36
+        },
+        {
+          "id": "sousa-1776778241849-yQqe8",
+          "nome": "PENDRIVE 64GB SANDISK ORIGINAL",
+          "preco": 43
+        },
+        {
+          "id": "sousa-1785852435144-yQqe8",
+          "nome": "APARADOR PHILIPS 7in1",
+          "preco": 180
+        },
+        {
+          "id": "sousa-1795018789909-yQqe8",
+          "nome": "APARADOR PHILIPS 9in1",
+          "preco": 195
+        },
+        {
+          "id": "sousa-1785862146934-yQqe8",
+          "nome": "Barbeador Philips séries 1000",
+          "preco": 240
         }
       ],
       "precosAlterados": [
         {
-          "id": "sousa-1789141377826-yQqe8",
-          "nome": "AMAZFIT BIP MAX PRETO",
-          "precoAnterior": 500,
+          "id": "sousa-1770386663844-yQqe8",
+          "nome": "AMAZFIT BIP 6 CINZA (CHARCOAL)",
+          "precoAnterior": 540,
           "precoNovo": 530,
-          "diferenca": 30
-        },
-        {
-          "id": "sousa-1789141416048-yQqe8",
-          "nome": "AMAZFIT BIP MAX SILVER",
-          "precoAnterior": 525,
-          "precoNovo": 530,
-          "diferenca": 5
+          "diferenca": -10
         }
       ]
     },
     "gsm": {
-      "novos": [
-        {
-          "id": "gsm-21452",
-          "nome": "MASSAGEADOR CORPORAL KNUP KP-EM86",
-          "precoCusto": 102.23
-        },
-        {
-          "id": "gsm-21451",
-          "nome": "INVERSOR KNUP 110V/3000W KP-547",
-          "precoCusto": 396.87
-        },
-        {
-          "id": "gsm-21450",
-          "nome": "INVERSOR KNUP 220V/1000W KP-521",
-          "precoCusto": 162.36
-        },
-        {
-          "id": "gsm-21449",
-          "nome": "MASSAGEADOR PARA PESCOÇO E OMBROS KNUP KP-EM16",
-          "precoCusto": 84.18
-        },
-        {
-          "id": "gsm-21437",
-          "nome": "CADEIRA DOBRÁVEL COM BOLSA TÉRMICA BMAX BM-F4337",
-          "precoCusto": 68.88
-        }
-      ],
-      "precosAlterados": [
-        {
-          "id": "gsm-20091",
-          "nome": "PROJETOR KNUP KP-PJ011",
-          "precoAnterior": 589.31,
-          "precoNovo": 529.17,
-          "diferenca": -60.14
-        }
-      ]
+      "novos": [],
+      "precosAlterados": []
     }
   }
 }
