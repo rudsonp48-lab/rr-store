@@ -1,35 +1,8 @@
 {
-  "syncedAt": "2026-11-18T16:58:08.127Z",
+  "syncedAt": "2026-11-18T19:11:23.646Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 133,
+  "count": 125,
   "products": [
-    {
-      "link": "/pt-BR/p/cel-a7-pro-azul-64gb-4ram/1792507862858-yQqe8",
-      "nome": "CEL.A7 PRO AZUL 64GB 4RAM",
-      "preco": 710,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FD96293A2-6709-4F88-B31B-73CCFC21B743.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1792507862858-yQqe8",
-      "categoriaSousa": "celulares"
-    },
-    {
-      "link": "/pt-BR/p/cel-a7-pro-preto-64gb-4ram/1791562517707-yQqe8",
-      "nome": "CEL.A7 PRO PRETO 64GB 4RAM",
-      "preco": 710,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F37E1F261-8D8B-4EF4-9795-065FC5C3AFED.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1791562517707-yQqe8",
-      "categoriaSousa": "celulares"
-    },
-    {
-      "link": "/pt-BR/p/cel-a7-pro-verde-64gb-4ram/1792507891495-yQqe8",
-      "nome": "CEL.A7 PRO VERDE 64GB 4RAM",
-      "preco": 710,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F6892CD3A-67A3-4A31-90EF-708627E796B8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1792507891495-yQqe8",
-      "categoriaSousa": "celulares"
-    },
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
       "nome": "CEL.HONOR PLAY20C 64GB 4RAM GOLD",
@@ -76,24 +49,6 @@
       "categoriaSousa": "celulares"
     },
     {
-      "link": "/pt-BR/p/cel-samsung-a17-nfc-cinza-256gb-8ram/1787663486485-yQqe8",
-      "nome": "CEL.SAMSUNG A17 NFC CINZA 256GB 8RAM",
-      "preco": 1030,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FF1139485-4BB1-4113-B050-D6B8116B4115.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1787663486485-yQqe8",
-      "categoriaSousa": "celulares"
-    },
-    {
-      "link": "/pt-BR/p/cel-samsung-a17-nfc-preto-256gb-8ram/1771431200659-yQqe8",
-      "nome": "CEL.SAMSUNG A17 NFC PRETO 256GB 8RAM",
-      "preco": 1030,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F3F6CD4AE-2A17-41BB-AE87-E737AC4F62BF.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1771431200659-yQqe8",
-      "categoriaSousa": "celulares"
-    },
-    {
       "link": "/pt-BR/p/base-carregamento-dualsense-ps5/1767963983753-yQqe8",
       "nome": "BASE CARREGAMENTO DUALSENSE PS5",
       "preco": 150,
@@ -109,15 +64,6 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F8E5B6C7E-447F-4AFF-B9D2-BB2AFB48AEC3.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1767893559861-yQqe8",
-      "categoriaSousa": "gamer"
-    },
-    {
-      "link": "/pt-BR/p/controle-play-5-preto/1767716516871-yQqe8",
-      "nome": "CONTROLE PLAY 5 PRETO",
-      "preco": 380,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF0E423A-9CD1-4ABB-AFBE-3BDCCB54B7BF.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1767716516871-yQqe8",
       "categoriaSousa": "gamer"
     },
     {
@@ -146,24 +92,6 @@
       "esgotado": false,
       "id": "sousa-1728486715038-yQqe8",
       "categoriaSousa": "gamer"
-    },
-    {
-      "link": "/pt-BR/p/console-sem-disco-playstation-5-digital-825gb/1784818570967-yQqe8",
-      "nome": "🇧🇷 CONSOLE SEM DISCO PLAYSTATION 5 DIGITAL 825GB",
-      "preco": 4000,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F39B90FC9-E970-40A0-83CB-14F0255314FF.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1784818570967-yQqe8",
-      "categoriaSousa": "gamer"
-    },
-    {
-      "link": "/pt-BR/p/filtro-dps-3p-clamper-energia-3-tr/1776457691632-yQqe8",
-      "nome": "FILTRO DPS 3P CLAMPER ENERGIA 3 TR",
-      "preco": 60,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F00675BD0-FA22-4055-896D-D3CDEA158480.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1776457691632-yQqe8",
-      "categoriaSousa": "clamper"
     },
     {
       "link": "/pt-BR/p/fone-bluetooth-philips-tah2209bt/1780587432237-yQqe8",
