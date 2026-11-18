@@ -1,141 +1,86 @@
 {
-  "executedAt": "2026-11-18T12:36:32.882Z",
-  "brasiliaTime": "18/11/2026, 09:36:32",
+  "executedAt": "2026-11-18T14:52:36.348Z",
+  "brasiliaTime": "18/11/2026, 11:52:36",
   "summary": {
-    "sousaTotal": 103,
-    "sousaNovos": 1,
+    "sousaTotal": 104,
+    "sousaNovos": 3,
     "sousaPrecosAlterados": 2,
-    "gsmTotal": 1138,
-    "gsmNovos": 18,
+    "gsmTotal": 1139,
+    "gsmNovos": 5,
     "gsmPrecosAlterados": 1,
-    "totalGeralSincronizado": 1241
+    "totalGeralSincronizado": 1243
   },
   "alteracoesDetectadas": {
     "sousa": {
       "novos": [
         {
-          "id": "sousa-1782933893492-yQqe8",
-          "nome": "GABINETE CLARITY BRANCO 83457",
-          "preco": 160
+          "id": "sousa-1781616044371-yQqe8",
+          "nome": "TV BOX tomate",
+          "preco": 145
+        },
+        {
+          "id": "sousa-1781277236695-yQqe8",
+          "nome": "Unitv v10",
+          "preco": 230
+        },
+        {
+          "id": "sousa-1795013177342-yQqe8",
+          "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
+          "preco": 1080
         }
       ],
       "precosAlterados": [
         {
-          "id": "sousa-1769515135229-yQqe8",
-          "nome": "CEL.NOTE 60X PRETO 128GB 4RAM 4G",
-          "precoAnterior": 790,
-          "precoNovo": 780,
-          "diferenca": -10
+          "id": "sousa-1789141377826-yQqe8",
+          "nome": "AMAZFIT BIP MAX PRETO",
+          "precoAnterior": 500,
+          "precoNovo": 530,
+          "diferenca": 30
         },
         {
-          "id": "sousa-1769517242176-yQqe8",
-          "nome": "CEL.NOTE 60X VERDE 128GB 4RAM 4G",
-          "precoAnterior": 790,
-          "precoNovo": 780,
-          "diferenca": -10
+          "id": "sousa-1789141416048-yQqe8",
+          "nome": "AMAZFIT BIP MAX SILVER",
+          "precoAnterior": 525,
+          "precoNovo": 530,
+          "diferenca": 5
         }
       ]
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-21439",
-          "nome": "EXPANSOR TYPE-C 11 EM 1 BMAX BM-8767",
-          "precoCusto": 51.66
+          "id": "gsm-21452",
+          "nome": "MASSAGEADOR CORPORAL KNUP KP-EM86",
+          "precoCusto": 102.23
         },
         {
-          "id": "gsm-21432",
-          "nome": "FONE DE OUVIDO TWS OPEN-EAR PEINING PEI-P1013",
-          "precoCusto": 34.44
+          "id": "gsm-21451",
+          "nome": "INVERSOR KNUP 110V/3000W KP-547",
+          "precoCusto": 396.87
         },
         {
-          "id": "gsm-21431",
-          "nome": "FONE DE OUVIDO TWS PEINING PEI-P3306",
-          "precoCusto": 43.05
+          "id": "gsm-21450",
+          "nome": "INVERSOR KNUP 220V/1000W KP-521",
+          "precoCusto": 162.36
         },
         {
-          "id": "gsm-21423",
-          "nome": "CAPACETE DE MOTOCICLETA STARMEGA COM VISEIRA ST-1119",
-          "precoCusto": 97.37
+          "id": "gsm-21449",
+          "nome": "MASSAGEADOR PARA PESCOÇO E OMBROS KNUP KP-EM16",
+          "precoCusto": 84.18
         },
         {
-          "id": "gsm-21422",
-          "nome": "CAPACETE DE MOTOCICLETA COM OCULOS STARMEGA ST-1118",
-          "precoCusto": 110.36
-        },
-        {
-          "id": "gsm-21421",
-          "nome": "CAPACETE DE BICICLETA STARMEGA COM VISEIRA ST-1116",
-          "precoCusto": 51.93
-        },
-        {
-          "id": "gsm-21420",
-          "nome": "CAPACETE DE BICICLETA STARMEGA SEM VISEIRA ST-1115",
-          "precoCusto": 54.53
-        },
-        {
-          "id": "gsm-21419",
-          "nome": "CAPACETE DE BICICLETA STARMEGA COM VISEIRA ST-1114",
-          "precoCusto": 49.34
-        },
-        {
-          "id": "gsm-21059",
-          "nome": "SUPORTE DE CELULAR BMAX AUTOMOTIVO COM CLIPE BMG-96",
-          "precoCusto": 13.53
-        },
-        {
-          "id": "gsm-20979",
-          "nome": "BATERIA PEINING 10000Mah WUP-1029",
-          "precoCusto": 71.34
-        },
-        {
-          "id": "gsm-20250",
-          "nome": "CORTADOR DE LEGUMES BMAX BP-15015",
-          "precoCusto": 29.52
-        },
-        {
-          "id": "gsm-20043",
-          "nome": "LUMINARIA COM VENTILADOR BMAX BM-F3102",
-          "precoCusto": 44.28
-        },
-        {
-          "id": "gsm-19698",
-          "nome": "ADAPTADOR BLUETOOTH PEINING PEI-BTA05",
-          "precoCusto": 12.3
-        },
-        {
-          "id": "gsm-19003",
-          "nome": "CORTADOR DE LEGUMES BMAX BP-6017",
-          "precoCusto": 34.44
-        },
-        {
-          "id": "gsm-17829",
-          "nome": "INVERSOR VEICULAR 220V PEINING PEI-NB02",
-          "precoCusto": 123
-        },
-        {
-          "id": "gsm-17822",
-          "nome": "CARREGADOR TPC PEINING 45W &#8211; PEI-333-5",
-          "precoCusto": 43.05
-        },
-        {
-          "id": "gsm-17141",
-          "nome": "CABO PEINING HDMI PEI-HDJ01-2M",
-          "precoCusto": 8.36
-        },
-        {
-          "id": "gsm-14710",
-          "nome": "PILHA RECARREGAVEL MAXPRINT AAA 1,2V CX4UN 75000046",
-          "precoCusto": 16.26
+          "id": "gsm-21437",
+          "nome": "CADEIRA DOBRÁVEL COM BOLSA TÉRMICA BMAX BM-F4337",
+          "precoCusto": 68.88
         }
       ],
       "precosAlterados": [
         {
-          "id": "gsm-14916",
-          "nome": "FURADEIRA B-TEK BT-DZ61",
-          "precoAnterior": 129.83,
-          "precoNovo": 121.62,
-          "diferenca": -8.21
+          "id": "gsm-20091",
+          "nome": "PROJETOR KNUP KP-PJ011",
+          "precoAnterior": 589.31,
+          "precoNovo": 529.17,
+          "diferenca": -60.14
         }
       ]
     }
