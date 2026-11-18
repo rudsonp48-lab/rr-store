@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-15T19:53:35.955Z",
+  "syncedAt": "2026-11-18T12:36:26.475Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 109,
+  "count": 103,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -33,7 +33,7 @@
     {
       "link": "/pt-BR/p/cel-note-60x-preto-128gb-4ram-4g/1769515135229-yQqe8",
       "nome": "CEL.NOTE 60X PRETO 128GB 4RAM 4G",
-      "preco": 790,
+      "preco": 780,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F97C54B37-4D08-4D10-8959-8058E6923D03.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1769515135229-yQqe8",
@@ -42,47 +42,20 @@
     {
       "link": "/pt-BR/p/cel-note-60x-verde-128gb-4ram-4g/1769517242176-yQqe8",
       "nome": "CEL.NOTE 60X VERDE 128GB 4RAM 4G",
-      "preco": 790,
+      "preco": 780,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FF75FFFCF-C053-4CFA-860C-D42FE05FAF29.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1769517242176-yQqe8",
       "categoriaSousa": "celulares"
     },
     {
-      "link": "/pt-BR/p/cel-poco-c71-preto-128gb-4ram/1769514750722-yQqe8",
-      "nome": "CEL.POCO C71 PRETO 128GB 4RAM",
-      "preco": 780,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FD78766C4-5D5B-4E88-8CA1-9968431EAFDD.jpg?alt=media",
+      "link": "/pt-BR/p/filtro-dps-3p-clamper-energia-3-tr/1776457691632-yQqe8",
+      "nome": "FILTRO DPS 3P CLAMPER ENERGIA 3 TR",
+      "preco": 60,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F00675BD0-FA22-4055-896D-D3CDEA158480.jpg?alt=media",
       "esgotado": false,
-      "id": "sousa-1769514750722-yQqe8",
-      "categoriaSousa": "celulares"
-    },
-    {
-      "link": "/pt-BR/p/cel-poco-c85-preto-256gb-8ram/1768578859521-yQqe8",
-      "nome": "CEL.POCO C85 PRETO 256GB 8RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F0F1C5B9F-D317-453B-9C33-C3338D10612D.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1768578859521-yQqe8",
-      "categoriaSousa": "celulares"
-    },
-    {
-      "link": "/pt-BR/p/cel-realme-note-80-azul-128gb-4ram/1789737788931-yQqe8",
-      "nome": "CEL.REALME NOTE 80 AZUL 128GB 4RAM",
-      "preco": 910,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEE548F03-84FE-41C8-8334-EA667B9EC79E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1789737788931-yQqe8",
-      "categoriaSousa": "celulares"
-    },
-    {
-      "link": "/pt-BR/p/cel-realme-note-80-preto-128gb-4ram/1789737877379-yQqe8",
-      "nome": "CEL.REALME NOTE 80 PRETO 128GB 4RAM",
-      "preco": 910,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F5C272EB4-0D7C-41C7-ACE1-DC317069AA7E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1789737877379-yQqe8",
-      "categoriaSousa": "celulares"
+      "id": "sousa-1776457691632-yQqe8",
+      "categoriaSousa": "clamper"
     },
     {
       "link": "/pt-BR/p/base-carregamento-dualsense-ps5/1767963983753-yQqe8",
@@ -155,15 +128,6 @@
       "esgotado": false,
       "id": "sousa-1784818570967-yQqe8",
       "categoriaSousa": "gamer"
-    },
-    {
-      "link": "/pt-BR/p/filtro-dps-3p-clamper-energia-3-tr/1776457691632-yQqe8",
-      "nome": "FILTRO DPS 3P CLAMPER ENERGIA 3 TR",
-      "preco": 60,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F00675BD0-FA22-4055-896D-D3CDEA158480.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1776457691632-yQqe8",
-      "categoriaSousa": "clamper"
     },
     {
       "link": "/pt-BR/p/fone-bluetooth-philips-tah2209bt/1780587432237-yQqe8",
@@ -409,6 +373,60 @@
       "categoriaSousa": "aparelhos-para-tv"
     },
     {
+      "link": "/pt-BR/p/poco-pad-m1-gray-256gb-8ram/1778861532381-yQqe8",
+      "nome": "POCO PAD M1 GRAY 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB04B6C98-26CA-4025-9100-C6F012C2D5B1.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1778861532381-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-gray-128gb-4ram/1757616018501-yQqe8",
+      "nome": "REDMI PAD 2 GRAY 128GB 4RAM",
+      "preco": 1150,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F17B4DFB5-561F-4D92-BBE1-7948857FD60C.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1757616018501-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
+      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1788532625984-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
+      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793978740202-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
+      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793113977220-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
+      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793114100828-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
       "link": "/pt-BR/p/cabo-fortrek-usbc-to-usbc-2m-3a-u222-black-edition/1764877669056-yQqe8",
       "nome": "CABO FORTREK USB-C to USB-C 2M 3A U222 BLACK EDITION",
       "preco": 13,
@@ -616,67 +634,13 @@
       "categoriaSousa": "fortrek"
     },
     {
-      "link": "/pt-BR/p/gabinete-atx-clarity-max-preto-fortrek/1768445335969-yQqe8",
-      "nome": "GABINETE ATX CLARITY MAX PRETO FORTREK",
-      "preco": 240,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FAF1EBC56-8021-424D-BFDD-AC7A964A6F38.jpg?alt=media",
+      "link": "/pt-BR/p/gabinete-clarity-branco-83457/1782933893492-yQqe8",
+      "nome": "GABINETE CLARITY BRANCO 83457",
+      "preco": 160,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F29B16353-64F7-429A-BB87-25388E751331.jpg?alt=media",
       "esgotado": false,
-      "id": "sousa-1768445335969-yQqe8",
+      "id": "sousa-1782933893492-yQqe8",
       "categoriaSousa": "fortrek"
-    },
-    {
-      "link": "/pt-BR/p/poco-pad-m1-gray-256gb-8ram/1778861532381-yQqe8",
-      "nome": "POCO PAD M1 GRAY 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB04B6C98-26CA-4025-9100-C6F012C2D5B1.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1778861532381-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-gray-128gb-4ram/1757616018501-yQqe8",
-      "nome": "REDMI PAD 2 GRAY 128GB 4RAM",
-      "preco": 1150,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F17B4DFB5-561F-4D92-BBE1-7948857FD60C.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1757616018501-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
-      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1788532625984-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
-      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793978740202-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
-      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793113977220-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
-      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793114100828-yQqe8",
-      "categoriaSousa": "tabletes"
     },
     {
       "link": "/pt-BR/p/amazfit-active-2-premium-quadrado-square/1772809438913-yQqe8",
@@ -850,30 +814,12 @@
       "categoriaSousa": "ssd"
     },
     {
-      "link": "/pt-BR/p/case-hd-sataiii/1785864773484-yQqe8",
-      "nome": "Case hd sataIII",
-      "preco": 20,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEBE2CF77-711F-449A-A265-F31000A8CC65.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1785864773484-yQqe8",
-      "categoriaSousa": "ssd"
-    },
-    {
       "link": "/pt-BR/p/ssd-240gb-sandisk/1785249610543-yQqe8",
       "nome": "SSD 240GB SANDISK",
       "preco": 330,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FA7B3A597-D459-4908-99BD-5C596529B922.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1785249610543-yQqe8",
-      "categoriaSousa": "ssd"
-    },
-    {
-      "link": "/pt-BR/p/ssd-480gb-sandisk/1785249686468-yQqe8",
-      "nome": "SSD 480GB SANDISK",
-      "preco": 400,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEE709821-4C31-4C52-BD71-EE3E65CF9D60.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1785249686468-yQqe8",
       "categoriaSousa": "ssd"
     },
     {
