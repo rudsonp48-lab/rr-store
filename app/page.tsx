@@ -64,6 +64,41 @@ function normalizeDuoText(text?: string): string {
   return (text || '').replace(/\biphone\s*18\s*duo\b/gi, 'iPhone Duo');
 }
 
+function fixMismatchedAppleImage(nome: string, img: string): string {
+  const n = (nome || '').toLowerCase();
+  const isIphoneImg = /(2154628|5582702|5582713|5582719|5582728|5582771|5582858|5411081)/.test(img || '');
+  const isIpadImg = /(5160866|5160798|5395689|5396762|5395853|5395826)/.test(img || '');
+
+  if (/\b(magic\s*keyboard|teclado)\b/i.test(n) && (isIphoneImg || isIpadImg)) {
+    return 'https://fastshopbr.vteximg.com.br/arquivos/ids/5115786/0_951e9d0f-363d-4261-97df-6b0dc1108ca5.jpeg.jpg?v=639180221821330000';
+  }
+  if (/\bipad\b/i.test(n) && !/\b(keyboard|teclado)\b/i.test(n) && isIphoneImg) {
+    if (n.includes('mini')) {
+      return 'https://fastshopbr.vtexassets.com/arquivos/ids/5395853/0_0_675b42cf447c42f8bd09ec97.jpg?v=639217374222870000';
+    }
+    if (n.includes('air') && n.includes('azul')) {
+      return 'https://fastshopbr.vtexassets.com/arquivos/ids/5396762/0_0_67dcb5c72954dd4c58245619.jpg?v=639217400428900000';
+    }
+    if (n.includes('air')) {
+      return 'https://fastshopbr.vtexassets.com/arquivos/ids/5395689/0_0_67dcb5c52954dd4c582455fd.jpg?v=639217367461330000';
+    }
+    if (n.includes('rosa')) {
+      return 'https://fastshopbr.vtexassets.com/arquivos/ids/5395619/0_0_67dcb5c52954dd4c58245605.jpg?v=639217365810770000';
+    }
+    if (n.includes('branco') || n.includes('silver')) {
+      return 'https://fastshopbr.vtexassets.com/arquivos/ids/5160798/0_0_675b42be447c42f8bd09eb01.jpg?v=639183781439670000';
+    }
+    return 'https://fastshopbr.vtexassets.com/arquivos/ids/5160866/0_0_675b42c4447c42f8bd09eb7d.jpg?v=639183784983530000';
+  }
+  if (/\bwatch\b/i.test(n) && isIphoneImg) {
+    return 'https://fastshopbr.vtexassets.com/arquivos/ids/5646899/0_e4fcd6ff-2904-4ccd-beee-d17f3b4d7939.jpeg.jpg?v=639263774609300000';
+  }
+  if (/\bmacbook\b/i.test(n) && isIphoneImg) {
+    return 'https://fastshopbr.vteximg.com.br/arquivos/ids/5396122/0_db925313-5501-4b17-ac3a-df463898ac2d.jpeg.jpg?v=639217382602570000';
+  }
+  return img;
+}
+
 function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
   const seen = new Set<string>();
   const uniqueCloud = cloudProducts.filter((cp) => {
@@ -88,7 +123,11 @@ function mergeWithVerifiedCatalog(cloudProducts: Product[]): Product[] {
         : isStaleSousaOnApple
         ? local?.imagem || 'https://fastshopbr.vtexassets.com/arquivos/ids/5582702/17892121899730.jpg?v=639248107988200000'
         : cp.imagem || local?.imagem || '';
-    const safeCloudImg = chosenImg.replace(/^http:\/\//i, 'https://');
+
+    const safeCloudImg = fixMismatchedAppleImage(
+      local?.nome || cp.nome,
+      chosenImg.replace(/^http:\/\//i, 'https://')
+    );
 
     // Para produtos Apple curados: se o documento na nuvem for anterior à versão 15
     // (ex: preços antigos com * 0.95 ou lista anterior), usa o preço integral atualizado da lista oficial
@@ -213,7 +252,10 @@ function applyStockmaster(base: Product[], items: StockmasterItem[]): Product[] 
         precoPix: it.preco,
         parcelamento: formatInstallment(it.preco, parcelas),
         estoque: it.estoque,
-        imagem: match.id.startsWith('rr-apple-') ? match.imagem || it.imagem || '' : it.imagem || match.imagem,
+        imagem: fixMismatchedAppleImage(
+          match.nome,
+          match.id.startsWith('rr-apple-') ? match.imagem || it.imagem || '' : it.imagem || match.imagem
+        ),
       });
     } else {
       result.set(smId, {
@@ -228,7 +270,7 @@ function applyStockmaster(base: Product[], items: StockmasterItem[]): Product[] 
         avaliacao: 5,
         avaliacoesCount: 12,
         tag: 'Novidade',
-        imagem: it.imagem || '',
+        imagem: fixMismatchedAppleImage(cleanName, it.imagem || ''),
         descricao: `${cleanName} — disponível em Brasília-DF com entrega rápida via Motoboy Express.`,
         estoque: it.estoque,
       });
