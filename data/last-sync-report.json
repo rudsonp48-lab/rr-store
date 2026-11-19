@@ -1,32 +1,31 @@
 {
-  "executedAt": "2026-11-19T13:11:05.018Z",
-  "brasiliaTime": "19/11/2026, 10:11:05",
+  "executedAt": "2026-11-19T15:28:02.694Z",
+  "brasiliaTime": "19/11/2026, 12:28:02",
   "summary": {
-    "sousaTotal": 124,
-    "sousaNovos": 1,
+    "sousaTotal": 123,
+    "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
-    "gsmTotal": 1142,
-    "gsmNovos": 1,
+    "gsmTotal": 1143,
+    "gsmNovos": 2,
     "gsmPrecosAlterados": 0,
     "totalGeralSincronizado": 1266
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1771431200659-yQqe8",
-          "nome": "CEL.SAMSUNG A17 NFC PRETO 256GB 8RAM",
-          "preco": 1030
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-14686",
-          "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE VERDE 743421",
-          "precoCusto": 3.7
+          "id": "gsm-21273",
+          "nome": "CAMERA DE LENTE DUPLA KNUP KP-CA212",
+          "precoCusto": 110.02
+        },
+        {
+          "id": "gsm-14680",
+          "nome": "CARREGADOR PEINING V8 PEI-216-1",
+          "precoCusto": 10.46
         }
       ],
       "precosAlterados": []

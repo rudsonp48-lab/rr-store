@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-19T13:11:05.015Z",
+  "syncedAt": "2026-11-19T15:28:02.686Z",
   "source": "https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products",
-  "count": 1142,
+  "count": 1143,
   "products": [
     {
       "id": "gsm-21452",
@@ -181,7 +181,7 @@
       "categorias": [
         "ULTRAMAX"
       ],
-      "estoqueTexto": "4593 em estoque"
+      "estoqueTexto": "4591 em estoque"
     },
     {
       "id": "gsm-21410",
@@ -693,6 +693,19 @@
       "estoqueTexto": "4 em estoque"
     },
     {
+      "id": "gsm-21273",
+      "originalId": 21273,
+      "nome": "CAMERA DE LENTE DUPLA KNUP KP-CA212",
+      "sku": "KP-CA212",
+      "precoCusto": 110.02,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/10/image-2026-10-29T160739.825.png",
+      "categorias": [
+        "CÂMERA KNUP",
+        "KNUP"
+      ],
+      "estoqueTexto": "14 em estoque"
+    },
+    {
       "id": "gsm-21271",
       "originalId": 21271,
       "nome": "ETIQUETA PARA IMPRESSAO TERMICA KNUP KP-PP06",
@@ -783,7 +796,7 @@
         "KNUP",
         "SOM E ILUMINAÇÃO KNUP"
       ],
-      "estoqueTexto": "127 em estoque"
+      "estoqueTexto": "125 em estoque"
     },
     {
       "id": "gsm-21246",
@@ -875,7 +888,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "34 em estoque"
+      "estoqueTexto": "32 em estoque"
     },
     {
       "id": "gsm-21239",
@@ -978,7 +991,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "961 em estoque"
+      "estoqueTexto": "955 em estoque"
     },
     {
       "id": "gsm-21222",
@@ -1134,7 +1147,7 @@
         "BICICLETA ELÉTRICA",
         "STARMEGA"
       ],
-      "estoqueTexto": "1 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-21182",
@@ -1290,7 +1303,7 @@
         "ELETRO, CASA E COZINHA SUMERX",
         "SUMEXR"
       ],
-      "estoqueTexto": "234 em estoque"
+      "estoqueTexto": "224 em estoque"
     },
     {
       "id": "gsm-21073",
@@ -1303,7 +1316,7 @@
         "B-TEK",
         "FERRAMENTA BMAX"
       ],
-      "estoqueTexto": "8 em estoque"
+      "estoqueTexto": "7 em estoque"
     },
     {
       "id": "gsm-21072",
@@ -1759,7 +1772,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "10 em estoque"
+      "estoqueTexto": "8 em estoque"
     },
     {
       "id": "gsm-20969",
@@ -1863,7 +1876,7 @@
         "BMAX",
         "SUPORTE BMAX"
       ],
-      "estoqueTexto": "48 em estoque"
+      "estoqueTexto": "46 em estoque"
     },
     {
       "id": "gsm-20960",
@@ -1877,7 +1890,7 @@
         "ELETRO, CASA E COZINHA BMAX",
         "FERRAMENTA BMAX"
       ],
-      "estoqueTexto": "19 em estoque"
+      "estoqueTexto": "18 em estoque"
     },
     {
       "id": "gsm-20959",
@@ -1903,7 +1916,7 @@
         "BMAX",
         "FACA BMAX"
       ],
-      "estoqueTexto": "28 em estoque"
+      "estoqueTexto": "27 em estoque"
     },
     {
       "id": "gsm-20957",
@@ -1994,7 +2007,7 @@
         "LEHMOX",
         "SOM E ILUMINAÇÃO LEHMOX"
       ],
-      "estoqueTexto": "18 em estoque"
+      "estoqueTexto": "16 em estoque"
     },
     {
       "id": "gsm-20913",
@@ -2046,7 +2059,7 @@
         "GAMER LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "12 em estoque"
+      "estoqueTexto": "9 em estoque"
     },
     {
       "id": "gsm-20909",
@@ -3586,7 +3599,7 @@
         "BMAX",
         "FACA BMAX"
       ],
-      "estoqueTexto": "50 em estoque"
+      "estoqueTexto": "48 em estoque"
     },
     {
       "id": "gsm-20499",
@@ -3651,7 +3664,7 @@
         "BMAX",
         "FACA BMAX"
       ],
-      "estoqueTexto": "38 em estoque"
+      "estoqueTexto": "34 em estoque"
     },
     {
       "id": "gsm-20489",
@@ -3716,7 +3729,7 @@
         "APARADOR BMAX",
         "BMAX"
       ],
-      "estoqueTexto": "8 em estoque"
+      "estoqueTexto": "6 em estoque"
     },
     {
       "id": "gsm-20481",
@@ -4402,19 +4415,6 @@
       "estoqueTexto": "7 em estoque"
     },
     {
-      "id": "gsm-20323",
-      "originalId": 20323,
-      "nome": "CAIXA DE SOM 40W PEINING PEI-S122",
-      "sku": "PEI-S122",
-      "precoCusto": 174.66,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/07/image-2026-08-06T102006.501.png",
-      "categorias": [
-        "CAIXA DE SOM PEINING",
-        "PEINING"
-      ],
-      "estoqueTexto": "1 em estoque"
-    },
-    {
       "id": "gsm-20312",
       "originalId": 20312,
       "nome": "ANTENA DIGITAL 5M LEHMOX NY-3202",
@@ -4590,7 +4590,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "111 em estoque"
+      "estoqueTexto": "108 em estoque"
     },
     {
       "id": "gsm-20131",
@@ -5122,7 +5122,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "24 em estoque"
+      "estoqueTexto": "21 em estoque"
     },
     {
       "id": "gsm-20041",
@@ -5535,7 +5535,7 @@
       "categorias": [
         "ALTOMEX"
       ],
-      "estoqueTexto": "50 em estoque"
+      "estoqueTexto": "48 em estoque"
     },
     {
       "id": "gsm-19909",
@@ -5635,7 +5635,7 @@
       "categorias": [
         "ALTOMEX"
       ],
-      "estoqueTexto": "322 em estoque"
+      "estoqueTexto": "314 em estoque"
     },
     {
       "id": "gsm-19781",
@@ -6007,7 +6007,7 @@
         "BMAX",
         "FACA BMAX"
       ],
-      "estoqueTexto": "32 em estoque"
+      "estoqueTexto": "21 em estoque"
     },
     {
       "id": "gsm-19308",
@@ -6072,7 +6072,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "435 em estoque"
+      "estoqueTexto": "429 em estoque"
     },
     {
       "id": "gsm-19201",
@@ -6593,7 +6593,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "247 em estoque"
+      "estoqueTexto": "243 em estoque"
     },
     {
       "id": "gsm-18871",
@@ -7023,7 +7023,7 @@
         "BMAX",
         "FACA BMAX"
       ],
-      "estoqueTexto": "23 em estoque"
+      "estoqueTexto": "15 em estoque"
     },
     {
       "id": "gsm-18757",
@@ -7931,7 +7931,7 @@
         "CAIXA DE SOM PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "5 em estoque"
+      "estoqueTexto": "4 em estoque"
     },
     {
       "id": "gsm-18165",
@@ -7957,7 +7957,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "152 em estoque"
+      "estoqueTexto": "142 em estoque"
     },
     {
       "id": "gsm-18156",
@@ -9631,7 +9631,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "130 em estoque"
+      "estoqueTexto": "122 em estoque"
     },
     {
       "id": "gsm-17824",
@@ -9644,7 +9644,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "383 em estoque"
+      "estoqueTexto": "373 em estoque"
     },
     {
       "id": "gsm-17823",
@@ -9890,7 +9890,7 @@
         "BATERIA PORTÁTIL FAM",
         "KIMASTER"
       ],
-      "estoqueTexto": "314 em estoque"
+      "estoqueTexto": "312 em estoque"
     },
     {
       "id": "gsm-17594",
@@ -11005,7 +11005,7 @@
         "BMAX",
         "SUPORTE BMAX"
       ],
-      "estoqueTexto": "101 em estoque"
+      "estoqueTexto": "100 em estoque"
     },
     {
       "id": "gsm-16780",
@@ -11276,7 +11276,7 @@
         "ILUMINAÇÃO PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "33 em estoque"
+      "estoqueTexto": "31 em estoque"
     },
     {
       "id": "gsm-16542",
@@ -11457,7 +11457,7 @@
         "CABO E CARREGADOR KIMASTER",
         "KIMASTER"
       ],
-      "estoqueTexto": "195 em estoque"
+      "estoqueTexto": "190 em estoque"
     },
     {
       "id": "gsm-16285",
@@ -13343,7 +13343,7 @@
         "CABO E CARREGADOR IMENSO",
         "IMENSO"
       ],
-      "estoqueTexto": "10 em estoque"
+      "estoqueTexto": "9 em estoque"
     },
     {
       "id": "gsm-15109",
@@ -13626,7 +13626,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "3 em estoque"
+      "estoqueTexto": "2 em estoque"
     },
     {
       "id": "gsm-14917",
@@ -14710,6 +14710,19 @@
         "PAPELARIA"
       ],
       "estoqueTexto": "20 em estoque"
+    },
+    {
+      "id": "gsm-14680",
+      "originalId": 14680,
+      "nome": "CARREGADOR PEINING V8 PEI-216-1",
+      "sku": "PEI-216-1",
+      "precoCusto": 10.46,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/214-v8.png",
+      "categorias": [
+        "CABO E CARREGADOR PEINING",
+        "PEINING"
+      ],
+      "estoqueTexto": "25 em estoque"
     }
   ]
 }
