@@ -1,37 +1,51 @@
 {
-  "executedAt": "2026-11-20T01:14:47.793Z",
-  "brasiliaTime": "19/11/2026, 22:14:47",
+  "executedAt": "2026-11-20T13:35:44.740Z",
+  "brasiliaTime": "20/11/2026, 10:35:44",
   "summary": {
     "sousaTotal": 121,
-    "sousaNovos": 2,
+    "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
-    "gsmTotal": 1142,
-    "gsmNovos": 1,
+    "gsmTotal": 1146,
+    "gsmNovos": 6,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1263
+    "totalGeralSincronizado": 1267
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1785864773484-yQqe8",
-          "nome": "Case hd sataIII",
-          "preco": 20
-        },
-        {
-          "id": "sousa-1794666291370-yQqe8",
-          "nome": "JBL QUANTUM 100 M2 ROSA",
-          "preco": 140
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-14679",
-          "nome": "GARRAFA TERMICA BM-P1924",
-          "precoCusto": 35.9
+          "id": "gsm-21461",
+          "nome": "INVERSOR KNUP 220V/2000W KP-550A",
+          "precoCusto": 252.56
+        },
+        {
+          "id": "gsm-21216",
+          "nome": "CAIXA DE SOM TWS 300W PEINING PEI-S132",
+          "precoCusto": 664.2
+        },
+        {
+          "id": "gsm-20607",
+          "nome": "CAIXA DE TEMPEROS BMAX BP-21563",
+          "precoCusto": 16.61
+        },
+        {
+          "id": "gsm-14678",
+          "nome": "KIT BMAX TECLADO/MOUSE RGB BM-T13",
+          "precoCusto": 43.05
+        },
+        {
+          "id": "gsm-14677",
+          "nome": "CHAVE B-TEK DE CATRACA ELETRICA 21V BT-DZ74",
+          "precoCusto": 319.9
+        },
+        {
+          "id": "gsm-14676",
+          "nome": "VENTILADOR BMAX LED COM CONTROLE BM-F1755",
+          "precoCusto": 84.72
         }
       ],
       "precosAlterados": []

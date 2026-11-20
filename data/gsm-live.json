@@ -1,8 +1,21 @@
 {
-  "syncedAt": "2026-11-20T01:14:47.717Z",
+  "syncedAt": "2026-11-20T13:35:44.737Z",
   "source": "https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products",
-  "count": 1142,
+  "count": 1146,
   "products": [
+    {
+      "id": "gsm-21461",
+      "originalId": 21461,
+      "nome": "INVERSOR KNUP 220V/2000W KP-550A",
+      "sku": "KP-550A",
+      "precoCusto": 252.56,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/11/image-2026-11-20T092615.203.png",
+      "categorias": [
+        "INFORMÁTICA KNUP",
+        "KNUP"
+      ],
+      "estoqueTexto": "10 em estoque"
+    },
     {
       "id": "gsm-21452",
       "originalId": 21452,
@@ -66,7 +79,7 @@
         "BMAX",
         "INFORMÁTICA BMAX"
       ],
-      "estoqueTexto": "46 em estoque"
+      "estoqueTexto": "44 em estoque"
     },
     {
       "id": "gsm-21437",
@@ -118,7 +131,7 @@
         "BICICLETA ELÉTRICA",
         "STARMEGA"
       ],
-      "estoqueTexto": "18 em estoque"
+      "estoqueTexto": "17 em estoque"
     },
     {
       "id": "gsm-21422",
@@ -130,7 +143,7 @@
       "categorias": [
         "STARMEGA"
       ],
-      "estoqueTexto": "24 em estoque"
+      "estoqueTexto": "23 em estoque"
     },
     {
       "id": "gsm-21421",
@@ -143,7 +156,7 @@
         "BICICLETA ELÉTRICA",
         "STARMEGA"
       ],
-      "estoqueTexto": "38 em estoque"
+      "estoqueTexto": "37 em estoque"
     },
     {
       "id": "gsm-21420",
@@ -156,7 +169,7 @@
         "BICICLETA ELÉTRICA",
         "STARMEGA"
       ],
-      "estoqueTexto": "40 em estoque"
+      "estoqueTexto": "39 em estoque"
     },
     {
       "id": "gsm-21419",
@@ -169,7 +182,7 @@
         "BICICLETA ELÉTRICA",
         "STARMEGA"
       ],
-      "estoqueTexto": "38 em estoque"
+      "estoqueTexto": "36 em estoque"
     },
     {
       "id": "gsm-21411",
@@ -258,7 +271,7 @@
       "categorias": [
         "SUMEXR"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-21359",
@@ -464,7 +477,7 @@
         "BMAX",
         "INFORMÁTICA BMAX"
       ],
-      "estoqueTexto": "90 em estoque"
+      "estoqueTexto": "88 em estoque"
     },
     {
       "id": "gsm-21332",
@@ -478,7 +491,7 @@
         "ELETRO, CASA E COZINHA BMAX",
         "INFORMÁTICA BMAX"
       ],
-      "estoqueTexto": "80 em estoque"
+      "estoqueTexto": "57 em estoque"
     },
     {
       "id": "gsm-21329",
@@ -756,7 +769,7 @@
         "KAPBOM",
         "SMARTWATCH KAPBOM"
       ],
-      "estoqueTexto": "58 em estoque"
+      "estoqueTexto": "56 em estoque"
     },
     {
       "id": "gsm-21248",
@@ -940,7 +953,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "76 em estoque"
+      "estoqueTexto": "74 em estoque"
     },
     {
       "id": "gsm-21227",
@@ -991,7 +1004,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "34 em estoque"
+      "estoqueTexto": "29 em estoque"
     },
     {
       "id": "gsm-21221",
@@ -1057,6 +1070,19 @@
         "PEINING"
       ],
       "estoqueTexto": "1 em estoque"
+    },
+    {
+      "id": "gsm-21216",
+      "originalId": 21216,
+      "nome": "CAIXA DE SOM TWS 300W PEINING PEI-S132",
+      "sku": "PEI-S132",
+      "precoCusto": 664.2,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/10/image-2026-11-20T095144.989.png",
+      "categorias": [
+        "CAIXA DE SOM PEINING",
+        "PEINING"
+      ],
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-21214",
@@ -1719,7 +1745,7 @@
         "BATERIA PORTÁTIL PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "87 em estoque"
+      "estoqueTexto": "82 em estoque"
     },
     {
       "id": "gsm-20976",
@@ -2189,7 +2215,7 @@
         "CABO E CARREGADOR KINGO",
         "KINGO"
       ],
-      "estoqueTexto": "141 em estoque"
+      "estoqueTexto": "133 em estoque"
     },
     {
       "id": "gsm-20896",
@@ -2202,7 +2228,7 @@
         "CABO E CARREGADOR KINGO",
         "KINGO"
       ],
-      "estoqueTexto": "113 em estoque"
+      "estoqueTexto": "105 em estoque"
     },
     {
       "id": "gsm-20872",
@@ -2279,7 +2305,7 @@
       "categorias": [
         "DESTAQUES"
       ],
-      "estoqueTexto": "152 em estoque"
+      "estoqueTexto": "151 em estoque"
     },
     {
       "id": "gsm-20855",
@@ -2539,7 +2565,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "234 em estoque"
+      "estoqueTexto": "226 em estoque"
     },
     {
       "id": "gsm-20814",
@@ -2773,7 +2799,7 @@
         "BMAX",
         "INFORMÁTICA BMAX"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-20672",
@@ -2813,19 +2839,6 @@
         "CABO E CARREGADOR BMAX"
       ],
       "estoqueTexto": "274 em estoque"
-    },
-    {
-      "id": "gsm-20666",
-      "originalId": 20666,
-      "nome": "BICICLETA ELÉTRICA STARMEGA X8S-P",
-      "sku": "X8S-P",
-      "precoCusto": 5790,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/08/image-2026-08-26T134708.819.png",
-      "categorias": [
-        "BICICLETA ELÉTRICA",
-        "STARMEGA"
-      ],
-      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-20657",
@@ -3193,6 +3206,19 @@
       "estoqueTexto": "2 em estoque"
     },
     {
+      "id": "gsm-20607",
+      "originalId": 20607,
+      "nome": "CAIXA DE TEMPEROS BMAX BP-21563",
+      "sku": "BP-21563",
+      "precoCusto": 16.61,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/08/image-2026-11-20T095827.821.png",
+      "categorias": [
+        "BMAX",
+        "ELETRO, CASA E COZINHA BMAX"
+      ],
+      "estoqueTexto": "29 em estoque"
+    },
+    {
       "id": "gsm-20606",
       "originalId": 20606,
       "nome": "ORGANIZADORA BMAX BP-21399",
@@ -3456,7 +3482,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "23 em estoque"
+      "estoqueTexto": "21 em estoque"
     },
     {
       "id": "gsm-20509",
@@ -3469,7 +3495,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "13 em estoque"
+      "estoqueTexto": "11 em estoque"
     },
     {
       "id": "gsm-20508",
@@ -4425,7 +4451,7 @@
         "LEHMOX",
         "SUPORTE LEHMOX"
       ],
-      "estoqueTexto": "99 em estoque"
+      "estoqueTexto": "96 em estoque"
     },
     {
       "id": "gsm-20309",
@@ -4913,7 +4939,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "117 em estoque"
+      "estoqueTexto": "112 em estoque"
     },
     {
       "id": "gsm-20073",
@@ -7114,7 +7140,7 @@
         "LEHMOX",
         "SUPORTE LEHMOX"
       ],
-      "estoqueTexto": "5 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-18512",
@@ -7931,7 +7957,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "203 em estoque"
+      "estoqueTexto": "199 em estoque"
     },
     {
       "id": "gsm-18156",
@@ -9618,7 +9644,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "350 em estoque"
+      "estoqueTexto": "345 em estoque"
     },
     {
       "id": "gsm-17823",
@@ -9644,7 +9670,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "88 em estoque"
+      "estoqueTexto": "78 em estoque"
     },
     {
       "id": "gsm-17821",
@@ -9683,7 +9709,7 @@
         "INFORMÁTICA KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "26 em estoque"
+      "estoqueTexto": "24 em estoque"
     },
     {
       "id": "gsm-17805",
@@ -10979,7 +11005,7 @@
         "BMAX",
         "SUPORTE BMAX"
       ],
-      "estoqueTexto": "100 em estoque"
+      "estoqueTexto": "99 em estoque"
     },
     {
       "id": "gsm-16780",
@@ -13590,19 +13616,6 @@
       "estoqueTexto": "17 em estoque"
     },
     {
-      "id": "gsm-14918",
-      "originalId": 14918,
-      "nome": "TESOURA BMAX BT-610",
-      "sku": "BT-610",
-      "precoCusto": 15.74,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/imagem_2025-12-18_095529909-1.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "2 em estoque"
-    },
-    {
       "id": "gsm-14917",
       "originalId": 14917,
       "nome": "SERRA B-TEK SABRE BT-DZ39",
@@ -13665,7 +13678,7 @@
         "B-TEK",
         "FERRAMENTA BMAX"
       ],
-      "estoqueTexto": "7 em estoque"
+      "estoqueTexto": "5 em estoque"
     },
     {
       "id": "gsm-14912",
@@ -14710,6 +14723,45 @@
         "ELETRO, CASA E COZINHA BMAX"
       ],
       "estoqueTexto": "2 em estoque"
+    },
+    {
+      "id": "gsm-14678",
+      "originalId": 14678,
+      "nome": "KIT BMAX TECLADO/MOUSE RGB BM-T13",
+      "sku": "BM-T13",
+      "precoCusto": 43.05,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/Kit-Teclado-Gamer-E-Mouse-B-max-C-fio-Semi-Mec-nico-Ilumina-o-RGB_1738946446-1.png",
+      "categorias": [
+        "BMAX",
+        "INFORMÁTICA BMAX"
+      ],
+      "estoqueTexto": "34 em estoque"
+    },
+    {
+      "id": "gsm-14677",
+      "originalId": 14677,
+      "nome": "CHAVE B-TEK DE CATRACA ELETRICA 21V BT-DZ74",
+      "sku": "BT-DZ74",
+      "precoCusto": 319.9,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/D_NQ_NP_2X_979236-MLB99783835126_122025-F-chave-catraca-b-tek-12-bivolt-recarregavel-2-baterias-21v.png",
+      "categorias": [
+        "B-TEK",
+        "FERRAMENTA BMAX"
+      ],
+      "estoqueTexto": "10 em estoque"
+    },
+    {
+      "id": "gsm-14676",
+      "originalId": 14676,
+      "nome": "VENTILADOR BMAX LED COM CONTROLE BM-F1755",
+      "sku": "BM-1755",
+      "precoCusto": 84.72,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/image_124326.png",
+      "categorias": [
+        "BMAX",
+        "ELETRO, CASA E COZINHA BMAX"
+      ],
+      "estoqueTexto": "32 em estoque"
     }
   ]
 }
