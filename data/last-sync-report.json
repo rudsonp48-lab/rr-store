@@ -1,31 +1,37 @@
 {
-  "executedAt": "2026-11-19T15:28:02.694Z",
-  "brasiliaTime": "19/11/2026, 12:28:02",
+  "executedAt": "2026-11-20T01:14:47.793Z",
+  "brasiliaTime": "19/11/2026, 22:14:47",
   "summary": {
-    "sousaTotal": 123,
-    "sousaNovos": 0,
+    "sousaTotal": 121,
+    "sousaNovos": 2,
     "sousaPrecosAlterados": 0,
-    "gsmTotal": 1143,
-    "gsmNovos": 2,
+    "gsmTotal": 1142,
+    "gsmNovos": 1,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1266
+    "totalGeralSincronizado": 1263
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [],
+      "novos": [
+        {
+          "id": "sousa-1785864773484-yQqe8",
+          "nome": "Case hd sataIII",
+          "preco": 20
+        },
+        {
+          "id": "sousa-1794666291370-yQqe8",
+          "nome": "JBL QUANTUM 100 M2 ROSA",
+          "preco": 140
+        }
+      ],
       "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-21273",
-          "nome": "CAMERA DE LENTE DUPLA KNUP KP-CA212",
-          "precoCusto": 110.02
-        },
-        {
-          "id": "gsm-14680",
-          "nome": "CARREGADOR PEINING V8 PEI-216-1",
-          "precoCusto": 10.46
+          "id": "gsm-14679",
+          "nome": "GARRAFA TERMICA BM-P1924",
+          "precoCusto": 35.9
         }
       ],
       "precosAlterados": []

@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-19T15:27:56.127Z",
+  "syncedAt": "2026-11-20T01:14:41.248Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 123,
+  "count": 121,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -47,15 +47,6 @@
       "esgotado": false,
       "id": "sousa-1769517242176-yQqe8",
       "categoriaSousa": "celulares"
-    },
-    {
-      "link": "/pt-BR/p/base-carregamento-dualsense-ps5/1767963983753-yQqe8",
-      "nome": "BASE CARREGAMENTO DUALSENSE PS5",
-      "preco": 150,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F02CEC84D-7C7E-431D-90BC-E7FF45548383.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1767963983753-yQqe8",
-      "categoriaSousa": "gamer"
     },
     {
       "link": "/pt-BR/p/controle-play-5-camuflado/1767893559861-yQqe8",
@@ -211,15 +202,6 @@
       "categoriaSousa": "fones"
     },
     {
-      "link": "/pt-BR/p/aa-alkaline-4-pilhas-toshiba/1764767828278-yQqe8",
-      "nome": "AA ALKALINE 4 PILHAS TOSHIBA",
-      "preco": 8,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBJZutrXjyxGHOr%2BPO4u5UQ%3D%3D.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1764767828278-yQqe8",
-      "categoriaSousa": "pilha"
-    },
-    {
       "link": "/pt-BR/p/carregador-toshiba-aa-c-4-2-600mah/1723501191518-yQqe8",
       "nome": "CARREGADOR TOSHIBA AA C/4 2.600mAh",
       "preco": 99,
@@ -244,15 +226,6 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB4B9D2AC-E911-4F06-AE07-706C31A8DA4E.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1739291498249-yQqe8",
-      "categoriaSousa": "pilha"
-    },
-    {
-      "link": "/pt-BR/p/pilha-aaa-c-2-recarregaveis/1762298990470-yQqe8",
-      "nome": "Pilha AAA c/2 RECARREGÁVEIS",
-      "preco": 25,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F2QV36nsXhW%2BrOHFbNPtgMg%3D%3D.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1762298990470-yQqe8",
       "categoriaSousa": "pilha"
     },
     {
@@ -877,21 +850,21 @@
       "categoriaSousa": "ssd"
     },
     {
+      "link": "/pt-BR/p/case-hd-sataiii/1785864773484-yQqe8",
+      "nome": "Case hd sataIII",
+      "preco": 20,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEBE2CF77-711F-449A-A265-F31000A8CC65.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1785864773484-yQqe8",
+      "categoriaSousa": "ssd"
+    },
+    {
       "link": "/pt-BR/p/jbl-boombox-4-preta/1767798485755-yQqe8",
       "nome": "JBL BOOMBOX 4 PRETA",
       "preco": 2099,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FECB51A11-072F-4544-AB5B-5C18999FF4AE.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1767798485755-yQqe8",
-      "categoriaSousa": "jbl"
-    },
-    {
-      "link": "/pt-BR/p/jbl-clip-5-azul/1775586252941-yQqe8",
-      "nome": "JBL CLIP 5 AZUL",
-      "preco": 265,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F95FB07AE-DC65-42C4-B32D-953F9ECDD70D.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1775586252941-yQqe8",
       "categoriaSousa": "jbl"
     },
     {
@@ -928,6 +901,15 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F24A84DC1-BEEF-4416-A7CF-FD3C5E603BCD.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1728497442778-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
+      "link": "/pt-BR/p/jbl-quantum-100-m2-rosa/1794666291370-yQqe8",
+      "nome": "JBL QUANTUM 100 M2 ROSA",
+      "preco": 140,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FD832692A-C194-4D9B-AE02-8266E0629BB6.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1794666291370-yQqe8",
       "categoriaSousa": "jbl"
     },
     {
