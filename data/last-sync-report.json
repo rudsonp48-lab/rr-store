@@ -1,34 +1,22 @@
 {
-  "executedAt": "2026-11-20T15:55:32.076Z",
-  "brasiliaTime": "20/11/2026, 12:55:32",
+  "executedAt": "2026-11-20T18:09:41.534Z",
+  "brasiliaTime": "20/11/2026, 15:09:41",
   "summary": {
     "sousaTotal": 120,
-    "sousaNovos": 1,
+    "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1146,
-    "gsmNovos": 1,
+    "gsmNovos": 0,
     "gsmPrecosAlterados": 0,
     "totalGeralSincronizado": 1266
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1776535413938-yQqe8",
-          "nome": "HEADPHONE ANC DEEP FORTREK",
-          "preco": 100
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     },
     "gsm": {
-      "novos": [
-        {
-          "id": "gsm-20325",
-          "nome": "CARREGADOR VEICULAR USB PEINING PEI-QCC99",
-          "precoCusto": 8
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     }
   }
