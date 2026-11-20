@@ -1,12 +1,12 @@
 {
-  "executedAt": "2026-11-20T13:35:44.740Z",
-  "brasiliaTime": "20/11/2026, 10:35:44",
+  "executedAt": "2026-11-20T13:49:26.371Z",
+  "brasiliaTime": "20/11/2026, 10:49:26",
   "summary": {
     "sousaTotal": 121,
     "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1146,
-    "gsmNovos": 6,
+    "gsmNovos": 0,
     "gsmPrecosAlterados": 0,
     "totalGeralSincronizado": 1267
   },
@@ -16,38 +16,7 @@
       "precosAlterados": []
     },
     "gsm": {
-      "novos": [
-        {
-          "id": "gsm-21461",
-          "nome": "INVERSOR KNUP 220V/2000W KP-550A",
-          "precoCusto": 252.56
-        },
-        {
-          "id": "gsm-21216",
-          "nome": "CAIXA DE SOM TWS 300W PEINING PEI-S132",
-          "precoCusto": 664.2
-        },
-        {
-          "id": "gsm-20607",
-          "nome": "CAIXA DE TEMPEROS BMAX BP-21563",
-          "precoCusto": 16.61
-        },
-        {
-          "id": "gsm-14678",
-          "nome": "KIT BMAX TECLADO/MOUSE RGB BM-T13",
-          "precoCusto": 43.05
-        },
-        {
-          "id": "gsm-14677",
-          "nome": "CHAVE B-TEK DE CATRACA ELETRICA 21V BT-DZ74",
-          "precoCusto": 319.9
-        },
-        {
-          "id": "gsm-14676",
-          "nome": "VENTILADOR BMAX LED COM CONTROLE BM-F1755",
-          "precoCusto": 84.72
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     }
   }
