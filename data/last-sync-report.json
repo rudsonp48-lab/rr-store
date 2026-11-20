@@ -1,14 +1,14 @@
 {
-  "executedAt": "2026-11-20T18:09:41.534Z",
-  "brasiliaTime": "20/11/2026, 15:09:41",
+  "executedAt": "2026-11-20T20:23:32.741Z",
+  "brasiliaTime": "20/11/2026, 17:23:32",
   "summary": {
-    "sousaTotal": 120,
+    "sousaTotal": 119,
     "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1146,
-    "gsmNovos": 0,
+    "gsmNovos": 1,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1266
+    "totalGeralSincronizado": 1265
   },
   "alteracoesDetectadas": {
     "sousa": {
@@ -16,7 +16,13 @@
       "precosAlterados": []
     },
     "gsm": {
-      "novos": [],
+      "novos": [
+        {
+          "id": "gsm-20075",
+          "nome": "CARREGADOR USB+TPC 20w IP PEI-PD167-4",
+          "precoCusto": 19.64
+        }
+      ],
       "precosAlterados": []
     }
   }

@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-20T18:09:41.489Z",
+  "syncedAt": "2026-11-20T20:23:32.702Z",
   "source": "https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products",
   "count": 1146,
   "products": [
@@ -118,7 +118,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "91 em estoque"
+      "estoqueTexto": "88 em estoque"
     },
     {
       "id": "gsm-21423",
@@ -425,7 +425,7 @@
         "ELETRO, CASA E COZINHA BMAX",
         "FACA BMAX"
       ],
-      "estoqueTexto": "13 em estoque"
+      "estoqueTexto": "11 em estoque"
     },
     {
       "id": "gsm-21338",
@@ -451,7 +451,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "20 em estoque"
+      "estoqueTexto": "19 em estoque"
     },
     {
       "id": "gsm-21336",
@@ -491,7 +491,7 @@
         "ELETRO, CASA E COZINHA BMAX",
         "INFORMÁTICA BMAX"
       ],
-      "estoqueTexto": "56 em estoque"
+      "estoqueTexto": "51 em estoque"
     },
     {
       "id": "gsm-21329",
@@ -690,7 +690,7 @@
         "KNUP",
         "PROJETOR KNUP"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-21273",
@@ -809,7 +809,7 @@
         "ELETRO, CASA E COZINHA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "7 em estoque"
+      "estoqueTexto": "6 em estoque"
     },
     {
       "id": "gsm-21245",
@@ -888,7 +888,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "32 em estoque"
+      "estoqueTexto": "31 em estoque"
     },
     {
       "id": "gsm-21239",
@@ -991,7 +991,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "893 em estoque"
+      "estoqueTexto": "882 em estoque"
     },
     {
       "id": "gsm-21222",
@@ -1342,7 +1342,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "22 em estoque"
+      "estoqueTexto": "18 em estoque"
     },
     {
       "id": "gsm-21071",
@@ -1381,7 +1381,7 @@
         "BATERIA PORTÁTIL PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "14 em estoque"
+      "estoqueTexto": "13 em estoque"
     },
     {
       "id": "gsm-21068",
@@ -2682,7 +2682,7 @@
         "CABO E CARREGADOR KINGO",
         "KINGO"
       ],
-      "estoqueTexto": "586 em estoque"
+      "estoqueTexto": "536 em estoque"
     },
     {
       "id": "gsm-20691",
@@ -3229,7 +3229,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "12 em estoque"
+      "estoqueTexto": "11 em estoque"
     },
     {
       "id": "gsm-20605",
@@ -3482,7 +3482,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "21 em estoque"
+      "estoqueTexto": "20 em estoque"
     },
     {
       "id": "gsm-20509",
@@ -4616,7 +4616,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "106 em estoque"
+      "estoqueTexto": "102 em estoque"
     },
     {
       "id": "gsm-20131",
@@ -4681,7 +4681,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "12 em estoque"
+      "estoqueTexto": "7 em estoque"
     },
     {
       "id": "gsm-20123",
@@ -4940,6 +4940,19 @@
         "SUPORTE LEHMOX"
       ],
       "estoqueTexto": "129 em estoque"
+    },
+    {
+      "id": "gsm-20075",
+      "originalId": 20075,
+      "nome": "CARREGADOR USB+TPC 20w IP PEI-PD167-4",
+      "sku": "PEI-PD167-4",
+      "precoCusto": 19.64,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/07/image-40.png",
+      "categorias": [
+        "CABO E CARREGADOR PEINING",
+        "PEINING"
+      ],
+      "estoqueTexto": "196 em estoque"
     },
     {
       "id": "gsm-20074",
@@ -5586,7 +5599,7 @@
         "ELETRO, CASA E COZINHA KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "3 em estoque"
+      "estoqueTexto": "2 em estoque"
     },
     {
       "id": "gsm-19860",
@@ -5683,7 +5696,7 @@
         "CAIXA DE SOM FAM",
         "FAM"
       ],
-      "estoqueTexto": "49 em estoque"
+      "estoqueTexto": "46 em estoque"
     },
     {
       "id": "gsm-19777",
@@ -5851,7 +5864,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "154 em estoque"
+      "estoqueTexto": "153 em estoque"
     },
     {
       "id": "gsm-19697",
@@ -7270,7 +7283,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "480 em estoque"
+      "estoqueTexto": "451 em estoque"
     },
     {
       "id": "gsm-18294",
@@ -7970,7 +7983,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "178 em estoque"
+      "estoqueTexto": "168 em estoque"
     },
     {
       "id": "gsm-18156",
@@ -8344,7 +8357,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "10 em estoque"
+      "estoqueTexto": "4 em estoque"
     },
     {
       "id": "gsm-18072",
@@ -8474,7 +8487,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "16 em estoque"
+      "estoqueTexto": "15 em estoque"
     },
     {
       "id": "gsm-18053",
@@ -8721,7 +8734,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "12 em estoque"
+      "estoqueTexto": "9 em estoque"
     },
     {
       "id": "gsm-18015",
@@ -9644,7 +9657,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "178 em estoque"
+      "estoqueTexto": "172 em estoque"
     },
     {
       "id": "gsm-17824",
@@ -9657,7 +9670,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "330 em estoque"
+      "estoqueTexto": "320 em estoque"
     },
     {
       "id": "gsm-17823",
@@ -9852,7 +9865,7 @@
         "ELETRO, CASA E COZINHA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "2 em estoque"
+      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-17687",
@@ -11018,7 +11031,7 @@
         "BMAX",
         "SUPORTE BMAX"
       ],
-      "estoqueTexto": "98 em estoque"
+      "estoqueTexto": "97 em estoque"
     },
     {
       "id": "gsm-16780",
@@ -11648,7 +11661,7 @@
         "CIS",
         "PAPELARIA"
       ],
-      "estoqueTexto": "70 em estoque"
+      "estoqueTexto": "69 em estoque"
     },
     {
       "id": "gsm-16056",
@@ -11700,7 +11713,7 @@
         "CIS",
         "PAPELARIA"
       ],
-      "estoqueTexto": "70 em estoque"
+      "estoqueTexto": "69 em estoque"
     },
     {
       "id": "gsm-16012",
@@ -12168,7 +12181,7 @@
         "CIS",
         "PAPELARIA"
       ],
-      "estoqueTexto": "107 em estoque"
+      "estoqueTexto": "106 em estoque"
     },
     {
       "id": "gsm-15976",
@@ -13847,7 +13860,7 @@
         "CARREGADOR FAM",
         "FAM"
       ],
-      "estoqueTexto": "25 em estoque"
+      "estoqueTexto": "125 em estoque"
     },
     {
       "id": "gsm-14835",
@@ -14749,19 +14762,6 @@
         "INFORMÁTICA BMAX"
       ],
       "estoqueTexto": "34 em estoque"
-    },
-    {
-      "id": "gsm-14677",
-      "originalId": 14677,
-      "nome": "CHAVE B-TEK DE CATRACA ELETRICA 21V BT-DZ74",
-      "sku": "BT-DZ74",
-      "precoCusto": 319.9,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/D_NQ_NP_2X_979236-MLB99783835126_122025-F-chave-catraca-b-tek-12-bivolt-recarregavel-2-baterias-21v.png",
-      "categorias": [
-        "B-TEK",
-        "FERRAMENTA BMAX"
-      ],
-      "estoqueTexto": "10 em estoque"
     }
   ]
 }
