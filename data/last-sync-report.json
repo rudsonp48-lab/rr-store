@@ -1,22 +1,49 @@
 {
-  "executedAt": "2026-11-21T16:44:44.593Z",
-  "brasiliaTime": "21/11/2026, 13:44:44",
+  "executedAt": "2026-11-21T18:48:23.699Z",
+  "brasiliaTime": "21/11/2026, 15:48:23",
   "summary": {
     "sousaTotal": 118,
-    "sousaNovos": 0,
+    "sousaNovos": 1,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1146,
-    "gsmNovos": 0,
+    "gsmNovos": 4,
     "gsmPrecosAlterados": 0,
     "totalGeralSincronizado": 1264
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [],
+      "novos": [
+        {
+          "id": "sousa-1764871925895-yQqe8",
+          "nome": "GABINETE CLARITY PRETO 83456",
+          "preco": 160
+        }
+      ],
       "precosAlterados": []
     },
     "gsm": {
-      "novos": [],
+      "novos": [
+        {
+          "id": "gsm-14676",
+          "nome": "VENTILADOR BMAX LED COM CONTROLE BM-F1755",
+          "precoCusto": 84.72
+        },
+        {
+          "id": "gsm-14675",
+          "nome": "SOPRADOR B-TEK TERMICO 48V BT-DZ63",
+          "precoCusto": 279.9
+        },
+        {
+          "id": "gsm-14674",
+          "nome": "TECLADO BMAX MECANICO BM-T14",
+          "precoCusto": 92.25
+        },
+        {
+          "id": "gsm-14672",
+          "nome": "LUMINARIA BMAX NOTURNA BM-F1430",
+          "precoCusto": 21.18
+        }
+      ],
       "precosAlterados": []
     }
   }
