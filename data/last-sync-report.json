@@ -1,14 +1,14 @@
 {
-  "executedAt": "2026-11-21T12:36:14.895Z",
-  "brasiliaTime": "21/11/2026, 09:36:14",
+  "executedAt": "2026-11-21T14:40:41.853Z",
+  "brasiliaTime": "21/11/2026, 11:40:41",
   "summary": {
-    "sousaTotal": 119,
+    "sousaTotal": 118,
     "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1146,
-    "gsmNovos": 0,
+    "gsmNovos": 1,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1265
+    "totalGeralSincronizado": 1264
   },
   "alteracoesDetectadas": {
     "sousa": {
@@ -16,7 +16,13 @@
       "precosAlterados": []
     },
     "gsm": {
-      "novos": [],
+      "novos": [
+        {
+          "id": "gsm-14677",
+          "nome": "CHAVE B-TEK DE CATRACA ELETRICA 21V BT-DZ74",
+          "precoCusto": 319.9
+        }
+      ],
       "precosAlterados": []
     }
   }
