@@ -635,20 +635,29 @@ export default function RRStorePage() {
 
     const syncWithSupplierAndCloud = async () => {
       try {
-        const cloud = await loadStoreSettings();
+        const [cloudResult, supplierResult] = await Promise.allSettled([
+          loadStoreSettings(),
+          fetch('/api/supplier-sync', {
+            cache: 'no-store',
+            signal: AbortSignal.timeout(10000),
+          }).then(async (res) => (res.ok ? res.json() : null)),
+        ]);
+
+        const cloud =
+          cloudResult.status === 'fulfilled'
+            ? cloudResult.value
+            : { products: null, regions: null, banners: null, stockmaster: null };
+
         let baseProducts = PRODUCTS;
         if (cloud.products && cloud.products.length > 0) {
           baseProducts = mergeWithVerifiedCatalog(cloud.products);
         }
 
-        // Sincroniza em segundo plano com timeout de 10 segundos para nunca perder cold start
+        // Mescla produtos sincronizados da Souza Eletrônicos e GSM Digital
         try {
-          const res = await fetch('/api/supplier-sync', {
-            signal: AbortSignal.timeout(10000),
-          });
-          if (res.ok) {
-            const supplierData = await res.json();
-            if (Array.isArray(supplierData.products) && supplierData.products.length > 0) {
+          const supplierData =
+            supplierResult.status === 'fulfilled' ? supplierResult.value : null;
+          if (supplierData && Array.isArray(supplierData.products) && supplierData.products.length > 0) {
               const supplierMap = new Map<string, Product>(
                 supplierData.products.map((p: Product) => [p.id, p])
               );
@@ -678,7 +687,6 @@ export default function RRStorePage() {
               if ((supplierData.sousa ?? 0) > 10) {
                 baseProducts = baseProducts.filter((p) => !p.id.startsWith('sousa-') || liveIds.has(p.id));
               }
-            }
           }
         } catch {
           // Fallback silencioso para o catálogo local/cloud
@@ -955,6 +963,7 @@ export default function RRStorePage() {
         quickFilter={quickFilter}
         onSelectQuickFilter={(id) => {
           setQuickFilter(id);
+          setSubFilter('all');
           setSelectedCategory('Todos');
         }}
         onSelectCategory={setSelectedCategory}
