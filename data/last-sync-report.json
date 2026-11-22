@@ -1,47 +1,36 @@
 {
-  "executedAt": "2026-11-21T18:48:23.699Z",
-  "brasiliaTime": "21/11/2026, 15:48:23",
+  "executedAt": "2026-11-22T13:17:22.619Z",
+  "brasiliaTime": "22/11/2026, 10:17:22",
   "summary": {
     "sousaTotal": 118,
-    "sousaNovos": 1,
+    "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
-    "gsmTotal": 1146,
-    "gsmNovos": 4,
+    "gsmTotal": 1147,
+    "gsmNovos": 3,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1264
+    "totalGeralSincronizado": 1265
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1764871925895-yQqe8",
-          "nome": "GABINETE CLARITY PRETO 83456",
-          "preco": 160
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-14676",
-          "nome": "VENTILADOR BMAX LED COM CONTROLE BM-F1755",
-          "precoCusto": 84.72
+          "id": "gsm-17814",
+          "nome": "BATERIA KAPBOM 10MAH KA-966 H",
+          "precoCusto": 34.16
         },
         {
-          "id": "gsm-14675",
-          "nome": "SOPRADOR B-TEK TERMICO 48V BT-DZ63",
-          "precoCusto": 279.9
+          "id": "gsm-14671",
+          "nome": "PORTA CONDIMENTOS BMAX BM-F1717",
+          "precoCusto": 17.22
         },
         {
-          "id": "gsm-14674",
-          "nome": "TECLADO BMAX MECANICO BM-T14",
-          "precoCusto": 92.25
-        },
-        {
-          "id": "gsm-14672",
-          "nome": "LUMINARIA BMAX NOTURNA BM-F1430",
-          "precoCusto": 21.18
+          "id": "gsm-14669",
+          "nome": "MOUSE BMAX BM-616",
+          "precoCusto": 8
         }
       ],
       "precosAlterados": []
