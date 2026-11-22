@@ -1,14 +1,14 @@
 {
-  "executedAt": "2026-11-22T17:24:46.661Z",
-  "brasiliaTime": "22/11/2026, 14:24:46",
+  "executedAt": "2026-11-22T19:29:06.033Z",
+  "brasiliaTime": "22/11/2026, 16:29:06",
   "summary": {
     "sousaTotal": 117,
     "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
-    "gsmTotal": 1147,
+    "gsmTotal": 1146,
     "gsmNovos": 1,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1264
+    "totalGeralSincronizado": 1263
   },
   "alteracoesDetectadas": {
     "sousa": {
@@ -18,9 +18,9 @@
     "gsm": {
       "novos": [
         {
-          "id": "gsm-14667",
-          "nome": "GARRAFA TERMICA BM-P2014",
-          "precoCusto": 43.9
+          "id": "gsm-18872",
+          "nome": "FONE PEINING PEI-P1091",
+          "precoCusto": 59.04
         }
       ],
       "precosAlterados": []

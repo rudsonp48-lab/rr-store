@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-22T17:24:40.503Z",
+  "syncedAt": "2026-11-22T19:28:59.552Z",
   "source": "https://sousagamestecnologia.kyte.site",
   "count": 117,
   "products": [
@@ -328,6 +328,87 @@
       "categoriaSousa": "aparelhos-para-tv"
     },
     {
+      "link": "/pt-BR/p/poco-pad-m1-gray-256gb-8ram/1778861532381-yQqe8",
+      "nome": "POCO PAD M1 GRAY 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB04B6C98-26CA-4025-9100-C6F012C2D5B1.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1778861532381-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-gray-128gb-4ram/1757616018501-yQqe8",
+      "nome": "REDMI PAD 2 GRAY 128GB 4RAM",
+      "preco": 1150,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F17B4DFB5-561F-4D92-BBE1-7948857FD60C.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1757616018501-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
+      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1788532625984-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
+      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793978740202-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-infantil-azul/1791300602096-yQqe8",
+      "nome": "TAB. Infantil azul",
+      "preco": 260,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F050A1F92-C3CC-4508-9DCD-B68182313F20.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1791300602096-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-infantil-rosa/1791301166438-yQqe8",
+      "nome": "TAB. Infantil ROSA",
+      "preco": 260,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F050A1F92-C3CC-4508-9DCD-B68182313F20.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1791301166438-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-honor-pad-x8a-gray-128gb-4ram-com-capa-tela-11/1795013177342-yQqe8",
+      "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
+      "preco": 1080,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDFEE0778-900B-49AD-9F9D-8C5010C7EA20.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795013177342-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
+      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793113977220-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
+      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793114100828-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
       "link": "/pt-BR/p/cabo-fortrek-usbc-to-usbc-2m-3a-u222-black-edition/1764877669056-yQqe8",
       "nome": "CABO FORTREK USB-C to USB-C 2M 3A U222 BLACK EDITION",
       "preco": 13,
@@ -542,87 +623,6 @@
       "esgotado": false,
       "id": "sousa-1764871925895-yQqe8",
       "categoriaSousa": "fortrek"
-    },
-    {
-      "link": "/pt-BR/p/poco-pad-m1-gray-256gb-8ram/1778861532381-yQqe8",
-      "nome": "POCO PAD M1 GRAY 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB04B6C98-26CA-4025-9100-C6F012C2D5B1.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1778861532381-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-gray-128gb-4ram/1757616018501-yQqe8",
-      "nome": "REDMI PAD 2 GRAY 128GB 4RAM",
-      "preco": 1150,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F17B4DFB5-561F-4D92-BBE1-7948857FD60C.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1757616018501-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
-      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1788532625984-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
-      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793978740202-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-infantil-azul/1791300602096-yQqe8",
-      "nome": "TAB. Infantil azul",
-      "preco": 260,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F050A1F92-C3CC-4508-9DCD-B68182313F20.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1791300602096-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-infantil-rosa/1791301166438-yQqe8",
-      "nome": "TAB. Infantil ROSA",
-      "preco": 260,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F050A1F92-C3CC-4508-9DCD-B68182313F20.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1791301166438-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-honor-pad-x8a-gray-128gb-4ram-com-capa-tela-11/1795013177342-yQqe8",
-      "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
-      "preco": 1080,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDFEE0778-900B-49AD-9F9D-8C5010C7EA20.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1795013177342-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
-      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793113977220-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
-      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793114100828-yQqe8",
-      "categoriaSousa": "tabletes"
     },
     {
       "link": "/pt-BR/p/amazfit-active-2-premium-quadrado-square/1772809438913-yQqe8",

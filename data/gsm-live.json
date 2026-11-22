@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-22T17:24:46.656Z",
+  "syncedAt": "2026-11-22T19:29:06.014Z",
   "source": "https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products",
-  "count": 1147,
+  "count": 1146,
   "products": [
     {
       "id": "gsm-21461",
@@ -105,7 +105,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "7 em estoque"
+      "estoqueTexto": "5 em estoque"
     },
     {
       "id": "gsm-21431",
@@ -118,7 +118,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "78 em estoque"
+      "estoqueTexto": "76 em estoque"
     },
     {
       "id": "gsm-21423",
@@ -1303,7 +1303,7 @@
         "ELETRO, CASA E COZINHA SUMERX",
         "SUMEXR"
       ],
-      "estoqueTexto": "123 em estoque"
+      "estoqueTexto": "115 em estoque"
     },
     {
       "id": "gsm-21073",
@@ -1628,7 +1628,7 @@
         "CABO E CARREGADOR KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "15 em estoque"
+      "estoqueTexto": "11 em estoque"
     },
     {
       "id": "gsm-21006",
@@ -1654,7 +1654,7 @@
         "CABO E CARREGADOR KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "27 em estoque"
+      "estoqueTexto": "24 em estoque"
     },
     {
       "id": "gsm-20986",
@@ -1732,7 +1732,7 @@
         "BATERIA PORTÁTIL PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "77 em estoque"
+      "estoqueTexto": "75 em estoque"
     },
     {
       "id": "gsm-20976",
@@ -2124,7 +2124,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "12 em estoque"
+      "estoqueTexto": "8 em estoque"
     },
     {
       "id": "gsm-20903",
@@ -2202,7 +2202,7 @@
         "CABO E CARREGADOR KINGO",
         "KINGO"
       ],
-      "estoqueTexto": "133 em estoque"
+      "estoqueTexto": "131 em estoque"
     },
     {
       "id": "gsm-20896",
@@ -3495,7 +3495,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "9 em estoque"
+      "estoqueTexto": "8 em estoque"
     },
     {
       "id": "gsm-20506",
@@ -3796,7 +3796,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "35 em estoque"
+      "estoqueTexto": "29 em estoque"
     },
     {
       "id": "gsm-20475",
@@ -4373,7 +4373,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "144 em estoque"
+      "estoqueTexto": "126 em estoque"
     },
     {
       "id": "gsm-20327",
@@ -4386,7 +4386,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "101 em estoque"
+      "estoqueTexto": "83 em estoque"
     },
     {
       "id": "gsm-20326",
@@ -4926,7 +4926,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "63 em estoque"
+      "estoqueTexto": "38 em estoque"
     },
     {
       "id": "gsm-20073",
@@ -5122,7 +5122,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "25 em estoque"
+      "estoqueTexto": "24 em estoque"
     },
     {
       "id": "gsm-20040",
@@ -5622,7 +5622,7 @@
       "categorias": [
         "ALTOMEX"
       ],
-      "estoqueTexto": "314 em estoque"
+      "estoqueTexto": "310 em estoque"
     },
     {
       "id": "gsm-19781",
@@ -6059,7 +6059,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "396 em estoque"
+      "estoqueTexto": "376 em estoque"
     },
     {
       "id": "gsm-19201",
@@ -6581,6 +6581,19 @@
         "LEHMOX"
       ],
       "estoqueTexto": "233 em estoque"
+    },
+    {
+      "id": "gsm-18872",
+      "originalId": 18872,
+      "nome": "FONE PEINING PEI-P1091",
+      "sku": "PEI-P1091",
+      "precoCusto": 59.04,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/05/5-5.png",
+      "categorias": [
+        "FONE E MICROFONE PEINING",
+        "PEINING"
+      ],
+      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-18871",
@@ -7218,7 +7231,7 @@
         "FONE LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "93 em estoque"
+      "estoqueTexto": "81 em estoque"
     },
     {
       "id": "gsm-18297",
@@ -7697,7 +7710,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "101 em estoque"
+      "estoqueTexto": "100 em estoque"
     },
     {
       "id": "gsm-18189",
@@ -7944,7 +7957,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "52 em estoque"
+      "estoqueTexto": "31 em estoque"
     },
     {
       "id": "gsm-18156",
@@ -7957,7 +7970,7 @@
         "FAM",
         "FONE FAM"
       ],
-      "estoqueTexto": "143 em estoque"
+      "estoqueTexto": "141 em estoque"
     },
     {
       "id": "gsm-18126",
@@ -9224,7 +9237,7 @@
       "precoCusto": 266.49,
       "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/04/61SzxNyos5L._AC_UF8941000_QL80_.png",
       "categorias": [],
-      "estoqueTexto": "72 em estoque"
+      "estoqueTexto": "71 em estoque"
     },
     {
       "id": "gsm-17900",
@@ -9592,7 +9605,7 @@
         "INFORMÁTICA PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "30 em estoque"
+      "estoqueTexto": "29 em estoque"
     },
     {
       "id": "gsm-17828",
@@ -9618,7 +9631,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "84 em estoque"
+      "estoqueTexto": "77 em estoque"
     },
     {
       "id": "gsm-17824",
@@ -9631,7 +9644,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "245 em estoque"
+      "estoqueTexto": "232 em estoque"
     },
     {
       "id": "gsm-17823",
@@ -9657,7 +9670,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "161 em estoque"
+      "estoqueTexto": "160 em estoque"
     },
     {
       "id": "gsm-17821",
@@ -10633,7 +10646,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "150 em estoque"
+      "estoqueTexto": "147 em estoque"
     },
     {
       "id": "gsm-17140",
@@ -10971,7 +10984,7 @@
         "ELETRO, CASA E COZINHA KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "296 em estoque"
+      "estoqueTexto": "292 em estoque"
     },
     {
       "id": "gsm-16726",
@@ -11384,7 +11397,7 @@
         "CABO E CARREGADOR KIMASTER",
         "KIMASTER"
       ],
-      "estoqueTexto": "175 em estoque"
+      "estoqueTexto": "173 em estoque"
     },
     {
       "id": "gsm-16285",
@@ -12873,7 +12886,7 @@
         "B-TEK",
         "FERRAMENTA BMAX"
       ],
-      "estoqueTexto": "110 em estoque"
+      "estoqueTexto": "109 em estoque"
     },
     {
       "id": "gsm-15839",
@@ -12925,7 +12938,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "39 em estoque"
+      "estoqueTexto": "38 em estoque"
     },
     {
       "id": "gsm-15674",
@@ -14270,7 +14283,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "116 em estoque"
+      "estoqueTexto": "113 em estoque"
     },
     {
       "id": "gsm-14714",
@@ -14354,7 +14367,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "182 em estoque"
+      "estoqueTexto": "179 em estoque"
     },
     {
       "id": "gsm-14707",
@@ -14754,32 +14767,6 @@
         "ELETRO, CASA E COZINHA BMAX"
       ],
       "estoqueTexto": "58 em estoque"
-    },
-    {
-      "id": "gsm-14668",
-      "originalId": 14668,
-      "nome": "GARRAFA TERMICA BM-P1982",
-      "sku": "BM-P1982",
-      "precoCusto": 34.9,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/imagem_2026-01-22_124223536-1.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "26 em estoque"
-    },
-    {
-      "id": "gsm-14667",
-      "originalId": 14667,
-      "nome": "GARRAFA TERMICA BM-P2014",
-      "sku": "BM-P2014",
-      "precoCusto": 43.9,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/imagem_2026-01-22_125907122.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "11 em estoque"
     }
   ]
 }
