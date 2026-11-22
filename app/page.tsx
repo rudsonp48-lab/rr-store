@@ -309,7 +309,7 @@ function matchesQuickFilter(product: Product, filterId: QuickFilterId): boolean 
     case 'smartwatches':
       return /\b(smartwatch|apple watch|amazfit|haylou|rel[oó]gio)\b/i.test(name);
     case 'ssd':
-      return /\b(ssd|nvme|sata|sandisk|kingston|case gaveta)\b/i.test(name);
+      return /\b(ssd|nvme|sandisk|kingston|case\s*(gaveta|hd))|sata/i.test(name);
     default:
       return true;
   }
@@ -641,10 +641,10 @@ export default function RRStorePage() {
           baseProducts = mergeWithVerifiedCatalog(cloud.products);
         }
 
-        // Sincroniza em segundo plano com timeout de 4 segundos para nunca travar a vitrine
+        // Sincroniza em segundo plano com timeout de 10 segundos para nunca perder cold start
         try {
           const res = await fetch('/api/supplier-sync', {
-            signal: AbortSignal.timeout(4000),
+            signal: AbortSignal.timeout(10000),
           });
           if (res.ok) {
             const supplierData = await res.json();
