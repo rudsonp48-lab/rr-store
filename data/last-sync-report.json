@@ -1,12 +1,12 @@
 {
-  "executedAt": "2026-11-22T13:17:22.619Z",
-  "brasiliaTime": "22/11/2026, 10:17:22",
+  "executedAt": "2026-11-22T15:20:58.128Z",
+  "brasiliaTime": "22/11/2026, 12:20:58",
   "summary": {
     "sousaTotal": 118,
     "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1147,
-    "gsmNovos": 3,
+    "gsmNovos": 1,
     "gsmPrecosAlterados": 0,
     "totalGeralSincronizado": 1265
   },
@@ -18,19 +18,9 @@
     "gsm": {
       "novos": [
         {
-          "id": "gsm-17814",
-          "nome": "BATERIA KAPBOM 10MAH KA-966 H",
-          "precoCusto": 34.16
-        },
-        {
-          "id": "gsm-14671",
-          "nome": "PORTA CONDIMENTOS BMAX BM-F1717",
-          "precoCusto": 17.22
-        },
-        {
-          "id": "gsm-14669",
-          "nome": "MOUSE BMAX BM-616",
-          "precoCusto": 8
+          "id": "gsm-14668",
+          "nome": "GARRAFA TERMICA BM-P1982",
+          "precoCusto": 34.9
         }
       ],
       "precosAlterados": []
