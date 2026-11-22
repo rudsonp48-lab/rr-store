@@ -1,14 +1,14 @@
 {
-  "executedAt": "2026-11-22T15:20:58.128Z",
-  "brasiliaTime": "22/11/2026, 12:20:58",
+  "executedAt": "2026-11-22T17:24:46.661Z",
+  "brasiliaTime": "22/11/2026, 14:24:46",
   "summary": {
-    "sousaTotal": 118,
+    "sousaTotal": 117,
     "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1147,
     "gsmNovos": 1,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1265
+    "totalGeralSincronizado": 1264
   },
   "alteracoesDetectadas": {
     "sousa": {
@@ -18,9 +18,9 @@
     "gsm": {
       "novos": [
         {
-          "id": "gsm-14668",
-          "nome": "GARRAFA TERMICA BM-P1982",
-          "precoCusto": 34.9
+          "id": "gsm-14667",
+          "nome": "GARRAFA TERMICA BM-P2014",
+          "precoCusto": 43.9
         }
       ],
       "precosAlterados": []

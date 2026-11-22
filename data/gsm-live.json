@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-22T15:20:58.119Z",
+  "syncedAt": "2026-11-22T17:24:46.656Z",
   "source": "https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products",
   "count": 1147,
   "products": [
@@ -295,7 +295,7 @@
       "categorias": [
         "SUMEXR"
       ],
-      "estoqueTexto": "2 em estoque"
+      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-21357",
@@ -398,7 +398,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-21344",
@@ -451,7 +451,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "19 em estoque"
+      "estoqueTexto": "18 em estoque"
     },
     {
       "id": "gsm-21336",
@@ -477,7 +477,7 @@
         "BMAX",
         "INFORMÁTICA BMAX"
       ],
-      "estoqueTexto": "80 em estoque"
+      "estoqueTexto": "76 em estoque"
     },
     {
       "id": "gsm-21332",
@@ -610,7 +610,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "50 em estoque"
+      "estoqueTexto": "35 em estoque"
     },
     {
       "id": "gsm-21280",
@@ -717,7 +717,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "88 em estoque"
+      "estoqueTexto": "86 em estoque"
     },
     {
       "id": "gsm-21270",
@@ -782,7 +782,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "9 em estoque"
+      "estoqueTexto": "8 em estoque"
     },
     {
       "id": "gsm-21247",
@@ -904,19 +904,6 @@
       "estoqueTexto": "2 em estoque"
     },
     {
-      "id": "gsm-21238",
-      "originalId": 21238,
-      "nome": "AUXILIAR DE PARTIDA+COMP DE AR 8000MAH PEINING PEI-CD9002",
-      "sku": "PEI-CD9002",
-      "precoCusto": 289.05,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/10/image-2026-10-29T110140.982.png",
-      "categorias": [
-        "INFORMÁTICA PEINING",
-        "PEINING"
-      ],
-      "estoqueTexto": "1 em estoque"
-    },
-    {
       "id": "gsm-21230",
       "originalId": 21230,
       "nome": "FONE BLUETOOTH STARMEGA ST-95",
@@ -927,7 +914,7 @@
         "FONE STARMEGA",
         "STARMEGA"
       ],
-      "estoqueTexto": "82 em estoque"
+      "estoqueTexto": "79 em estoque"
     },
     {
       "id": "gsm-21229",
@@ -991,7 +978,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "813 em estoque"
+      "estoqueTexto": "793 em estoque"
     },
     {
       "id": "gsm-21222",
@@ -1264,7 +1251,7 @@
         "ELETRO, CASA E COZINHA SUMERX",
         "SUMEXR"
       ],
-      "estoqueTexto": "13 em estoque"
+      "estoqueTexto": "12 em estoque"
     },
     {
       "id": "gsm-21079",
@@ -1316,7 +1303,7 @@
         "ELETRO, CASA E COZINHA SUMERX",
         "SUMEXR"
       ],
-      "estoqueTexto": "133 em estoque"
+      "estoqueTexto": "123 em estoque"
     },
     {
       "id": "gsm-21073",
@@ -1433,7 +1420,7 @@
         "BMAX",
         "SUPORTE BMAX"
       ],
-      "estoqueTexto": "41 em estoque"
+      "estoqueTexto": "39 em estoque"
     },
     {
       "id": "gsm-21063",
@@ -1693,7 +1680,7 @@
         "BATERIA PORTÁTIL PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "5 em estoque"
+      "estoqueTexto": "2 em estoque"
     },
     {
       "id": "gsm-20982",
@@ -3378,7 +3365,7 @@
       "precoCusto": 20.5,
       "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/08/image-2026-08-15T124717.455.png",
       "categorias": [],
-      "estoqueTexto": "73 em estoque"
+      "estoqueTexto": "72 em estoque"
     },
     {
       "id": "gsm-20517",
@@ -3742,7 +3729,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "23 em estoque"
+      "estoqueTexto": "22 em estoque"
     },
     {
       "id": "gsm-20480",
@@ -4386,7 +4373,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "149 em estoque"
+      "estoqueTexto": "144 em estoque"
     },
     {
       "id": "gsm-20327",
@@ -4590,7 +4577,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "88 em estoque"
+      "estoqueTexto": "86 em estoque"
     },
     {
       "id": "gsm-20131",
@@ -4939,7 +4926,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "67 em estoque"
+      "estoqueTexto": "63 em estoque"
     },
     {
       "id": "gsm-20073",
@@ -5670,7 +5657,7 @@
         "CAIXA DE SOM FAM",
         "FAM"
       ],
-      "estoqueTexto": "39 em estoque"
+      "estoqueTexto": "38 em estoque"
     },
     {
       "id": "gsm-19777",
@@ -6059,7 +6046,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-19202",
@@ -6111,7 +6098,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "3 em estoque"
+      "estoqueTexto": "2 em estoque"
     },
     {
       "id": "gsm-19198",
@@ -6632,7 +6619,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "40 em estoque"
+      "estoqueTexto": "39 em estoque"
     },
     {
       "id": "gsm-18868",
@@ -6658,7 +6645,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "232 em estoque"
+      "estoqueTexto": "231 em estoque"
     },
     {
       "id": "gsm-18866",
@@ -7036,7 +7023,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "73 em estoque"
+      "estoqueTexto": "71 em estoque"
     },
     {
       "id": "gsm-18756",
@@ -7270,7 +7257,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "227 em estoque"
+      "estoqueTexto": "222 em estoque"
     },
     {
       "id": "gsm-18288",
@@ -7957,7 +7944,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "64 em estoque"
+      "estoqueTexto": "52 em estoque"
     },
     {
       "id": "gsm-18156",
@@ -8786,7 +8773,7 @@
         "BOMVINK",
         "ELETRO, CASA E COZINHA BOMVINK"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-18004",
@@ -9631,7 +9618,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "89 em estoque"
+      "estoqueTexto": "84 em estoque"
     },
     {
       "id": "gsm-17824",
@@ -9644,7 +9631,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "247 em estoque"
+      "estoqueTexto": "245 em estoque"
     },
     {
       "id": "gsm-17823",
@@ -9735,7 +9722,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "13 em estoque"
+      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-17803",
@@ -10646,7 +10633,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "156 em estoque"
+      "estoqueTexto": "150 em estoque"
     },
     {
       "id": "gsm-17140",
@@ -10945,7 +10932,7 @@
         "BMAX",
         "SUPORTE BMAX"
       ],
-      "estoqueTexto": "96 em estoque"
+      "estoqueTexto": "95 em estoque"
     },
     {
       "id": "gsm-16780",
@@ -11523,7 +11510,7 @@
       "precoCusto": 21.9,
       "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/02/D_NQ_NP_2X_807881-MLA87482562042_072025-F.png",
       "categorias": [],
-      "estoqueTexto": "375 em estoque"
+      "estoqueTexto": "374 em estoque"
     },
     {
       "id": "gsm-16079",
@@ -13501,7 +13488,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "21 em estoque"
+      "estoqueTexto": "7 em estoque"
     },
     {
       "id": "gsm-14927",
@@ -13618,7 +13605,7 @@
         "B-TEK",
         "FERRAMENTA BMAX"
       ],
-      "estoqueTexto": "5 em estoque"
+      "estoqueTexto": "4 em estoque"
     },
     {
       "id": "gsm-14912",
@@ -13878,7 +13865,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "2 em estoque"
     },
     {
       "id": "gsm-14751",
@@ -14780,6 +14767,19 @@
         "ELETRO, CASA E COZINHA BMAX"
       ],
       "estoqueTexto": "26 em estoque"
+    },
+    {
+      "id": "gsm-14667",
+      "originalId": 14667,
+      "nome": "GARRAFA TERMICA BM-P2014",
+      "sku": "BM-P2014",
+      "precoCusto": 43.9,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/imagem_2026-01-22_125907122.png",
+      "categorias": [
+        "BMAX",
+        "ELETRO, CASA E COZINHA BMAX"
+      ],
+      "estoqueTexto": "11 em estoque"
     }
   ]
 }
