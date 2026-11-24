@@ -1,26 +1,64 @@
 {
-  "executedAt": "2026-11-22T19:29:06.033Z",
-  "brasiliaTime": "22/11/2026, 16:29:06",
+  "executedAt": "2026-11-24T13:50:10.107Z",
+  "brasiliaTime": "24/11/2026, 10:50:10",
   "summary": {
-    "sousaTotal": 117,
-    "sousaNovos": 0,
-    "sousaPrecosAlterados": 0,
-    "gsmTotal": 1146,
-    "gsmNovos": 1,
+    "sousaTotal": 113,
+    "sousaNovos": 1,
+    "sousaPrecosAlterados": 3,
+    "gsmTotal": 1148,
+    "gsmNovos": 3,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1263
+    "totalGeralSincronizado": 1261
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [],
-      "precosAlterados": []
+      "novos": [
+        {
+          "id": "sousa-1795527848658-yQqe8",
+          "nome": "CEL.SAMSUNG A17 NFC 128GB PRETO 4RAM",
+          "preco": 850
+        }
+      ],
+      "precosAlterados": [
+        {
+          "id": "sousa-1772809438913-yQqe8",
+          "nome": "AMAZFIT ACTIVE 2 PREMIUM QUADRADO (SQUARE)",
+          "precoAnterior": 580,
+          "precoNovo": 630,
+          "diferenca": 50
+        },
+        {
+          "id": "sousa-1777400070513-yQqe8",
+          "nome": "AMAZFIT T-REX 3 PRETO 48mm",
+          "precoAnterior": 1080,
+          "precoNovo": 1150,
+          "diferenca": 70
+        },
+        {
+          "id": "sousa-1777399932402-yQqe8",
+          "nome": "AMAZFIT T-REX PRO 3 GOLD 48mm",
+          "precoAnterior": 1600,
+          "precoNovo": 1700,
+          "diferenca": 100
+        }
+      ]
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-18872",
-          "nome": "FONE PEINING PEI-P1091",
-          "precoCusto": 59.04
+          "id": "gsm-21282",
+          "nome": "VOLANTE GAMER 7 EM 1 KNUP KP-5818",
+          "precoCusto": 481.07
+        },
+        {
+          "id": "gsm-21238",
+          "nome": "AUXILIAR DE PARTIDA+COMP DE AR 8000MAH PEINING PEI-CD9002",
+          "precoCusto": 289.05
+        },
+        {
+          "id": "gsm-16492",
+          "nome": "BASTAO DE SELFIE PEINING 672MM PEI-SK14",
+          "precoCusto": 15.99
         }
       ],
       "precosAlterados": []

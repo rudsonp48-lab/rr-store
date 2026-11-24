@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-22T19:28:59.552Z",
+  "syncedAt": "2026-11-24T13:49:52.160Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 117,
+  "count": 113,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -46,6 +46,15 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FF75FFFCF-C053-4CFA-860C-D42FE05FAF29.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1769517242176-yQqe8",
+      "categoriaSousa": "celulares"
+    },
+    {
+      "link": "/pt-BR/p/cel-samsung-a17-nfc-128gb-preto-4ram/1795527848658-yQqe8",
+      "nome": "CEL.SAMSUNG A17 NFC 128GB PRETO 4RAM",
+      "preco": 850,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F3F6CD4AE-2A17-41BB-AE87-E737AC4F62BF.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795527848658-yQqe8",
       "categoriaSousa": "celulares"
     },
     {
@@ -265,15 +274,6 @@
       "categoriaSousa": "aparelhos-para-tv"
     },
     {
-      "link": "/pt-BR/p/fire-tv-stick-hd-wi-fi-6/1769173200268-yQqe8",
-      "nome": "FIRE TV STICK HD WI-FI 6",
-      "preco": 200,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F1577C5D0-8E19-47ED-A98F-B8C864B7C557.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1769173200268-yQqe8",
-      "categoriaSousa": "aparelhos-para-tv"
-    },
-    {
       "link": "/pt-BR/p/kit-starlink-mini-x-internet-via-satelite-antena-mini-router/1767729945813-yQqe8",
       "nome": "KIT STARLINK MINI X INTERNET VIA SATELITE (ANTENA MINI + ROUTER)",
       "preco": 419.99,
@@ -337,15 +337,6 @@
       "categoriaSousa": "tabletes"
     },
     {
-      "link": "/pt-BR/p/redmi-pad-2-gray-128gb-4ram/1757616018501-yQqe8",
-      "nome": "REDMI PAD 2 GRAY 128GB 4RAM",
-      "preco": 1150,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F17B4DFB5-561F-4D92-BBE1-7948857FD60C.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1757616018501-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
       "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
       "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
       "preco": 1730,
@@ -361,24 +352,6 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1793978740202-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-infantil-azul/1791300602096-yQqe8",
-      "nome": "TAB. Infantil azul",
-      "preco": 260,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F050A1F92-C3CC-4508-9DCD-B68182313F20.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1791300602096-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-infantil-rosa/1791301166438-yQqe8",
-      "nome": "TAB. Infantil ROSA",
-      "preco": 260,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F050A1F92-C3CC-4508-9DCD-B68182313F20.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1791301166438-yQqe8",
       "categoriaSousa": "tabletes"
     },
     {
@@ -627,7 +600,7 @@
     {
       "link": "/pt-BR/p/amazfit-active-2-premium-quadrado-square/1772809438913-yQqe8",
       "nome": "AMAZFIT ACTIVE 2 PREMIUM QUADRADO (SQUARE)",
-      "preco": 580,
+      "preco": 630,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F9E3B3E1B-E4E6-4BE6-8CBA-9A7A8C8D2324.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1772809438913-yQqe8",
@@ -681,7 +654,7 @@
     {
       "link": "/pt-BR/p/amazfit-t-rex-3-preto-48mm/1777400070513-yQqe8",
       "nome": "AMAZFIT T-REX 3 PRETO 48mm",
-      "preco": 1080,
+      "preco": 1150,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F4BAEBE1D-E148-46EC-89A5-055C92A00009.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1777400070513-yQqe8",
@@ -690,7 +663,7 @@
     {
       "link": "/pt-BR/p/amazfit-t-rex-pro-3-gold-48mm/1777399932402-yQqe8",
       "nome": "AMAZFIT T-REX PRO 3 GOLD 48mm",
-      "preco": 1600,
+      "preco": 1700,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F58F78951-6C78-44CC-906B-BD973DEA3720.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1777399932402-yQqe8",
@@ -739,15 +712,6 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FF61CD87E-BAB8-4617-AEA9-61B7E16193EE.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1777050913498-yQqe8",
-      "categoriaSousa": "relogio"
-    },
-    {
-      "link": "/pt-BR/p/haylou-watch-4s-com-gps-preto/1757092720983-yQqe8",
-      "nome": "HAYLOU WATCH 4S COM GPS PRETO",
-      "preco": 205,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FF49DCED9-6A1C-41CA-BC4D-A0638BD9D90A.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1757092720983-yQqe8",
       "categoriaSousa": "relogio"
     },
     {
