@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-24T13:49:52.160Z",
+  "syncedAt": "2026-11-24T15:54:10.729Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 113,
+  "count": 117,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -49,13 +49,67 @@
       "categoriaSousa": "celulares"
     },
     {
-      "link": "/pt-BR/p/cel-samsung-a17-nfc-128gb-preto-4ram/1795527848658-yQqe8",
-      "nome": "CEL.SAMSUNG A17 NFC 128GB PRETO 4RAM",
-      "preco": 850,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F3F6CD4AE-2A17-41BB-AE87-E737AC4F62BF.jpg?alt=media",
+      "link": "/pt-BR/p/cel-samsung-a17-nfc-azul-256gb-8ram/1795525955573-yQqe8",
+      "nome": "CEL.SAMSUNG A17 NFC AZUL 256GB 8RAM",
+      "preco": 1050,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F62972862-D7EB-4269-8046-25E417651BF8.jpg?alt=media",
       "esgotado": false,
-      "id": "sousa-1795527848658-yQqe8",
+      "id": "sousa-1795525955573-yQqe8",
       "categoriaSousa": "celulares"
+    },
+    {
+      "link": "/pt-BR/p/cel-samsung-a17-nfc-cinza-256gb-8ram/1787663486485-yQqe8",
+      "nome": "CEL.SAMSUNG A17 NFC CINZA 256GB 8RAM",
+      "preco": 1050,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FF1139485-4BB1-4113-B050-D6B8116B4115.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1787663486485-yQqe8",
+      "categoriaSousa": "celulares"
+    },
+    {
+      "link": "/pt-BR/p/base-carregamento-dualsense-ps5/1767963983753-yQqe8",
+      "nome": "BASE CARREGAMENTO DUALSENSE PS5",
+      "preco": 150,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F02CEC84D-7C7E-431D-90BC-E7FF45548383.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1767963983753-yQqe8",
+      "categoriaSousa": "gamer"
+    },
+    {
+      "link": "/pt-BR/p/controle-play-5-branco/1767716581479-yQqe8",
+      "nome": "CONTROLE PLAY 5 BRANCO",
+      "preco": 380,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F93E47CAD-54E0-41E6-A37E-9A1A1DCB1459.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1767716581479-yQqe8",
+      "categoriaSousa": "gamer"
+    },
+    {
+      "link": "/pt-BR/p/controle-play-5-camuflado/1767893559861-yQqe8",
+      "nome": "CONTROLE PLAY 5 CAMUFLADO",
+      "preco": 380,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F8E5B6C7E-447F-4AFF-B9D2-BB2AFB48AEC3.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1767893559861-yQqe8",
+      "categoriaSousa": "gamer"
+    },
+    {
+      "link": "/pt-BR/p/controle-play-5-preto/1767716516871-yQqe8",
+      "nome": "CONTROLE PLAY 5 PRETO",
+      "preco": 380,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF0E423A-9CD1-4ABB-AFBE-3BDCCB54B7BF.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1767716516871-yQqe8",
+      "categoriaSousa": "gamer"
+    },
+    {
+      "link": "/pt-BR/p/controle-play-5-vermelho/1784818361176-yQqe8",
+      "nome": "Controle play 5 vermelho",
+      "preco": 380,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FFC29C891-0617-4D41-96D5-DD99DAB47E51.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1784818361176-yQqe8",
+      "categoriaSousa": "gamer"
     },
     {
       "link": "/pt-BR/p/controle-xbox-c-cabo-usb-c-preto/1771517629980-yQqe8",
@@ -289,15 +343,6 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FC0C7A55F-FB64-48B5-83F6-BD562B3D3C52.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1781616044371-yQqe8",
-      "categoriaSousa": "aparelhos-para-tv"
-    },
-    {
-      "link": "/pt-BR/p/unitv-s1/1781277290055-yQqe8",
-      "nome": "Unitv S1",
-      "preco": 340,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FAD890252-F13F-4B68-8C0E-34746DC1FB56.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1781277290055-yQqe8",
       "categoriaSousa": "aparelhos-para-tv"
     },
     {
@@ -688,15 +733,6 @@
       "categoriaSousa": "relogio"
     },
     {
-      "link": "/pt-BR/p/haylou-solar-5-preto-c-2-pulseiras/1769006964524-yQqe8",
-      "nome": "HAYLOU SOLAR 5 PRETO C/2 PULSEIRAS",
-      "preco": 225,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FE26E7F2F-48B8-4120-99EF-AD35DDE67612.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1769006964524-yQqe8",
-      "categoriaSousa": "relogio"
-    },
-    {
       "link": "/pt-BR/p/haylou-solar-neo-preto/1729022526335-yQqe8",
       "nome": "HAYLOU SOLAR NEO PRETO",
       "preco": 115,
@@ -796,15 +832,6 @@
       "categoriaSousa": "ssd"
     },
     {
-      "link": "/pt-BR/p/jbl-boombox-4-preta/1767798485755-yQqe8",
-      "nome": "JBL BOOMBOX 4 PRETA",
-      "preco": 2099,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FECB51A11-072F-4544-AB5B-5C18999FF4AE.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1767798485755-yQqe8",
-      "categoriaSousa": "jbl"
-    },
-    {
       "link": "/pt-BR/p/jbl-clip-5-preta/1775586078266-yQqe8",
       "nome": "Jbl CLIP 5 PRETA",
       "preco": 265,
@@ -884,6 +911,15 @@
       "esgotado": false,
       "id": "sousa-1775830922132-yQqe8",
       "categoriaSousa": "memorias"
+    },
+    {
+      "link": "/pt-BR/p/fonte-20w-apple-original-anatel/1723502000706-yQqe8",
+      "nome": "FONTE 20W APPLE ORIGINAL ANATEL",
+      "preco": 122,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F982712D5-C73F-40BB-A80D-6E3E7E812679.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1723502000706-yQqe8",
+      "categoriaSousa": "fonte"
     },
     {
       "link": "/pt-BR/p/pendrive-128gb-sandisk-original/1776778304522-yQqe8",

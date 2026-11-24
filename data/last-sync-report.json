@@ -1,67 +1,88 @@
 {
-  "executedAt": "2026-11-24T13:50:10.107Z",
-  "brasiliaTime": "24/11/2026, 10:50:10",
+  "executedAt": "2026-11-24T15:54:21.525Z",
+  "brasiliaTime": "24/11/2026, 12:54:21",
   "summary": {
-    "sousaTotal": 113,
-    "sousaNovos": 1,
-    "sousaPrecosAlterados": 3,
-    "gsmTotal": 1148,
+    "sousaTotal": 117,
+    "sousaNovos": 8,
+    "sousaPrecosAlterados": 0,
+    "gsmTotal": 1135,
     "gsmNovos": 3,
-    "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1261
+    "gsmPrecosAlterados": 1,
+    "totalGeralSincronizado": 1252
   },
   "alteracoesDetectadas": {
     "sousa": {
       "novos": [
         {
-          "id": "sousa-1795527848658-yQqe8",
-          "nome": "CEL.SAMSUNG A17 NFC 128GB PRETO 4RAM",
-          "preco": 850
+          "id": "sousa-1795525955573-yQqe8",
+          "nome": "CEL.SAMSUNG A17 NFC AZUL 256GB 8RAM",
+          "preco": 1050
+        },
+        {
+          "id": "sousa-1787663486485-yQqe8",
+          "nome": "CEL.SAMSUNG A17 NFC CINZA 256GB 8RAM",
+          "preco": 1050
+        },
+        {
+          "id": "sousa-1767963983753-yQqe8",
+          "nome": "BASE CARREGAMENTO DUALSENSE PS5",
+          "preco": 150
+        },
+        {
+          "id": "sousa-1767716581479-yQqe8",
+          "nome": "CONTROLE PLAY 5 BRANCO",
+          "preco": 380
+        },
+        {
+          "id": "sousa-1767893559861-yQqe8",
+          "nome": "CONTROLE PLAY 5 CAMUFLADO",
+          "preco": 380
+        },
+        {
+          "id": "sousa-1767716516871-yQqe8",
+          "nome": "CONTROLE PLAY 5 PRETO",
+          "preco": 380
+        },
+        {
+          "id": "sousa-1784818361176-yQqe8",
+          "nome": "Controle play 5 vermelho",
+          "preco": 380
+        },
+        {
+          "id": "sousa-1723502000706-yQqe8",
+          "nome": "FONTE 20W APPLE ORIGINAL ANATEL",
+          "preco": 122
         }
       ],
-      "precosAlterados": [
-        {
-          "id": "sousa-1772809438913-yQqe8",
-          "nome": "AMAZFIT ACTIVE 2 PREMIUM QUADRADO (SQUARE)",
-          "precoAnterior": 580,
-          "precoNovo": 630,
-          "diferenca": 50
-        },
-        {
-          "id": "sousa-1777400070513-yQqe8",
-          "nome": "AMAZFIT T-REX 3 PRETO 48mm",
-          "precoAnterior": 1080,
-          "precoNovo": 1150,
-          "diferenca": 70
-        },
-        {
-          "id": "sousa-1777399932402-yQqe8",
-          "nome": "AMAZFIT T-REX PRO 3 GOLD 48mm",
-          "precoAnterior": 1600,
-          "precoNovo": 1700,
-          "diferenca": 100
-        }
-      ]
+      "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-21282",
-          "nome": "VOLANTE GAMER 7 EM 1 KNUP KP-5818",
-          "precoCusto": 481.07
+          "id": "gsm-21179",
+          "nome": "TOMADA BMAX MULTIPLA 3M BM-8810",
+          "precoCusto": 12.92
         },
         {
-          "id": "gsm-21238",
-          "nome": "AUXILIAR DE PARTIDA+COMP DE AR 8000MAH PEINING PEI-CD9002",
-          "precoCusto": 289.05
+          "id": "gsm-18515",
+          "nome": "CAIXA GRASEP D-3139",
+          "precoCusto": 48.78
         },
         {
-          "id": "gsm-16492",
-          "nome": "BASTAO DE SELFIE PEINING 672MM PEI-SK14",
-          "precoCusto": 15.99
+          "id": "gsm-17011",
+          "nome": "MONITOR GRASEP 15 POL D-TELA11",
+          "precoCusto": 418.2
         }
       ],
-      "precosAlterados": []
+      "precosAlterados": [
+        {
+          "id": "gsm-20909",
+          "nome": "MINI MIXER LEHMOX NY-3370",
+          "precoAnterior": 30.06,
+          "precoNovo": 28.7,
+          "diferenca": -1.36
+        }
+      ]
     }
   }
 }

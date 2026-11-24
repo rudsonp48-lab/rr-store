@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-24T13:50:10.104Z",
+  "syncedAt": "2026-11-24T15:54:21.516Z",
   "source": "https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products",
-  "count": 1148,
+  "count": 1135,
   "products": [
     {
       "id": "gsm-21461",
@@ -207,7 +207,7 @@
         "DESTAQUES",
         "ULTRAMAX"
       ],
-      "estoqueTexto": "1732 em estoque"
+      "estoqueTexto": "1642 em estoque"
     },
     {
       "id": "gsm-21407",
@@ -234,7 +234,7 @@
         "LEHMOX",
         "SUPORTE LEHMOX"
       ],
-      "estoqueTexto": "50 em estoque"
+      "estoqueTexto": "48 em estoque"
     },
     {
       "id": "gsm-21405",
@@ -247,7 +247,7 @@
         "INFORMÁTICA LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "21 em estoque"
+      "estoqueTexto": "17 em estoque"
     },
     {
       "id": "gsm-21362",
@@ -332,7 +332,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "29 em estoque"
+      "estoqueTexto": "25 em estoque"
     },
     {
       "id": "gsm-21352",
@@ -796,7 +796,7 @@
         "KNUP",
         "SOM E ILUMINAÇÃO KNUP"
       ],
-      "estoqueTexto": "112 em estoque"
+      "estoqueTexto": "109 em estoque"
     },
     {
       "id": "gsm-21246",
@@ -888,7 +888,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "21 em estoque"
+      "estoqueTexto": "15 em estoque"
     },
     {
       "id": "gsm-21239",
@@ -927,7 +927,7 @@
         "FONE STARMEGA",
         "STARMEGA"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "11 em estoque"
     },
     {
       "id": "gsm-21229",
@@ -991,7 +991,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "788 em estoque"
+      "estoqueTexto": "784 em estoque"
     },
     {
       "id": "gsm-21222",
@@ -1004,7 +1004,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "19 em estoque"
+      "estoqueTexto": "17 em estoque"
     },
     {
       "id": "gsm-21221",
@@ -1095,7 +1095,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "40 em estoque"
+      "estoqueTexto": "30 em estoque"
     },
     {
       "id": "gsm-21189",
@@ -1187,6 +1187,19 @@
         "ELETRO, CASA E COZINHA BMAX"
       ],
       "estoqueTexto": "57 em estoque"
+    },
+    {
+      "id": "gsm-21179",
+      "originalId": 21179,
+      "nome": "TOMADA BMAX MULTIPLA 3M BM-8810",
+      "sku": "BM-8810",
+      "precoCusto": 12.92,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/10/image-2026-11-24T110715.105.png",
+      "categorias": [
+        "BMAX",
+        "ELETRO, CASA E COZINHA BMAX"
+      ],
+      "estoqueTexto": "21 em estoque"
     },
     {
       "id": "gsm-21175",
@@ -1537,7 +1550,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "32 em estoque"
+      "estoqueTexto": "26 em estoque"
     },
     {
       "id": "gsm-21054",
@@ -1563,7 +1576,7 @@
         "B-TEK",
         "FERRAMENTA BMAX"
       ],
-      "estoqueTexto": "174 em estoque"
+      "estoqueTexto": "171 em estoque"
     },
     {
       "id": "gsm-21014",
@@ -1798,7 +1811,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "11 em estoque"
+      "estoqueTexto": "10 em estoque"
     },
     {
       "id": "gsm-20968",
@@ -1889,7 +1902,7 @@
         "BMAX",
         "SUPORTE BMAX"
       ],
-      "estoqueTexto": "34 em estoque"
+      "estoqueTexto": "32 em estoque"
     },
     {
       "id": "gsm-20960",
@@ -1903,7 +1916,7 @@
         "ELETRO, CASA E COZINHA BMAX",
         "FERRAMENTA BMAX"
       ],
-      "estoqueTexto": "16 em estoque"
+      "estoqueTexto": "15 em estoque"
     },
     {
       "id": "gsm-20959",
@@ -2072,20 +2085,20 @@
         "GAMER LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "9 em estoque"
+      "estoqueTexto": "7 em estoque"
     },
     {
       "id": "gsm-20909",
       "originalId": 20909,
       "nome": "MINI MIXER LEHMOX NY-3370",
       "sku": "NY-3370",
-      "precoCusto": 30.06,
+      "precoCusto": 28.7,
       "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/09/image-2026-09-18T102200.333.png",
       "categorias": [
         "ELETRO, CASA E COZINHA LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "7 em estoque"
+      "estoqueTexto": "127 em estoque"
     },
     {
       "id": "gsm-20907",
@@ -2539,7 +2552,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "53 em estoque"
+      "estoqueTexto": "43 em estoque"
     },
     {
       "id": "gsm-20816",
@@ -3511,6 +3524,19 @@
       "estoqueTexto": "8 em estoque"
     },
     {
+      "id": "gsm-20507",
+      "originalId": 20507,
+      "nome": "ABRIDOR DE VINHO ELETRICO BMAX BP-15002",
+      "sku": "BP-15002",
+      "precoCusto": 39.36,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/08/image-2026-08-16T102530.598.png",
+      "categorias": [
+        "BMAX",
+        "ELETRO, CASA E COZINHA BMAX"
+      ],
+      "estoqueTexto": "8 em estoque"
+    },
+    {
       "id": "gsm-20506",
       "originalId": 20506,
       "nome": "SAPATEIRA VERTICAL BMAX BP-21272",
@@ -3771,20 +3797,6 @@
       "estoqueTexto": "1 em estoque"
     },
     {
-      "id": "gsm-20478",
-      "originalId": 20478,
-      "nome": "LUMINARIA LED ASTRONAUTA BMAX BM-F997",
-      "sku": "BM-F997",
-      "precoCusto": 66.42,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/08/image-2026-08-18T114553.588.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX",
-        "UMIDIFICADOR BMAX"
-      ],
-      "estoqueTexto": "7 em estoque"
-    },
-    {
       "id": "gsm-20477",
       "originalId": 20477,
       "nome": "LANTERNA BMAX BM-8553",
@@ -3809,7 +3821,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "29 em estoque"
+      "estoqueTexto": "26 em estoque"
     },
     {
       "id": "gsm-20475",
@@ -3862,7 +3874,7 @@
         "BMAX",
         "SUPORTE BMAX"
       ],
-      "estoqueTexto": "56 em estoque"
+      "estoqueTexto": "51 em estoque"
     },
     {
       "id": "gsm-20471",
@@ -3992,7 +4004,7 @@
         "BATERIA PORTÁTIL PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "20 em estoque"
+      "estoqueTexto": "10 em estoque"
     },
     {
       "id": "gsm-20441",
@@ -4386,7 +4398,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "125 em estoque"
+      "estoqueTexto": "124 em estoque"
     },
     {
       "id": "gsm-20327",
@@ -4399,7 +4411,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "83 em estoque"
+      "estoqueTexto": "81 em estoque"
     },
     {
       "id": "gsm-20326",
@@ -4501,7 +4513,7 @@
         "CAIXA DE SOM IMENSO",
         "IMENSO"
       ],
-      "estoqueTexto": "3 em estoque"
+      "estoqueTexto": "2 em estoque"
     },
     {
       "id": "gsm-20254",
@@ -4590,7 +4602,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "86 em estoque"
+      "estoqueTexto": "80 em estoque"
     },
     {
       "id": "gsm-20131",
@@ -4603,7 +4615,7 @@
         "CAIXA DE SOM KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "5 em estoque"
+      "estoqueTexto": "15 em estoque"
     },
     {
       "id": "gsm-20130",
@@ -4913,7 +4925,7 @@
         "LEHMOX",
         "SUPORTE LEHMOX"
       ],
-      "estoqueTexto": "125 em estoque"
+      "estoqueTexto": "122 em estoque"
     },
     {
       "id": "gsm-20075",
@@ -4952,7 +4964,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "159 em estoque"
+      "estoqueTexto": "154 em estoque"
     },
     {
       "id": "gsm-20072",
@@ -4965,7 +4977,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "156 em estoque"
+      "estoqueTexto": "152 em estoque"
     },
     {
       "id": "gsm-20071",
@@ -5473,7 +5485,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "172 em estoque"
+      "estoqueTexto": "167 em estoque"
     },
     {
       "id": "gsm-19967",
@@ -5560,7 +5572,7 @@
         "CAIXA DE SOM KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "7 em estoque"
+      "estoqueTexto": "6 em estoque"
     },
     {
       "id": "gsm-19906",
@@ -5670,7 +5682,7 @@
         "CAIXA DE SOM FAM",
         "FAM"
       ],
-      "estoqueTexto": "41 em estoque"
+      "estoqueTexto": "21 em estoque"
     },
     {
       "id": "gsm-19777",
@@ -5851,7 +5863,7 @@
         "CAIXA DE SOM FAM",
         "FAM"
       ],
-      "estoqueTexto": "10 em estoque"
+      "estoqueTexto": "6 em estoque"
     },
     {
       "id": "gsm-19685",
@@ -6059,7 +6071,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "3 em estoque"
+      "estoqueTexto": "2 em estoque"
     },
     {
       "id": "gsm-19202",
@@ -6072,7 +6084,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "376 em estoque"
+      "estoqueTexto": "362 em estoque"
     },
     {
       "id": "gsm-19201",
@@ -6880,7 +6892,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "88 em estoque"
+      "estoqueTexto": "83 em estoque"
     },
     {
       "id": "gsm-18848",
@@ -7049,7 +7061,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "71 em estoque"
+      "estoqueTexto": "70 em estoque"
     },
     {
       "id": "gsm-18756",
@@ -7141,6 +7153,32 @@
         "KAPBOM"
       ],
       "estoqueTexto": "17 em estoque"
+    },
+    {
+      "id": "gsm-18516",
+      "originalId": 18516,
+      "nome": "TECLADO KAPBOM KA-689",
+      "sku": "KA-689",
+      "precoCusto": 36.12,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/04/D_NQ_NP_2X_622722-MLB74159155307_012024-F.png",
+      "categorias": [
+        "INFORMÁTICA KAPBOM",
+        "KAPBOM"
+      ],
+      "estoqueTexto": "17 em estoque"
+    },
+    {
+      "id": "gsm-18515",
+      "originalId": 18515,
+      "nome": "CAIXA GRASEP D-3139",
+      "sku": "D-3139",
+      "precoCusto": 48.78,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/04/D_NQ_NP_2X_629407-MLA100040384589_122025-F.png",
+      "categorias": [
+        "KNUP",
+        "SOM E ILUMINAÇÃO KNUP"
+      ],
+      "estoqueTexto": "120 em estoque"
     },
     {
       "id": "gsm-18513",
@@ -7270,7 +7308,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "351 em estoque"
+      "estoqueTexto": "348 em estoque"
     },
     {
       "id": "gsm-18294",
@@ -7425,7 +7463,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "25 em estoque"
+      "estoqueTexto": "24 em estoque"
     },
     {
       "id": "gsm-18220",
@@ -7970,7 +8008,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "231 em estoque"
+      "estoqueTexto": "321 em estoque"
     },
     {
       "id": "gsm-18156",
@@ -8422,7 +8460,7 @@
         "BOMVINK",
         "ELETRO, CASA E COZINHA BOMVINK"
       ],
-      "estoqueTexto": "12 em estoque"
+      "estoqueTexto": "11 em estoque"
     },
     {
       "id": "gsm-18064",
@@ -8890,7 +8928,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "10 em estoque"
+      "estoqueTexto": "8 em estoque"
     },
     {
       "id": "gsm-17996",
@@ -9618,7 +9656,7 @@
         "INFORMÁTICA PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "29 em estoque"
+      "estoqueTexto": "24 em estoque"
     },
     {
       "id": "gsm-17828",
@@ -9644,7 +9682,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "273 em estoque"
+      "estoqueTexto": "363 em estoque"
     },
     {
       "id": "gsm-17824",
@@ -9657,7 +9695,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "232 em estoque"
+      "estoqueTexto": "201 em estoque"
     },
     {
       "id": "gsm-17823",
@@ -9670,7 +9708,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "23 em estoque"
+      "estoqueTexto": "18 em estoque"
     },
     {
       "id": "gsm-17822",
@@ -10042,19 +10080,6 @@
         "LEHMOX"
       ],
       "estoqueTexto": "3 em estoque"
-    },
-    {
-      "id": "gsm-17572",
-      "originalId": 17572,
-      "nome": "CABO LEHMOX IP &#8211; TYPE-C LE479",
-      "sku": "LE479",
-      "precoCusto": 4.92,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/03/D_NQ_NP_2X_745066-MLB107586979331_022026-F-1.png",
-      "categorias": [
-        "CABO E CARREGADOR LEHMOX",
-        "LEHMOX"
-      ],
-      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-17570",
@@ -10607,7 +10632,7 @@
         "INFORMÁTICA PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "13 em estoque"
+      "estoqueTexto": "12 em estoque"
     },
     {
       "id": "gsm-17144",
@@ -10659,7 +10684,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "147 em estoque"
+      "estoqueTexto": "140 em estoque"
     },
     {
       "id": "gsm-17140",
@@ -10805,6 +10830,19 @@
       "estoqueTexto": "1 em estoque"
     },
     {
+      "id": "gsm-17046",
+      "originalId": 17046,
+      "nome": "TRICICLO ELÉTRICO STARMEGA ST-992C",
+      "sku": "ST-992C",
+      "precoCusto": 656,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/03/3edc0f41-97bd-42b8-96e5-8e52d556051b-1.png",
+      "categorias": [
+        "BICICLETA ELÉTRICA",
+        "STARMEGA"
+      ],
+      "estoqueTexto": "1 em estoque"
+    },
+    {
       "id": "gsm-17042",
       "originalId": 17042,
       "nome": "TRICICLO ELÉTRICO STARMEGA ST-994C",
@@ -10855,6 +10893,19 @@
         "KNUP"
       ],
       "estoqueTexto": "1 em estoque"
+    },
+    {
+      "id": "gsm-17011",
+      "originalId": 17011,
+      "nome": "MONITOR GRASEP 15 POL D-TELA11",
+      "sku": "D-TELA11",
+      "precoCusto": 418.2,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/03/D_NQ_NP_2X_846140-MLA91555632678_092025-F.png",
+      "categorias": [
+        "INFORMÁTICA KNUP",
+        "KNUP"
+      ],
+      "estoqueTexto": "10 em estoque"
     },
     {
       "id": "gsm-16984",
@@ -10971,7 +11022,7 @@
         "ELETRO, CASA E COZINHA KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "25 em estoque"
+      "estoqueTexto": "22 em estoque"
     },
     {
       "id": "gsm-16779",
@@ -11307,7 +11358,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "106 em estoque"
+      "estoqueTexto": "98 em estoque"
     },
     {
       "id": "gsm-16487",
@@ -11320,7 +11371,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "110 em estoque"
+      "estoqueTexto": "108 em estoque"
     },
     {
       "id": "gsm-16486",
@@ -11423,7 +11474,7 @@
         "CABO E CARREGADOR KIMASTER",
         "KIMASTER"
       ],
-      "estoqueTexto": "173 em estoque"
+      "estoqueTexto": "168 em estoque"
     },
     {
       "id": "gsm-16285",
@@ -13813,7 +13864,7 @@
         "MAXPRINT",
         "PAPELARIA"
       ],
-      "estoqueTexto": "11 em estoque"
+      "estoqueTexto": "9 em estoque"
     },
     {
       "id": "gsm-14834",
@@ -14572,227 +14623,6 @@
         "PAPELARIA"
       ],
       "estoqueTexto": "8 em estoque"
-    },
-    {
-      "id": "gsm-14693",
-      "originalId": 14693,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO LARANJA 743359",
-      "sku": "C19SC74335",
-      "precoCusto": 2.71,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/61xYVXVhxCL.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "25 em estoque"
-    },
-    {
-      "id": "gsm-14691",
-      "originalId": 14691,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO VERDE 743378",
-      "sku": "743378",
-      "precoCusto": 2.71,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/743378-3.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "28 em estoque"
-    },
-    {
-      "id": "gsm-14690",
-      "originalId": 14690,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO AZUL 743382",
-      "sku": "743382",
-      "precoCusto": 2.71,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/41amYdWu1-L.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "14 em estoque"
-    },
-    {
-      "id": "gsm-14689",
-      "originalId": 14689,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE AMARELO 743397",
-      "sku": "C19SC743397",
-      "precoCusto": 3.7,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/D_NQ_NP_2X_633215-MLA99596186020_122025-F.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "39 em estoque"
-    },
-    {
-      "id": "gsm-14688",
-      "originalId": 14688,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE LARANJA 743401",
-      "sku": "743401",
-      "precoCusto": 3.7,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/bloco_ades_grande_laranja_neon_maxprint_1163_1_9d3b11c3e3f081b1a0cc1285baec78cf.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "89 em estoque"
-    },
-    {
-      "id": "gsm-14687",
-      "originalId": 14687,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE ROSA 743416",
-      "sku": "743416",
-      "precoCusto": 3.7,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/imagem_2025-12-22_133501910.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "64 em estoque"
-    },
-    {
-      "id": "gsm-14686",
-      "originalId": 14686,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE VERDE 743421",
-      "sku": "743421",
-      "precoCusto": 3.7,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/3870_1.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "20 em estoque"
-    },
-    {
-      "id": "gsm-14680",
-      "originalId": 14680,
-      "nome": "CARREGADOR PEINING V8 PEI-216-1",
-      "sku": "PEI-216-1",
-      "precoCusto": 10.46,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/214-v8.png",
-      "categorias": [
-        "CABO E CARREGADOR PEINING",
-        "PEINING"
-      ],
-      "estoqueTexto": "25 em estoque"
-    },
-    {
-      "id": "gsm-14679",
-      "originalId": 14679,
-      "nome": "GARRAFA TERMICA BM-P1924",
-      "sku": "BM-P1924",
-      "precoCusto": 35.9,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/garrafa_termica_350ml_btop_1_20251012094931_0bbcf2b23082.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "2 em estoque"
-    },
-    {
-      "id": "gsm-14678",
-      "originalId": 14678,
-      "nome": "KIT BMAX TECLADO/MOUSE RGB BM-T13",
-      "sku": "BM-T13",
-      "precoCusto": 43.05,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/Kit-Teclado-Gamer-E-Mouse-B-max-C-fio-Semi-Mec-nico-Ilumina-o-RGB_1738946446-1.png",
-      "categorias": [
-        "BMAX",
-        "INFORMÁTICA BMAX"
-      ],
-      "estoqueTexto": "34 em estoque"
-    },
-    {
-      "id": "gsm-14677",
-      "originalId": 14677,
-      "nome": "CHAVE B-TEK DE CATRACA ELETRICA 21V BT-DZ74",
-      "sku": "BT-DZ74",
-      "precoCusto": 319.9,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/D_NQ_NP_2X_979236-MLB99783835126_122025-F-chave-catraca-b-tek-12-bivolt-recarregavel-2-baterias-21v.png",
-      "categorias": [
-        "B-TEK",
-        "FERRAMENTA BMAX"
-      ],
-      "estoqueTexto": "10 em estoque"
-    },
-    {
-      "id": "gsm-14676",
-      "originalId": 14676,
-      "nome": "VENTILADOR BMAX LED COM CONTROLE BM-F1755",
-      "sku": "BM-1755",
-      "precoCusto": 84.72,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/image_124326.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "32 em estoque"
-    },
-    {
-      "id": "gsm-14675",
-      "originalId": 14675,
-      "nome": "SOPRADOR B-TEK TERMICO 48V BT-DZ63",
-      "sku": "BT-DZ63",
-      "precoCusto": 279.9,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/image-2026-11-11T102758.402.png",
-      "categorias": [
-        "B-TEK",
-        "FERRAMENTA BMAX"
-      ],
-      "estoqueTexto": "1 em estoque"
-    },
-    {
-      "id": "gsm-14674",
-      "originalId": 14674,
-      "nome": "TECLADO BMAX MECANICO BM-T14",
-      "sku": "BM-T14",
-      "precoCusto": 92.25,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/image_124328.png",
-      "categorias": [
-        "BMAX",
-        "INFORMÁTICA BMAX"
-      ],
-      "estoqueTexto": "20 em estoque"
-    },
-    {
-      "id": "gsm-14672",
-      "originalId": 14672,
-      "nome": "LUMINARIA BMAX NOTURNA BM-F1430",
-      "sku": "BM-F1430",
-      "precoCusto": 21.18,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/bf96594602c411f4534721731782c322.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "30 em estoque"
-    },
-    {
-      "id": "gsm-14671",
-      "originalId": 14671,
-      "nome": "PORTA CONDIMENTOS BMAX BM-F1717",
-      "sku": "BM-F1717",
-      "precoCusto": 17.22,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/D_NQ_NP_2X_655420-MLB108748617334_032026-F.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "99 em estoque"
-    },
-    {
-      "id": "gsm-14669",
-      "originalId": 14669,
-      "nome": "MOUSE BMAX BM-616",
-      "sku": "BM-616",
-      "precoCusto": 8,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/D_NQ_NP_648861-MLA94044926908_102025-O.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "58 em estoque"
     }
   ]
 }
