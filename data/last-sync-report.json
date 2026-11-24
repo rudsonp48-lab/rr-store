@@ -1,37 +1,67 @@
 {
-  "executedAt": "2026-11-24T17:58:02.289Z",
-  "brasiliaTime": "24/11/2026, 14:58:02",
+  "executedAt": "2026-11-24T20:05:22.829Z",
+  "brasiliaTime": "24/11/2026, 17:05:22",
   "summary": {
-    "sousaTotal": 116,
-    "sousaNovos": 0,
-    "sousaPrecosAlterados": 0,
-    "gsmTotal": 1128,
-    "gsmNovos": 1,
-    "gsmPrecosAlterados": 1,
-    "totalGeralSincronizado": 1244
+    "sousaTotal": 122,
+    "sousaNovos": 7,
+    "sousaPrecosAlterados": 1,
+    "gsmTotal": 1120,
+    "gsmNovos": 0,
+    "gsmPrecosAlterados": 0,
+    "totalGeralSincronizado": 1242
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [],
-      "precosAlterados": []
-    },
-    "gsm": {
       "novos": [
         {
-          "id": "gsm-17548",
-          "nome": "CARREGADOR LEHMOX TYPE C LE5114",
-          "precoCusto": 8.61
+          "id": "sousa-1769793260546-yQqe8",
+          "nome": "CEL.REALME C73 ROXO 256GB 8RAM",
+          "preco": 1070
+        },
+        {
+          "id": "sousa-1769793158353-yQqe8",
+          "nome": "CEL.REALME C73 VERDE 256GB 8RAM",
+          "preco": 1070
+        },
+        {
+          "id": "sousa-1771431200659-yQqe8",
+          "nome": "CEL.SAMSUNG A17 NFC PRETO 256GB 8RAM",
+          "preco": 1020
+        },
+        {
+          "id": "sousa-1781277290055-yQqe8",
+          "nome": "Unitv S1",
+          "preco": 380
+        },
+        {
+          "id": "sousa-1776535413938-yQqe8",
+          "nome": "HEADPHONE ANC DEEP FORTREK",
+          "preco": 100
+        },
+        {
+          "id": "sousa-1795545721127-yQqe8",
+          "nome": "REDMI PAD 2 GRAY C/CAPA 256GB 8RAM",
+          "preco": 1600
+        },
+        {
+          "id": "sousa-1772809277271-yQqe8",
+          "nome": "AMAZFIT ACTIVE MAX",
+          "preco": 830
         }
       ],
       "precosAlterados": [
         {
-          "id": "gsm-20309",
-          "nome": "TECLADO GAME RGB LEHMOX LEY-2372",
-          "precoAnterior": 72.9,
-          "precoNovo": 68.33,
-          "diferenca": -4.57
+          "id": "sousa-1792176419758-yQqe8",
+          "nome": "AMAZFIT BIP 6 BLACK",
+          "precoAnterior": 530,
+          "precoNovo": 540,
+          "diferenca": 10
         }
       ]
+    },
+    "gsm": {
+      "novos": [],
+      "precosAlterados": []
     }
   }
 }
