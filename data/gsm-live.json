@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-24T15:54:21.516Z",
+  "syncedAt": "2026-11-24T17:58:02.268Z",
   "source": "https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products",
-  "count": 1135,
+  "count": 1128,
   "products": [
     {
       "id": "gsm-21461",
@@ -307,7 +307,7 @@
       "categorias": [
         "SUMEXR"
       ],
-      "estoqueTexto": "7 em estoque"
+      "estoqueTexto": "6 em estoque"
     },
     {
       "id": "gsm-21354",
@@ -491,7 +491,7 @@
         "ELETRO, CASA E COZINHA BMAX",
         "INFORMÁTICA BMAX"
       ],
-      "estoqueTexto": "41 em estoque"
+      "estoqueTexto": "35 em estoque"
     },
     {
       "id": "gsm-21329",
@@ -941,7 +941,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "11 em estoque"
+      "estoqueTexto": "10 em estoque"
     },
     {
       "id": "gsm-21228",
@@ -1433,7 +1433,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "99 em estoque"
+      "estoqueTexto": "75 em estoque"
     },
     {
       "id": "gsm-21065",
@@ -2098,7 +2098,7 @@
         "ELETRO, CASA E COZINHA LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "127 em estoque"
+      "estoqueTexto": "126 em estoque"
     },
     {
       "id": "gsm-20907",
@@ -2189,7 +2189,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "23 em estoque"
+      "estoqueTexto": "2523 em estoque"
     },
     {
       "id": "gsm-20900",
@@ -2656,7 +2656,7 @@
         "CABO E CARREGADOR KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "46 em estoque"
+      "estoqueTexto": "45 em estoque"
     },
     {
       "id": "gsm-20799",
@@ -2734,7 +2734,7 @@
         "CABO E CARREGADOR KINGO",
         "KINGO"
       ],
-      "estoqueTexto": "300 em estoque"
+      "estoqueTexto": "298 em estoque"
     },
     {
       "id": "gsm-20687",
@@ -3482,7 +3482,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "17 em estoque"
+      "estoqueTexto": "16 em estoque"
     },
     {
       "id": "gsm-20509",
@@ -3521,20 +3521,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "8 em estoque"
-    },
-    {
-      "id": "gsm-20507",
-      "originalId": 20507,
-      "nome": "ABRIDOR DE VINHO ELETRICO BMAX BP-15002",
-      "sku": "BP-15002",
-      "precoCusto": 39.36,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/08/image-2026-08-16T102530.598.png",
-      "categorias": [
-        "BMAX",
-        "ELETRO, CASA E COZINHA BMAX"
-      ],
-      "estoqueTexto": "8 em estoque"
+      "estoqueTexto": "7 em estoque"
     },
     {
       "id": "gsm-20506",
@@ -3677,7 +3664,7 @@
         "BMAX",
         "FACA BMAX"
       ],
-      "estoqueTexto": "49 em estoque"
+      "estoqueTexto": "48 em estoque"
     },
     {
       "id": "gsm-20495",
@@ -4398,7 +4385,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "124 em estoque"
+      "estoqueTexto": "100 em estoque"
     },
     {
       "id": "gsm-20327",
@@ -4411,7 +4398,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "81 em estoque"
+      "estoqueTexto": "57 em estoque"
     },
     {
       "id": "gsm-20326",
@@ -4457,13 +4444,13 @@
       "originalId": 20309,
       "nome": "TECLADO GAME RGB LEHMOX LEY-2372",
       "sku": "LEY-2372",
-      "precoCusto": 72.9,
+      "precoCusto": 68.33,
       "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/07/image-2026-08-01T153125.926.png",
       "categorias": [
         "INFORMÁTICA LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "25 em estoque"
+      "estoqueTexto": "65 em estoque"
     },
     {
       "id": "gsm-20307",
@@ -4938,7 +4925,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "140 em estoque"
+      "estoqueTexto": "138 em estoque"
     },
     {
       "id": "gsm-20074",
@@ -4951,7 +4938,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "38 em estoque"
+      "estoqueTexto": "29 em estoque"
     },
     {
       "id": "gsm-20073",
@@ -5511,7 +5498,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "2 em estoque"
+      "estoqueTexto": "1502 em estoque"
     },
     {
       "id": "gsm-19915",
@@ -5572,7 +5559,7 @@
         "CAIXA DE SOM KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "6 em estoque"
+      "estoqueTexto": "5 em estoque"
     },
     {
       "id": "gsm-19906",
@@ -6084,7 +6071,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "362 em estoque"
+      "estoqueTexto": "342 em estoque"
     },
     {
       "id": "gsm-19201",
@@ -6436,7 +6423,7 @@
         "1HORA",
         "CABO E CARREGADOR 1HORA"
       ],
-      "estoqueTexto": "179 em estoque"
+      "estoqueTexto": "174 em estoque"
     },
     {
       "id": "gsm-19129",
@@ -7155,19 +7142,6 @@
       "estoqueTexto": "17 em estoque"
     },
     {
-      "id": "gsm-18516",
-      "originalId": 18516,
-      "nome": "TECLADO KAPBOM KA-689",
-      "sku": "KA-689",
-      "precoCusto": 36.12,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/04/D_NQ_NP_2X_622722-MLB74159155307_012024-F.png",
-      "categorias": [
-        "INFORMÁTICA KAPBOM",
-        "KAPBOM"
-      ],
-      "estoqueTexto": "17 em estoque"
-    },
-    {
       "id": "gsm-18515",
       "originalId": 18515,
       "nome": "CAIXA GRASEP D-3139",
@@ -7191,7 +7165,7 @@
         "LEHMOX",
         "SUPORTE LEHMOX"
       ],
-      "estoqueTexto": "3 em estoque"
+      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-18512",
@@ -7774,7 +7748,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "13 em estoque"
+      "estoqueTexto": "12 em estoque"
     },
     {
       "id": "gsm-18188",
@@ -8008,7 +7982,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "321 em estoque"
+      "estoqueTexto": "307 em estoque"
     },
     {
       "id": "gsm-18156",
@@ -9682,7 +9656,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "363 em estoque"
+      "estoqueTexto": "349 em estoque"
     },
     {
       "id": "gsm-17824",
@@ -9695,7 +9669,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "201 em estoque"
+      "estoqueTexto": "199 em estoque"
     },
     {
       "id": "gsm-17823",
@@ -9721,7 +9695,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "154 em estoque"
+      "estoqueTexto": "148 em estoque"
     },
     {
       "id": "gsm-17821",
@@ -10274,6 +10248,18 @@
       "estoqueTexto": "4 em estoque"
     },
     {
+      "id": "gsm-17548",
+      "originalId": 17548,
+      "nome": "CARREGADOR LEHMOX TYPE C LE5114",
+      "sku": "LE5114",
+      "precoCusto": 8.61,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/03/CARREGADOR-DE-CELULAR-3.1A-USB-COM-CABO-TYPE-C-LEHMOX-LE-511-TYPEC.png",
+      "categorias": [
+        "LEHMOX"
+      ],
+      "estoqueTexto": "3000 em estoque"
+    },
+    {
       "id": "gsm-17546",
       "originalId": 17546,
       "nome": "CARREGADOR LEHMOX TYPE-C LE513",
@@ -10810,19 +10796,6 @@
       "sku": "ST-992B",
       "precoCusto": 656,
       "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/03/f628bab8-472d-4813-9afe-a7d779110a18.png",
-      "categorias": [
-        "BICICLETA ELÉTRICA",
-        "STARMEGA"
-      ],
-      "estoqueTexto": "1 em estoque"
-    },
-    {
-      "id": "gsm-17046",
-      "originalId": 17046,
-      "nome": "TRICICLO ELÉTRICO STARMEGA ST-992C",
-      "sku": "ST-992C",
-      "precoCusto": 656,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/03/3edc0f41-97bd-42b8-96e5-8e52d556051b-1.png",
       "categorias": [
         "BICICLETA ELÉTRICA",
         "STARMEGA"
@@ -13825,7 +13798,7 @@
         "CARREGADOR FAM",
         "FAM"
       ],
-      "estoqueTexto": "51 em estoque"
+      "estoqueTexto": "48 em estoque"
     },
     {
       "id": "gsm-14894",
@@ -13955,7 +13928,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "21 em estoque"
+      "estoqueTexto": "19 em estoque"
     },
     {
       "id": "gsm-14751",
@@ -14183,7 +14156,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-14733",
@@ -14300,7 +14273,7 @@
         "MAXPRINT",
         "PAPELARIA"
       ],
-      "estoqueTexto": "32 em estoque"
+      "estoqueTexto": "31 em estoque"
     },
     {
       "id": "gsm-14719",
@@ -14372,7 +14345,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "89 em estoque"
+      "estoqueTexto": "53 em estoque"
     },
     {
       "id": "gsm-14713",
@@ -14558,71 +14531,6 @@
         "PAPELARIA"
       ],
       "estoqueTexto": "57 em estoque"
-    },
-    {
-      "id": "gsm-14698",
-      "originalId": 14698,
-      "nome": "BLOCO ADESIVO MAXPRINT MEDIO AMARELO 741026",
-      "sku": "C19SC741026",
-      "precoCusto": 2.11,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/images-1-1.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "38 em estoque"
-    },
-    {
-      "id": "gsm-14697",
-      "originalId": 14697,
-      "nome": "BLOCO ADESIVO MAXPRINT GRANDE AMARELO 741011",
-      "sku": "C19SC741011",
-      "precoCusto": 2.52,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/bloco_adesivo_maxprint_76x102_grande_neon_amarelo_1_20250917121201_dae80f10644c.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "107 em estoque"
-    },
-    {
-      "id": "gsm-14696",
-      "originalId": 14696,
-      "nome": "BLOCO ADESIVO MAXPRINT GRANDE PASTEL 74000011",
-      "sku": "74000011",
-      "precoCusto": 6.75,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/74000011_2.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "58 em estoque"
-    },
-    {
-      "id": "gsm-14695",
-      "originalId": 14695,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON PEQUENO 741705",
-      "sku": "C19SC741705",
-      "precoCusto": 2.92,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/741705.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "32 em estoque"
-    },
-    {
-      "id": "gsm-14694",
-      "originalId": 14694,
-      "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO AMARELO 743344",
-      "sku": "C19SC743344",
-      "precoCusto": 2.71,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/41VVOFVDmhL.png",
-      "categorias": [
-        "MAXPRINT",
-        "PAPELARIA"
-      ],
-      "estoqueTexto": "8 em estoque"
     }
   ]
 }

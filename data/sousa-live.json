@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-24T15:54:10.729Z",
+  "syncedAt": "2026-11-24T17:57:55.484Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 117,
+  "count": 116,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -373,60 +373,6 @@
       "categoriaSousa": "aparelhos-para-tv"
     },
     {
-      "link": "/pt-BR/p/poco-pad-m1-gray-256gb-8ram/1778861532381-yQqe8",
-      "nome": "POCO PAD M1 GRAY 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB04B6C98-26CA-4025-9100-C6F012C2D5B1.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1778861532381-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
-      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1788532625984-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
-      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793978740202-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-honor-pad-x8a-gray-128gb-4ram-com-capa-tela-11/1795013177342-yQqe8",
-      "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
-      "preco": 1080,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDFEE0778-900B-49AD-9F9D-8C5010C7EA20.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1795013177342-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
-      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793113977220-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
-      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793114100828-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
       "link": "/pt-BR/p/cabo-fortrek-usbc-to-usbc-2m-3a-u222-black-edition/1764877669056-yQqe8",
       "nome": "CABO FORTREK USB-C to USB-C 2M 3A U222 BLACK EDITION",
       "preco": 13,
@@ -643,6 +589,60 @@
       "categoriaSousa": "fortrek"
     },
     {
+      "link": "/pt-BR/p/poco-pad-m1-gray-256gb-8ram/1778861532381-yQqe8",
+      "nome": "POCO PAD M1 GRAY 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB04B6C98-26CA-4025-9100-C6F012C2D5B1.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1778861532381-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
+      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1788532625984-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
+      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793978740202-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-honor-pad-x8a-gray-128gb-4ram-com-capa-tela-11/1795013177342-yQqe8",
+      "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
+      "preco": 1080,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDFEE0778-900B-49AD-9F9D-8C5010C7EA20.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795013177342-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
+      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793113977220-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
+      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793114100828-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
       "link": "/pt-BR/p/amazfit-active-2-premium-quadrado-square/1772809438913-yQqe8",
       "nome": "AMAZFIT ACTIVE 2 PREMIUM QUADRADO (SQUARE)",
       "preco": 630,
@@ -775,15 +775,6 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/DQRTQU743fcKyYbf7T4OboG8lv03%2F869deaaf-6497-438d-84ca-a4f5c5063889.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1726663840199-yQqe8",
-      "categoriaSousa": "relogio"
-    },
-    {
-      "link": "/pt-BR/p/redmi-watch-5-lite-preto/1728068893140-yQqe8",
-      "nome": "REDMI WATCH 5 LITE PRETO",
-      "preco": 260,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F733C4C9D-DE81-4C62-8577-00B1075FD0A8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1728068893140-yQqe8",
       "categoriaSousa": "relogio"
     },
     {

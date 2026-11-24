@@ -1,86 +1,35 @@
 {
-  "executedAt": "2026-11-24T15:54:21.525Z",
-  "brasiliaTime": "24/11/2026, 12:54:21",
+  "executedAt": "2026-11-24T17:58:02.289Z",
+  "brasiliaTime": "24/11/2026, 14:58:02",
   "summary": {
-    "sousaTotal": 117,
-    "sousaNovos": 8,
+    "sousaTotal": 116,
+    "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
-    "gsmTotal": 1135,
-    "gsmNovos": 3,
+    "gsmTotal": 1128,
+    "gsmNovos": 1,
     "gsmPrecosAlterados": 1,
-    "totalGeralSincronizado": 1252
+    "totalGeralSincronizado": 1244
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1795525955573-yQqe8",
-          "nome": "CEL.SAMSUNG A17 NFC AZUL 256GB 8RAM",
-          "preco": 1050
-        },
-        {
-          "id": "sousa-1787663486485-yQqe8",
-          "nome": "CEL.SAMSUNG A17 NFC CINZA 256GB 8RAM",
-          "preco": 1050
-        },
-        {
-          "id": "sousa-1767963983753-yQqe8",
-          "nome": "BASE CARREGAMENTO DUALSENSE PS5",
-          "preco": 150
-        },
-        {
-          "id": "sousa-1767716581479-yQqe8",
-          "nome": "CONTROLE PLAY 5 BRANCO",
-          "preco": 380
-        },
-        {
-          "id": "sousa-1767893559861-yQqe8",
-          "nome": "CONTROLE PLAY 5 CAMUFLADO",
-          "preco": 380
-        },
-        {
-          "id": "sousa-1767716516871-yQqe8",
-          "nome": "CONTROLE PLAY 5 PRETO",
-          "preco": 380
-        },
-        {
-          "id": "sousa-1784818361176-yQqe8",
-          "nome": "Controle play 5 vermelho",
-          "preco": 380
-        },
-        {
-          "id": "sousa-1723502000706-yQqe8",
-          "nome": "FONTE 20W APPLE ORIGINAL ANATEL",
-          "preco": 122
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-21179",
-          "nome": "TOMADA BMAX MULTIPLA 3M BM-8810",
-          "precoCusto": 12.92
-        },
-        {
-          "id": "gsm-18515",
-          "nome": "CAIXA GRASEP D-3139",
-          "precoCusto": 48.78
-        },
-        {
-          "id": "gsm-17011",
-          "nome": "MONITOR GRASEP 15 POL D-TELA11",
-          "precoCusto": 418.2
+          "id": "gsm-17548",
+          "nome": "CARREGADOR LEHMOX TYPE C LE5114",
+          "precoCusto": 8.61
         }
       ],
       "precosAlterados": [
         {
-          "id": "gsm-20909",
-          "nome": "MINI MIXER LEHMOX NY-3370",
-          "precoAnterior": 30.06,
-          "precoNovo": 28.7,
-          "diferenca": -1.36
+          "id": "gsm-20309",
+          "nome": "TECLADO GAME RGB LEHMOX LEY-2372",
+          "precoAnterior": 72.9,
+          "precoNovo": 68.33,
+          "diferenca": -4.57
         }
       ]
     }
