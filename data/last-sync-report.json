@@ -1,63 +1,19 @@
 {
-  "executedAt": "2026-11-24T20:05:22.829Z",
-  "brasiliaTime": "24/11/2026, 17:05:22",
+  "executedAt": "2026-11-25T12:43:15.567Z",
+  "brasiliaTime": "25/11/2026, 09:43:15",
   "summary": {
-    "sousaTotal": 122,
-    "sousaNovos": 7,
-    "sousaPrecosAlterados": 1,
+    "sousaTotal": 121,
+    "sousaNovos": 0,
+    "sousaPrecosAlterados": 0,
     "gsmTotal": 1120,
     "gsmNovos": 0,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1242
+    "totalGeralSincronizado": 1241
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1769793260546-yQqe8",
-          "nome": "CEL.REALME C73 ROXO 256GB 8RAM",
-          "preco": 1070
-        },
-        {
-          "id": "sousa-1769793158353-yQqe8",
-          "nome": "CEL.REALME C73 VERDE 256GB 8RAM",
-          "preco": 1070
-        },
-        {
-          "id": "sousa-1771431200659-yQqe8",
-          "nome": "CEL.SAMSUNG A17 NFC PRETO 256GB 8RAM",
-          "preco": 1020
-        },
-        {
-          "id": "sousa-1781277290055-yQqe8",
-          "nome": "Unitv S1",
-          "preco": 380
-        },
-        {
-          "id": "sousa-1776535413938-yQqe8",
-          "nome": "HEADPHONE ANC DEEP FORTREK",
-          "preco": 100
-        },
-        {
-          "id": "sousa-1795545721127-yQqe8",
-          "nome": "REDMI PAD 2 GRAY C/CAPA 256GB 8RAM",
-          "preco": 1600
-        },
-        {
-          "id": "sousa-1772809277271-yQqe8",
-          "nome": "AMAZFIT ACTIVE MAX",
-          "preco": 830
-        }
-      ],
-      "precosAlterados": [
-        {
-          "id": "sousa-1792176419758-yQqe8",
-          "nome": "AMAZFIT BIP 6 BLACK",
-          "precoAnterior": 530,
-          "precoNovo": 540,
-          "diferenca": 10
-        }
-      ]
+      "novos": [],
+      "precosAlterados": []
     },
     "gsm": {
       "novos": [],
