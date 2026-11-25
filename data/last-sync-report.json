@@ -1,68 +1,44 @@
 {
-  "executedAt": "2026-11-25T14:48:52.334Z",
-  "brasiliaTime": "25/11/2026, 11:48:52",
+  "executedAt": "2026-11-25T17:02:28.541Z",
+  "brasiliaTime": "25/11/2026, 14:02:28",
   "summary": {
     "sousaTotal": 122,
-    "sousaNovos": 1,
-    "sousaPrecosAlterados": 2,
+    "sousaNovos": 0,
+    "sousaPrecosAlterados": 0,
     "gsmTotal": 1122,
-    "gsmNovos": 3,
-    "gsmPrecosAlterados": 1,
+    "gsmNovos": 4,
+    "gsmPrecosAlterados": 0,
     "totalGeralSincronizado": 1244
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1793979913791-yQqe8",
-          "nome": "TAB.Galaxy Tab A11 64GB 4RAM CINZA",
-          "preco": 850
-        }
-      ],
-      "precosAlterados": [
-        {
-          "id": "sousa-1771431200659-yQqe8",
-          "nome": "CEL.SAMSUNG A17 NFC PRETO 256GB 8RAM",
-          "precoAnterior": 1020,
-          "precoNovo": 1050,
-          "diferenca": 30
-        },
-        {
-          "id": "sousa-1795545721127-yQqe8",
-          "nome": "REDMI PAD 2 GRAY C/CAPA 256GB 8RAM",
-          "precoAnterior": 1600,
-          "precoNovo": 1550,
-          "diferenca": -50
-        }
-      ]
+      "novos": [],
+      "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-21498",
-          "nome": "SUPORTE LEHMOX TV 13-70&#8243; LEY-2330",
-          "precoCusto": 10.25
+          "id": "gsm-14701",
+          "nome": "PERFURADOR METALICO MAXPRINT MXP20C 714484",
+          "precoCusto": 12.91
         },
         {
-          "id": "gsm-21497",
-          "nome": "KIT LEHMOX TECLADO MOUSE RGB LEY-2073",
-          "precoCusto": 41
+          "id": "gsm-14700",
+          "nome": "CLIPES COLORIDO MAXPRINT CX100UN 71000018",
+          "precoCusto": 2.11
         },
         {
-          "id": "gsm-14702",
-          "nome": "PERFURADOR METALICO MAXPRINT MXP10C 714470",
-          "precoCusto": 6.76
+          "id": "gsm-14699",
+          "nome": "BLOCO ADESIVO MAXPRINT PEQUENO AMARELO 74986",
+          "precoCusto": 2.65
+        },
+        {
+          "id": "gsm-14698",
+          "nome": "BLOCO ADESIVO MAXPRINT MEDIO AMARELO 741026",
+          "precoCusto": 2.11
         }
       ],
-      "precosAlterados": [
-        {
-          "id": "gsm-17828",
-          "nome": "SUPORTE PARA STARLINK MINNI PEI-XLH2",
-          "precoAnterior": 135.3,
-          "precoNovo": 99.9,
-          "diferenca": -35.4
-        }
-      ]
+      "precosAlterados": []
     }
   }
 }
