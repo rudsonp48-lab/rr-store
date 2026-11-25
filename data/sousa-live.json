@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-25T12:43:06.985Z",
+  "syncedAt": "2026-11-25T14:48:46.156Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 121,
+  "count": 122,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -87,7 +87,7 @@
     {
       "link": "/pt-BR/p/cel-samsung-a17-nfc-preto-256gb-8ram/1771431200659-yQqe8",
       "nome": "CEL.SAMSUNG A17 NFC PRETO 256GB 8RAM",
-      "preco": 1020,
+      "preco": 1050,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F3F6CD4AE-2A17-41BB-AE87-E737AC4F62BF.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1771431200659-yQqe8",
@@ -627,7 +627,7 @@
     {
       "link": "/pt-BR/p/redmi-pad-2-gray-c-capa-256gb-8ram/1795545721127-yQqe8",
       "nome": "REDMI PAD 2 GRAY C/CAPA 256GB 8RAM",
-      "preco": 1600,
+      "preco": 1550,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB26950DF-3AE4-4A90-9903-98C1786F01D8.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1795545721127-yQqe8",
@@ -649,6 +649,15 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1793978740202-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-galaxy-tab-a11-64gb-4ram-cinza/1793979913791-yQqe8",
+      "nome": "TAB.Galaxy Tab A11 64GB 4RAM CINZA",
+      "preco": 850,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F10693210-A9E4-4E6E-A6A5-B6FA1E95FC1B.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793979913791-yQqe8",
       "categoriaSousa": "tabletes"
     },
     {
