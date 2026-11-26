@@ -1,39 +1,22 @@
 {
-  "executedAt": "2026-11-26T06:00:24.410Z",
-  "brasiliaTime": "26/11/2026, 03:00:24",
+  "executedAt": "2026-11-26T08:04:20.502Z",
+  "brasiliaTime": "26/11/2026, 05:04:20",
   "summary": {
     "sousaTotal": 123,
-    "sousaNovos": 2,
+    "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1122,
-    "gsmNovos": 1,
+    "gsmNovos": 0,
     "gsmPrecosAlterados": 0,
     "totalGeralSincronizado": 1245
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1795634038785-yQqe8",
-          "nome": "JBL BOOMBOX 4 AZUL",
-          "preco": 2050
-        },
-        {
-          "id": "sousa-1767798485755-yQqe8",
-          "nome": "JBL BOOMBOX 4 PRETA",
-          "preco": 2050
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     },
     "gsm": {
-      "novos": [
-        {
-          "id": "gsm-14697",
-          "nome": "BLOCO ADESIVO MAXPRINT GRANDE AMARELO 741011",
-          "precoCusto": 2.52
-        }
-      ],
+      "novos": [],
       "precosAlterados": []
     }
   }
