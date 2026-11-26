@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-25T17:02:28.539Z",
+  "syncedAt": "2026-11-26T06:00:24.408Z",
   "source": "https://gsmdigitalacessorios.com.br/wp-json/wc/store/v1/products",
   "count": 1122,
   "products": [
@@ -40,7 +40,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "10 em estoque"
+      "estoqueTexto": "8 em estoque"
     },
     {
       "id": "gsm-21452",
@@ -105,7 +105,7 @@
         "BMAX",
         "INFORMÁTICA BMAX"
       ],
-      "estoqueTexto": "33 em estoque"
+      "estoqueTexto": "32 em estoque"
     },
     {
       "id": "gsm-21437",
@@ -220,7 +220,7 @@
       "categorias": [
         "ULTRAMAX"
       ],
-      "estoqueTexto": "4573 em estoque"
+      "estoqueTexto": "4570 em estoque"
     },
     {
       "id": "gsm-21410",
@@ -285,7 +285,7 @@
       "categorias": [
         "SUMEXR"
       ],
-      "estoqueTexto": "4 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-21360",
@@ -309,7 +309,7 @@
       "categorias": [
         "SUMEXR"
       ],
-      "estoqueTexto": "7 em estoque"
+      "estoqueTexto": "6 em estoque"
     },
     {
       "id": "gsm-21358",
@@ -333,7 +333,7 @@
       "categorias": [
         "SUMEXR"
       ],
-      "estoqueTexto": "6 em estoque"
+      "estoqueTexto": "7 em estoque"
     },
     {
       "id": "gsm-21354",
@@ -755,7 +755,7 @@
         "CÂMERA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "20 em estoque"
+      "estoqueTexto": "19 em estoque"
     },
     {
       "id": "gsm-21269",
@@ -1003,7 +1003,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "655 em estoque"
+      "estoqueTexto": "630 em estoque"
     },
     {
       "id": "gsm-21222",
@@ -1445,7 +1445,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "70 em estoque"
+      "estoqueTexto": "63 em estoque"
     },
     {
       "id": "gsm-21065",
@@ -1614,7 +1614,7 @@
         "CABO E CARREGADOR KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "80 em estoque"
+      "estoqueTexto": "67 em estoque"
     },
     {
       "id": "gsm-21011",
@@ -2175,7 +2175,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "107 em estoque"
+      "estoqueTexto": "97 em estoque"
     },
     {
       "id": "gsm-20902",
@@ -2201,7 +2201,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "884 em estoque"
+      "estoqueTexto": "348 em estoque"
     },
     {
       "id": "gsm-20900",
@@ -2395,7 +2395,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "35 em estoque"
+      "estoqueTexto": "20 em estoque"
     },
     {
       "id": "gsm-20850",
@@ -2525,7 +2525,7 @@
         "APARADOR BMAX",
         "BMAX"
       ],
-      "estoqueTexto": "44 em estoque"
+      "estoqueTexto": "39 em estoque"
     },
     {
       "id": "gsm-20820",
@@ -2577,7 +2577,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "23 em estoque"
+      "estoqueTexto": "20 em estoque"
     },
     {
       "id": "gsm-20815",
@@ -2590,7 +2590,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "221 em estoque"
+      "estoqueTexto": "220 em estoque"
     },
     {
       "id": "gsm-20814",
@@ -2603,7 +2603,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "75 em estoque"
+      "estoqueTexto": "74 em estoque"
     },
     {
       "id": "gsm-20804",
@@ -3363,7 +3363,7 @@
       "precoCusto": 20.5,
       "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/08/image-2026-08-15T124717.455.png",
       "categorias": [],
-      "estoqueTexto": "72 em estoque"
+      "estoqueTexto": "53 em estoque"
     },
     {
       "id": "gsm-20517",
@@ -3402,7 +3402,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "24 em estoque"
+      "estoqueTexto": "23 em estoque"
     },
     {
       "id": "gsm-20513",
@@ -4357,7 +4357,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "60 em estoque"
+      "estoqueTexto": "53 em estoque"
     },
     {
       "id": "gsm-20327",
@@ -4370,7 +4370,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "180 em estoque"
+      "estoqueTexto": "173 em estoque"
     },
     {
       "id": "gsm-20326",
@@ -4755,7 +4755,7 @@
         "KNUP",
         "PROJETOR KNUP"
       ],
-      "estoqueTexto": "2 em estoque"
+      "estoqueTexto": "1 em estoque"
     },
     {
       "id": "gsm-20090",
@@ -4793,7 +4793,7 @@
         "ELETRO, CASA E COZINHA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "6 em estoque"
+      "estoqueTexto": "4 em estoque"
     },
     {
       "id": "gsm-20085",
@@ -4819,7 +4819,7 @@
         "KNUP",
         "SUPORTE KNUP"
       ],
-      "estoqueTexto": "17 em estoque"
+      "estoqueTexto": "13 em estoque"
     },
     {
       "id": "gsm-20083",
@@ -4897,7 +4897,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "138 em estoque"
+      "estoqueTexto": "127 em estoque"
     },
     {
       "id": "gsm-20074",
@@ -4910,7 +4910,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "13 em estoque"
+      "estoqueTexto": "10 em estoque"
     },
     {
       "id": "gsm-20073",
@@ -4923,7 +4923,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "146 em estoque"
+      "estoqueTexto": "142 em estoque"
     },
     {
       "id": "gsm-20072",
@@ -5080,7 +5080,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "6 em estoque"
+      "estoqueTexto": "4 em estoque"
     },
     {
       "id": "gsm-20041",
@@ -5132,7 +5132,7 @@
         "BMAX",
         "ELETRO, CASA E COZINHA BMAX"
       ],
-      "estoqueTexto": "5 em estoque"
+      "estoqueTexto": "3 em estoque"
     },
     {
       "id": "gsm-20032",
@@ -5444,7 +5444,7 @@
         "CABO E CARREGADOR KINGO",
         "KINGO"
       ],
-      "estoqueTexto": "101 em estoque"
+      "estoqueTexto": "97 em estoque"
     },
     {
       "id": "gsm-19962",
@@ -5457,7 +5457,7 @@
         "CABO E CARREGADOR LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "1497 em estoque"
+      "estoqueTexto": "1172 em estoque"
     },
     {
       "id": "gsm-19915",
@@ -5733,7 +5733,7 @@
       "precoCusto": 7.65,
       "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/06/image-16.png",
       "categorias": [],
-      "estoqueTexto": "76 em estoque"
+      "estoqueTexto": "75 em estoque"
     },
     {
       "id": "gsm-19706",
@@ -5796,7 +5796,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "77 em estoque"
+      "estoqueTexto": "74 em estoque"
     },
     {
       "id": "gsm-19697",
@@ -6007,19 +6007,6 @@
       "estoqueTexto": "4 em estoque"
     },
     {
-      "id": "gsm-19203",
-      "originalId": 19203,
-      "nome": "CARREGADOR PEINING TYPE C PEI-218-3",
-      "sku": "PEI-218-3",
-      "precoCusto": 11.69,
-      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2026/05/D_NQ_NP_2X_878239-MLB87009061583_062025-F.png",
-      "categorias": [
-        "CABO E CARREGADOR PEINING",
-        "PEINING"
-      ],
-      "estoqueTexto": "2 em estoque"
-    },
-    {
       "id": "gsm-19202",
       "originalId": 19202,
       "nome": "CARREGADOR PEINING IP PEI-218-2",
@@ -6030,7 +6017,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "266 em estoque"
+      "estoqueTexto": "178 em estoque"
     },
     {
       "id": "gsm-19201",
@@ -6135,7 +6122,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "173 em estoque"
+      "estoqueTexto": "169 em estoque"
     },
     {
       "id": "gsm-19175",
@@ -7111,7 +7098,7 @@
         "KNUP",
         "SOM E ILUMINAÇÃO KNUP"
       ],
-      "estoqueTexto": "50 em estoque"
+      "estoqueTexto": "45 em estoque"
     },
     {
       "id": "gsm-18513",
@@ -7215,7 +7202,7 @@
         "FONE LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "79 em estoque"
+      "estoqueTexto": "76 em estoque"
     },
     {
       "id": "gsm-18297",
@@ -7241,7 +7228,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "346 em estoque"
+      "estoqueTexto": "336 em estoque"
     },
     {
       "id": "gsm-18294",
@@ -7902,7 +7889,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "205 em estoque"
+      "estoqueTexto": "166 em estoque"
     },
     {
       "id": "gsm-18156",
@@ -9043,7 +9030,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "9 em estoque"
+      "estoqueTexto": "8 em estoque"
     },
     {
       "id": "gsm-17974",
@@ -9222,7 +9209,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "177 em estoque"
+      "estoqueTexto": "174 em estoque"
     },
     {
       "id": "gsm-17895",
@@ -9313,7 +9300,7 @@
         "BOMVINK",
         "FERRAMENTA BOMVINK"
       ],
-      "estoqueTexto": "9 em estoque"
+      "estoqueTexto": "8 em estoque"
     },
     {
       "id": "gsm-17887",
@@ -9563,7 +9550,7 @@
         "FONE E MICROFONE PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "184 em estoque"
+      "estoqueTexto": "165 em estoque"
     },
     {
       "id": "gsm-17824",
@@ -9576,7 +9563,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "83 em estoque"
+      "estoqueTexto": "71 em estoque"
     },
     {
       "id": "gsm-17823",
@@ -9602,7 +9589,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "143 em estoque"
+      "estoqueTexto": "140 em estoque"
     },
     {
       "id": "gsm-17821",
@@ -9628,7 +9615,7 @@
         "FONE LEHMOX",
         "LEHMOX"
       ],
-      "estoqueTexto": "96 em estoque"
+      "estoqueTexto": "94 em estoque"
     },
     {
       "id": "gsm-17819",
@@ -10164,7 +10151,7 @@
       "categorias": [
         "LEHMOX"
       ],
-      "estoqueTexto": "2372 em estoque"
+      "estoqueTexto": "1711 em estoque"
     },
     {
       "id": "gsm-17546",
@@ -10902,7 +10889,7 @@
         "ELETRO, CASA E COZINHA KAPBOM",
         "KAPBOM"
       ],
-      "estoqueTexto": "20 em estoque"
+      "estoqueTexto": "16 em estoque"
     },
     {
       "id": "gsm-16779",
@@ -11111,7 +11098,7 @@
         "INFORMÁTICA KNUP",
         "KNUP"
       ],
-      "estoqueTexto": "14 em estoque"
+      "estoqueTexto": "13 em estoque"
     },
     {
       "id": "gsm-16594",
@@ -11124,7 +11111,7 @@
         "INFORMÁTICA LEHMOX",
         "KNUP"
       ],
-      "estoqueTexto": "20 em estoque"
+      "estoqueTexto": "19 em estoque"
     },
     {
       "id": "gsm-16593",
@@ -11238,7 +11225,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "85 em estoque"
+      "estoqueTexto": "76 em estoque"
     },
     {
       "id": "gsm-16487",
@@ -11251,7 +11238,7 @@
         "CABO E CARREGADOR PEINING",
         "PEINING"
       ],
-      "estoqueTexto": "108 em estoque"
+      "estoqueTexto": "99 em estoque"
     },
     {
       "id": "gsm-16486",
@@ -14228,7 +14215,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "23 em estoque"
+      "estoqueTexto": "19 em estoque"
     },
     {
       "id": "gsm-14715",
@@ -14240,7 +14227,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "113 em estoque"
+      "estoqueTexto": "112 em estoque"
     },
     {
       "id": "gsm-14714",
@@ -14252,7 +14239,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "53 em estoque"
+      "estoqueTexto": "48 em estoque"
     },
     {
       "id": "gsm-14713",
@@ -14264,7 +14251,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "40 em estoque"
+      "estoqueTexto": "37 em estoque"
     },
     {
       "id": "gsm-14712",
@@ -14288,7 +14275,7 @@
       "categorias": [
         "MAXPRINT"
       ],
-      "estoqueTexto": "15 em estoque"
+      "estoqueTexto": "13 em estoque"
     },
     {
       "id": "gsm-14710",
@@ -14451,6 +14438,19 @@
         "PAPELARIA"
       ],
       "estoqueTexto": "37 em estoque"
+    },
+    {
+      "id": "gsm-14697",
+      "originalId": 14697,
+      "nome": "BLOCO ADESIVO MAXPRINT GRANDE AMARELO 741011",
+      "sku": "C19SC741011",
+      "precoCusto": 2.52,
+      "imagem": "https://gsmdigitalacessorios.com.br/wp-content/uploads/2025/12/bloco_adesivo_maxprint_76x102_grande_neon_amarelo_1_20250917121201_dae80f10644c.png",
+      "categorias": [
+        "MAXPRINT",
+        "PAPELARIA"
+      ],
+      "estoqueTexto": "107 em estoque"
     }
   ]
 }

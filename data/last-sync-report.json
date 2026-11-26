@@ -1,41 +1,37 @@
 {
-  "executedAt": "2026-11-25T17:02:28.541Z",
-  "brasiliaTime": "25/11/2026, 14:02:28",
+  "executedAt": "2026-11-26T06:00:24.410Z",
+  "brasiliaTime": "26/11/2026, 03:00:24",
   "summary": {
-    "sousaTotal": 122,
-    "sousaNovos": 0,
+    "sousaTotal": 123,
+    "sousaNovos": 2,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1122,
-    "gsmNovos": 4,
+    "gsmNovos": 1,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1244
+    "totalGeralSincronizado": 1245
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [],
+      "novos": [
+        {
+          "id": "sousa-1795634038785-yQqe8",
+          "nome": "JBL BOOMBOX 4 AZUL",
+          "preco": 2050
+        },
+        {
+          "id": "sousa-1767798485755-yQqe8",
+          "nome": "JBL BOOMBOX 4 PRETA",
+          "preco": 2050
+        }
+      ],
       "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-14701",
-          "nome": "PERFURADOR METALICO MAXPRINT MXP20C 714484",
-          "precoCusto": 12.91
-        },
-        {
-          "id": "gsm-14700",
-          "nome": "CLIPES COLORIDO MAXPRINT CX100UN 71000018",
-          "precoCusto": 2.11
-        },
-        {
-          "id": "gsm-14699",
-          "nome": "BLOCO ADESIVO MAXPRINT PEQUENO AMARELO 74986",
-          "precoCusto": 2.65
-        },
-        {
-          "id": "gsm-14698",
-          "nome": "BLOCO ADESIVO MAXPRINT MEDIO AMARELO 741026",
-          "precoCusto": 2.11
+          "id": "gsm-14697",
+          "nome": "BLOCO ADESIVO MAXPRINT GRANDE AMARELO 741011",
+          "precoCusto": 2.52
         }
       ],
       "precosAlterados": []

@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-25T17:02:21.216Z",
+  "syncedAt": "2026-11-26T06:00:16.723Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 122,
+  "count": 123,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -877,21 +877,30 @@
       "categoriaSousa": "ssd"
     },
     {
+      "link": "/pt-BR/p/jbl-boombox-4-azul/1795634038785-yQqe8",
+      "nome": "JBL BOOMBOX 4 AZUL",
+      "preco": 2050,
+      "imagem": "",
+      "esgotado": false,
+      "id": "sousa-1795634038785-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
+      "link": "/pt-BR/p/jbl-boombox-4-preta/1767798485755-yQqe8",
+      "nome": "JBL BOOMBOX 4 PRETA",
+      "preco": 2050,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FECB51A11-072F-4544-AB5B-5C18999FF4AE.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1767798485755-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
       "link": "/pt-BR/p/jbl-clip-5-preta/1775586078266-yQqe8",
       "nome": "Jbl CLIP 5 PRETA",
       "preco": 265,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F79BEA44B-BF29-4FA0-A75B-9DBD9F935537.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1775586078266-yQqe8",
-      "categoriaSousa": "jbl"
-    },
-    {
-      "link": "/pt-BR/p/jbl-go5-preta/1772205810646-yQqe8",
-      "nome": "JBL GO5 PRETA",
-      "preco": 250,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEE2D02DB-8D8C-4EDF-8DE3-F67823B59F1B.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1772205810646-yQqe8",
       "categoriaSousa": "jbl"
     },
     {
