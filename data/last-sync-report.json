@@ -1,14 +1,14 @@
 {
-  "executedAt": "2026-11-26T14:36:31.792Z",
-  "brasiliaTime": "26/11/2026, 11:36:31",
+  "executedAt": "2026-11-26T16:45:07.405Z",
+  "brasiliaTime": "26/11/2026, 13:45:07",
   "summary": {
-    "sousaTotal": 122,
+    "sousaTotal": 120,
     "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
     "gsmTotal": 1130,
-    "gsmNovos": 10,
+    "gsmNovos": 2,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1252
+    "totalGeralSincronizado": 1250
   },
   "alteracoesDetectadas": {
     "sousa": {
@@ -18,54 +18,14 @@
     "gsm": {
       "novos": [
         {
-          "id": "gsm-21496",
-          "nome": "TECLADO LEHMOX MECANICO RGB LEY-2401",
-          "precoCusto": 76.53
+          "id": "gsm-14695",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON PEQUENO 741705",
+          "precoCusto": 2.92
         },
         {
-          "id": "gsm-21495",
-          "nome": "TECLADO LEHMOX MECANICO RGB LEY-2402",
-          "precoCusto": 76.53
-        },
-        {
-          "id": "gsm-21494",
-          "nome": "TECLADO LEHMOX MECANICO RGB LEY-2406",
-          "precoCusto": 54.66
-        },
-        {
-          "id": "gsm-21493",
-          "nome": "SUPORTE LEHMOX CELULAR VENTOSA LEY-1647",
-          "precoCusto": 9.56
-        },
-        {
-          "id": "gsm-21492",
-          "nome": "SUPORTE LEHMOX MAGNETICO LEY-1681",
-          "precoCusto": 4.91
-        },
-        {
-          "id": "gsm-21491",
-          "nome": "SUPORTE LEHMOX VEICULAR LEY-2397",
-          "precoCusto": 10.92
-        },
-        {
-          "id": "gsm-21490",
-          "nome": "PROCESSADOR LEHMOX DE ALIMENTOS MINE LEY-1935",
-          "precoCusto": 8.18
-        },
-        {
-          "id": "gsm-21477",
-          "nome": "MASSAGEADOR MUSCULAR 4 ESTILOS LEHMOX NY-3397",
-          "precoCusto": 50.55
-        },
-        {
-          "id": "gsm-20011",
-          "nome": "CARREGADOR IMENSO TIPO C IMS-226BL",
-          "precoCusto": 17.05
-        },
-        {
-          "id": "gsm-14696",
-          "nome": "BLOCO ADESIVO MAXPRINT GRANDE PASTEL 74000011",
-          "precoCusto": 6.75
+          "id": "gsm-14694",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO AMARELO 743344",
+          "precoCusto": 2.71
         }
       ],
       "precosAlterados": []
