@@ -1,14 +1,14 @@
 {
-  "executedAt": "2026-11-26T16:45:07.405Z",
-  "brasiliaTime": "26/11/2026, 13:45:07",
+  "executedAt": "2026-11-26T19:33:17.687Z",
+  "brasiliaTime": "26/11/2026, 16:33:17",
   "summary": {
     "sousaTotal": 120,
     "sousaNovos": 0,
     "sousaPrecosAlterados": 0,
-    "gsmTotal": 1130,
-    "gsmNovos": 2,
+    "gsmTotal": 1135,
+    "gsmNovos": 14,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1250
+    "totalGeralSincronizado": 1255
   },
   "alteracoesDetectadas": {
     "sousa": {
@@ -18,14 +18,74 @@
     "gsm": {
       "novos": [
         {
-          "id": "gsm-14695",
-          "nome": "BLOCO ADESIVO MAXPRINT NEON PEQUENO 741705",
-          "precoCusto": 2.92
+          "id": "gsm-21489",
+          "nome": "MONITOR GRASEP D-290G/165H",
+          "precoCusto": 1062.72
         },
         {
-          "id": "gsm-14694",
-          "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO AMARELO 743344",
+          "id": "gsm-21488",
+          "nome": "MONITOR GRASEP D-MNS215",
+          "precoCusto": 415.13
+        },
+        {
+          "id": "gsm-21487",
+          "nome": "MINI PENDRIVE GRASEP 16GB D-UP16",
+          "precoCusto": 24.48
+        },
+        {
+          "id": "gsm-21486",
+          "nome": "MINI PENDRIVE GRASEP 32GB D-UP32",
+          "precoCusto": 31.86
+        },
+        {
+          "id": "gsm-21485",
+          "nome": "CAIXA DE SOM PORTÁTIL GRASEP D-4142",
+          "precoCusto": 75.5
+        },
+        {
+          "id": "gsm-21484",
+          "nome": "CAIXA DE SOM AMPLIFICADA GRASEP D-XK1221",
+          "precoCusto": 1812.2
+        },
+        {
+          "id": "gsm-20674",
+          "nome": "COOLER PARA NOTEBOK BMAX BM-765",
+          "precoCusto": 39.36
+        },
+        {
+          "id": "gsm-20028",
+          "nome": "BATERIA 10000 IMENSO IMS-601A",
+          "precoCusto": 45.83
+        },
+        {
+          "id": "gsm-19697",
+          "nome": "CAIXA DE SOM FAM A606M2",
+          "precoCusto": 859.68
+        },
+        {
+          "id": "gsm-14693",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO LARANJA 743359",
           "precoCusto": 2.71
+        },
+        {
+          "id": "gsm-14691",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO VERDE 743378",
+          "precoCusto": 2.71
+        },
+        {
+          "id": "gsm-14690",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON MEDIO AZUL 743382",
+          "precoCusto": 2.71
+        },
+        {
+          "id": "gsm-14689",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE AMARELO 743397",
+          "precoCusto": 3.7
+        },
+        {
+          "id": "gsm-14688",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE LARANJA 743401",
+          "precoCusto": 3.7
         }
       ],
       "precosAlterados": []
