@@ -1,22 +1,242 @@
 {
-  "executedAt": "2026-11-27T08:08:22.217Z",
-  "brasiliaTime": "27/11/2026, 05:08:22",
+  "executedAt": "2026-11-27T15:09:56.831Z",
+  "brasiliaTime": "27/11/2026, 12:09:56",
   "summary": {
-    "sousaTotal": 108,
-    "sousaNovos": 0,
-    "sousaPrecosAlterados": 0,
-    "gsmTotal": 1135,
-    "gsmNovos": 0,
+    "sousaTotal": 130,
+    "sousaNovos": 25,
+    "sousaPrecosAlterados": 6,
+    "gsmTotal": 1137,
+    "gsmNovos": 10,
     "gsmPrecosAlterados": 0,
-    "totalGeralSincronizado": 1243
+    "totalGeralSincronizado": 1267
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [],
-      "precosAlterados": []
+      "novos": [
+        {
+          "id": "sousa-1791309655443-yQqe8",
+          "nome": "CEL.NOTE 17 PRO 5G PRETO 256GB 8RAM",
+          "preco": 2150
+        },
+        {
+          "id": "sousa-1787665411540-yQqe8",
+          "nome": "CEL.XIAOMI 17T PRETO 512GB 12RAM",
+          "preco": 3650
+        },
+        {
+          "id": "sousa-1787843669213-yQqe8",
+          "nome": "CEL.XIAOMI 17T PRO PRETO 512GB 12RAM 5G",
+          "preco": 4600
+        },
+        {
+          "id": "sousa-1723501191518-yQqe8",
+          "nome": "CARREGADOR TOSHIBA AA C/4 2.600mAh",
+          "preco": 99
+        },
+        {
+          "id": "sousa-1764879898322-yQqe8",
+          "nome": "CARTELA DE BAT. TOSHIBA CR2032 3V",
+          "preco": 14
+        },
+        {
+          "id": "sousa-1739291498249-yQqe8",
+          "nome": "PILHA AA ALKALINE TOSHIBA C/2",
+          "preco": 5
+        },
+        {
+          "id": "sousa-1723501257007-yQqe8",
+          "nome": "Pilhas AA C/2 2.600mAh recarregáveis",
+          "preco": 25
+        },
+        {
+          "id": "sousa-1770126815835-yQqe8",
+          "nome": "FIRE TV STICK 4K AMAZON",
+          "preco": 270
+        },
+        {
+          "id": "sousa-1780604222381-yQqe8",
+          "nome": "CABO HDMI 1.5M 4K 2.0 FORTREK HD201",
+          "preco": 10
+        },
+        {
+          "id": "sousa-1769006964524-yQqe8",
+          "nome": "HAYLOU SOLAR 5 PRETO C/2 PULSEIRAS",
+          "preco": 240
+        },
+        {
+          "id": "sousa-1786195687658-yQqe8",
+          "nome": "HAYLOU WATCH 3 1ATM PRETO",
+          "preco": 150
+        },
+        {
+          "id": "sousa-1795791017205-yQqe8",
+          "nome": "MIBRO LITE 3 PRO KHAKI GRAY",
+          "preco": 250
+        },
+        {
+          "id": "sousa-1795791070579-yQqe8",
+          "nome": "MIBRO LITE 3 PRO KHAKI ROSE GOLD",
+          "preco": 250
+        },
+        {
+          "id": "sousa-1787236165956-yQqe8",
+          "nome": "Smart Band 11 active branco",
+          "preco": 160
+        },
+        {
+          "id": "sousa-1787236098621-yQqe8",
+          "nome": "SMART BAND 11 ACTIVE PRETO",
+          "preco": 160
+        },
+        {
+          "id": "sousa-1795634038785-yQqe8",
+          "nome": "JBL BOOMBOX 4 AZUL",
+          "preco": 2050
+        },
+        {
+          "id": "sousa-1767798485755-yQqe8",
+          "nome": "JBL BOOMBOX 4 PRETA",
+          "preco": 2050
+        },
+        {
+          "id": "sousa-1775586078266-yQqe8",
+          "nome": "Jbl CLIP 5 PRETA",
+          "preco": 265
+        },
+        {
+          "id": "sousa-1728497442778-yQqe8",
+          "nome": "JBL QUANTUM 100 M2",
+          "preco": 140
+        },
+        {
+          "id": "sousa-1794666291370-yQqe8",
+          "nome": "JBL QUANTUM 100 M2 ROSA",
+          "preco": 140
+        },
+        {
+          "id": "sousa-1785424390627-yQqe8",
+          "nome": "MICROFONE JBL WIRELESS",
+          "preco": 460
+        },
+        {
+          "id": "sousa-1723502163593-yQqe8",
+          "nome": "CALCULADORA CASIO FX82ms",
+          "preco": 45
+        },
+        {
+          "id": "sousa-1790797223420-yQqe8",
+          "nome": "CALCULADORA DE SESA 12DIG CASIO MX12B ROSA",
+          "preco": 26
+        },
+        {
+          "id": "sousa-1795789164687-yQqe8",
+          "nome": "REPETIDOR WI-FI XIAOMI AX1500",
+          "preco": 170
+        },
+        {
+          "id": "sousa-1795789326166-yQqe8",
+          "nome": "BALANÇA XIAOMI S400",
+          "preco": 219
+        }
+      ],
+      "precosAlterados": [
+        {
+          "id": "sousa-1777051358492-yQqe8",
+          "nome": "Câmera Xiaomi C100",
+          "precoAnterior": 125,
+          "precoNovo": 135,
+          "diferenca": 10
+        },
+        {
+          "id": "sousa-1729022526335-yQqe8",
+          "nome": "HAYLOU SOLAR NEO PRETO",
+          "precoAnterior": 115,
+          "precoNovo": 125,
+          "diferenca": 10
+        },
+        {
+          "id": "sousa-1775831064751-yQqe8",
+          "nome": "MEMÓRIA 128GB MICRO SANDISK ULTRA",
+          "precoAnterior": 117,
+          "precoNovo": 120,
+          "diferenca": 3
+        },
+        {
+          "id": "sousa-1729275149803-yQqe8",
+          "nome": "MEMÓRIA 32GB MICRO SANDISK ULTRA",
+          "precoAnterior": 65,
+          "precoNovo": 66,
+          "diferenca": 1
+        },
+        {
+          "id": "sousa-1775830922132-yQqe8",
+          "nome": "MEMÓRIA 64GB MICRO SD SANDISK ULTRA",
+          "precoAnterior": 83,
+          "precoNovo": 85,
+          "diferenca": 2
+        },
+        {
+          "id": "sousa-1774362362914-yQqe8",
+          "nome": "APARADOR ONE BLADE PHILIPS",
+          "precoAnterior": 150,
+          "precoNovo": 155,
+          "diferenca": 5
+        }
+      ]
     },
     "gsm": {
-      "novos": [],
+      "novos": [
+        {
+          "id": "gsm-14687",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE ROSA 743416",
+          "precoCusto": 3.7
+        },
+        {
+          "id": "gsm-14686",
+          "nome": "BLOCO ADESIVO MAXPRINT NEON GRANDE VERDE 743421",
+          "precoCusto": 3.7
+        },
+        {
+          "id": "gsm-14680",
+          "nome": "CARREGADOR PEINING V8 PEI-216-1",
+          "precoCusto": 10.46
+        },
+        {
+          "id": "gsm-14679",
+          "nome": "GARRAFA TERMICA BM-P1924",
+          "precoCusto": 35.9
+        },
+        {
+          "id": "gsm-14678",
+          "nome": "KIT BMAX TECLADO/MOUSE RGB BM-T13",
+          "precoCusto": 43.05
+        },
+        {
+          "id": "gsm-14677",
+          "nome": "CHAVE B-TEK DE CATRACA ELETRICA 21V BT-DZ74",
+          "precoCusto": 319.9
+        },
+        {
+          "id": "gsm-14676",
+          "nome": "VENTILADOR BMAX LED COM CONTROLE BM-F1755",
+          "precoCusto": 84.72
+        },
+        {
+          "id": "gsm-14675",
+          "nome": "SOPRADOR B-TEK TERMICO 48V BT-DZ63",
+          "precoCusto": 279.9
+        },
+        {
+          "id": "gsm-14674",
+          "nome": "TECLADO BMAX MECANICO BM-T14",
+          "precoCusto": 92.25
+        },
+        {
+          "id": "gsm-14672",
+          "nome": "LUMINARIA BMAX NOTURNA BM-F1430",
+          "precoCusto": 21.18
+        }
+      ],
       "precosAlterados": []
     }
   }

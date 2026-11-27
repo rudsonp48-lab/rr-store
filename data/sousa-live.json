@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-27T08:08:16.197Z",
+  "syncedAt": "2026-11-27T15:09:50.781Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 108,
+  "count": 130,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -28,6 +28,15 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDF1A0D5-1EE3-457A-A4B0-748734B761D0.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1793116216207-yQqe8",
+      "categoriaSousa": "celulares"
+    },
+    {
+      "link": "/pt-BR/p/cel-note-17-pro-5g-preto-256gb-8ram/1791309655443-yQqe8",
+      "nome": "CEL.NOTE 17 PRO 5G PRETO 256GB 8RAM",
+      "preco": 2150,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FE125EC18-B3B8-4AD3-AA07-929E35BDDA65.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1791309655443-yQqe8",
       "categoriaSousa": "celulares"
     },
     {
@@ -91,6 +100,24 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F3F6CD4AE-2A17-41BB-AE87-E737AC4F62BF.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1771431200659-yQqe8",
+      "categoriaSousa": "celulares"
+    },
+    {
+      "link": "/pt-BR/p/cel-xiaomi-17t-preto-512gb-12ram/1787665411540-yQqe8",
+      "nome": "CEL.XIAOMI 17T PRETO 512GB 12RAM",
+      "preco": 3650,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FA5FFFDA8-A66D-48F8-9844-1350ACA450C1.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1787665411540-yQqe8",
+      "categoriaSousa": "celulares"
+    },
+    {
+      "link": "/pt-BR/p/cel-xiaomi-17t-pro-preto-512gb-12ram-5g/1787843669213-yQqe8",
+      "nome": "CEL.XIAOMI 17T PRO PRETO 512GB 12RAM 5G",
+      "preco": 4600,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FA9A61E29-B25B-41BE-A946-B7C97F8E6FEC.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1787843669213-yQqe8",
       "categoriaSousa": "celulares"
     },
     {
@@ -265,6 +292,42 @@
       "categoriaSousa": "fones"
     },
     {
+      "link": "/pt-BR/p/carregador-toshiba-aa-c-4-2-600mah/1723501191518-yQqe8",
+      "nome": "CARREGADOR TOSHIBA AA C/4 2.600mAh",
+      "preco": 99,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F701BEB30-3912-4897-86F5-FEF004824377.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1723501191518-yQqe8",
+      "categoriaSousa": "pilha"
+    },
+    {
+      "link": "/pt-BR/p/cartela-de-bat-toshiba-cr2032-3v/1764879898322-yQqe8",
+      "nome": "CARTELA DE BAT. TOSHIBA CR2032 3V",
+      "preco": 14,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F87F135E1-9CCC-4D7E-803D-6F9923349C19.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1764879898322-yQqe8",
+      "categoriaSousa": "pilha"
+    },
+    {
+      "link": "/pt-BR/p/pilha-aa-alkaline-toshiba-c-2/1739291498249-yQqe8",
+      "nome": "PILHA AA ALKALINE TOSHIBA C/2",
+      "preco": 5,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB4B9D2AC-E911-4F06-AE07-706C31A8DA4E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1739291498249-yQqe8",
+      "categoriaSousa": "pilha"
+    },
+    {
+      "link": "/pt-BR/p/pilhas-aa-c-2-2-600mah-recarregaveis/1723501257007-yQqe8",
+      "nome": "Pilhas AA C/2 2.600mAh recarregáveis",
+      "preco": 25,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBEfhzoysK%2BiCg5EFke7Bg%3D%3D.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1723501257007-yQqe8",
+      "categoriaSousa": "pilha"
+    },
+    {
       "link": "/pt-BR/p/camera-c400-xiaomi/1783004506771-yQqe8",
       "nome": "Câmera C400 Xiaomi",
       "preco": 215,
@@ -285,11 +348,20 @@
     {
       "link": "/pt-BR/p/camera-xiaomi-c100/1777051358492-yQqe8",
       "nome": "Câmera Xiaomi C100",
-      "preco": 125,
+      "preco": 135,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F6C2DFEF4-92B2-4F9D-BDE8-D0CA5220212F.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1777051358492-yQqe8",
       "categoriaSousa": "camera"
+    },
+    {
+      "link": "/pt-BR/p/fire-tv-stick-4k-amazon/1770126815835-yQqe8",
+      "nome": "FIRE TV STICK 4K AMAZON",
+      "preco": 270,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FCA911F88-5404-4FBD-A2F9-7D475F8BF7E4.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1770126815835-yQqe8",
+      "categoriaSousa": "aparelhos-para-tv"
     },
     {
       "link": "/pt-BR/p/kit-starlink-mini-x-internet-via-satelite-antena-mini-router/1767729945813-yQqe8",
@@ -346,6 +418,69 @@
       "categoriaSousa": "aparelhos-para-tv"
     },
     {
+      "link": "/pt-BR/p/redmi-pad-2-gray-c-capa-256gb-8ram/1795545721127-yQqe8",
+      "nome": "REDMI PAD 2 GRAY C/CAPA 256GB 8RAM",
+      "preco": 1550,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB26950DF-3AE4-4A90-9903-98C1786F01D8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795545721127-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
+      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1788532625984-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
+      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793978740202-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-galaxy-tab-a11-64gb-4ram-cinza/1793979913791-yQqe8",
+      "nome": "TAB.Galaxy Tab A11 64GB 4RAM CINZA",
+      "preco": 850,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F10693210-A9E4-4E6E-A6A5-B6FA1E95FC1B.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793979913791-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-honor-pad-x8a-gray-128gb-4ram-com-capa-tela-11/1795013177342-yQqe8",
+      "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
+      "preco": 1080,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDFEE0778-900B-49AD-9F9D-8C5010C7EA20.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795013177342-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
+      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793113977220-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
+      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793114100828-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
       "link": "/pt-BR/p/cabo-fortrek-usbc-to-usbc-2m-3a-u222-black-edition/1764877669056-yQqe8",
       "nome": "CABO FORTREK USB-C to USB-C 2M 3A U222 BLACK EDITION",
       "preco": 13,
@@ -361,6 +496,15 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F85C87065-8561-4356-8F3C-DA4D4ADBBA90.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1768445466373-yQqe8",
+      "categoriaSousa": "fortrek"
+    },
+    {
+      "link": "/pt-BR/p/cabo-hdmi-1-5m-4k-2-0-fortrek-hd201/1780604222381-yQqe8",
+      "nome": "CABO HDMI 1.5M 4K 2.0 FORTREK HD201",
+      "preco": 10,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F88904E5D-AF25-4185-8D03-F85BAD1C2590.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1780604222381-yQqe8",
       "categoriaSousa": "fortrek"
     },
     {
@@ -415,15 +559,6 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FH4OtcTu3ZZtBiiOcqjQv5A%3D%3D.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1780604311428-yQqe8",
-      "categoriaSousa": "fortrek"
-    },
-    {
-      "link": "/pt-BR/p/caixa-gaming-speaker-black-hawk-p2-6w/1788630608985-yQqe8",
-      "nome": "CAIXA GAMING SPEAKER BLACK HAWK P2 6w",
-      "preco": 60,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F59C87D92-862C-4B51-BCE7-F7428866BE93.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1788630608985-yQqe8",
       "categoriaSousa": "fortrek"
     },
     {
@@ -562,69 +697,6 @@
       "categoriaSousa": "fortrek"
     },
     {
-      "link": "/pt-BR/p/redmi-pad-2-gray-c-capa-256gb-8ram/1795545721127-yQqe8",
-      "nome": "REDMI PAD 2 GRAY C/CAPA 256GB 8RAM",
-      "preco": 1550,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB26950DF-3AE4-4A90-9903-98C1786F01D8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1795545721127-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
-      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1788532625984-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
-      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793978740202-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-galaxy-tab-a11-64gb-4ram-cinza/1793979913791-yQqe8",
-      "nome": "TAB.Galaxy Tab A11 64GB 4RAM CINZA",
-      "preco": 850,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F10693210-A9E4-4E6E-A6A5-B6FA1E95FC1B.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793979913791-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-honor-pad-x8a-gray-128gb-4ram-com-capa-tela-11/1795013177342-yQqe8",
-      "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
-      "preco": 1080,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDFEE0778-900B-49AD-9F9D-8C5010C7EA20.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1795013177342-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
-      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793113977220-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
-      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793114100828-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
       "link": "/pt-BR/p/amazfit-active-2-premium-quadrado-square/1772809438913-yQqe8",
       "nome": "AMAZFIT ACTIVE 2 PREMIUM QUADRADO (SQUARE)",
       "preco": 630,
@@ -724,9 +796,18 @@
       "categoriaSousa": "relogio"
     },
     {
+      "link": "/pt-BR/p/haylou-solar-5-preto-c-2-pulseiras/1769006964524-yQqe8",
+      "nome": "HAYLOU SOLAR 5 PRETO C/2 PULSEIRAS",
+      "preco": 240,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FE26E7F2F-48B8-4120-99EF-AD35DDE67612.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1769006964524-yQqe8",
+      "categoriaSousa": "relogio"
+    },
+    {
       "link": "/pt-BR/p/haylou-solar-neo-preto/1729022526335-yQqe8",
       "nome": "HAYLOU SOLAR NEO PRETO",
-      "preco": 115,
+      "preco": 125,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F7EFF4F66-9C1B-41B7-892F-C5BF0F160EF0.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1729022526335-yQqe8",
@@ -739,6 +820,33 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FF61CD87E-BAB8-4617-AEA9-61B7E16193EE.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1777050913498-yQqe8",
+      "categoriaSousa": "relogio"
+    },
+    {
+      "link": "/pt-BR/p/haylou-watch-3-1atm-preto/1786195687658-yQqe8",
+      "nome": "HAYLOU WATCH 3 1ATM PRETO",
+      "preco": 150,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FE09E7736-AD2E-4DFC-A12B-1EA0DC40E572.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1786195687658-yQqe8",
+      "categoriaSousa": "relogio"
+    },
+    {
+      "link": "/pt-BR/p/mibro-lite-3-pro-khaki-gray/1795791017205-yQqe8",
+      "nome": "MIBRO LITE 3 PRO KHAKI GRAY",
+      "preco": 250,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBA1C2B25-42FB-4E5B-A748-9621D2733BF1.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795791017205-yQqe8",
+      "categoriaSousa": "relogio"
+    },
+    {
+      "link": "/pt-BR/p/mibro-lite-3-pro-khaki-rose-gold/1795791070579-yQqe8",
+      "nome": "MIBRO LITE 3 PRO KHAKI ROSE GOLD",
+      "preco": 250,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F7CED6750-6706-45B9-B6EE-9B89F17DE829.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795791070579-yQqe8",
       "categoriaSousa": "relogio"
     },
     {
@@ -787,12 +895,21 @@
       "categoriaSousa": "relogio"
     },
     {
-      "link": "/pt-BR/p/xiaomi-smart-band-9-active-preta/1770129718932-yQqe8",
-      "nome": "XIAOMI SMART BAND 9 ACTIVE PRETA",
-      "preco": 135,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F3438291C-F2C5-412A-8361-EE999E01A6C4.jpg?alt=media",
+      "link": "/pt-BR/p/smart-band-11-active-branco/1787236165956-yQqe8",
+      "nome": "Smart Band 11 active branco",
+      "preco": 160,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F912501C9-8FD4-4FCA-AE03-E433AA08065E.jpg?alt=media",
       "esgotado": false,
-      "id": "sousa-1770129718932-yQqe8",
+      "id": "sousa-1787236165956-yQqe8",
+      "categoriaSousa": "relogio"
+    },
+    {
+      "link": "/pt-BR/p/smart-band-11-active-preto/1787236098621-yQqe8",
+      "nome": "SMART BAND 11 ACTIVE PRETO",
+      "preco": 160,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F62FE655E-3ECA-41D0-AD8F-3FF93D0F2257.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1787236098621-yQqe8",
       "categoriaSousa": "relogio"
     },
     {
@@ -814,9 +931,63 @@
       "categoriaSousa": "ssd"
     },
     {
+      "link": "/pt-BR/p/jbl-boombox-4-azul/1795634038785-yQqe8",
+      "nome": "JBL BOOMBOX 4 AZUL",
+      "preco": 2050,
+      "imagem": "",
+      "esgotado": false,
+      "id": "sousa-1795634038785-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
+      "link": "/pt-BR/p/jbl-boombox-4-preta/1767798485755-yQqe8",
+      "nome": "JBL BOOMBOX 4 PRETA",
+      "preco": 2050,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FECB51A11-072F-4544-AB5B-5C18999FF4AE.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1767798485755-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
+      "link": "/pt-BR/p/jbl-clip-5-preta/1775586078266-yQqe8",
+      "nome": "Jbl CLIP 5 PRETA",
+      "preco": 265,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F79BEA44B-BF29-4FA0-A75B-9DBD9F935537.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1775586078266-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
+      "link": "/pt-BR/p/jbl-quantum-100-m2/1728497442778-yQqe8",
+      "nome": "JBL QUANTUM 100 M2",
+      "preco": 140,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F24A84DC1-BEEF-4416-A7CF-FD3C5E603BCD.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1728497442778-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
+      "link": "/pt-BR/p/jbl-quantum-100-m2-rosa/1794666291370-yQqe8",
+      "nome": "JBL QUANTUM 100 M2 ROSA",
+      "preco": 140,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FD832692A-C194-4D9B-AE02-8266E0629BB6.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1794666291370-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
+      "link": "/pt-BR/p/microfone-jbl-wireless/1785424390627-yQqe8",
+      "nome": "MICROFONE JBL WIRELESS",
+      "preco": 460,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F5656B190-E81B-47EF-A695-3A6F24A2D152.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1785424390627-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
       "link": "/pt-BR/p/memoria-128gb-micro-sandisk-ultra/1775831064751-yQqe8",
       "nome": "MEMÓRIA 128GB MICRO SANDISK ULTRA",
-      "preco": 117,
+      "preco": 120,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F400DD8CA-BB87-4FA3-8370-D6CE5AA5A25E.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1775831064751-yQqe8",
@@ -834,7 +1005,7 @@
     {
       "link": "/pt-BR/p/memoria-32gb-micro-sandisk-ultra/1729275149803-yQqe8",
       "nome": "MEMÓRIA 32GB MICRO SANDISK ULTRA",
-      "preco": 65,
+      "preco": 66,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FF6TDjx7s6XTWvlafZeQe1Q%3D%3D.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1729275149803-yQqe8",
@@ -843,7 +1014,7 @@
     {
       "link": "/pt-BR/p/memoria-64gb-micro-sd-sandisk-ultra/1775830922132-yQqe8",
       "nome": "MEMÓRIA 64GB MICRO SD SANDISK ULTRA",
-      "preco": 83,
+      "preco": 85,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F7C463F12-0AB9-4011-9257-044349309AA4.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1775830922132-yQqe8",
@@ -906,7 +1077,7 @@
     {
       "link": "/pt-BR/p/aparador-one-blade-philips/1774362362914-yQqe8",
       "nome": "APARADOR ONE BLADE PHILIPS",
-      "preco": 150,
+      "preco": 155,
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBC803D62-C94E-4038-A0A0-C698A8AF5D20.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1774362362914-yQqe8",
@@ -958,13 +1129,31 @@
       "categoriaSousa": "aparador-de-pelos"
     },
     {
-      "link": "/pt-BR/p/refil-oneblade-1-unidade-cx/1785867142481-yQqe8",
-      "nome": "Refil oneblade 1 unidade cx",
-      "preco": 70,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDE042E2B-0768-49CB-95E4-1691EC09486B.jpg?alt=media",
+      "link": "/pt-BR/p/calculadora-casio-fx82ms/1723502163593-yQqe8",
+      "nome": "CALCULADORA CASIO FX82ms",
+      "preco": 45,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F31509183-4E69-453A-899A-B318D4B9DC77.jpg?alt=media",
       "esgotado": false,
-      "id": "sousa-1785867142481-yQqe8",
-      "categoriaSousa": "aparador-de-pelos"
+      "id": "sousa-1723502163593-yQqe8",
+      "categoriaSousa": "calculadoras"
+    },
+    {
+      "link": "/pt-BR/p/calculadora-de-sesa-12dig-casio-mx12b-rosa/1790797223420-yQqe8",
+      "nome": "CALCULADORA DE SESA 12DIG CASIO MX12B ROSA",
+      "preco": 26,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FA09D2AF2-6C7E-4968-93AF-533184232951.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1790797223420-yQqe8",
+      "categoriaSousa": "calculadoras"
+    },
+    {
+      "link": "/pt-BR/p/repetidor-wi-fi-xiaomi-ax1500/1795789164687-yQqe8",
+      "nome": "REPETIDOR WI-FI XIAOMI AX1500",
+      "preco": 170,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FED47D4A1-4EF2-4372-803E-B453EEB60FE8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795789164687-yQqe8",
+      "categoriaSousa": "repetidor-wifi"
     },
     {
       "link": "/pt-BR/p/xiaomi-tag-apple-e-android-c-4unidades-um-rastreador-inteligente-bluetooth/1776779344151-yQqe8",
@@ -974,6 +1163,15 @@
       "esgotado": false,
       "id": "sousa-1776779344151-yQqe8",
       "categoriaSousa": "rastreador"
+    },
+    {
+      "link": "/pt-BR/p/balanca-xiaomi-s400/1795789326166-yQqe8",
+      "nome": "BALANÇA XIAOMI S400",
+      "preco": 219,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F88EAA0CF-CBF8-4E67-B95A-6A41EF762759.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795789326166-yQqe8",
+      "categoriaSousa": "m"
     }
   ]
 }
