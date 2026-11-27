@@ -1,7 +1,7 @@
 {
-  "syncedAt": "2026-11-27T15:09:50.781Z",
+  "syncedAt": "2026-11-27T17:19:09.447Z",
   "source": "https://sousagamestecnologia.kyte.site",
-  "count": 130,
+  "count": 132,
   "products": [
     {
       "link": "/pt-BR/p/cel-honor-play20c-64gb-4ram-gold/1793116095145-yQqe8",
@@ -73,15 +73,6 @@
       "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F0ACF156C-D971-4084-BD70-B796D89674D0.jpg?alt=media",
       "esgotado": false,
       "id": "sousa-1769793158353-yQqe8",
-      "categoriaSousa": "celulares"
-    },
-    {
-      "link": "/pt-BR/p/cel-samsung-a17-nfc-azul-256gb-8ram/1795525955573-yQqe8",
-      "nome": "CEL.SAMSUNG A17 NFC AZUL 256GB 8RAM",
-      "preco": 1050,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F62972862-D7EB-4269-8046-25E417651BF8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1795525955573-yQqe8",
       "categoriaSousa": "celulares"
     },
     {
@@ -418,69 +409,6 @@
       "categoriaSousa": "aparelhos-para-tv"
     },
     {
-      "link": "/pt-BR/p/redmi-pad-2-gray-c-capa-256gb-8ram/1795545721127-yQqe8",
-      "nome": "REDMI PAD 2 GRAY C/CAPA 256GB 8RAM",
-      "preco": 1550,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB26950DF-3AE4-4A90-9903-98C1786F01D8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1795545721127-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
-      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1788532625984-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
-      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
-      "preco": 1730,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793978740202-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-galaxy-tab-a11-64gb-4ram-cinza/1793979913791-yQqe8",
-      "nome": "TAB.Galaxy Tab A11 64GB 4RAM CINZA",
-      "preco": 850,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F10693210-A9E4-4E6E-A6A5-B6FA1E95FC1B.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793979913791-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-honor-pad-x8a-gray-128gb-4ram-com-capa-tela-11/1795013177342-yQqe8",
-      "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
-      "preco": 1080,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDFEE0778-900B-49AD-9F9D-8C5010C7EA20.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1795013177342-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
-      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793113977220-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
-      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
-      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
-      "preco": 1120,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1793114100828-yQqe8",
-      "categoriaSousa": "tabletes"
-    },
-    {
       "link": "/pt-BR/p/cabo-fortrek-usbc-to-usbc-2m-3a-u222-black-edition/1764877669056-yQqe8",
       "nome": "CABO FORTREK USB-C to USB-C 2M 3A U222 BLACK EDITION",
       "preco": 13,
@@ -695,6 +623,69 @@
       "esgotado": false,
       "id": "sousa-1776535413938-yQqe8",
       "categoriaSousa": "fortrek"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-gray-c-capa-256gb-8ram/1795545721127-yQqe8",
+      "nome": "REDMI PAD 2 GRAY C/CAPA 256GB 8RAM",
+      "preco": 1550,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FB26950DF-3AE4-4A90-9903-98C1786F01D8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795545721127-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-grafite-256gb-8ram/1788532625984-yQqe8",
+      "nome": "REDMI PAD 2 PRO GRAFITE 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1788532625984-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/redmi-pad-2-pro-roxo-256gb-8ram/1793978740202-yQqe8",
+      "nome": "REDMI PAD 2 PRO ROXO 256GB 8RAM",
+      "preco": 1730,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F508E9F62-0565-4ADA-8593-5F022998D01E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793978740202-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-galaxy-tab-a11-64gb-4ram-cinza/1793979913791-yQqe8",
+      "nome": "TAB.Galaxy Tab A11 64GB 4RAM CINZA",
+      "preco": 850,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2F10693210-A9E4-4E6E-A6A5-B6FA1E95FC1B.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793979913791-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-honor-pad-x8a-gray-128gb-4ram-com-capa-tela-11/1795013177342-yQqe8",
+      "nome": "TAB.HONOR PAD X8a GRAY 128GB 4RAM COM CAPA TELA 11",
+      "preco": 1080,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDFEE0778-900B-49AD-9F9D-8C5010C7EA20.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795013177342-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-azul-128gb-6ram/1793113977220-yQqe8",
+      "nome": "TAB.POCO PAD C1 AZUL 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FBF9917CD-710A-4EA0-BE72-9790A1E94EA8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793113977220-yQqe8",
+      "categoriaSousa": "tabletes"
+    },
+    {
+      "link": "/pt-BR/p/tab-poco-pad-c1-gray-128gb-6ram/1793114100828-yQqe8",
+      "nome": "TAB.POCO PAD C1 GRAY 128GB 6RAM",
+      "preco": 1120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FEDFE4D9B-A3C7-4522-8EE7-AB694558C82E.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1793114100828-yQqe8",
+      "categoriaSousa": "tabletes"
     },
     {
       "link": "/pt-BR/p/amazfit-active-2-premium-quadrado-square/1772809438913-yQqe8",
@@ -976,6 +967,24 @@
       "categoriaSousa": "jbl"
     },
     {
+      "link": "/pt-BR/p/jbl-tune-530bt-branco/1726427410013-yQqe8",
+      "nome": "JBL TUNE 530BT BRANCO",
+      "preco": 170,
+      "imagem": "",
+      "esgotado": false,
+      "id": "sousa-1726427410013-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
+      "link": "/pt-BR/p/jbl-tune-530bt-lavanda/1772206114103-yQqe8",
+      "nome": "JBL TUNE 530BT LAVANDA",
+      "preco": 170,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FC46D35B3-2BCD-40B3-A20B-80D22ED12BA1.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1772206114103-yQqe8",
+      "categoriaSousa": "jbl"
+    },
+    {
       "link": "/pt-BR/p/microfone-jbl-wireless/1785424390627-yQqe8",
       "nome": "MICROFONE JBL WIRELESS",
       "preco": 460,
@@ -1129,6 +1138,24 @@
       "categoriaSousa": "aparador-de-pelos"
     },
     {
+      "link": "/pt-BR/p/refil-oneblade-2-unidades-cx/1785867213072-yQqe8",
+      "nome": "Refil oneblade 2 unidades cx",
+      "preco": 120,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FDE3AB69A-B125-42E9-9BE2-338D078C4460.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1785867213072-yQqe8",
+      "categoriaSousa": "aparador-de-pelos"
+    },
+    {
+      "link": "/pt-BR/p/repetidor-wi-fi-xiaomi-ax1500/1795789164687-yQqe8",
+      "nome": "REPETIDOR WI-FI XIAOMI AX1500",
+      "preco": 170,
+      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FED47D4A1-4EF2-4372-803E-B453EEB60FE8.jpg?alt=media",
+      "esgotado": false,
+      "id": "sousa-1795789164687-yQqe8",
+      "categoriaSousa": "repetidor-wifi"
+    },
+    {
       "link": "/pt-BR/p/calculadora-casio-fx82ms/1723502163593-yQqe8",
       "nome": "CALCULADORA CASIO FX82ms",
       "preco": 45,
@@ -1145,15 +1172,6 @@
       "esgotado": false,
       "id": "sousa-1790797223420-yQqe8",
       "categoriaSousa": "calculadoras"
-    },
-    {
-      "link": "/pt-BR/p/repetidor-wi-fi-xiaomi-ax1500/1795789164687-yQqe8",
-      "nome": "REPETIDOR WI-FI XIAOMI AX1500",
-      "preco": 170,
-      "imagem": "https://images-cdn.kyte.site/v0/b/kyte-7c484.appspot.com/o/yQqe87RWSDQcPUngkC4A4glM7W42%2FED47D4A1-4EF2-4372-803E-B453EEB60FE8.jpg?alt=media",
-      "esgotado": false,
-      "id": "sousa-1795789164687-yQqe8",
-      "categoriaSousa": "repetidor-wifi"
     },
     {
       "link": "/pt-BR/p/xiaomi-tag-apple-e-android-c-4unidades-um-rastreador-inteligente-bluetooth/1776779344151-yQqe8",
