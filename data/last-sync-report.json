@@ -1,50 +1,26 @@
 {
-  "executedAt": "2026-11-27T19:30:17.906Z",
-  "brasiliaTime": "27/11/2026, 16:30:17",
+  "executedAt": "2026-11-28T13:31:13.714Z",
+  "brasiliaTime": "28/11/2026, 10:31:13",
   "summary": {
     "sousaTotal": 132,
-    "sousaNovos": 1,
-    "sousaPrecosAlterados": 1,
+    "sousaNovos": 0,
+    "sousaPrecosAlterados": 0,
     "gsmTotal": 1137,
-    "gsmNovos": 3,
+    "gsmNovos": 1,
     "gsmPrecosAlterados": 0,
     "totalGeralSincronizado": 1269
   },
   "alteracoesDetectadas": {
     "sousa": {
-      "novos": [
-        {
-          "id": "sousa-1787237347086-yQqe8",
-          "nome": "Smart Band 11 active rosa",
-          "preco": 160
-        }
-      ],
-      "precosAlterados": [
-        {
-          "id": "sousa-1770386663844-yQqe8",
-          "nome": "AMAZFIT BIP 6 CINZA (CHARCOAL)",
-          "precoAnterior": 530,
-          "precoNovo": 540,
-          "diferenca": 10
-        }
-      ]
+      "novos": [],
+      "precosAlterados": []
     },
     "gsm": {
       "novos": [
         {
-          "id": "gsm-21221",
-          "nome": "CARREGADOR TPC 35w TPC/IP PEINING PEI-XC002-4",
-          "precoCusto": 25.83
-        },
-        {
-          "id": "gsm-20638",
-          "nome": "FACAO 36.5 CM BOMVINNK BOM-1160",
-          "precoCusto": 15.28
-        },
-        {
-          "id": "gsm-20482",
-          "nome": "APARADOR DE PELOS BMAX BM-C050",
-          "precoCusto": 51.66
+          "id": "gsm-14671",
+          "nome": "PORTA CONDIMENTOS BMAX BM-F1717",
+          "precoCusto": 17.22
         }
       ],
       "precosAlterados": []
