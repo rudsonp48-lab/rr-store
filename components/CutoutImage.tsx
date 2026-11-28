@@ -220,11 +220,47 @@ async function processCutout(src: string): Promise<string | null> {
     if (y < h - 1) tryNeighbor(ci, p + w);
   }
 
-  // 3) Aplica transparência preservando 100% da integridade do produto
+  // 3) Suavização de bordas (Anti-aliasing + Defringing) para eliminar serrilhado e halos brancos
+  const edgeWeight = new Uint8Array(w * h);
+  for (let y = 1; y < h - 1; y++) {
+    const rowOffset = y * w;
+    for (let x = 1; x < w - 1; x++) {
+      const p = rowOffset + x;
+      if (visited[p]) continue; // Fundo visitado
+
+      const bgNeighbors =
+        visited[p - w] +
+        visited[p + w] +
+        visited[p - 1] +
+        visited[p + 1];
+
+      if (bgNeighbors > 0) {
+        edgeWeight[p] = bgNeighbors;
+      }
+    }
+  }
+
+  // Aplica transparência e anti-aliasing na silhueta do produto
   for (let p = 0; p < w * h; p++) {
-    if (!visited[p]) continue;
     const i = p * 4;
-    d[i + 3] = 0;
+    if (visited[p]) {
+      d[i + 3] = 0;
+    } else if (edgeWeight[p] > 0) {
+      const count = edgeWeight[p];
+      // Suaviza a transição de alfa no contorno exterior
+      const factor = count >= 3 ? 0.35 : count === 2 ? 0.65 : 0.88;
+      d[i + 3] = Math.round(d[i + 3] * factor);
+
+      // Defringing: atenua contaminação de fundo branco nos pixels da borda
+      const r = d[i];
+      const g = d[i + 1];
+      const b = d[i + 2];
+      if (Math.min(r, g, b) > 195) {
+        d[i] = Math.round(r * 0.82);
+        d[i + 1] = Math.round(g * 0.82);
+        d[i + 2] = Math.round(b * 0.82);
+      }
+    }
   }
 
   ctx.putImageData(imageData, 0, 0);

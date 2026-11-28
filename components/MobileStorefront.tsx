@@ -20,6 +20,7 @@ import { getProductVariantConfig, getPureModelName } from '../data/productVarian
 import { buildConsultantWhatsAppUrl } from '../data/whatsappUtils';
 import CutoutImage from './CutoutImage';
 import BrandLogo, { BrandLogoKey } from './BrandLogo';
+import { resolveProductCutout } from '../data/productCutouts';
 
 export type MobileQuickFilterId =
   | 'todos'
@@ -115,13 +116,14 @@ export default function MobileStorefront({
   const bannerSlides = useMemo(() => {
     const inStock = products.filter((p) => p.estoque > 0 && p.imagem);
     const prioritizedIds = [
-      'rr-apple-ip18duo-256-silver',
-      'rr-apple-ip18promax-256-bordo',
       'rr-apple-ip18pro-256-bordo',
-      'rr-apple-watch-s12-46-preto',
-      'rr-apple-macbook-air-m5-16-512-midnight',
-      'rr-apple-ipad-pro-m5-13-256-preto',
-      'rr-apple-airpods-max-2-roxo',
+      'rr-apple-ip18pm-256-bordo',
+      'rr-apple-watch-s12-42-dourado-bordo',
+      'rr-apple-macbook-air-m5-512-midnight',
+      'rr-apple-ipadpro-m5-13-256-preto',
+      'rr-apple-airpods-max2-azul',
+      'rr-apple-airpods-pro-3',
+      'rr-apple-ip18duo-256-silver',
     ];
 
     const picked: Product[] = [];
@@ -191,26 +193,26 @@ export default function MobileStorefront({
     <div className="md:hidden min-h-screen bg-[#FAF8FE] text-[#1B1130] flex flex-col">
       {/* 1. Topo Lavanda Suave com Busca e Avatar/Menu */}
       <header className="bg-gradient-to-b from-[#D7C9F6] via-[#E8DFFA] to-[#FAF8FE] pt-3.5 pb-7 px-4">
-        <div className="flex items-center gap-2.5">
-          {/* Barra de Busca em Pílula Branca */}
-          <div className="flex-1 bg-white rounded-full px-4 py-2.5 shadow-[0_4px_16px_rgba(45,27,78,0.06)] flex items-center gap-2.5 border border-white">
+        <div className="flex items-center gap-2">
+          {/* Barra de Busca em Pílula Branca com Borda Refinada */}
+          <div className="flex-1 min-w-0 bg-white rounded-full px-3.5 py-2.5 shadow-[0_2px_12px_rgba(45,27,78,0.05)] flex items-center gap-2 border border-[#E4DCF7] focus-within:border-[#7C4DFF] focus-within:ring-2 focus-within:ring-[#7C4DFF]/15 transition-all">
             <Search className="w-4 h-4 text-[#2D1B4E] shrink-0" />
             <input
               id="rr-mobile-search-input"
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Buscar iPhone, Watch, AirPods..."
-              className="w-full bg-transparent text-[13px] font-medium text-[#1B1130] placeholder:text-[#8E7DB3] focus:outline-none"
+              placeholder="Buscar iPhone, Mac, Watch..."
+              className="w-full bg-transparent text-[12.5px] font-medium text-[#1B1130] placeholder:text-[#8E7DB3] focus:outline-none truncate"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => onSearchChange('')}
                 aria-label="Limpar busca"
-                className="text-[#8E7DB3] hover:text-[#2D1B4E]"
+                className="text-[#8E7DB3] hover:text-[#2D1B4E] p-0.5"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
@@ -220,41 +222,42 @@ export default function MobileStorefront({
             type="button"
             onClick={onOpenCart}
             aria-label="Abrir sacola"
-            className="relative w-10 h-10 rounded-full bg-white text-[#2D1B4E] flex items-center justify-center shadow-[0_4px_16px_rgba(45,27,78,0.08)] shrink-0 border border-white active:scale-95 transition-transform"
+            className="relative w-10 h-10 rounded-full bg-white text-[#2D1B4E] flex items-center justify-center shadow-[0_2px_12px_rgba(45,27,78,0.05)] shrink-0 border border-[#E4DCF7] active:scale-95 transition-transform"
           >
             <ShoppingBag className="w-4 h-4" />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#5E35B1] text-white text-[10px] font-black flex items-center justify-center border-2 border-[#E8DFFA]">
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#5E35B1] text-white text-[10px] font-black flex items-center justify-center border-2 border-white shadow-xs">
                 {cartCount}
               </span>
             )}
           </button>
 
-          {/* Logo Circular RR Mobile no Perfil */}
+          {/* Logo Circular RR Mobile com Aro de Destaque */}
           <button
             type="button"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Abrir opções da loja"
-            className="w-10 h-10 rounded-full bg-[#0A0A0A] overflow-hidden flex items-center justify-center shadow-md shrink-0 border-2 border-white active:scale-95 transition-transform"
+            className="relative w-10 h-10 rounded-full bg-[#0D0D12] overflow-hidden flex items-center justify-center shrink-0 border-2 border-white ring-2 ring-[#7C4DFF]/35 shadow-[0_3px_12px_rgba(45,27,78,0.12)] active:scale-95 transition-transform"
           >
             <img
               src="/rr-mobile-logo.jpg"
               alt="RR Mobile"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover scale-110"
             />
           </button>
         </div>
 
-        {/* Banner Slider Roxo Vibrante com Proporção Ampliada e Fotos Maiores */}
+        {/* Banner Slider Roxo Vibrante com Acabamento Premium de Estúdio */}
         {!searchQuery.trim() && bannerSlides.length > 0 && (
           <div
             onTouchStart={handleBannerTouchStart}
             onTouchEnd={handleBannerTouchEnd}
-            className="mt-3.5 rounded-[28px] bg-gradient-to-br from-[#3B1D6E] via-[#5E35B1] to-[#4A258C] h-[230px] text-white relative overflow-hidden shadow-[0_16px_34px_rgba(74,37,140,0.3)]"
+            className="mt-3.5 rounded-[30px] bg-gradient-to-br from-[#270E4F] via-[#481E8C] to-[#6329B8] h-[238px] text-white relative overflow-hidden shadow-[0_18px_40px_rgba(45,17,82,0.32),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-white/20"
           >
-            {/* Brilho suave ao fundo */}
-            <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-[#9D7CE8]/35 blur-2xl pointer-events-none" />
-            <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full bg-[#7C4DFF]/25 blur-2xl pointer-events-none" />
+            {/* Brilhos atmosféricos e reflexo superior de vidro */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10" />
+            <div className="absolute -right-8 -top-8 w-52 h-52 rounded-full bg-[#A855F7]/35 blur-3xl pointer-events-none" />
+            <div className="absolute -left-8 -bottom-8 w-44 h-44 rounded-full bg-[#7C3AED]/30 blur-2xl pointer-events-none" />
 
             {/* Trilha do Slider */}
             <div
@@ -263,45 +266,54 @@ export default function MobileStorefront({
             >
               {bannerSlides.map((slide) => {
                 const slideModel = getPureModelName(slide.nome) || slide.nome;
+                const slideCutout = resolveProductCutout(slide);
                 return (
                   <div
                     key={slide.id}
                     onClick={() => onSelectProduct(slide)}
-                    className="w-full h-full shrink-0 pl-4 pr-2 py-2 flex items-center justify-between gap-1 cursor-pointer relative z-10"
+                    className="w-full h-full shrink-0 pl-4 pr-1.5 py-2 flex items-center justify-between gap-1 cursor-pointer relative z-10"
                   >
-                    <div className="flex-1 min-w-0 flex flex-col justify-between h-full pt-2 pb-5">
+                    <div className="flex-1 min-w-0 flex flex-col justify-between h-full pt-2.5 pb-4.5">
                       <div>
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#E3DAFB] text-[#2D1B4E] text-[10px] font-black tracking-wide">
-                          <Sparkles className="w-3 h-3 text-[#5E35B1]" />
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-md text-white text-[10.5px] font-extrabold tracking-wide border border-white/25 shadow-xs">
+                          <Sparkles className="w-3 h-3 text-[#E9D5FF] fill-[#E9D5FF]/60" />
                           Novidades
                         </span>
 
-                        <h2 className="text-[20px] font-black leading-[1.12] tracking-tight mt-2.5 line-clamp-2">
+                        <h2 className="text-[21px] font-black leading-[1.12] tracking-tight mt-2 text-white line-clamp-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]">
                           {slideModel}
                         </h2>
 
-                        <p className="text-[13px] font-black text-[#E3DAFB] mt-1">
-                          {formatBRL(slide.precoPix)}{' '}
-                          <span className="text-[10px] font-semibold text-white/75">
-                            no PIX
+                        <div className="mt-2 flex flex-col">
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="text-[17px] font-black text-white tracking-tight drop-shadow-xs">
+                              {formatBRL(slide.precoPix)}
+                            </span>
+                            <span className="px-1.5 py-0.5 rounded-md bg-[#10B981]/25 border border-[#10B981]/40 text-[#34D399] text-[9.5px] font-black uppercase tracking-wider">
+                              no PIX
+                            </span>
+                          </div>
+                          <span className="text-[10px] font-medium text-purple-200/80 mt-0.5">
+                            ou 12x no cartão de crédito
                           </span>
-                        </p>
+                        </div>
                       </div>
 
-                      <div>
-                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-white bg-white/15 px-3 py-1.5 rounded-full backdrop-blur-xs border border-white/15">
+                      <div className="pt-1">
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-black text-[#2B1055] bg-white hover:bg-purple-50 px-3.5 py-1.5 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.18)] active:scale-95 transition-all">
                           <span>Ver detalhes</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
+                          <ChevronRight className="w-3.5 h-3.5 text-[#5E35B1]" />
                         </span>
                       </div>
                     </div>
 
-                    {/* Foto Grande Proporcional (sem cortar topo nem base) */}
-                    <div className="w-[48%] h-full shrink-0 flex items-center justify-center py-2.5 pr-2">
+                    {/* Foto Grande de Estúdio com Sombra Realista no Piso */}
+                    <div className="w-[50%] h-full shrink-0 relative flex items-center justify-center p-2">
+                      <div className="absolute bottom-2.5 w-32 h-3.5 bg-black/45 rounded-full blur-md pointer-events-none" />
                       <CutoutImage
-                        src={slide.imagem}
+                        src={slideCutout}
                         alt={slide.nome}
-                        className="w-full h-full object-contain drop-shadow-[0_14px_24px_rgba(0,0,0,0.4)]"
+                        className="w-full h-full object-contain drop-shadow-[0_12px_22px_rgba(0,0,0,0.45)] relative z-10 transition-transform duration-300"
                       />
                     </div>
                   </div>
@@ -309,7 +321,7 @@ export default function MobileStorefront({
               })}
             </div>
 
-            {/* Indicadores (Dots) do Slider */}
+            {/* Indicadores (Dots) do Slider Estilo Apple */}
             {bannerSlides.length > 1 && (
               <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
                 {bannerSlides.map((slide, idx) => (
@@ -323,8 +335,8 @@ export default function MobileStorefront({
                     }}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
                       idx === activeSlide
-                        ? 'w-5 bg-white'
-                        : 'w-1.5 bg-white/40 hover:bg-white/60'
+                        ? 'w-6 bg-white shadow-[0_0_8px_rgba(255,255,255,0.7)]'
+                        : 'w-1.5 bg-white/40 hover:bg-white/70'
                     }`}
                   />
                 ))}
@@ -443,7 +455,7 @@ export default function MobileStorefront({
                     {/* Foto Flutuante Centralizada Ampliada */}
                     <div className="w-full h-36 flex items-center justify-center my-0.5">
                       <CutoutImage
-                        src={product.imagem}
+                        src={resolveProductCutout(product)}
                         alt={product.nome}
                         className="w-full h-full object-contain scale-105 drop-shadow-[0_6px_12px_rgba(45,27,78,0.12)]"
                       />

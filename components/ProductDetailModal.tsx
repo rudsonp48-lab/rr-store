@@ -27,6 +27,7 @@ import { formatBRL } from '../data/mockData';
 import { buildSingleProductWhatsAppUrl } from '../data/whatsappUtils';
 import { getProductSeoDetails } from '../data/productSeoUtils';
 import CutoutImage from './CutoutImage';
+import { resolveProductCutout } from '../data/productCutouts';
 import {
   getProductVariantConfig,
   buildConfiguredProduct,
@@ -244,7 +245,7 @@ export default function ProductDetailModal({
             >
               {currentMainImage === activeProduct.imagem ? (
                 <CutoutImage
-                  src={currentMainImage}
+                  src={resolveProductCutout(activeProduct)}
                   alt={activeProduct.nome}
                   className="h-full w-full object-contain scale-110 drop-shadow-[0_22px_36px_rgba(45,27,78,0.28)] transition-all duration-300"
                 />
